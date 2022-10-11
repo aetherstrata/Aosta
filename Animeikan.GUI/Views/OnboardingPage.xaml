@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Animeikan.GUI.ViewModels"
+             xmlns:models="clr-namespace:Animeikan.GUI.Models"
+             x:Class="Animeikan.GUI.Views.OnboardingPage"
+             x:DataType="viewModels:OnboardingScreenViewModel"
+             Title="OnboardingPage"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Content>
+        <StackLayout 
+            Orientation="Vertical">
+            
+            <CarouselView 
+                Loop="False"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                IndicatorView="OnboardingIndicator"
+                Position="{Binding Position}"
+                PositionChangedCommand="{Binding PositionChangedCommand}"
+                ItemsSource="{Binding OnboardingScreens}">
+                
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="models:OnboardingScreenModel">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="65*" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Row 0 is whitespace -->
+                            
+                            <Image Grid.Row="1"
+                                Margin="20"
+                                Source="{Binding OnboardingImage}"
+                                Aspect="AspectFill"  />
+
+                            <VerticalStackLayout Grid.Row="2"
+                                Spacing="10"
+                                VerticalOptions="Center">
+                                
+                                <Label 
+                                    Text="{Binding OnboardingTitle}" 
+                                    FontFamily="ComfortaaBold"
+                                    FontSize="28" 
+                                    HorizontalTextAlignment="Center"/>
+                                
+                                <Label 
+                                    Text="{Binding OnboardingDescription}"
+                                    FontFamily="ComfortaaRegular"
+                                    FontSize="20" 
+                                    HorizontalTextAlignment="Center"/>
+                                
+                            </VerticalStackLayout>
+                            
+                        </Grid>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>                
+            </CarouselView>
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <!-- Column 0 is whitespace -->
+
+                <IndicatorView Grid.Column="1"
+                    x:Name="OnboardingIndicator"
+                    VerticalOptions="EndAndExpand"
+                    HorizontalOptions="Center"
+                    IndicatorSize="10"
+                    IndicatorColor="LightGray"
+                    Margin="15"
+                    SelectedIndicatorColor="{x:StaticResource Primary}">
+                </IndicatorView>
+
+                <Frame Grid.Column="2"
+                    Margin="25"
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                    HeightRequest="70" 
+                    WidthRequest="70"
+                    CornerRadius="35">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NextPageCommand}"></TapGestureRecognizer>
+                    </Frame.GestureRecognizers>                    
+                    
+                    <Image>
+                        <Image.Source>
+                            <FontImageSource
+                                FontFamily="FontAwesome"
+                                Glyph="{Binding ButtonGlyph}"
+                                Color="Black"/>
+                        </Image.Source>
+                    </Image>
+
+                </Frame>
+                
+            </Grid>            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
