@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    x:Class="Animeikan.GUI.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:Animeikan.GUI.Views">
+  x:Class="Animeikan.GUI.AppShell"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:views="clr-namespace:Animeikan.GUI.Views"
+  xmlns:models="clr-namespace:Animeikan.GUI.Models">
 
-    <ShellContent
-        Title="Welcome"
-        ContentTemplate="{DataTemplate views:OnboardingPage}"
-        Route="FirstRun" />
+  <ShellContent
+    Title="Welcome"
+    ContentTemplate="{DataTemplate views:OnboardingPage}"
+    Route="FirstRun" />
 
-    <ShellContent
+  <TabBar>
+    <Tab
+      Title="Anime">
+      <ShellContent
         Title="Animeikan"
         ContentTemplate="{DataTemplate views:MainPage}"
         Route="MainPage" />
-
+    </Tab>
+    <Tab
+      Title="Settings">
+      <Tab.Icon>
+        <FontImageSource 
+          FontFamily="FontAwesome"
+          Glyph="{x:Static models:FontAwesomeIcons.ArrowRight}"
+          Color="{x:StaticResource Key=Primary}"/>
+      </Tab.Icon>
+      <ShellContent
+        Title="Settings"
+        ContentTemplate="{DataTemplate views:SettingsPage}"
+        Route="SettingsPage" />
+    </Tab>
+  </TabBar>
+  
 </Shell>

@@ -18,7 +18,7 @@ public partial class OnboardingScreenViewModel : ObservableObject
 
     public OnboardingScreenViewModel()
     {
-        _onboardingScreens.AddRange(new []
+        _onboardingScreens.AddRange(new[]
         {
             new OnboardingScreenModel()
             {
@@ -48,10 +48,10 @@ public partial class OnboardingScreenViewModel : ObservableObject
 
     public ICommand NextPageCommand => new Command(async () =>
     {
-        if(Position == OnboardingScreens.Count - 1)
+        if (Position == OnboardingScreens.Count - 1)
             await AppShell.Current.GoToAsync($"//{nameof(MainPage)}");
 
-        if(Position < OnboardingScreens.Count - 1)        
+        if (Position < OnboardingScreens.Count - 1)
             Position++;
     });
 }
