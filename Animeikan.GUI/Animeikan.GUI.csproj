@@ -53,10 +53,14 @@
         <PackageReference Include="CommunityToolkit.Maui" Version="1.3.0" />
         <PackageReference Include="CommunityToolkit.Maui.Markup" Version="1.1.1" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+        <PackageReference Include="JikanDotNet" Version="2.3.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0-rc.1.22426.10" />
     </ItemGroup>
 
     <ItemGroup>
+      <MauiXaml Update="Views\AnimeSummaryPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
       <MauiXaml Update="Views\MainPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
