@@ -4,27 +4,37 @@
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:views="clr-namespace:Animeikan.GUI.Views"
-  xmlns:models="clr-namespace:Animeikan.GUI.Models">
+  xmlns:models="clr-namespace:Animeikan.GUI.Models" 
+  BackgroundColor="{x:StaticResource Primary}">
 
+  
   <ShellContent
     Title="Welcome"
-    ContentTemplate="{DataTemplate views:OnboardingPage}"
-    Route="FirstRun" />
+    Route="FirstRun">
+    <views:OnboardingPage/>
+  </ShellContent>
 
-  <TabBar>
-    <Tab
-      Title="Anime">
+  <TabBar x:Name="BottomTabBar">
+    <TabBar.Style>
+    </TabBar.Style>
+    <Tab Title="Anime">      
+      <Tab.Icon>
+        <FontImageSource 
+        FontFamily="FontAwesome"
+        Glyph="{x:Static models:FontAwesomeIcons.Film}"
+        Color="{x:StaticResource Primary}"/>
+      </Tab.Icon>
       <ShellContent
         Title="Animeikan"
         ContentTemplate="{DataTemplate views:MainPage}"
         Route="MainPage" />
     </Tab>
-    <Tab
-      Title="Settings">
+
+    <Tab Title="Settings">
       <Tab.Icon>
         <FontImageSource 
           FontFamily="FontAwesome"
-          Glyph="{x:Static models:FontAwesomeIcons.ArrowRight}"
+          Glyph="{x:Static models:FontAwesomeIcons.Gear}"
           Color="{x:StaticResource Key=Primary}"/>
       </Tab.Icon>
       <ShellContent
@@ -33,5 +43,4 @@
         Route="SettingsPage" />
     </Tab>
   </TabBar>
-  
 </Shell>
