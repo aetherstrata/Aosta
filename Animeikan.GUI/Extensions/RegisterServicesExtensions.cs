@@ -1,10 +1,12 @@
-﻿namespace Animeikan.GUI.Extensions;
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace Animeikan.GUI.Extensions;
 
 internal static partial class MauiAppBuilderExtensions
 {
-    public static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
-    {
-        // Add services here...
+  public static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
+  {
+    builder.Services.AddSingleton<ISecureStorageService, SecureStorageService>();
 
         // Default method
         //builder.Services.Add();
@@ -14,6 +16,6 @@ internal static partial class MauiAppBuilderExtensions
         //builder.Services.AddSingleton();  
         // Transient objects lifetime services are created each time they are requested. This lifetime works best for lightweight, stateless services.
         //builder.Services.AddTransient();  
-        return builder;
-    }
+    return builder;
+  }
 }
