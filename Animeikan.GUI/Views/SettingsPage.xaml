@@ -1,43 +1,59 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Animeikan.GUI.Models"
              x:Class="Animeikan.GUI.Views.SettingsPage"
              Title="SettingsPage"
              Shell.NavBarIsVisible="False">
+  <Grid>
+    <ScrollView>
+      <Border
+      Margin="5,5,5,-40"
+      Padding="20,20,20,0"
+      BackgroundColor="LightBlue"
+      StrokeThickness="5">
 
-  <Border
-    Margin="5,5,5,-40"
-    Padding="20,20,20,0"
-    BackgroundColor="LightBlue"
-    StrokeThickness="5">
-    
-    <Border.StrokeShape>
-      <RoundRectangle CornerRadius="20,20,0,0"/>
-    </Border.StrokeShape>
-    
-    <Border.Stroke>
-      <LinearGradientBrush EndPoint="0,1">
-        <GradientStop 
-          Color="{x:StaticResource Primary}"
-          Offset="0"/>
-        <GradientStop 
-          Color="LightBlue"
-          Offset="0.5"/>
-      </LinearGradientBrush>
-    </Border.Stroke>
-      
-    <VerticalStackLayout>
-      <Label 
-      Text="Palle e pisello!"
-      VerticalOptions="Center" 
-      HorizontalOptions="Center" />
+        <Border.StrokeShape>
+          <RoundRectangle CornerRadius="20,20,0,0"/>
+        </Border.StrokeShape>
+        <Border.Stroke>
+          <LinearGradientBrush EndPoint="0,1">
+            <GradientStop 
+              Color="{x:StaticResource Primary}"
+              Offset="0"/>
+            <GradientStop 
+              Color="LightBlue"
+              Offset="0.5"/>
+          </LinearGradientBrush>
+        </Border.Stroke>
 
-      <Entry 
-      Placeholder="API Key"
-      IsTextPredictionEnabled="False"
-      MaxLength="30"
-      FontFamily="ComfortaaRegular"/>
+        <VerticalStackLayout>
+          <Label 
+            Text="Palle e pisello!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
 
-    </VerticalStackLayout>
-  </Border>
+          <Entry 
+            Placeholder="API Key"
+            IsTextPredictionEnabled="False"
+            MaxLength="30"
+            FontFamily="ComfortaaRegular"/>
+
+          <Frame MinimumHeightRequest="100"></Frame>
+
+        </VerticalStackLayout>
+      </Border>
+    </ScrollView>
+    <Button
+      Style="{x:StaticResource Key=FloatingActionButton}"
+      Margin="0,0,20,20"
+      Text="{x:Static models:FontAwesomeIcons.FloppyDisk}">
+      <Button.Shadow>
+        <Shadow Brush="Black"
+                Offset="10,10"
+                Radius="20"
+                Opacity="0.2"/>
+      </Button.Shadow>
+    </Button>
+  </Grid>
 </ContentPage>
