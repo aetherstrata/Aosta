@@ -15,8 +15,6 @@
   </ShellContent>
 
   <TabBar x:Name="BottomTabBar">
-    <TabBar.Style>
-    </TabBar.Style>
     <Tab Title="Anime">      
       <Tab.Icon>
         <FontImageSource 
