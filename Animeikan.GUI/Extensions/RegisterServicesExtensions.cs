@@ -1,11 +1,17 @@
-﻿namespace Animeikan.GUI.Extensions;
+﻿using Animeikan.GUI.Services;
+using CommunityToolkit.Maui;
+using JikanDotNet;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Animeikan.GUI.Extensions;
 
 internal static partial class MauiAppBuilderExtensions
 {
   public static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
   {
     builder.Services.AddSingleton<ISecureStorageService, SecureStorageService>();
-
+    builder.Services.AddSingleton<ISettingsService, SettingsService>();
+    builder.Services.AddSingleton<IJikan, Jikan>();
     // Default method
     //builder.Services.Add();
     // Scoped objects are the same within a request, but different across different requests.
