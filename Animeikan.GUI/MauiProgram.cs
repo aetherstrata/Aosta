@@ -7,6 +7,9 @@ namespace Animeikan.GUI;
 
 public static class MauiProgram
 {
+	static readonly string AppDataPath = FileSystem.Current.AppDataDirectory;
+	static readonly string CacheDirPath = FileSystem.Current.CacheDirectory;
+
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
