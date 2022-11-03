@@ -4,11 +4,42 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-  <Color x:Key="Primary">#27b3fc</Color>
-  <Color x:Key="Secondary">#DFD8F7</Color>
-  <Color x:Key="Tertiary">#2B0B98</Color>
   <Color x:Key="White">White</Color>
   <Color x:Key="Black">Black</Color>
+
+  <Color x:Key="BaseColor">#00AAFF</Color>
+
+  <!-- Brightness Palette -->
+  <Color x:Key="BaseColor0B">Black</Color>
+  <Color x:Key="BaseColor10B">#19C3FF</Color>
+  <Color x:Key="BaseColor20B">#33DDFF</Color>
+  <Color x:Key="BaseColor30B">#4CF6FF</Color>
+  <Color x:Key="BaseColor40B">#66FFFF</Color>
+  <Color x:Key="BaseColor50B">#7FFFFF</Color>
+  <Color x:Key="BaseColor60B">#99FFFF</Color>
+  <Color x:Key="BaseColor70B">#B2FFFF</Color>
+  <Color x:Key="BaseColor80B">#CCFFFF</Color>
+  <Color x:Key="BaseColor90B">#E5FFFF</Color>
+  <Color x:Key="BaseColor100B">White</Color>
+
+  <!-- Lightness Palette -->
+  <Color x:Key="BaseColor0L">Black</Color>
+  <Color x:Key="BaseColor10L">#002233</Color>
+  <Color x:Key="BaseColor20L">#004466</Color>
+  <Color x:Key="BaseColor30L">#006699</Color>
+  <Color x:Key="BaseColor40L">#0088CC</Color>
+  <Color x:Key="BaseColor50L">#00AAFF</Color>
+  <Color x:Key="BaseColor60L">#33BBFF</Color>
+  <Color x:Key="BaseColor70L">#66CCFF</Color>
+  <Color x:Key="BaseColor80L">#99DDFF</Color>
+  <Color x:Key="BaseColor90L">#CCEEFF</Color>
+  <Color x:Key="BaseColor100L">White</Color>
+
+  <Color x:Key="Analogus1">#00FFEE</Color>
+  <Color x:Key="Analogus2">#00DDFF</Color>
+  <Color x:Key="Analogus3">#0077FF</Color>
+  <Color x:Key="Analogus4">#0044FF</Color>
+
   <Color x:Key="Gray100">#E1E1E1</Color>
   <Color x:Key="Gray200">#C8C8C8</Color>
   <Color x:Key="Gray300">#ACACAC</Color>
@@ -17,11 +48,10 @@
   <Color x:Key="Gray600">#404040</Color>
   <Color x:Key="Gray900">#212121</Color>
   <Color x:Key="Gray950">#141414</Color>
-  <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
-  <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
-  <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
+
   <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
   <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
+
   <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}"/>
   <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}"/>
   <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}"/>
