@@ -1,11 +1,29 @@
-﻿namespace Animeikan.GUI;
+﻿using Animeikan.GUI.Services;
+using Animeikan.GUI.Views;
+
+using JikanDotNet;
+
+namespace Animeikan.GUI;
 
 public partial class App : Application
 {
-    public App()
-    {
-        InitializeComponent();
+  ISettingsService settingsService;
+  bool isFirstRun;
 
-        MainPage = new AppShell();
-    }
+  public App(ISettingsService settingsService)
+  {
+    InitializeComponent();
+
+    this.settingsService = settingsService;
+    this.isFirstRun = settingsService.Get<bool>("firstRun", true).Result;
+
+    MainPage = new AppShell();
+  }
+  
+  protected override void OnStart()
+  {
+    if (!isFirstRun)
+      AppShell.Current.GoToAsync($"//{nameof(MainPage)}");
+  }
+
 }
