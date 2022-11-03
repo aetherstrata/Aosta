@@ -1,6 +1,6 @@
 ﻿namespace Animeikan.GUI;
 
-internal static partial class MauiAppBuilderExtensions
+public static partial class MauiAppBuilderExtensions
 {
     public static MauiAppBuilder RegisterHandlers(this MauiAppBuilder builder)
     {

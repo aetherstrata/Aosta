@@ -1,6 +1,6 @@
 ﻿namespace Animeikan.GUI.Services;
 
-class SettingsService : ISettingsService
+public class SettingsService : ISettingsService
 {
   public Task<T> Get<T>(string key, T defaultValue)
   {
@@ -11,7 +11,7 @@ class SettingsService : ISettingsService
 
   public Task Save<T>(string key, T value)
   {
-    Preferences.Default.Set(key, value);
+    Preferences.Default.Set<T>(key, value);
 
     return Task.CompletedTask;
   }
