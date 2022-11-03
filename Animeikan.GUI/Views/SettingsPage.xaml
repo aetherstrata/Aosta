@@ -1,53 +1,75 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:models="clr-namespace:Animeikan.GUI.Models"
+             xmlns:viewModels="clr-namespace:Animeikan.GUI.ViewModels"
+             xmlns:constants="clr-namespace:Animeikan.GUI.Constants"
              x:Class="Animeikan.GUI.Views.SettingsPage"
+             x:DataType="viewModels:SettingsViewModel"
              Title="SettingsPage"
              Shell.NavBarIsVisible="False">
+
+  <ContentPage.Behaviors>
+    <mct:StatusBarBehavior StatusBarColor="{x:StaticResource Gray950}"/>
+  </ContentPage.Behaviors>
+  
   <Grid>
-    <ScrollView>
-      <Border
-      Margin="5,5,5,-40"
-      Padding="20,20,20,0"
-      BackgroundColor="LightBlue"
-      StrokeThickness="5">
+    <ScrollView VerticalOptions="FillAndExpand">
+      <ScrollView.Background>
+        <LinearGradientBrush EndPoint="0,1">
+          <GradientStop 
+            Color="{StaticResource Gray950}" 
+            Offset="0"/>
+          <GradientStop 
+            Color="{StaticResource Gray900}" 
+            Offset="1"/>
+        </LinearGradientBrush>
+      </ScrollView.Background>
+      
+      <VerticalStackLayout 
+        VerticalOptions="StartAndExpand"
+        Padding="20">
+        
+        <Label
+          Margin="25,0,0,0"
+          Text="Settings"
+          VerticalOptions="Center" 
+          HorizontalOptions="Start" 
+          FontFamily="ComfortaaBold"
+          FontSize="40"/>
 
-        <Border.StrokeShape>
-          <RoundRectangle CornerRadius="20,20,0,0"/>
-        </Border.StrokeShape>
-        <Border.Stroke>
-          <LinearGradientBrush EndPoint="0,1">
-            <GradientStop 
-              Color="{x:StaticResource Primary}"
-              Offset="0"/>
-            <GradientStop 
-              Color="LightBlue"
-              Offset="0.5"/>
-          </LinearGradientBrush>
-        </Border.Stroke>
 
-        <VerticalStackLayout>
-          <Label 
-            Text="Palle e pisello!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label
+          Margin="70,0,0,0"
+          FontSize="18"
+          Text="General"
+          TextColor="#43a8fd"
+          FontFamily="ComfortaaBold"/>
 
-          <Entry 
-            Placeholder="API Key"
-            IsTextPredictionEnabled="False"
-            MaxLength="30"
-            FontFamily="ComfortaaRegular"/>
+        <Button Text="Open Onboarding Page" Command="{Binding GotoOnboardingCommand}"></Button>
 
-          <Frame MinimumHeightRequest="100"></Frame>
+        <Label 
+      x:Name="AnimeTitleLabel"
+      FontFamily="ComfortaaBold"
+      FontSize="30"
+      MaxLines="2"
+      LineBreakMode="WordWrap"
+      Text="Re:Zero - Starting Life in Another World from Zero"/>
 
-        </VerticalStackLayout>
-      </Border>
+        <Button Text="Print Anime Title" Command="{Binding PrintAnime}"/>
+
+        <Label Text="{Binding Anime}" 
+      FontFamily="ComfortaaBold"
+      FontSize="30"/>
+
+      </VerticalStackLayout>
     </ScrollView>
+    
     <Button
       Style="{x:StaticResource Key=FloatingActionButton}"
       Margin="0,0,20,20"
-      Text="{x:Static models:FontAwesomeIcons.FloppyDisk}">
+      Text="{x:Static constants:FontAwesomeIcons.FloppyDisk}">
       <Button.Shadow>
         <Shadow Brush="Black"
                 Offset="10,10"

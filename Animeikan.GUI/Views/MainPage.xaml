@@ -1,15 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:models="clr-namespace:Animeikan.GUI.Models"
+             xmlns:constants="clr-namespace:Animeikan.GUI.Constants"
              x:Class="Animeikan.GUI.Views.MainPage"
              Shell.NavBarIsVisible="False">
+
+  <ContentPage.Behaviors>
+    <mct:StatusBarBehavior StatusBarColor="{x:StaticResource Key=Primary}" StatusBarStyle="LightContent"/>
+  </ContentPage.Behaviors>
+  
   <Grid>
     <ScrollView VerticalOptions="FillAndExpand">
       <ScrollView.Background>
         <LinearGradientBrush EndPoint="0,1">
           <GradientStop 
-            Color="LightBlue" 
+            Color="#def" 
             Offset="0"/>
           <GradientStop 
             Color="White" 
@@ -46,7 +53,7 @@
     <Button
       Style="{x:StaticResource Key=FloatingActionButton}"
       Margin="0,0,20,20"
-      Text="{x:Static models:FontAwesomeIcons.Plus}">
+      Text="{x:Static constants:FontAwesomeIcons.Plus}">
       <Button.Shadow>
         <Shadow Brush="Black"
                 Offset="10,10"

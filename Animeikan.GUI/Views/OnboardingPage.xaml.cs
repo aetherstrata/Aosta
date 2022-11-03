@@ -4,9 +4,7 @@ namespace Animeikan.GUI.Views;
 
 public partial class OnboardingPage : ContentPage
 {
-    private OnboardingScreenViewModel obvm = new();
-
-    public OnboardingPage()
+    public OnboardingPage(OnboardingScreenViewModel obvm)
     {
         InitializeComponent();
         BindingContext = obvm;
