@@ -4,7 +4,7 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:models="clr-namespace:Animeikan.GUI.Models"
              xmlns:viewModels="clr-namespace:Animeikan.GUI.ViewModels"
-             xmlns:constants="clr-namespace:Animeikan.GUI.Constants"
+             xmlns:constants="clr-namespace:Animeikan.GUI.Globals"
              x:Class="Animeikan.GUI.Views.SettingsPage"
              x:DataType="viewModels:SettingsViewModel"
              Title="SettingsPage"
@@ -19,10 +19,10 @@
       <ScrollView.Background>
         <LinearGradientBrush EndPoint="0,1">
           <GradientStop 
-            Color="{StaticResource Gray950}" 
+            Color="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor90L}}" 
             Offset="0"/>
           <GradientStop 
-            Color="{StaticResource Gray900}" 
+            Color="{AppThemeBinding Dark={StaticResource Gray900}, Light={StaticResource White}}" 
             Offset="1"/>
         </LinearGradientBrush>
       </ScrollView.Background>
@@ -39,30 +39,51 @@
           FontFamily="ComfortaaBold"
           FontSize="40"/>
 
-
         <Label
           Margin="70,0,0,0"
           FontSize="18"
-          Text="General"
+          Text="{Binding Path}"
           TextColor="#43a8fd"
           FontFamily="ComfortaaBold"/>
-
+        
         <Button Text="Open Onboarding Page" Command="{Binding GotoOnboardingCommand}"></Button>
 
         <Label 
-      x:Name="AnimeTitleLabel"
-      FontFamily="ComfortaaBold"
-      FontSize="30"
-      MaxLines="2"
-      LineBreakMode="WordWrap"
-      Text="Re:Zero - Starting Life in Another World from Zero"/>
+          x:Name="AnimeTitleLabel"
+          FontFamily="ComfortaaBold"
+          FontSize="30"
+          MaxLines="2"
+          LineBreakMode="WordWrap"
+          Text="Re:Zero - Starting Life in Another World from Zero"/>
 
         <Button Text="Print Anime Title" Command="{Binding PrintAnime}"/>
 
-        <Label Text="{Binding Anime}" 
-      FontFamily="ComfortaaBold"
-      FontSize="30"/>
+        <Label 
+          Text="{Binding Anime}" 
+          FontFamily="ComfortaaBold"
+          FontSize="30"/>
 
+        <Grid>          
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          
+          <Label 
+            VerticalOptions="Center"
+            Grid.Column ="0"
+            Text="DarkTheme"/>
+          
+          <Switch 
+            Grid.Column="1"
+            IsToggled="{Binding DarkModeSwitch}">
+            <Switch.Behaviors>
+              <mct:EventToCommandBehavior 
+                EventName="Toggled"
+                Command="{Binding UpdateTheme}"/>
+            </Switch.Behaviors>
+          </Switch>
+        </Grid>
       </VerticalStackLayout>
     </ScrollView>
     

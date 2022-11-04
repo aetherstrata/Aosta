@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:models="clr-namespace:Animeikan.GUI.Models"
-             xmlns:constants="clr-namespace:Animeikan.GUI.Constants"
+             xmlns:constants="clr-namespace:Animeikan.GUI.Globals"
              x:Class="Animeikan.GUI.Views.MainPage"
              Shell.NavBarIsVisible="False">
 
   <ContentPage.Behaviors>
-    <mct:StatusBarBehavior StatusBarColor="{x:StaticResource Key=Primary}" StatusBarStyle="LightContent"/>
+    <mct:StatusBarBehavior StatusBarColor="{x:StaticResource Key=BaseColor}" StatusBarStyle="LightContent"/>
   </ContentPage.Behaviors>
   
   <Grid>
@@ -16,10 +16,10 @@
       <ScrollView.Background>
         <LinearGradientBrush EndPoint="0,1">
           <GradientStop 
-            Color="#def" 
+            Color="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor90L}}" 
             Offset="0"/>
           <GradientStop 
-            Color="White" 
+            Color="{AppThemeBinding Dark={StaticResource Gray900}, Light={StaticResource White}}" 
             Offset="1"/>
         </LinearGradientBrush>
       </ScrollView.Background>

@@ -5,6 +5,8 @@ using Animeikan.GUI.Views;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
+using JikanDotNet;
+
 using Realms;
 
 using System.Collections.Specialized;
@@ -17,11 +19,23 @@ namespace Animeikan.GUI.ViewModels;
 [ObservableObject]
 public partial class SettingsViewModel
 {
+  IJikan jikan;
+  ISettingsService settingsService;
+
   [ObservableProperty]
-  private string _path;
+  private string _path = Globals.Location.AppData;
 
   [ObservableProperty]
   private string _anime = "AHA";
+
+  [ObservableProperty]
+  private bool _darkModeSwitch = Application.Current.UserAppTheme.HasFlag(AppTheme.Dark);
+
+  public SettingsViewModel(ISettingsService settingsService, IJikan jikan)
+  {
+    this.jikan = jikan;
+    this.settingsService = settingsService;
+  }
 
   public async Task LoadAssetToString(string fileName)
   {
@@ -38,19 +52,39 @@ public partial class SettingsViewModel
 
   public ICommand PrintAnime => new Command(async () =>
   {
+    //TODO
+    var test = await jikan.GetAnimeAsync(1);
+
+    var pp = test.Data;
+
     AnimeData dio = new AnimeData()
     {
       Title = "PORCODIO"
     };
 
-    Realm db = RealmInstance.Singleton.Db;
-
-    await db.WriteAsync(() =>
+    using (var db = RealmInstance.Manager.Db)
     {
-      db.Add(dio);
-    });
+      await db.WriteAsync(() =>
+      {
+        db.Add(dio);
+      });
 
-    Anime = db.Find<AnimeData>(dio.Id).Title;
+      Anime = db.Find<AnimeData>(dio.Id).Title;
+    }
+  });
+
+  public ICommand UpdateTheme => new Command(async () =>
+  {
+    if (DarkModeSwitch)
+    {
+      await settingsService.Save<bool>("useDarkTheme", true);
+      Application.Current.UserAppTheme = AppTheme.Dark;
+    }
+    else
+    {
+      await settingsService.Save<bool>("useDarkTheme", false);
+      Application.Current.UserAppTheme = AppTheme.Light;
+    }
   });
 }
 

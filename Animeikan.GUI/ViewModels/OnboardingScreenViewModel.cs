@@ -1,4 +1,4 @@
-﻿using Animeikan.GUI.Constants;
+﻿using Animeikan.GUI.Globals;
 using Animeikan.GUI.Models;
 using Animeikan.GUI.Services;
 using Animeikan.GUI.Views;

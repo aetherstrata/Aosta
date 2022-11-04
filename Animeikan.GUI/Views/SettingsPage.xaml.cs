@@ -7,6 +7,7 @@ public partial class SettingsPage : ContentPage
   public SettingsPage(SettingsViewModel svm)
   {
     InitializeComponent();
+
     BindingContext = svm;
   }
 }

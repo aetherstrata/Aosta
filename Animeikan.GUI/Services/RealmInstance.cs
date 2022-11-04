@@ -6,22 +6,34 @@ namespace Animeikan.GUI.Services;
 
 public sealed class RealmInstance
 {
-  private static readonly Lazy<RealmInstance> singleton = new Lazy<RealmInstance>(() => new RealmInstance());
-  public static RealmInstance Singleton { get { return singleton.Value; } }
+  private static readonly Lazy<RealmInstance> manager = new(() => new RealmInstance());
+  public static RealmInstance Manager { get { return manager.Value; } }
 
-  private Realm db = null;
-  public Realm Db { get { return db; } }
-
-  private RealmInstance()
-  {
-    var config = new RealmConfiguration(Constants.Location.Database)
+  private static readonly RealmConfiguration Config = 
+    new RealmConfiguration(Globals.Location.Database)
     {
       IsReadOnly = false
     };
 
+  private ThreadLocal<Realm> db = new();
+
+  public Realm Db 
+  { 
+    get 
+    { 
+      if (!db.IsValueCreated) Init();
+      return db.Value; 
+    }
+  }
+
+  private void Init()
+  {
     try
     {
-      db = Realm.GetInstance(config);
+      db = new ThreadLocal<Realm>(() => 
+      {
+        return Realm.GetInstance(Config);
+      });
     }
     catch (RealmFileAccessErrorException ex)
     {
