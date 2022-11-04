@@ -1,4 +1,4 @@
-﻿namespace Animeikan.GUI.Constants;
+﻿namespace Animeikan.GUI.Globals;
 
 /// <summary>
 /// This class contains the unicode representation of all FontAwesome icons used throughout the app

@@ -1,4 +1,4 @@
-﻿namespace Animeikan.GUI.Constants;
+﻿namespace Animeikan.GUI.Globals;
 
 public static class Location
 {

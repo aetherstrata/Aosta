@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Animeikan.GUI.Constants;
+namespace Animeikan.GUI.Globals;
 
 public enum WatchStatus
 
