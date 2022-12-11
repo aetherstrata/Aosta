@@ -3,14 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:models="clr-namespace:Animeikan.GUI.Models"
+             xmlns:viewModels="clr-namespace:Animeikan.GUI.ViewModels"
+             xmlns:views="clr-namespace:Animeikan.GUI.Views"
              xmlns:constants="clr-namespace:Animeikan.GUI.Globals"
              x:Class="Animeikan.GUI.Views.MainPage"
-             Shell.NavBarIsVisible="False">
+             x:DataType="viewModels:MainPageViewModel"
+             Title="Main Page"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
 
   <ContentPage.Behaviors>
-    <mct:StatusBarBehavior StatusBarColor="{x:StaticResource Key=BaseColor}" StatusBarStyle="LightContent"/>
+    <mct:StatusBarBehavior StatusBarColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor}}" StatusBarStyle="Default"/>
   </ContentPage.Behaviors>
-  
+
   <Grid>
     <ScrollView VerticalOptions="FillAndExpand">
       <ScrollView.Background>
@@ -44,22 +49,60 @@
       </Border>
       -->
 
-        <Grid >
-        </Grid>
 
       </VerticalStackLayout>
     </ScrollView>
-    
+
     <Button
+      Grid.Row="0"
       Style="{x:StaticResource Key=FloatingActionButton}"
       Margin="0,0,20,20"
-      Text="{x:Static constants:FontAwesomeIcons.Plus}">
+      Text="{x:Static constants:FontAwesomeIcons.Plus}"
+      Command="{Binding AddAnimeCommand}">
       <Button.Shadow>
-        <Shadow Brush="Black"
-                Offset="10,10"
-                Radius="20"
-                Opacity="0.2"/>
+        <Shadow 
+          Brush="Black"
+          Offset="10,10"
+          Radius="20"
+          Opacity="0.2"/>
       </Button.Shadow>
     </Button>
+
+    <Border
+      Grid.Row="0"
+      Margin="20,0,120,20"
+      Style="{x:StaticResource FloatingActionMenu}"
+      StrokeThickness="0">
+      
+      <Border.Shadow>
+        <Shadow 
+          Brush="Black"
+          Offset="10,10"
+          Radius="20"
+          Opacity="0.2"/>
+      </Border.Shadow>
+
+      <Border.StrokeShape>
+        <RoundRectangle CornerRadius="40"/>
+      </Border.StrokeShape>
+
+      <HorizontalStackLayout 
+        Spacing="10"
+        VerticalOptions="Center">
+
+        <Button
+          Style="{x:StaticResource FloatingActionButton}"
+          Text="{x:Static constants:FontAwesomeIcons.User}"
+          Command="{Binding GoToCommand}"
+          CommandParameter="{x:Type views:ProfilePage}"/>
+
+        <Button
+          Style="{x:StaticResource FloatingActionButton}"
+          Text="{x:Static constants:FontAwesomeIcons.Gear}"
+          Command="{Binding GoToCommand}"
+          CommandParameter="{x:Type views:SettingsPage}"/>
+
+      </HorizontalStackLayout>
+    </Border>
   </Grid>
 </ContentPage>

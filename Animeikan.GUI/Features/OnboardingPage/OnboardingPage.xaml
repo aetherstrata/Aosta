@@ -12,7 +12,7 @@
              Shell.TabBarIsVisible="False">
   
   <ContentPage.Behaviors>
-    <mct:StatusBarBehavior StatusBarColor="{StaticResource Key=Primary}" StatusBarStyle="DarkContent"/>
+    <mct:StatusBarBehavior StatusBarColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource BaseColor}}" StatusBarStyle="Default"/>
   </ContentPage.Behaviors>
   
   <ContentPage.Content>
@@ -83,7 +83,7 @@
           IndicatorSize="10"
           IndicatorColor="LightGray"
           Margin="15"
-          SelectedIndicatorColor="{x:StaticResource Primary}">
+          SelectedIndicatorColor="{x:StaticResource BaseColor}">
         </IndicatorView>
 
         <Frame Grid.Column="2"
@@ -103,7 +103,7 @@
               <FontImageSource
                 FontFamily="FontAwesome"
                 Glyph="{Binding ButtonGlyph}"
-                Color="{StaticResource Key=Primary}"/>
+                Color="{StaticResource BaseColor}"/>
             </Image.Source>
           </Image>
 

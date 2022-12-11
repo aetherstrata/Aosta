@@ -7,11 +7,12 @@
              xmlns:constants="clr-namespace:Animeikan.GUI.Globals"
              x:Class="Animeikan.GUI.Views.SettingsPage"
              x:DataType="viewModels:SettingsViewModel"
-             Title="SettingsPage"
-             Shell.NavBarIsVisible="False">
+             Title="Settings Page"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
 
   <ContentPage.Behaviors>
-    <mct:StatusBarBehavior StatusBarColor="{x:StaticResource Gray950}"/>
+    <mct:StatusBarBehavior StatusBarColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor}}" StatusBarStyle="Default"/>
   </ContentPage.Behaviors>
   
   <Grid>
@@ -45,7 +46,14 @@
           Text="{Binding Path}"
           TextColor="#43a8fd"
           FontFamily="ComfortaaBold"/>
-        
+
+        <Label
+          Margin="70,0,0,0"
+          FontSize="18"
+          Text="{Binding ObjectCount}"
+          TextColor="#43a8fd"
+          FontFamily="ComfortaaBold"/>
+
         <Button Text="Open Onboarding Page" Command="{Binding GotoOnboardingCommand}"></Button>
 
         <Label 
@@ -56,7 +64,9 @@
           LineBreakMode="WordWrap"
           Text="Re:Zero - Starting Life in Another World from Zero"/>
 
-        <Button Text="Print Anime Title" Command="{Binding PrintAnime}"/>
+        <Button Text="Print Anime Title" Command="{Binding PrintAnimeCount}"/>
+        
+        <Button Text="Delete Realm File" Command="{Binding DeleteRealmFile}"/>
 
         <Label 
           Text="{Binding Anime}" 

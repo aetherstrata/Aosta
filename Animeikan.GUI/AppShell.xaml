@@ -6,53 +6,19 @@
   xmlns:views="clr-namespace:Animeikan.GUI.Views"
   xmlns:models="clr-namespace:Animeikan.GUI.Models" 
   xmlns:constants="clr-namespace:Animeikan.GUI.Globals" 
-  BackgroundColor="{x:StaticResource Primary}">
+  BackgroundColor="{x:StaticResource BaseColor20B}"
+  FlyoutBehavior="Disabled">
 
   <ShellContent
     Title="OnboardingPage"
-    Route="OnboardingPage"
-    ContentTemplate="{DataTemplate views:OnboardingPage}">
+    ContentTemplate="{DataTemplate views:OnboardingPage}"
+    Route="OnboardingPage">
   </ShellContent>
   
-  <TabBar x:Name="BottomTabBar">
-    <Tab Title="Profile">
-      <Tab.Icon>
-        <FontImageSource 
-        FontFamily="FontAwesome"
-        Glyph="{x:Static constants:FontAwesomeIcons.User}"
-        Color="{x:StaticResource Primary}"/>
-      </Tab.Icon>
-      <ShellContent
-        Title="Animeikan"
-        ContentTemplate="{DataTemplate views:ProfilePage}"
-        Route="ProfilePage" />
-    </Tab>
-    
-    <Tab Title="Home">      
-      <Tab.Icon>
-        <FontImageSource 
-        FontFamily="FontAwesome"
-        Glyph="{x:Static constants:FontAwesomeIcons.Film}"
-        Color="{x:StaticResource Primary}"/>
-      </Tab.Icon>
-      <ShellContent
-        Title="Animeikan"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage" />
-    </Tab>
-
-    <Tab Title="Settings">
-      <Tab.Icon>
-        <FontImageSource 
-          FontFamily="FontAwesome"
-          Glyph="{x:Static constants:FontAwesomeIcons.Gear}"
-          Color="{x:StaticResource Key=Primary}"/>
-      </Tab.Icon>
-      <ShellContent
-        Title="Settings"
-        ContentTemplate="{DataTemplate views:SettingsPage}"
-        Route="SettingsPage" />
-    </Tab>
-  </TabBar>
+  <ShellContent
+    Title="MainPage"
+    ContentTemplate="{DataTemplate views:MainPage}"
+    Route="MainPage">
+  </ShellContent>
 
 </Shell>

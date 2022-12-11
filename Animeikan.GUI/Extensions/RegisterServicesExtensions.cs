@@ -17,7 +17,6 @@ internal static partial class MauiAppBuilderExtensions
     builder.Services.AddSingleton<ISecureStorageService, SecureStorageService>();
     builder.Services.AddSingleton<ISettingsService, SettingsService>();
     builder.Services.AddSingleton<IJikan, Jikan>();
-
     #endregion
 
     #region ViewModels
@@ -25,10 +24,11 @@ internal static partial class MauiAppBuilderExtensions
     // Singleton VIewModels
     builder.Services.AddSingleton<ViewModels.OnboardingScreenViewModel>();
     builder.Services.AddSingleton<ViewModels.SettingsViewModel>();
+    builder.Services.AddSingleton<ViewModels.MainPageViewModel>();
 
     //Transient ViewModels
     builder.Services.AddTransient<ViewModels.AnimeSummaryViewModel>();
-
+    builder.Services.AddTransient<ViewModels.AnimeManualAddViewModel>();
     #endregion
 
     #region Views
@@ -41,9 +41,10 @@ internal static partial class MauiAppBuilderExtensions
 
     //Transient Views
     builder.Services.AddTransient<Views.AnimeSummaryPage>();
-
+    builder.Services.AddTransient<Views.AddAnimePage>();
     #endregion
 
+    builder.Services.AddSingletonWithShellRoute<Views.AddAnimePage, ViewModels.AnimeManualAddViewModel>(nameof(Views.AddAnimePage));
     // Default method
     //builder.Services.Add();
     // Scoped objects are the same within a request, but different across different requests.

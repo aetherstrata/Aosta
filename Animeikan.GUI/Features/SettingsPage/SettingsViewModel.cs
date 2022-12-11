@@ -1,5 +1,4 @@
-﻿using Animeikan.GUI.Data;
-using Animeikan.GUI.Models;
+﻿using Animeikan.GUI.Models;
 using Animeikan.GUI.Services;
 using Animeikan.GUI.Views;
 
@@ -7,11 +6,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 using JikanDotNet;
 
+using Microsoft.Maui.Controls;
+
 using Realms;
 
-using System.Collections.Specialized;
-using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace Animeikan.GUI.ViewModels;
@@ -26,15 +24,23 @@ public partial class SettingsViewModel
   private string _path = Globals.Location.AppData;
 
   [ObservableProperty]
+  private string _objectCount = "N/A";
+
+  [ObservableProperty]
   private string _anime = "AHA";
 
   [ObservableProperty]
-  private bool _darkModeSwitch = Application.Current.UserAppTheme.HasFlag(AppTheme.Dark);
+  private bool _darkModeSwitch = Application.Current?.UserAppTheme == AppTheme.Dark;
 
   public SettingsViewModel(ISettingsService settingsService, IJikan jikan)
   {
     this.jikan = jikan;
     this.settingsService = settingsService;
+
+    using (var db = Realm.GetInstance(Globals.RealmConfig.Default))
+    {
+      ObjectCount = db.All<AnimeModel>().Count().ToString();
+    }
   }
 
   public async Task LoadAssetToString(string fileName)
@@ -50,26 +56,29 @@ public partial class SettingsViewModel
     await AppShell.Current.GoToAsync($"//{nameof(OnboardingPage)}");
   });
 
-  public ICommand PrintAnime => new Command(async () =>
+  public ICommand PrintAnimeCount => new Command(async () =>
   {
-    //TODO
-    var test = await jikan.GetAnimeAsync(1);
+    //File.Delete(Globals.Location.Database);
 
-    var pp = test.Data;
-
-    AnimeData dio = new AnimeData()
-    {
-      Title = "PORCODIO"
-    };
-
-    using (var db = RealmInstance.Manager.Db)
+    using (var db = Realm.GetInstance(Globals.RealmConfig.Default))
     {
       await db.WriteAsync(() =>
       {
-        db.Add(dio);
+        var anime = new AnimeModel() { Title = "Paolo"};
+        db.Add(anime);
       });
 
-      Anime = db.Find<AnimeData>(dio.Id).Title;
+      ObjectCount = db.All<AnimeModel>().Count().ToString();
+    }
+  });
+
+  public ICommand DeleteRealmFile => new Command(() =>
+  {
+    File.Delete(Globals.Location.Database);
+
+    using (var db = Realm.GetInstance(Globals.RealmConfig.Default))
+    {
+      ObjectCount = db.All<AnimeModel>().Count().ToString();
     }
   });
 
@@ -77,13 +86,13 @@ public partial class SettingsViewModel
   {
     if (DarkModeSwitch)
     {
+      Application.Current!.UserAppTheme = AppTheme.Dark;
       await settingsService.Save<bool>("useDarkTheme", true);
-      Application.Current.UserAppTheme = AppTheme.Dark;
     }
     else
     {
+      Application.Current!.UserAppTheme = AppTheme.Light;
       await settingsService.Save<bool>("useDarkTheme", false);
-      Application.Current.UserAppTheme = AppTheme.Light;
     }
   });
 }
