@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:constants="clr-namespace:Aosta.GUI.Globals"
+             xmlns:views="clr-namespace:Aosta.GUI.Views"
+             xmlns:viewModels="clr-namespace:Aosta.GUI.ViewModels"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             x:Class="Aosta.GUI.Views.AddAnimePage"
+             x:DataType="viewModels:AnimeManualAddViewModel"
+             Title="Add new"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             Shell.BackgroundColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor60L}}">
+  <Grid>
+    <VerticalStackLayout
+    Margin="10"
+    Spacing="10">
+
+      <Label 
+      Text="Welcome to .NET MAUI!"
+      VerticalOptions="Center" 
+      HorizontalOptions="Center" />
+
+      <Entry 
+        Placeholder="Title" 
+        Text="{Binding AnimeTitle}"/>
+      <Entry 
+        Placeholder="Score" 
+        Text="{Binding AnimeScore}"
+        Keyboard="Numeric">
+        <Entry.Behaviors>
+          <toolkit:NumericValidationBehavior
+            IsValid="{Binding IsScoreValid}"/>
+        </Entry.Behaviors>
+      </Entry>
+      
+      <Label Text="{Binding AnimeTitleBack}"/>
+
+    </VerticalStackLayout>
+
+    <Button
+      Margin="0,0,20,20"
+      Style="{x:StaticResource FloatingActionButton}"
+      Text="{x:Static constants:FontAwesomeIcons.Plus}"
+      Command="{Binding AddToRealm}"/>
+
+  </Grid>
+</ContentPage>

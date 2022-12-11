@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:viewModels="clr-namespace:Aosta.GUI.ViewModels"
+             xmlns:views="clr-namespace:Aosta.GUI.Views"
+             xmlns:constants="clr-namespace:Aosta.GUI.Globals"
+             x:Class="Aosta.GUI.Views.MainPage"
+             x:DataType="viewModels:MainPageViewModel"
+             Title="Main Page"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+
+  <ContentPage.Behaviors>
+    <mct:StatusBarBehavior StatusBarColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor}}" StatusBarStyle="Default"/>
+  </ContentPage.Behaviors>
+
+  <Grid>
+    <ScrollView VerticalOptions="FillAndExpand">
+      <ScrollView.Background>
+        <LinearGradientBrush EndPoint="0,1">
+          <GradientStop 
+            Color="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor90L}}" 
+            Offset="0"/>
+          <GradientStop 
+            Color="{AppThemeBinding Dark={StaticResource Gray900}, Light={StaticResource White}}" 
+            Offset="1"/>
+        </LinearGradientBrush>
+      </ScrollView.Background>
+
+      <VerticalStackLayout
+        Spacing="25"
+        Padding="5,0,5,0"
+        VerticalOptions="StartAndExpand">
+
+        <Label
+          Text="Welcome"
+          SemanticProperties.HeadingLevel="Level1"
+          FontSize="32"
+          FontFamily="ComfortaaBold"
+          HorizontalOptions="Center" />
+
+        <!--
+      <Border MinimumHeightRequest="100" StrokeThickness="2">
+        <Border.StrokeShape>
+          <RoundRectangle CornerRadius="10,10,0,0"></RoundRectangle>
+        </Border.StrokeShape>
+      </Border>
+      -->
+
+
+      </VerticalStackLayout>
+    </ScrollView>
+
+    <Button
+      Grid.Row="0"
+      Style="{x:StaticResource Key=FloatingActionButton}"
+      Margin="0,0,20,20"
+      Text="{x:Static constants:FontAwesomeIcons.Plus}"
+      Command="{Binding AddAnimeCommand}">
+      <Button.Shadow>
+        <Shadow 
+          Brush="Black"
+          Offset="10,10"
+          Radius="20"
+          Opacity="0.2"/>
+      </Button.Shadow>
+    </Button>
+
+    <Border
+      Grid.Row="0"
+      Margin="20,0,120,20"
+      Style="{x:StaticResource FloatingActionMenu}"
+      StrokeThickness="0">
+      
+      <Border.Shadow>
+        <Shadow 
+          Brush="Black"
+          Offset="10,10"
+          Radius="20"
+          Opacity="0.2"/>
+      </Border.Shadow>
+
+      <Border.StrokeShape>
+        <RoundRectangle CornerRadius="40"/>
+      </Border.StrokeShape>
+
+      <HorizontalStackLayout 
+        Spacing="10"
+        VerticalOptions="Center">
+
+        <Button
+          Style="{x:StaticResource FloatingActionButton}"
+          Text="{x:Static constants:FontAwesomeIcons.User}"
+          Command="{Binding GoToCommand}"
+          CommandParameter="{x:Type views:ProfilePage}"/>
+
+        <Button
+          Style="{x:StaticResource FloatingActionButton}"
+          Text="{x:Static constants:FontAwesomeIcons.Gear}"
+          Command="{Binding GoToCommand}"
+          CommandParameter="{x:Type views:SettingsPage}"/>
+
+      </HorizontalStackLayout>
+    </Border>
+  </Grid>
+</ContentPage>
