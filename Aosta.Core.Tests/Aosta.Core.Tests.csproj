@@ -7,7 +7,7 @@
 
         <IsPackable>false</IsPackable>
 
-        <RootNamespace>Animeikan.Core.Tests</RootNamespace>
+        <RootNamespace>Aosta.Core.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

@@ -5,7 +5,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Animeikan.CLI</RootNamespace>
+        <RootNamespace>Aosta.CLI</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
