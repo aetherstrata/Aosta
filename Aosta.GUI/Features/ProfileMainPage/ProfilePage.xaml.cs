@@ -1,4 +1,4 @@
-namespace Aosta.GUI.Views;
+namespace Aosta.GUI.Features.ProfileMainPage;
 
 public partial class ProfilePage : ContentPage
 {

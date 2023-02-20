@@ -1,6 +1,4 @@
-using Aosta.GUI.ViewModels;
-
-namespace Aosta.GUI.Views;
+namespace Aosta.GUI.Features.AnimeManualAddPage;
 
 public partial class AddAnimePage : ContentPage
 {

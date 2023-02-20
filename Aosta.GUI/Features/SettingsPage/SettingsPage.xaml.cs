@@ -1,6 +1,4 @@
-using Aosta.GUI.ViewModels;
-
-namespace Aosta.GUI.Views;
+namespace Aosta.GUI.Features.SettingsPage;
 
 public partial class SettingsPage : ContentPage
 {

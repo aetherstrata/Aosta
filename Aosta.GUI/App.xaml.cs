@@ -1,5 +1,4 @@
 ﻿using Aosta.Core;
-using Aosta.GUI.Globals;
 using Aosta.GUI.Services;
 using Realms;
 

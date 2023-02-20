@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Aosta.GUI.ViewModels;
+namespace Aosta.GUI.Features.AnimeSummaryPage;
 
 [ObservableObject]
 public partial class AnimeSummaryViewModel

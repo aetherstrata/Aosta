@@ -1,12 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-using Realms;
-
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Aosta.Core.Data;
 using Aosta.Core.Data.Realm;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Realms;
 
-namespace Aosta.GUI.ViewModels;
+namespace Aosta.GUI.Features.AnimeManualAddPage;
 
 [ObservableObject]
 public partial class AnimeManualAddViewModel
@@ -37,7 +35,7 @@ public partial class AnimeManualAddViewModel
       var anime = new AnimeObject
       {
         Title = AnimeTitle,
-        Score = string.IsNullOrWhiteSpace(AnimeScore) ? -1 :int.Parse(AnimeScore),
+        Score = string.IsNullOrWhiteSpace(AnimeScore) ? -1 :int.Parse((string)AnimeScore),
         Type = ContentType.TV
       };
 

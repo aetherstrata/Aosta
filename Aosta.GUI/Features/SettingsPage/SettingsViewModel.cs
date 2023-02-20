@@ -1,14 +1,12 @@
-﻿using Aosta.GUI.Services;
-using Aosta.GUI.Views;
+﻿using System.Windows.Input;
+using Aosta.Core.Data;
+using Aosta.Core.Data.Realm;
+using Aosta.GUI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using JikanDotNet;
 using Realms;
-using System.Windows.Input;
-using Aosta.Core;
-using Aosta.Core.Data;
-using Aosta.Core.Data.Realm;
 
-namespace Aosta.GUI.ViewModels;
+namespace Aosta.GUI.Features.SettingsPage;
 
 [ObservableObject]
 public partial class SettingsViewModel
@@ -45,7 +43,7 @@ public partial class SettingsViewModel
 
     public ICommand GotoOnboardingCommand => new Command(async () =>
     {
-        await AppShell.Current.GoToAsync($"//{nameof(OnboardingPage)}");
+        await AppShell.Current.GoToAsync($"//{nameof(OnboardingPage.OnboardingPage)}");
     });
 
     public ICommand PrintAnimeCount => new Command(async () =>

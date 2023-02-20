@@ -1,9 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Windows.Input;
-using Realms;
+﻿using System.Windows.Input;
 using Aosta.Core.Data.Realm;
+using Aosta.GUI.Features.AnimeManualAddPage;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Realms;
 
-namespace Aosta.GUI.ViewModels;
+namespace Aosta.GUI.Features.MainPage;
 
 [ObservableObject]
 public partial class MainPageViewModel
@@ -20,7 +21,7 @@ public partial class MainPageViewModel
 
     public ICommand AddAnimeCommand => new Command(async () =>
     {
-        await AppShell.Current.GoToAsync(nameof(Views.AddAnimePage));
+        await AppShell.Current.GoToAsync(nameof(AddAnimePage));
     });
 
     public ICommand GoToCommand => new Command<Type>(

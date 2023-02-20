@@ -1,4 +1,4 @@
-﻿namespace Aosta.GUI.Models;
+﻿namespace Aosta.GUI.Features.OnboardingPage;
 
 public class OnboardingScreenModel
 {

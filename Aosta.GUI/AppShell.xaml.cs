@@ -1,4 +1,5 @@
-﻿using Aosta.GUI.Views;
+﻿using Aosta.GUI.Features.ProfileMainPage;
+using Aosta.GUI.Features.SettingsPage;
 
 namespace Aosta.GUI;
 

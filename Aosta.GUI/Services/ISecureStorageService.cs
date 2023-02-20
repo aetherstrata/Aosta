@@ -1,4 +1,4 @@
-﻿namespace Aosta.GUI
+﻿namespace Aosta.GUI.Services
 {
     interface ISecureStorageService
     {

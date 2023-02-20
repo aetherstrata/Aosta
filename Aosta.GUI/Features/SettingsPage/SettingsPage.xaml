@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-             xmlns:viewModels="clr-namespace:Aosta.GUI.ViewModels"
              xmlns:constants="clr-namespace:Aosta.GUI.Globals"
-             x:Class="Aosta.GUI.Views.SettingsPage"
-             x:DataType="viewModels:SettingsViewModel"
+             xmlns:settingsPage="using:Aosta.GUI.Features.SettingsPage"
+             x:Class="Aosta.GUI.Features.SettingsPage.SettingsPage"
+             x:DataType="settingsPage:SettingsViewModel"
              Title="Settings Page"
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False">

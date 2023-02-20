@@ -1,10 +1,14 @@
-﻿using Aosta.GUI.Services;
+﻿using Aosta.GUI.Features.AnimeManualAddPage;
+using Aosta.GUI.Features.AnimeSummaryPage;
+using Aosta.GUI.Features.MainPage;
+using Aosta.GUI.Features.OnboardingPage;
+using Aosta.GUI.Features.ProfileMainPage;
+using Aosta.GUI.Features.SettingsPage;
+using Aosta.GUI.Services;
 
 using CommunityToolkit.Maui;
 
 using JikanDotNet;
-
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Aosta.GUI.Extensions;
 
@@ -23,29 +27,29 @@ internal static partial class MauiAppBuilderExtensions
     #region ViewModels
 
     // Singleton VIewModels
-    builder.Services.AddSingleton<ViewModels.OnboardingScreenViewModel>();
-    builder.Services.AddSingleton<ViewModels.SettingsViewModel>();
-    builder.Services.AddSingleton<ViewModels.MainPageViewModel>();
+    builder.Services.AddSingleton<OnboardingScreenViewModel>();
+    builder.Services.AddSingleton<SettingsViewModel>();
+    builder.Services.AddSingleton<MainPageViewModel>();
 
     //Transient ViewModels
-    builder.Services.AddTransient<ViewModels.AnimeSummaryViewModel>();
-    builder.Services.AddTransient<ViewModels.AnimeManualAddViewModel>();
+    builder.Services.AddTransient<AnimeSummaryViewModel>();
+    builder.Services.AddTransient<AnimeManualAddViewModel>();
     #endregion
 
     #region Views
 
     //Singleton Views
-    builder.Services.AddSingleton<Views.OnboardingPage>();
-    builder.Services.AddSingleton<Views.SettingsPage>();
-    builder.Services.AddSingleton<Views.MainPage>();
-    builder.Services.AddSingleton<Views.ProfilePage>();
+    builder.Services.AddSingleton<OnboardingPage>();
+    builder.Services.AddSingleton<SettingsPage>();
+    builder.Services.AddSingleton<MainPage>();
+    builder.Services.AddSingleton<ProfilePage>();
 
     //Transient Views
-    builder.Services.AddTransient<Views.AnimeSummaryPage>();
-    builder.Services.AddTransient<Views.AddAnimePage>();
+    builder.Services.AddTransient<AnimeSummaryPage>();
+    builder.Services.AddTransient<AddAnimePage>();
     #endregion
 
-    builder.Services.AddSingletonWithShellRoute<Views.AddAnimePage, ViewModels.AnimeManualAddViewModel>(nameof(Views.AddAnimePage));
+    builder.Services.AddSingletonWithShellRoute<AddAnimePage, AnimeManualAddViewModel>(nameof(AddAnimePage));
 
     // Default method
     //builder.Services.Add();

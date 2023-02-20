@@ -1,6 +1,4 @@
-﻿using Aosta.GUI.ViewModels;
-
-namespace Aosta.GUI.Views;
+﻿namespace Aosta.GUI.Features.OnboardingPage;
 
 public partial class OnboardingPage : ContentPage
 {

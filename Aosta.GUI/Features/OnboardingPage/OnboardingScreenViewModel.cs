@@ -1,13 +1,9 @@
-﻿using Aosta.GUI.Globals;
-using Aosta.GUI.Models;
+﻿using System.Windows.Input;
+using Aosta.GUI.Globals;
 using Aosta.GUI.Services;
-using Aosta.GUI.Views;
-
 using CommunityToolkit.Mvvm.ComponentModel;
 
-using System.Windows.Input;
-
-namespace Aosta.GUI.ViewModels;
+namespace Aosta.GUI.Features.OnboardingPage;
 
 [ObservableObject]
 public partial class OnboardingScreenViewModel
@@ -61,7 +57,7 @@ public partial class OnboardingScreenViewModel
     if (Position == OnboardingScreens.Count - 1)
     {
       await settingsService.Save<bool>("firstRun", false);
-      await AppShell.Current.GoToAsync($"//{nameof(MainPage)}");
+      await AppShell.Current.GoToAsync($"//{nameof(MainPage.MainPage)}");
     }
 
     if (Position < OnboardingScreens.Count - 1)
