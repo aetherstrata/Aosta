@@ -18,7 +18,7 @@ public class AnimeObject : RealmObject, IContent, IUserRating, IEquatable<AnimeO
 
     [Indexed]
     [JsonPropertyName("content_type")]
-    private int _Type { get; set; } = 0;
+    private int _Type { get; set; } = -1;
 
     /// <summary>The type of this content. (Eg. Movie, OVA)</summary>
     public ContentType Type
