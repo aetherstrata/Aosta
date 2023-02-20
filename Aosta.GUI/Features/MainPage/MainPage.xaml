@@ -4,6 +4,7 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:viewModels="clr-namespace:Aosta.GUI.ViewModels"
              xmlns:views="clr-namespace:Aosta.GUI.Views"
+             xmlns:data="clr-namespace:Aosta.Core.Data;assembly=Aosta.Core"
              xmlns:constants="clr-namespace:Aosta.GUI.Globals"
              x:Class="Aosta.GUI.Views.MainPage"
              x:DataType="viewModels:MainPageViewModel"
@@ -40,16 +41,33 @@
           FontFamily="ComfortaaBold"
           HorizontalOptions="Center" />
 
-        <!--
-      <Border MinimumHeightRequest="100" StrokeThickness="2">
-        <Border.StrokeShape>
-          <RoundRectangle CornerRadius="10,10,0,0"></RoundRectangle>
-        </Border.StrokeShape>
-      </Border>
-      -->
+        <Label
+          Text="Palle"
+          SemanticProperties.HeadingLevel="Level2"
+          FontSize="18"
+          FontFamily="ComfortaaRegular"
+          HorizontalOptions="Start"/>
 
+        <CollectionView ItemsSource="{Binding RealmAnimeList}">
+          <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="data:AnimeObject">
+              <ContentView
+                Padding="5">
+                <Border
+                  Padding="5"
+                  BackgroundColor="{x:StaticResource Key=BaseColor}">
+                  <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                  </Border.StrokeShape>
+                  <Label Text="{Binding Title}"/>
+                </Border>
+              </ContentView>
+            </DataTemplate>
+          </CollectionView.ItemTemplate>
+        </CollectionView>
 
       </VerticalStackLayout>
+
     </ScrollView>
 
     <Button

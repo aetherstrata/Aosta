@@ -6,8 +6,6 @@ using Realms;
 using System.Windows.Input;
 using Aosta.Core;
 using Aosta.Core.Data;
-using Aosta.Core.Extensions;
-using Aosta.Core.Realm;
 
 namespace Aosta.GUI.ViewModels;
 
@@ -33,7 +31,7 @@ public partial class SettingsViewModel
         this.settingsService = settingsService;
         this.realm = App.Core.GetInstance();
 
-        ObjectCount = realm.All<ContentDTO>().Count().ToString();
+        ObjectCount = realm.All<AnimeObject>().Count().ToString();
     }
 
     public async Task LoadAssetToString(string fileName)
@@ -56,23 +54,23 @@ public partial class SettingsViewModel
 
         await realm.WriteAsync(() =>
         {
-            var anime = new ContentDTO
+            var anime = new AnimeObject
             {
-                Type = ContentType.TV.ToStringCached(),
+                Type = ContentType.TV,
                 Title = "Paolo"
             };
             realm.Add(anime);
         });
 
-        ObjectCount = realm.All<ContentDTO>().Count().ToString();
+        ObjectCount = realm.All<AnimeObject>().Count().ToString();
     });
 
     public ICommand DeleteRealmFile => new Command(() =>
     {
         realm.Dispose();
         File.Delete(Globals.Location.Database);
-        realm = RealmAccess.Singleton.GetInstance(App.DatabaseConfiguration);
-        ObjectCount = realm.All<ContentDTO>().Count().ToString();
+        realm = App.Core.GetInstance();
+        ObjectCount = realm.All<AnimeObject>().Count().ToString();
     });
 
     public ICommand UpdateTheme => new Command(async () =>

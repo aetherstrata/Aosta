@@ -4,8 +4,6 @@ using Realms;
 
 using System.Windows.Input;
 using Aosta.Core.Data;
-using Aosta.Core.Extensions;
-using Aosta.Core.Realm;
 
 namespace Aosta.GUI.ViewModels;
 
@@ -35,11 +33,11 @@ public partial class AnimeManualAddViewModel
   {
     if (IsScoreValid)
     {
-      var anime = new ContentDTO
+      var anime = new AnimeObject
       {
         Title = AnimeTitle,
-        Score = int.Parse(AnimeScore),
-        Type = ContentType.TV.ToStringCached()
+        Score = string.IsNullOrWhiteSpace(AnimeScore) ? -1 :int.Parse(AnimeScore),
+        Type = ContentType.TV
       };
 
       Guid guid = anime.Id;
@@ -52,7 +50,7 @@ public partial class AnimeManualAddViewModel
           _realm.Add(anime);
         });
 
-        AnimeTitleBack = _realm.Find<ContentDTO>(guid).Title;
+        AnimeTitleBack = _realm.Find<AnimeObject>(guid).Title;
 
     }
   });
