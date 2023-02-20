@@ -1,5 +1,5 @@
 ﻿using Aosta.Core;
-using Aosta.Core.Realm;
+using Aosta.GUI.Globals;
 using Aosta.GUI.Services;
 using Realms;
 
@@ -7,20 +7,12 @@ namespace Aosta.GUI;
 
 public partial class App : Application
 {
-    internal static readonly DatabaseConfiguration DatabaseConfiguration = new()
+    public static readonly AostaDotNet Core = new(new RealmConfiguration(Globals.Location.Database)
     {
-        Location = Globals.Location.Database,
-        Configuration = new(Globals.Location.Database)
-        {
-            IsReadOnly = false,
-            ShouldDeleteIfMigrationNeeded = true
-        }
-    };
-
-    public static AostaDotNet Core = new AostaDotNet()
-    {
-        DatabaseConfiguration = DatabaseConfiguration
-    };
+        SchemaVersion = 1,
+        IsReadOnly = false,
+        ShouldDeleteIfMigrationNeeded = true
+    });
 
     private readonly ISettingsService _settingsService;
 
