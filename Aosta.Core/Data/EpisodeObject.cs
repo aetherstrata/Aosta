@@ -4,10 +4,10 @@ using Realms;
 namespace Aosta.Core.Data;
 
 /// <summary>Episode data-transfer-object for <see cref="Realm"/> storage.</summary>
-public class EpisodeDTO : RealmObject, IEpisode, IUserRating
+public class EpisodeObject : RealmObject, IEpisode, IUserRating
 {
     /// <summary>The content this episode is from.</summary>
-    public ContentDTO? Content { get; set; }
+    public AnimeObject? Content { get; set; }
 
     /// <summary>The unique ID of this episode.</summary>
     [PrimaryKey]
@@ -61,7 +61,7 @@ public class EpisodeDTO : RealmObject, IEpisode, IUserRating
     public override string ToString()
     {
         return $$"""
-                Content: {{Content?.Title}}
+                Content: {{Content?.Title ?? "N/A"}}
                 ID: {{Id}}
                 Title: {{Title}}
                 Synopsis: {{Synopsis}}
