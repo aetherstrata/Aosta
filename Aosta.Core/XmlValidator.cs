@@ -1,6 +1,6 @@
-﻿using System.Xml;
+using System.Xml;
 
-namespace Animeikan.Core;
+namespace Aosta.Core;
 
 internal static class XmlValidator
 {
