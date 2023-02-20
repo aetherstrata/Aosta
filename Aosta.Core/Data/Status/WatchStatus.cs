@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aosta.Core.Data;
+namespace Aosta.Core.Data.Status;
 
 public enum WatchStatus
 {

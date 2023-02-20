@@ -1,5 +1,3 @@
-using System.Xml;
-
 namespace Aosta.Core;
 
 internal static class XmlValidator

@@ -1,7 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using Realms;
-
-namespace Aosta.Core.Data;
+﻿namespace Aosta.Core.Data;
 
 public interface IUserRating : IUserScore
 {

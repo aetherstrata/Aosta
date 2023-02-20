@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aosta.Core.Data;
+﻿using Aosta.Core.Data;
 using Aosta.Core.Data.Realm;
 using JikanDotNet;
-using AiringStatus = Aosta.Core.Data.AiringStatus;
+using AiringStatus = Aosta.Core.Data.Status.AiringStatus;
 
 namespace Aosta.Core.Extensions;
 internal static class JikanAnimeExtensions

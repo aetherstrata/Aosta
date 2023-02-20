@@ -1,4 +1,4 @@
-﻿namespace Aosta.Core.Data;
+﻿namespace Aosta.Core.Data.Status;
 
 public enum AiringStatus
 {

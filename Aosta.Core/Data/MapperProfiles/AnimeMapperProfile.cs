@@ -2,7 +2,7 @@
 using AutoMapper;
 using JikanDotNet;
 
-namespace Aosta.Core.Data;
+namespace Aosta.Core.Data.MapperProfiles;
 
 public class AnimeMapperProfile : Profile
 {
