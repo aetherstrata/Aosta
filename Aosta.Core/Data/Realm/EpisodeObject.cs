@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Realms;
 
-namespace Aosta.Core.Data;
+namespace Aosta.Core.Data.Realm;
 
 /// <summary>Episode data-transfer-object for <see cref="Realm"/> storage.</summary>
 public class EpisodeObject : RealmObject, IEpisode, IUserRating
@@ -24,7 +24,7 @@ public class EpisodeObject : RealmObject, IEpisode, IUserRating
 
     /// <summary>The episode description.</summary>
     [JsonPropertyName("episodeSynopsis")]
-    public string Synopsis { get; set; } = String.Empty;
+    public string Synopsis { get; set; } = string.Empty;
 
     /// <summary>The episode score.</summary>
     [Indexed]
@@ -33,7 +33,7 @@ public class EpisodeObject : RealmObject, IEpisode, IUserRating
 
     /// <summary>The episode review.</summary>
     [JsonPropertyName("episodeReview")]
-    public string Review { get; set; } = String.Empty;
+    public string Review { get; set; } = string.Empty;
 
     /// <summary>The duration of the episode in seconds.</summary>
     /// <remarks>

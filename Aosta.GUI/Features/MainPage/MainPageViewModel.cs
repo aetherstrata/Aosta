@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Input;
-using Aosta.Core.Data;
 using Realms;
+using Aosta.Core.Data.Realm;
 
 namespace Aosta.GUI.ViewModels;
 

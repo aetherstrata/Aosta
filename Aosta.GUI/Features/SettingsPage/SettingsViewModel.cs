@@ -6,6 +6,7 @@ using Realms;
 using System.Windows.Input;
 using Aosta.Core;
 using Aosta.Core.Data;
+using Aosta.Core.Data.Realm;
 
 namespace Aosta.GUI.ViewModels;
 

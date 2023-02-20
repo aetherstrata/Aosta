@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Realms;
 
-namespace Aosta.Core.Data;
+namespace Aosta.Core.Data.Realm;
 
 /// <summary> MyAnimeList data model </summary>
 public class MalDataObject : RealmObject
@@ -13,7 +13,7 @@ public class MalDataObject : RealmObject
 
     /// <summary>The canonical link.</summary>
     [JsonPropertyName("url")]
-    public string Url { get; set; } = String.Empty;
+    public string Url { get; set; } = string.Empty;
 
     /// <summary>The MAL score</summary>
     [Indexed]

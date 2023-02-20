@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 using Realms;
 
-namespace Aosta.Core.Data;
+namespace Aosta.Core.Data.Realm;
 
 /// <summary>Image URL model class.</summary>
-public class OnlineImage : RealmObject
+public class OnlineImageObject : RealmObject
 {
-    public static OnlineImage Empty = new();
+    public static readonly OnlineImageObject Empty = new();
 
     [PrimaryKey]
     [JsonPropertyName("id")]

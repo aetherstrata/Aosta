@@ -1,4 +1,6 @@
-﻿namespace Aosta.Core.Data;
+﻿using Aosta.Core.Data.Realm;
+
+namespace Aosta.Core.Data;
 
 public interface IEpisode
 {

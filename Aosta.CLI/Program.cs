@@ -1,31 +1,27 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Aosta.Core;
-using Aosta.Core.Data;
+using Aosta.Core.Data.Realm;
+using JikanDotNet;
+using Realms;
 
 namespace Aosta.CLI;
 
-class Program
+internal static class Program
 {
-    internal static AostaDotNet Core = new()
+    private static readonly AostaDotNet Core = new(new RealmConfiguration(AppContext.BaseDirectory)
     {
-        DatabaseConfiguration = new()
-        {
-            Location = AppContext.BaseDirectory,
-            Configuration = new(AppContext.BaseDirectory)
-            {
-                SchemaVersion = 2,
-                IsReadOnly = false,
-                ShouldDeleteIfMigrationNeeded = true
-            }
-        }
-    };
+        SchemaVersion = 2,
+        IsReadOnly = false,
+        ShouldDeleteIfMigrationNeeded = true
+    });
 
     public static async Task Main(string[] args)
     {
-        Guid id = await Core.WriteOnlineAnimeAsync(100);
+        Guid id = await Core.WriteAnimeAndEpisodesAsync(22);
+        var recommend = new Jikan().GetUserRecommendationsAsync("aetherstrata").Result;
         var realm = Core.GetInstance();
-        Console.WriteLine(realm.Find<ContentDTO>(id).Title);
+        Console.WriteLine(realm.Find<AnimeObject>(id).Title);
         realm.Dispose();
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Realms;
 
 using System.Text.Json.Serialization;
+using Aosta.Core.Data.Status;
 
-namespace Aosta.Core.Data;
+namespace Aosta.Core.Data.Realm;
 
 public class AnimeObject : RealmObject, IContent, IUserRating, IEquatable<AnimeObject>
 {
@@ -19,7 +20,7 @@ public class AnimeObject : RealmObject, IContent, IUserRating, IEquatable<AnimeO
     [JsonPropertyName("content_type")]
     private int _Type { get; set; } = 0;
 
-    /// <summary>The type of this content</summary>
+    /// <summary>The type of this content. (Eg. Movie, OVA)</summary>
     public ContentType Type
     {
         get => (ContentType)_Type;
@@ -48,7 +49,7 @@ public class AnimeObject : RealmObject, IContent, IUserRating, IEquatable<AnimeO
     /// <summary>Content source (e .g. "Manga" or "Original").</summary>
     [JsonPropertyName("source")]
     public string Source { get; set; } = string.Empty;
-    
+
     /// <summary>The score from 0 to 100</summary>
     [Indexed]
     [JsonPropertyName("score")]
@@ -74,11 +75,11 @@ public class AnimeObject : RealmObject, IContent, IUserRating, IEquatable<AnimeO
 
     /// <summary>The JPEG images of this content</summary>
     [JsonPropertyName("images_jpg")]
-    public OnlineImage? ImageJPG { get; set; }
+    public OnlineImageObject? ImageJPG { get; set; }
 
     /// <summary>The WebP images of this content</summary>
     [JsonPropertyName("images_webp")]
-    public OnlineImage? ImageWebP { get; set; }
+    public OnlineImageObject? ImageWebP { get; set; }
 
     public bool Equals(AnimeObject? other)
     {
@@ -91,7 +92,7 @@ public class AnimeObject : RealmObject, IContent, IUserRating, IEquatable<AnimeO
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
+        if (obj.GetType() != GetType()) return false;
         return Equals((AnimeObject)obj);
     }
 

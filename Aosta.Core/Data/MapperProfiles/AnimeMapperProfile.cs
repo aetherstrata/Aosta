@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Aosta.Core.Data.Realm;
+using AutoMapper;
 using JikanDotNet;
 
 namespace Aosta.Core.Data;
