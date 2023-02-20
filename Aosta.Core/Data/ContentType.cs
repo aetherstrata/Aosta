@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 namespace Aosta.Core.Data;
 
@@ -18,4 +19,17 @@ public enum ContentType
 
     [Display(Name = "Movie")]
     Movie = 4
+}
+
+public static class ContentTypeExtensions
+{
+    public static string ToStringCached(this ContentType contentType) => contentType switch
+    {
+        ContentType.TV => "TV",
+        ContentType.ONA => "ONA",
+        ContentType.OVA => "OVA",
+        ContentType.Movie => "Movie",
+        ContentType.Special => "Special",
+        _ => throw new UnreachableException()
+    };
 }

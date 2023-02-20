@@ -3,7 +3,7 @@
 public interface IEpisode
 {
     /// <summary>The content this episode is from.</summary>
-    public ContentDTO? Content { get; set; }
+    public AnimeObject? Content { get; set; }
 
     /// <summary>The unique ID of this episode.</summary>
     public Guid Id { get; init; }

@@ -9,7 +9,7 @@ public class AnimeMapperProfile : Profile
     {
         //TODO: think about global scores
         //for now I'll ignore it and store only the personal score
-        CreateMap<Anime, ContentDTO>()
+        CreateMap<Anime, AnimeObject>()
             .ForMember(dest => dest.Episodes, opt => opt.Ignore())
             .ForMember(dest => dest.EpisodeCount, opt => opt.MapFrom(src => src.Episodes))
             .ForMember(dest => dest.Score, opt => opt.Ignore());

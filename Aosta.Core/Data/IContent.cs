@@ -4,7 +4,7 @@ public interface IContent
 {
     public Guid Id { get; }
 
-    public string? Type { get; set; }
+    public ContentType Type { get; set; }
 
     public string Title { get; set; }
 

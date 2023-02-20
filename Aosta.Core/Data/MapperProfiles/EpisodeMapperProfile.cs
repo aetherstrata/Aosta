@@ -7,7 +7,8 @@ public class EpisodeMapperProfile : Profile
 {
     public EpisodeMapperProfile()
     {
-        CreateMap<AnimeEpisode, EpisodeDTO>()
+        CreateMap<AnimeEpisode, EpisodeObject>()
+            .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.MalId))
             .ForMember(dest => dest.IsFiller, opt => opt.MapFrom(src => src.Filler))
             .ForMember(dest => dest.IsRecap, opt => opt.MapFrom(src => src.Recap));
     }
