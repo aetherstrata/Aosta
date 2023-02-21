@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace Aosta.Core.Data.Mal;
+namespace Aosta.Core.Data.MalXml;
 
 //TODO: add xmldoc
 
