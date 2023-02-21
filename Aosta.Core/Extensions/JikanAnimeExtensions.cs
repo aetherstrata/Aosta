@@ -4,6 +4,7 @@ using JikanDotNet;
 using AiringStatus = Aosta.Core.Data.Status.AiringStatus;
 
 namespace Aosta.Core.Extensions;
+
 internal static class JikanAnimeExtensions
 {
     internal static AnimeObject ToAnimeObject(this Anime anime)
