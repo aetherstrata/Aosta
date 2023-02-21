@@ -12,8 +12,8 @@ internal static class JikanAnimeExtensions
         return new AnimeObject()
         {
             Title = anime.Titles.First(e => e.Type.Equals("Default")).Title,
-            Type = Enum.Parse<ContentType>(anime.Type.Trim()),
-            AiringStatus = Enum.Parse<AiringStatus>(anime.Status.Trim()),
+            Type = EnumHelper.Parse<ContentType>(anime.Type),
+            AiringStatus = EnumHelper.Parse<AiringStatus>(anime.Status),
             Synopsis = anime.Synopsis,
             EpisodeCount = anime.Episodes,
             Source = anime.Source,
