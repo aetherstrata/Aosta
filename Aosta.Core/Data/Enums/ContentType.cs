@@ -1,15 +1,16 @@
 ﻿using System.Diagnostics;
 
-namespace Aosta.Core.Data;
+namespace Aosta.Core.Data.Enums;
 
 public enum ContentType
 {
     Unknown = -1,
-    TV = 0,
-    ONA = 1,
-    OVA = 2,
-    Special = 3,
-    Movie = 4,
+    Movie,
+    Music,
+    ONA,
+    OVA,
+    Special,
+    TV
 }
 
 public static class ContentTypeExtensions
@@ -17,11 +18,12 @@ public static class ContentTypeExtensions
     public static string ToStringCached(this ContentType contentType) => contentType switch
     {
         ContentType.Unknown => "Unknown",
-        ContentType.TV => "TV",
+        ContentType.Movie => "Movie",
+        ContentType.Music => "Music",
         ContentType.ONA => "ONA",
         ContentType.OVA => "OVA",
-        ContentType.Movie => "Movie",
         ContentType.Special => "Special",
+        ContentType.TV => "TV",
         _ => throw new UnreachableException()
     };
 }

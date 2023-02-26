@@ -76,6 +76,7 @@ internal sealed class MalAnime
   [XmlElement("my_sns")]
   public string MySns { get; set; } = "default";
 
+  /// <summary> Whether this entry should be updated when imported on MyAnimeList </summary>
   [XmlElement("update_on_import")]
-  public byte UpdateOnImport { get; set; }
+  public byte UpdateOnImport { get; set; } = 0;
 }
