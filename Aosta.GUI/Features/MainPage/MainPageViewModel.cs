@@ -1,8 +1,8 @@
 ﻿using System.Windows.Input;
-using Aosta.Core.Data.Realm;
 using Aosta.GUI.Features.AnimeManualAddPage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Realms;
+using ContentObject = Aosta.Core.Data.Models.ContentObject;
 
 namespace Aosta.GUI.Features.MainPage;
 
@@ -11,12 +11,12 @@ public partial class MainPageViewModel
 {
     private Realm _realm;
 
-    public IEnumerable<AnimeObject> RealmAnimeList { get; set; }
+    public IEnumerable<ContentObject> RealmAnimeList { get; set; }
 
     public MainPageViewModel()
     {
         _realm = App.Core.GetInstance();
-        RealmAnimeList = _realm.All<AnimeObject>().OrderBy(anime => anime.Title);
+        RealmAnimeList = _realm.All<ContentObject>().OrderBy(anime => anime.Title);
     }
 
     public ICommand AddAnimeCommand => new Command(async () =>

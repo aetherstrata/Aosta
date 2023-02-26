@@ -6,5 +6,5 @@ namespace Aosta.GUI.Features.AnimeSummaryPage;
 public partial class AnimeSummaryViewModel
 {
     [ObservableProperty]
-    private string _animeTitle;
+    private string _animeTitle = string.Empty;
 }

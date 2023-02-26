@@ -1,10 +1,10 @@
 ﻿using System.Windows.Input;
-using Aosta.Core.Data;
-using Aosta.Core.Data.Realm;
+using Aosta.Core.Data.Enums;
 using Aosta.GUI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using JikanDotNet;
 using Realms;
+using ContentObject = Aosta.Core.Data.Models.ContentObject;
 
 namespace Aosta.GUI.Features.SettingsPage;
 
@@ -30,7 +30,7 @@ public partial class SettingsViewModel
         this.settingsService = settingsService;
         this.realm = App.Core.GetInstance();
 
-        ObjectCount = realm.All<AnimeObject>().Count().ToString();
+        ObjectCount = realm.All<ContentObject>().Count().ToString();
     }
 
     public async Task LoadAssetToString(string fileName)
@@ -53,7 +53,7 @@ public partial class SettingsViewModel
 
         await realm.WriteAsync(() =>
         {
-            var anime = new AnimeObject
+            var anime = new ContentObject
             {
                 Type = ContentType.TV,
                 Title = "Paolo"
@@ -61,7 +61,7 @@ public partial class SettingsViewModel
             realm.Add(anime);
         });
 
-        ObjectCount = realm.All<AnimeObject>().Count().ToString();
+        ObjectCount = realm.All<ContentObject>().Count().ToString();
     });
 
     public ICommand DeleteRealmFile => new Command(() =>
@@ -69,7 +69,7 @@ public partial class SettingsViewModel
         realm.Dispose();
         File.Delete(Globals.Location.Database);
         realm = App.Core.GetInstance();
-        ObjectCount = realm.All<AnimeObject>().Count().ToString();
+        ObjectCount = realm.All<ContentObject>().Count().ToString();
     });
 
     public ICommand UpdateTheme => new Command(async () =>

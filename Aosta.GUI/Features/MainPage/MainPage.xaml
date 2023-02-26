@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:constants="clr-namespace:Aosta.GUI.Globals"
-             xmlns:realm="clr-namespace:Aosta.Core.Data.Realm;assembly=Aosta.Core"
+             xmlns:realm="clr-namespace:Aosta.Core.Data.Models;assembly=Aosta.Core"
              xmlns:profileMainPage="using:Aosta.GUI.Features.ProfileMainPage"
              xmlns:settingsPage="using:Aosta.GUI.Features.SettingsPage"
              xmlns:mainPage="using:Aosta.GUI.Features.MainPage"
@@ -51,7 +51,7 @@
 
         <CollectionView ItemsSource="{Binding RealmAnimeList}">
           <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="realm:AnimeObject">
+            <DataTemplate x:DataType="realm:ContentObject">
               <ContentView
                 Padding="5">
 

@@ -1,8 +1,8 @@
 ﻿using System.Windows.Input;
-using Aosta.Core.Data;
-using Aosta.Core.Data.Realm;
+using Aosta.Core.Data.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Realms;
+using ContentObject = Aosta.Core.Data.Models.ContentObject;
 
 namespace Aosta.GUI.Features.AnimeManualAddPage;
 
@@ -32,7 +32,7 @@ public partial class AnimeManualAddViewModel
   {
     if (IsScoreValid)
     {
-      var anime = new AnimeObject
+      var anime = new ContentObject
       {
         Title = AnimeTitle,
         Score = string.IsNullOrWhiteSpace(AnimeScore) ? -1 :int.Parse((string)AnimeScore),
@@ -49,7 +49,7 @@ public partial class AnimeManualAddViewModel
           _realm.Add(anime);
         });
 
-        AnimeTitleBack = _realm.Find<AnimeObject>(guid).Title;
+        AnimeTitleBack = _realm.Find<ContentObject>(guid).Title;
 
     }
   });
