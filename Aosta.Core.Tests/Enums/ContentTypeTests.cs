@@ -1,6 +1,6 @@
 using Aosta.Core.Data.Enums;
 
-namespace Aosta.Core.Tests;
+namespace Aosta.Core.Tests.Enums;
 
 [TestFixture]
 public class ContentTypeTests
@@ -21,7 +21,7 @@ public class ContentTypeTests
     [Test]
     public void QuantityChangedTest()
     {
-        Assert.That(Enum.GetValues<ContentType>().Length, Is.EqualTo(7));
+        Assert.That(Enum.GetValues<ContentType>(), Has.Length.EqualTo(7));
     }
 
     [Test]

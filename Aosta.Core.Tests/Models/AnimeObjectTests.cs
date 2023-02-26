@@ -1,8 +1,7 @@
 ﻿using Aosta.Core.Data.Enums;
-using Aosta.Core.Tests.Fixture;
 using ContentObject = Aosta.Core.Data.Models.ContentObject;
 
-namespace Aosta.Core.Tests;
+namespace Aosta.Core.Tests.Models;
 
 [TestFixture]
 public class AnimeObjectTests
@@ -12,7 +11,7 @@ public class AnimeObjectTests
     [SetUp]
     public void SetUp()
     {
-        _core = new(RealmFixture.NewConfig());
+        _core = new(RealmSetup.NewConfig());
     }
 
     [Test]
@@ -25,24 +24,24 @@ public class AnimeObjectTests
         Assert.Multiple(() =>
         {
             Assert.That(realm.All<ContentObject>().Count(), Is.EqualTo(1));
-            Assert.That(realm.First<ContentObject>().Title, Is.Empty);
+            Assert.That(realm.All<ContentObject>().First().Title, Is.Empty);
         });
     }
 
     [Test]
     public void EditAnimeTest()
     {
-        using var realm = RealmFixture.CreateNewRealm(InitConfig.OneContent);
-        realm.Write(() => { realm.First<ContentObject>().Title = "Awesome Title"; });
-        Assert.That(realm.First<ContentObject>().Title, Is.EqualTo("Awesome Title"));
+        using var realm = RealmSetup.CreateNewRealm(InitConfig.OneContent);
+        realm.Write(() => { realm.All<ContentObject>().First().Title = "Awesome Title"; });
+        Assert.That(realm.All<ContentObject>().First().Title, Is.EqualTo("Awesome Title"));
     }
 
     [Test]
     public void EditContentTypeTest()
     {
-        using var realm = RealmFixture.CreateNewRealm(InitConfig.OneContent);
-        Assert.That(realm.First<ContentObject>().Type, Is.EqualTo(ContentType.Unknown));
-        realm.Write(() => { realm.First<ContentObject>().Type = ContentType.Movie;});
-        Assert.That(realm.First<ContentObject>().Type, Is.EqualTo(ContentType.Movie));
+        using var realm = RealmSetup.CreateNewRealm(InitConfig.OneContent);
+        Assert.That(realm.All<ContentObject>().First().Type, Is.EqualTo(ContentType.Unknown));
+        realm.Write(() => { realm.All<ContentObject>().First().Type = ContentType.Movie;});
+        Assert.That(realm.All<ContentObject>().First().Type, Is.EqualTo(ContentType.Movie));
     }
 }
