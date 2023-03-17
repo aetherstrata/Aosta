@@ -1,4 +1,4 @@
-﻿using JikanDotNet;
+using JikanDotNet;
 using Realms;
 
 //using Aosta.Core.Data.RealmObjects.Mal;

@@ -1,4 +1,4 @@
-﻿using Aosta.Core.Data.Models.Jikan;
+using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
 using JikanDotNet;
 
@@ -7,23 +7,23 @@ namespace Aosta.Core.Tests.Models.Jikan;
 [TestFixture]
 public class TimePeriodTests
 {
-    private DateTime _from;
-    private DateTime _to;
-
-    private TimePeriod _period = null!;
-
     [SetUp]
     public void SetUp()
     {
         _from = new DateTime(2000, 10, 24);
         _to = new DateTime(2001, 1, 8);
 
-        _period = new()
+        _period = new TimePeriod
         {
             From = _from,
             To = _to
         };
     }
+
+    private DateTime _from;
+    private DateTime _to;
+
+    private TimePeriod _period = null!;
 
     [Test]
     public void ConversionTest()

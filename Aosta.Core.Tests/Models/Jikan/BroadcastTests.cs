@@ -1,4 +1,4 @@
-﻿using Aosta.Core.Data.Enums;
+using Aosta.Core.Data.Enums;
 using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
 using JikanDotNet;
@@ -8,16 +8,10 @@ namespace Aosta.Core.Tests.Models.Jikan;
 [TestFixture]
 public class BroadcastTests
 {
-    private AnimeBroadcast _broadcast = null!;
-
-    private TimeOnly _time;
-    private TimeZoneInfo _timeZone = null!;
-    private DaysOfWeek _days;
-
     [SetUp]
     public void SetUp()
     {
-        _broadcast = new()
+        _broadcast = new AnimeBroadcast
         {
             Day = "Mondays",
             Time = "07:00",
@@ -29,6 +23,12 @@ public class BroadcastTests
         _timeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Rome");
         _days = DaysOfWeek.Monday;
     }
+
+    private AnimeBroadcast _broadcast = null!;
+
+    private TimeOnly _time;
+    private TimeZoneInfo _timeZone = null!;
+    private DaysOfWeek _days;
 
     [Test]
     public void FullConversionTest()

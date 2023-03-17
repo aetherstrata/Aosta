@@ -1,9 +1,8 @@
-﻿namespace Aosta.GUI.Services
-{
-    interface ISecureStorageService
-    {
-        Task Save(string key, string value);
+namespace Aosta.GUI.Services;
 
-        Task<string> Get(string key);
-    }
+internal interface ISecureStorageService
+{
+    Task Save(string key, string value);
+
+    Task<string> Get(string key);
 }

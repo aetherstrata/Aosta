@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 namespace Aosta.Core.Data.Enums;
 
@@ -17,16 +17,19 @@ public enum DaysOfWeek
 
 public static class DaysOfWeekExtensions
 {
-    public static string ToStringCached(this DaysOfWeek day) => day switch
+    public static string ToStringCached(this DaysOfWeek day)
     {
-        DaysOfWeek.Monday => "Mondays",
-        DaysOfWeek.Tuesday => "Tuesdays",
-        DaysOfWeek.Wednesday => "Wednesdays",
-        DaysOfWeek.Thursday => "Thursdays",
-        DaysOfWeek.Friday => "Fridays",
-        DaysOfWeek.Saturday => "Saturdays",
-        DaysOfWeek.Sunday => "Sundays",
-        DaysOfWeek.None => "None",
-        _ => throw new UnreachableException()
-    };
+        return day switch
+        {
+            DaysOfWeek.Monday => "Mondays",
+            DaysOfWeek.Tuesday => "Tuesdays",
+            DaysOfWeek.Wednesday => "Wednesdays",
+            DaysOfWeek.Thursday => "Thursdays",
+            DaysOfWeek.Friday => "Fridays",
+            DaysOfWeek.Saturday => "Saturdays",
+            DaysOfWeek.Sunday => "Sundays",
+            DaysOfWeek.None => "None",
+            _ => throw new UnreachableException()
+        };
+    }
 }

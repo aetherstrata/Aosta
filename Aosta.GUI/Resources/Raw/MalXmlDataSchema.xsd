@@ -1,91 +1,90 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="MalXmlDataSchema"
-    targetNamespace="http://tempuri.org/MalXmlDataSchema.xsd"
-    elementFormDefault="qualified"
-    xmlns="http://tempuri.org/MalXmlDataSchema.xsd"
-    xmlns:mstns="http://tempuri.org/MalXmlDataSchema.xsd"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="myanimelist">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="myinfo">
-          <xs:complexType>
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           id="MalXmlDataSchema"
+           targetNamespace="http://tempuri.org/MalXmlDataSchema.xsd"
+           elementFormDefault="qualified"
+           xmlns="http://tempuri.org/MalXmlDataSchema.xsd">
+    <xs:element name="myanimelist">
+        <xs:complexType>
             <xs:sequence>
-              <xs:element name="user_id"
-                          type="xs:nonNegativeInteger" />
-              <xs:element name="user_name"
-                          type="xs:string" />
-              <xs:element name="user_export_type"
-                          type="xs:unsignedByte" />
-              <xs:element name="user_total_anime"
-                          type="xs:nonNegativeInteger" />
-              <xs:element name="user_total_watching"
-                          type="xs:nonNegativeInteger" />
-              <xs:element name="user_total_completed"
-                          type="xs:nonNegativeInteger" />
-              <xs:element name="user_total_onhold"
-                          type="xs:nonNegativeInteger" />
-              <xs:element name="user_total_dropped"
-                          type="xs:nonNegativeInteger" />
-              <xs:element name="user_total_plantowatch"
-                          type="xs:nonNegativeInteger" />
+                <xs:element name="myinfo">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="user_id"
+                                        type="xs:nonNegativeInteger"/>
+                            <xs:element name="user_name"
+                                        type="xs:string"/>
+                            <xs:element name="user_export_type"
+                                        type="xs:unsignedByte"/>
+                            <xs:element name="user_total_anime"
+                                        type="xs:nonNegativeInteger"/>
+                            <xs:element name="user_total_watching"
+                                        type="xs:nonNegativeInteger"/>
+                            <xs:element name="user_total_completed"
+                                        type="xs:nonNegativeInteger"/>
+                            <xs:element name="user_total_onhold"
+                                        type="xs:nonNegativeInteger"/>
+                            <xs:element name="user_total_dropped"
+                                        type="xs:nonNegativeInteger"/>
+                            <xs:element name="user_total_plantowatch"
+                                        type="xs:nonNegativeInteger"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded"
+                            name="anime">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="series_animedb_id"
+                                        type="xs:unsignedInt"/>
+                            <xs:element name="series_title"
+                                        type="xs:string"/>
+                            <xs:element name="series_type"
+                                        type="xs:string"/>
+                            <xs:element name="series_episodes"
+                                        type="xs:nonNegativeInteger"/>
+                            <xs:element name="my_id"
+                                        type="xs:nonNegativeInteger"/>
+                            <xs:element name="my_watched_episodes"
+                                        type="xs:nonNegativeInteger"/>
+                            <xs:element name="my_start_date"
+                                        type="xs:string"/>
+                            <xs:element name="my_finish_date"
+                                        type="xs:string"/>
+                            <xs:element name="my_rated"
+                                        type="xs:string"/>
+                            <xs:element name="my_score"
+                                        type="xs:unsignedByte"/>
+                            <xs:element name="my_storage"
+                                        type="xs:string"/>
+                            <xs:element name="my_storage_value"
+                                        type="xs:decimal"/>
+                            <xs:element name="my_status"
+                                        type="xs:string"/>
+                            <xs:element name="my_comments"
+                                        type="xs:string"/>
+                            <xs:element name="my_times_watched"
+                                        type="xs:unsignedByte"/>
+                            <xs:element name="my_rewatch_value"
+                                        type="xs:string"/>
+                            <xs:element name="my_priority"
+                                        type="xs:string"/>
+                            <xs:element name="my_tags"
+                                        type="xs:string"/>
+                            <xs:element name="my_rewatching"
+                                        type="xs:unsignedByte"/>
+                            <xs:element name="my_rewatching_ep"
+                                        type="xs:nonNegativeInteger"/>
+                            <xs:element name="my_discuss"
+                                        type="xs:unsignedByte"/>
+                            <xs:element name="my_sns"
+                                        type="xs:string"/>
+                            <xs:element name="update_on_import"
+                                        type="xs:unsignedByte"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element maxOccurs="unbounded"
-                    name="anime">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="series_animedb_id"
-                          type="xs:unsignedInt" />
-              <xs:element name="series_title"
-                          type="xs:string" />
-              <xs:element name="series_type"
-                          type="xs:string" />
-              <xs:element name="series_episodes"
-                          type="xs:nonNegativeInteger" />
-              <xs:element name="my_id"
-                          type="xs:nonNegativeInteger" />
-              <xs:element name="my_watched_episodes"
-                          type="xs:nonNegativeInteger" />
-              <xs:element name="my_start_date"
-                          type="xs:string" />
-              <xs:element name="my_finish_date"
-                          type="xs:string" />
-              <xs:element name="my_rated"
-                          type="xs:string" />
-              <xs:element name="my_score"
-                          type="xs:unsignedByte" />
-              <xs:element name="my_storage"
-                          type="xs:string"/>
-              <xs:element name="my_storage_value"
-                          type="xs:decimal" />
-              <xs:element name="my_status"
-                          type="xs:string" />
-              <xs:element name="my_comments"
-                          type="xs:string" />
-              <xs:element name="my_times_watched"
-                          type="xs:unsignedByte" />
-              <xs:element name="my_rewatch_value"
-                          type="xs:string" />
-              <xs:element name="my_priority"
-                          type="xs:string" />
-              <xs:element name="my_tags"
-                          type="xs:string" />
-              <xs:element name="my_rewatching"
-                          type="xs:unsignedByte" />
-              <xs:element name="my_rewatching_ep"
-                          type="xs:nonNegativeInteger" />
-              <xs:element name="my_discuss"
-                          type="xs:unsignedByte" />
-              <xs:element name="my_sns"
-                          type="xs:string" />
-              <xs:element name="update_on_import"
-                          type="xs:unsignedByte" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

@@ -1,4 +1,4 @@
-﻿using Aosta.Core.Data.Models.Jikan;
+using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
 using JikanDotNet;
 
@@ -7,8 +7,6 @@ namespace Aosta.Core.Tests.Models.Jikan;
 [TestFixture]
 public class TitleTests
 {
-    private TitleEntry _title = null!;
-
     [SetUp]
     public void SetUp()
     {
@@ -18,6 +16,8 @@ public class TitleTests
             Title = "title"
         };
     }
+
+    private TitleEntry _title = null!;
 
     [Test]
     public void ConversionTest()

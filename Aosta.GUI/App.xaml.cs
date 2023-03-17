@@ -1,14 +1,15 @@
-﻿using Aosta.Core;
+using Aosta.Core;
 using Aosta.GUI.Services;
 using Realms;
+using Location = Aosta.GUI.Globals.Location;
 
 namespace Aosta.GUI;
 
 public partial class App : Application
 {
-    public static readonly AostaDotNet Core = new(new RealmConfiguration(Globals.Location.Database)
+    public static readonly AostaDotNet Core = new(new RealmConfiguration(Location.Database)
     {
-        SchemaVersion = 1,
+        SchemaVersion = 2,
         IsReadOnly = false,
         ShouldDeleteIfMigrationNeeded = true
     });
@@ -19,17 +20,18 @@ public partial class App : Application
     {
         InitializeComponent();
 
-        this._settingsService = settingsService;
+        _settingsService = settingsService;
 
         MainPage = new AppShell();
     }
 
     protected override void OnStart()
     {
-        UserAppTheme = _settingsService.Get<bool>("useDarkTheme", true).Result
-            ? AppTheme.Dark : AppTheme.Light;
+        UserAppTheme = _settingsService.Get("useDarkTheme", true).Result
+            ? AppTheme.Dark
+            : AppTheme.Light;
 
-        if (!_settingsService.Get<bool>("firstRun", true).Result)
-            AppShell.Current.GoToAsync($"//{nameof(MainPage)}");
+        if (!_settingsService.Get("firstRun", true).Result)
+            Shell.Current.GoToAsync($"//{nameof(MainPage)}");
     }
 }

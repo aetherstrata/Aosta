@@ -1,5 +1,7 @@
-﻿using Android.App;
+using Android.App;
 using Android.Runtime;
+
+[assembly: UsesPermission(Android.Manifest.Permission.AccessNetworkState)]
 
 namespace Aosta.GUI;
 

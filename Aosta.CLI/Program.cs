@@ -1,13 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+// See https://aka.ms/new-console-template for more information
 
 using Aosta.Core;
-using Aosta.Core.Data.Enums;
-using Realms;
 using Aosta.Core.Data.Models;
-using Aosta.Core.Extensions;
-using JikanDotNet;
-using AiringStatus = Aosta.Core.Data.Enums.AiringStatus;
-using ContentObject = Aosta.Core.Data.Models.ContentObject;
+using Realms;
 
 namespace Aosta.CLI;
 
@@ -22,12 +17,25 @@ internal static class Program
 
     public static async Task Main(string[] args)
     {
-        await Core.UpdateMyAnimeListData(1);
+        await Core.WriteJikanContentAsync(1);
 
+        /*
         using var realm = Core.GetInstance();
 
-        Console.WriteLine(realm.Find<JikanContentObject>(1).Episodes);
-/*
+        await realm.WriteAsync(() =>
+        {
+            foreach (var content in realm.All<ContentObject>())
+            {
+                content.Title = "Sugo";
+            }
+        });
+
+        realm.Dispose();
+        */
+
+        await Core.UpdateJikanContentAsync(1, true);
+
+        /*
         await realm.WriteAsync(() =>
         {
             realm.Add(anime);
@@ -35,9 +43,8 @@ internal static class Program
 
         Console.WriteLine(realm.First<ContentObject>().Title);
 */
-        return;
 
-        /*
+/*
         using (var r = Core.GetInstance())
         {
             Console.WriteLine(r.Config.DatabasePath);

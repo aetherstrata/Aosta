@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
@@ -13,118 +14,120 @@
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False">
 
-  <ContentPage.Behaviors>
-    <mct:StatusBarBehavior StatusBarColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor}}" StatusBarStyle="Default"/>
-  </ContentPage.Behaviors>
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior
+            StatusBarColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor}}"
+            StatusBarStyle="Default" />
+    </ContentPage.Behaviors>
 
-  <Grid>
-    <ScrollView VerticalOptions="FillAndExpand">
-      <ScrollView.Background>
-        <LinearGradientBrush EndPoint="0,1">
-          <GradientStop 
-            Color="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor90L}}" 
-            Offset="0"/>
-          <GradientStop 
-            Color="{AppThemeBinding Dark={StaticResource Gray900}, Light={StaticResource White}}" 
-            Offset="1"/>
-        </LinearGradientBrush>
-      </ScrollView.Background>
+    <Grid>
+        <ScrollView VerticalOptions="FillAndExpand">
+            <ScrollView.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop
+                        Color="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor90L}}"
+                        Offset="0" />
+                    <GradientStop
+                        Color="{AppThemeBinding Dark={StaticResource Gray900}, Light={StaticResource White}}"
+                        Offset="1" />
+                </LinearGradientBrush>
+            </ScrollView.Background>
 
-      <VerticalStackLayout
-        Spacing="25"
-        Padding="5,0,5,0"
-        VerticalOptions="StartAndExpand">
+            <VerticalStackLayout
+                Spacing="25"
+                Padding="5,0,5,0"
+                VerticalOptions="StartAndExpand">
 
-        <Label
-          Text="Welcome"
-          SemanticProperties.HeadingLevel="Level1"
-          FontSize="32"
-          FontFamily="ComfortaaBold"
-          HorizontalOptions="Center" />
+                <Label
+                    Text="Welcome"
+                    SemanticProperties.HeadingLevel="Level1"
+                    FontSize="32"
+                    FontFamily="ComfortaaBold"
+                    HorizontalOptions="Center" />
 
-        <Label
-          Text="Palle"
-          SemanticProperties.HeadingLevel="Level2"
-          FontSize="18"
-          FontFamily="ComfortaaRegular"
-          HorizontalOptions="Start"/>
+                <Label
+                    Text="Palle"
+                    SemanticProperties.HeadingLevel="Level2"
+                    FontSize="18"
+                    FontFamily="ComfortaaRegular"
+                    HorizontalOptions="Start" />
 
-        <CollectionView ItemsSource="{Binding RealmAnimeList}">
-          <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="realm:ContentObject">
-              <ContentView
-                Padding="5">
+                <CollectionView ItemsSource="{Binding RealmAnimeList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="realm:ContentObject">
+                            <ContentView
+                                Padding="5">
 
-                <Border
-                  Padding="5"
-                  BackgroundColor="{x:StaticResource Key=BaseColor}">
-                  <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10"/>
-                  </Border.StrokeShape>
-                  <Label Text="{Binding Title}"/>
-                </Border>
+                                <Border
+                                    Padding="5"
+                                    BackgroundColor="{x:StaticResource Key=BaseColor}">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10" />
+                                    </Border.StrokeShape>
+                                    <Label Text="{Binding Title}" />
+                                </Border>
 
-              </ContentView>
-            </DataTemplate>
-          </CollectionView.ItemTemplate>
-        </CollectionView>
+                            </ContentView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-      </VerticalStackLayout>
+            </VerticalStackLayout>
 
-    </ScrollView>
-
-    <Button
-      Grid.Row="0"
-      Style="{x:StaticResource Key=FloatingActionButton}"
-      Margin="0,0,20,20"
-      Text="{x:Static constants:FontAwesomeIcons.Plus}"
-      Command="{Binding AddAnimeCommand}">
-
-      <Button.Shadow>
-        <Shadow 
-          Brush="Black"
-          Offset="10,10"
-          Radius="20"
-          Opacity="0.2"/>
-      </Button.Shadow>
-
-    </Button>
-
-    <Border
-      Grid.Row="0"
-      Margin="20,0,120,20"
-      Style="{x:StaticResource FloatingActionMenu}"
-      StrokeThickness="0">
-      
-      <Border.Shadow>
-        <Shadow 
-          Brush="Black"
-          Offset="10,10"
-          Radius="20"
-          Opacity="0.2"/>
-      </Border.Shadow>
-
-      <Border.StrokeShape>
-        <RoundRectangle CornerRadius="40"/>
-      </Border.StrokeShape>
-
-      <HorizontalStackLayout 
-        Spacing="10"
-        VerticalOptions="Center">
+        </ScrollView>
 
         <Button
-          Style="{x:StaticResource FloatingActionButton}"
-          Text="{x:Static constants:FontAwesomeIcons.User}"
-          Command="{Binding GoToCommand}"
-          CommandParameter="{x:Type profileMainPage:ProfilePage}"/>
+            Grid.Row="0"
+            Style="{x:StaticResource Key=FloatingActionButton}"
+            Margin="0,0,20,20"
+            Text="{x:Static constants:FontAwesomeIcons.Plus}"
+            Command="{Binding AddAnimeCommand}">
 
-        <Button
-          Style="{x:StaticResource FloatingActionButton}"
-          Text="{x:Static constants:FontAwesomeIcons.Gear}"
-          Command="{Binding GoToCommand}"
-          CommandParameter="{x:Type settingsPage:SettingsPage}"/>
+            <Button.Shadow>
+                <Shadow
+                    Brush="Black"
+                    Offset="10,10"
+                    Radius="20"
+                    Opacity="0.2" />
+            </Button.Shadow>
 
-      </HorizontalStackLayout>
-    </Border>
-  </Grid>
+        </Button>
+
+        <Border
+            Grid.Row="0"
+            Margin="20,0,120,20"
+            Style="{x:StaticResource FloatingActionMenu}"
+            StrokeThickness="0">
+
+            <Border.Shadow>
+                <Shadow
+                    Brush="Black"
+                    Offset="10,10"
+                    Radius="20"
+                    Opacity="0.2" />
+            </Border.Shadow>
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="40" />
+            </Border.StrokeShape>
+
+            <HorizontalStackLayout
+                Spacing="10"
+                VerticalOptions="Center">
+
+                <Button
+                    Style="{x:StaticResource FloatingActionButton}"
+                    Text="{x:Static constants:FontAwesomeIcons.User}"
+                    Command="{Binding GoToCommand}"
+                    CommandParameter="{x:Type profileMainPage:ProfilePage}" />
+
+                <Button
+                    Style="{x:StaticResource FloatingActionButton}"
+                    Text="{x:Static constants:FontAwesomeIcons.Gear}"
+                    Command="{Binding GoToCommand}"
+                    CommandParameter="{x:Type settingsPage:SettingsPage}" />
+
+            </HorizontalStackLayout>
+        </Border>
+    </Grid>
 </ContentPage>

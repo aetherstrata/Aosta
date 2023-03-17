@@ -1,11 +1,11 @@
-﻿namespace Aosta.GUI.Features.MainPage;
+namespace Aosta.GUI.Features.MainPage;
 
 public partial class MainPage : ContentPage
 {
-  public MainPage(MainPageViewModel mpvm)
-  {
-    InitializeComponent();
+    public MainPage(MainPageViewModel vm)
+    {
+        InitializeComponent();
 
-    BindingContext = mpvm;
-  }
+        BindingContext = vm;
+    }
 }
