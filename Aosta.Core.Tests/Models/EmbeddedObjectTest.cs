@@ -1,11 +1,14 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Realms;
 
 namespace Aosta.Core.Tests.Models;
 
 public class EmbeddedObjectTest
 {
-    private Realm _realm = null!;
+    private readonly ComplexEmbeddedData _complexEmbed = new()
+    {
+        Description = "Embedded Data"
+    };
 
     private readonly EmbeddedData _simpleEmbed = new()
     {
@@ -13,21 +16,18 @@ public class EmbeddedObjectTest
         Data = "0123456789"
     };
 
-    private readonly ComplexEmbeddedData _complexEmbed = new()
-    {
-        Description = "Embedded Data"
-    };
+    private Realm _realm = null!;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        _complexEmbed.Data.Add(new ()
+        _complexEmbed.Data.Add(new EmbeddedData
         {
             Description = "Data 0",
             Data = "0"
         });
 
-        _complexEmbed.Data.Add(new ()
+        _complexEmbed.Data.Add(new EmbeddedData
         {
             Description = "Data 1",
             Data = "1"
@@ -43,16 +43,16 @@ public class EmbeddedObjectTest
     [Test]
     public void SimpleEmbeddingTest()
     {
-        Guid id = Guid.Empty;
+        var id = Guid.Empty;
 
-        _realm.Write((() =>
+        _realm.Write(() =>
         {
-            id = _realm.Add(new EmbedTestObject()
+            id = _realm.Add(new EmbedTestObject
             {
                 Name = "Test",
                 EmbeddedData = _simpleEmbed
             }).Id;
-        }));
+        });
 
         var testObject = _realm.Find<EmbedTestObject>(id);
 
@@ -68,11 +68,11 @@ public class EmbeddedObjectTest
     [Test]
     public void ComplexEmbeddingTest()
     {
-        Guid id = Guid.Empty;
+        var id = Guid.Empty;
 
         _realm.Write(() =>
         {
-            id = _realm.Add(new EmbedTestObject()
+            id = _realm.Add(new EmbedTestObject
             {
                 Name = "Test",
                 ComplexData = _complexEmbed
@@ -102,8 +102,7 @@ public class EmbeddedObjectTest
 
 public partial class EmbedTestObject : IRealmObject
 {
-    [PrimaryKey]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    [PrimaryKey] public Guid Id { get; set; } = Guid.NewGuid();
 
     public string Name { get; set; } = string.Empty;
 

@@ -1,4 +1,3 @@
-﻿using System.Diagnostics;
 using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
 using JikanDotNet;
@@ -8,11 +7,6 @@ namespace Aosta.Core.Tests.Models.Jikan;
 [TestFixture]
 public class ImageTests
 {
-    private Image _image1 = null!;
-    private Image _image2 = null!;
-
-    private ImagesSet _set = null!;
-
     [SetUp]
     public void SetUp()
     {
@@ -33,16 +27,13 @@ public class ImageTests
             LargeImageUrl = "https://url.com/largeImage.webp",
             MaximumImageUrl = "https://url.com/MaximumImage.webp"
         };
-
-        _set = new ImagesSet()
-        {
-            JPG = _image1,
-            WebP = _image2
-        };
     }
 
+    private Image _image1 = null!;
+    private Image _image2 = null!;
+
     [Test]
-    public void SingleConversionTest()
+    public void ConversionTest()
     {
         var converted = _image1.ToRealmObject();
 
@@ -50,7 +41,7 @@ public class ImageTests
     }
 
     [Test]
-    public void SingeDefaultValuesTest()
+    public void DefaultValuesTest()
     {
         var newImage = new ImageObject(new Image());
 
@@ -64,28 +55,7 @@ public class ImageTests
         });
     }
 
-    [Test]
-    public void SetConversionTest()
-    {
-        var converted = _set.ToRealmObject();
-
-        AssertImagesAreEqual(converted.JPG, _set.JPG);
-        AssertImagesAreEqual(converted.WebP, _set.WebP);
-    }
-
-    [Test]
-    public void SetDefaultValuesTest()
-    {
-        var newSet = new ImageSetObject(new ImagesSet());
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(newSet.JPG, Is.Null);
-            Assert.That(newSet.WebP, Is.Null);
-        });
-    }
-
-    private static void AssertImagesAreEqual(ImageObject converted, Image input)
+    internal static void AssertImagesAreEqual(ImageObject converted, Image input)
     {
         Assert.Multiple(() =>
         {

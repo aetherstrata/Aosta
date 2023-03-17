@@ -1,56 +1,46 @@
 ﻿using System.Windows.Input;
 using Aosta.Core.Data.Enums;
+using Aosta.Core.Data.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Realms;
-using ContentObject = Aosta.Core.Data.Models.ContentObject;
 
 namespace Aosta.GUI.Features.AnimeManualAddPage;
 
-[ObservableObject]
-public partial class AnimeManualAddViewModel
+public partial class AnimeManualAddViewModel : ObservableObject
 {
-  private Realm _realm;
+    [ObservableProperty]
+    private string _animeScore = string.Empty;
 
-  [ObservableProperty]
-  private string _animeTitle = string.Empty;
+    [ObservableProperty]
+    private string _animeTitle = string.Empty;
 
-  [ObservableProperty]
-  private string _animeScore = string.Empty;
+    [ObservableProperty]
+    private string _animeTitleBack = string.Empty;
 
-  [ObservableProperty]
-  private bool _isScoreValid;
+    private readonly CancellationTokenSource _cts = new();
 
-  [ObservableProperty]
-  private string _animeTitleBack = string.Empty;
-
-  public AnimeManualAddViewModel()
-  {
-    this._realm = App.Core.GetInstance();
-  }
-
-  public ICommand AddToRealm => new Command(async () =>
-  {
-    if (IsScoreValid)
+    public AnimeManualAddViewModel()
     {
-      var anime = new ContentObject
-      {
-        Title = AnimeTitle,
-        Score = string.IsNullOrWhiteSpace(AnimeScore) ? -1 :int.Parse((string)AnimeScore),
-        Type = ContentType.TV
-      };
-
-      Guid guid = anime.Id;
-
-
-        await _realm.WriteAsync(() =>
-        {
-          guid = anime.Id;
-
-          _realm.Add(anime);
-        });
-
-        AnimeTitleBack = _realm.Find<ContentObject>(guid).Title;
 
     }
-  });
+
+    public ICommand AddToRealm => new Command(async () =>
+    {
+        var token = _cts.Token;
+
+        var anime = new ContentObject()
+        {
+            Title = AnimeTitle,
+            Score = float.TryParse(AnimeScore, out float score) ? -1 : (int)Math.Floor(score*10),
+            Type = ContentType.TV
+        };
+
+        var guid = anime.Id;
+
+
+        Guid id = await App.Core.WriteContentAsync(anime, token);
+
+        AnimeTitleBack = App.Core.GetInstance().Find<ContentObject>(guid).Title;
+
+        _cts.Dispose();
+    });
 }

@@ -1,4 +1,4 @@
-﻿using Aosta.Core.Data.Models;
+using Aosta.Core.Data.Models;
 using Aosta.Core.Data.Models.Jikan;
 using JikanDotNet;
 
@@ -22,16 +22,20 @@ internal static class JikanExtensions
 
     internal static UrlObject ToRealmObject(this MalUrl url) => new(url);
 
-    internal static void AddRange(this IList<UrlObject> list, ICollection<MalUrl> collection)
+    internal static void AddRange(this IList<UrlObject> list, ICollection<MalUrl>? collection)
     {
+        if (collection is null) return;
+
         foreach (var elem in collection)
         {
             list.Add(elem.ToRealmObject());
         }
     }
 
-    internal static void AddRange(this IList<TitleObject> list, ICollection<TitleEntry> collection)
+    internal static void AddRange(this IList<TitleObject> list, ICollection<TitleEntry>? collection)
     {
+        if (collection is null) return;
+
         foreach (var elem in collection)
         {
             list.Add(elem.ToRealmObject());

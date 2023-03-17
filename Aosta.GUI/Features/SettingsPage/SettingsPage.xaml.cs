@@ -2,10 +2,17 @@ namespace Aosta.GUI.Features.SettingsPage;
 
 public partial class SettingsPage : ContentPage
 {
-  public SettingsPage(SettingsViewModel vm)
-  {
-    InitializeComponent();
+    private SettingsViewModel viewModel;
 
-    BindingContext = vm;
-  }
+    public SettingsPage(SettingsViewModel vm)
+    {
+        InitializeComponent();
+
+        BindingContext = viewModel = vm;
+    }
+
+    protected override void OnAppearing()
+    {
+        viewModel.UpdateRealmCount();
+    }
 }

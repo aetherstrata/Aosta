@@ -1,4 +1,4 @@
-﻿namespace Aosta.GUI.Extensions;
+namespace Aosta.GUI.Extensions;
 
 internal static partial class MauiAppBuilderExtensions
 {

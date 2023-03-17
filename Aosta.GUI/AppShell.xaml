@@ -1,23 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-  x:Class="Aosta.GUI.AppShell"
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:onboardingPage="using:Aosta.GUI.Features.OnboardingPage"
-  xmlns:mainPage="using:Aosta.GUI.Features.MainPage"
-  BackgroundColor="{x:StaticResource BaseColor20B}"
-  FlyoutBehavior="Disabled">
+<?xml version="1.0" encoding="UTF-8"?>
 
-  <ShellContent
-    Title="OnboardingPage"
-    ContentTemplate="{DataTemplate onboardingPage:OnboardingPage}"
-    Route="OnboardingPage">
-  </ShellContent>
-  
-  <ShellContent
-    Title="MainPage"
-    ContentTemplate="{DataTemplate mainPage:MainPage}"
-    Route="MainPage">
-  </ShellContent>
+<Shell
+    x:Class="Aosta.GUI.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:onboardingPage="using:Aosta.GUI.Features.OnboardingPage"
+    xmlns:mainPage="using:Aosta.GUI.Features.MainPage"
+    BackgroundColor="{x:StaticResource BaseColor20B}"
+    FlyoutBehavior="Disabled">
+
+    <ShellContent
+        Title="OnboardingPage"
+        ContentTemplate="{DataTemplate onboardingPage:OnboardingPage}"
+        Route="OnboardingPage" />
+
+    <ShellContent
+        Title="MainPage"
+        ContentTemplate="{DataTemplate mainPage:MainPage}"
+        Route="MainPage" />
 
 </Shell>

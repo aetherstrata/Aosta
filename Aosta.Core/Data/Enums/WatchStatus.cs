@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 namespace Aosta.Core.Data.Enums;
 
@@ -13,13 +13,16 @@ public enum WatchStatus
 
 public static class WatchStatusExtensions
 {
-    public static string ToStringCached(this WatchStatus status) => status switch
+    public static string ToStringCached(this WatchStatus status)
     {
-        WatchStatus.PlanToWatch => "Plan To Watch",
-        WatchStatus.Completed => "Completed",
-        WatchStatus.Dropped => "Dropped",
-        WatchStatus.OnHold => "On Hold",
-        WatchStatus.Watching => "Watching",
-        _ => throw new UnreachableException()
-    };
+        return status switch
+        {
+            WatchStatus.PlanToWatch => "Plan To Watch",
+            WatchStatus.Completed => "Completed",
+            WatchStatus.Dropped => "Dropped",
+            WatchStatus.OnHold => "On Hold",
+            WatchStatus.Watching => "Watching",
+            _ => throw new UnreachableException()
+        };
+    }
 }

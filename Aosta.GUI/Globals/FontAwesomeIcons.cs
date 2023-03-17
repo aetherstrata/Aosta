@@ -1,7 +1,7 @@
-﻿namespace Aosta.GUI.Globals;
+namespace Aosta.GUI.Globals;
 
 /// <summary>
-/// This class contains the unicode representation of all FontAwesome icons used throughout the app
+///     This class contains the unicode representation of all FontAwesome icons used throughout the app
 /// </summary>
 public static class FontAwesomeIcons
 {

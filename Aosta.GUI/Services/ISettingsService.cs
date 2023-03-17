@@ -1,4 +1,4 @@
-﻿namespace Aosta.GUI.Services;
+namespace Aosta.GUI.Services;
 
 public interface ISettingsService
 {

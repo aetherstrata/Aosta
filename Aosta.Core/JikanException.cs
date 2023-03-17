@@ -1,6 +1,5 @@
-﻿namespace Aosta.Core;
+namespace Aosta.Core;
 
 public class JikanException : Exception
 {
-
 }

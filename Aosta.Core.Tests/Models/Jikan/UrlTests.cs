@@ -1,4 +1,4 @@
-﻿using Aosta.Core.Data.Models.Jikan;
+using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
 using JikanDotNet;
 
@@ -7,8 +7,6 @@ namespace Aosta.Core.Tests.Models.Jikan;
 [TestFixture]
 public class UrlTests
 {
-    private MalUrl _url = null!;
-
     [SetUp]
     public void SetUp()
     {
@@ -20,6 +18,8 @@ public class UrlTests
             Name = "name"
         };
     }
+
+    private MalUrl _url = null!;
 
     [Test]
     public void ConversionTest()

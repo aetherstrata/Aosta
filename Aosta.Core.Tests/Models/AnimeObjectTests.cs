@@ -1,23 +1,23 @@
-﻿using Aosta.Core.Data.Enums;
-using ContentObject = Aosta.Core.Data.Models.ContentObject;
+using Aosta.Core.Data.Enums;
+using Aosta.Core.Data.Models;
 
 namespace Aosta.Core.Tests.Models;
 
 [TestFixture]
 public class AnimeObjectTests
 {
-    private AostaDotNet _core;
-
     [SetUp]
     public void SetUp()
     {
-        _core = new(RealmSetup.NewConfig());
+        _core = new AostaDotNet(RealmSetup.NewConfig());
     }
+
+    private AostaDotNet _core;
 
     [Test]
     public async Task CreateNewAnimeTest()
     {
-        Guid id = await _core.WriteContentAsync(new ContentObject());
+        var id = await _core.WriteContentAsync(new ContentObject());
 
         using var realm = _core.GetInstance();
 
@@ -41,7 +41,7 @@ public class AnimeObjectTests
     {
         using var realm = RealmSetup.CreateNewRealm(InitConfig.OneContent);
         Assert.That(realm.All<ContentObject>().First().Type, Is.EqualTo(ContentType.Unknown));
-        realm.Write(() => { realm.All<ContentObject>().First().Type = ContentType.Movie;});
+        realm.Write(() => { realm.All<ContentObject>().First().Type = ContentType.Movie; });
         Assert.That(realm.All<ContentObject>().First().Type, Is.EqualTo(ContentType.Movie));
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Aosta.Core.Data.Models;
 using Realms;
 
@@ -12,19 +12,20 @@ public class RealmSetup
     [OneTimeSetUp]
     public void Initialize()
     {
-        if (Directory.Exists(RealmPath))
-        {
-            Directory.Delete(RealmPath,true);
-        }
+        if (Directory.Exists(RealmPath)) Directory.Delete(RealmPath, true);
         Directory.CreateDirectory(RealmPath);
     }
 
-    internal static RealmConfiguration NewConfig() =>
-        new(Path.Combine(AppContext.BaseDirectory, "realms", $"{Guid.NewGuid()}.realm"));
+    internal static RealmConfiguration NewConfig()
+    {
+        return new RealmConfiguration(Path.Combine(AppContext.BaseDirectory, "realms", $"{Guid.NewGuid()}.realm"));
+    }
 
 
-    internal static Realm CreateNewRealm(InitConfig init = InitConfig.Empty) =>
-        CreateNewRealm(NewConfig(), init);
+    internal static Realm CreateNewRealm(InitConfig init = InitConfig.Empty)
+    {
+        return CreateNewRealm(NewConfig(), init);
+    }
 
     internal static Realm CreateNewRealm(RealmConfigurationBase cfg, InitConfig init = InitConfig.Empty)
     {

@@ -1,75 +1,80 @@
-﻿using System.Windows.Input;
+using System.Diagnostics;
+using System.Windows.Input;
 using Aosta.Core.Data.Enums;
+using Aosta.Core.Data.Models;
 using Aosta.GUI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using JikanDotNet;
 using Realms;
-using ContentObject = Aosta.Core.Data.Models.ContentObject;
+using AiringStatus = Aosta.Core.Data.Enums.AiringStatus;
+using Location = Aosta.GUI.Globals.Location;
 
 namespace Aosta.GUI.Features.SettingsPage;
 
 [ObservableObject]
-public partial class SettingsViewModel
+public partial class SettingsViewModel : RealmViewModel
 {
-    IJikan jikan;
-    ISettingsService settingsService;
+    [ObservableProperty] 
+    private string _anime = "AHA";
 
-    private Realm realm;
+    [ObservableProperty] 
+    private bool _darkModeSwitch = Application.Current?.UserAppTheme == AppTheme.Dark;
 
-    [ObservableProperty] private string _path = Globals.Location.AppData;
+    [ObservableProperty] 
+    private string _objectCount = "N/A";
 
-    [ObservableProperty] private string _objectCount = "N/A";
+    [ObservableProperty] 
+    private string _path = Location.AppData;
 
-    [ObservableProperty] private string _anime = "AHA";
+    private IJikan jikan;
 
-    [ObservableProperty] private bool _darkModeSwitch = Application.Current?.UserAppTheme == AppTheme.Dark;
+    private int count = 1;
+
+    private readonly ISettingsService settingsService;
 
     public SettingsViewModel(ISettingsService settingsService, IJikan jikan)
     {
         this.jikan = jikan;
         this.settingsService = settingsService;
-        this.realm = App.Core.GetInstance();
 
-        ObjectCount = realm.All<ContentObject>().Count().ToString();
-    }
-
-    public async Task LoadAssetToString(string fileName)
-    {
-        using Stream fileStream = await FileSystem.Current.OpenAppPackageFileAsync(fileName);
-        using StreamReader reader = new StreamReader(fileStream);
-
-        Path = await reader.ReadToEndAsync();
+        UpdateRealmCount();
     }
 
     public ICommand GotoOnboardingCommand => new Command(async () =>
     {
-        await AppShell.Current.GoToAsync($"//{nameof(OnboardingPage.OnboardingPage)}");
+        await Shell.Current.GoToAsync($"//{nameof(OnboardingPage.OnboardingPage)}");
     });
 
     public ICommand PrintAnimeCount => new Command(async () =>
     {
-        //File.Delete(Globals.Location.Database);
-
-
-        await realm.WriteAsync(() =>
+        if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
         {
-            var anime = new ContentObject
-            {
-                Type = ContentType.TV,
-                Title = "Paolo"
-            };
-            realm.Add(anime);
-        });
+            await App.Core.WriteJikanContentAsync(count);
 
-        ObjectCount = realm.All<ContentObject>().Count().ToString();
+            await Realm.WriteAsync(() =>
+            {
+                Realm.Add(new ContentObject()
+                {
+                    Title = "Pippo " + count,
+                    JikanResponseData = Realm.Find<JikanContentObject>(count)
+                });
+            });
+
+            count++;
+            ObjectCount = Realm.All<ContentObject>().Count().ToString();
+        }
+        else
+        {
+            Debug.WriteLine("No internet! Jikan will fail...");
+        }
     });
 
     public ICommand DeleteRealmFile => new Command(() =>
     {
-        realm.Dispose();
-        File.Delete(Globals.Location.Database);
-        realm = App.Core.GetInstance();
-        ObjectCount = realm.All<ContentObject>().Count().ToString();
+        Realm.Dispose();
+        File.Delete(Location.Database);
+        base.NewInstance();
+        UpdateRealmCount();
     });
 
     public ICommand UpdateTheme => new Command(async () =>
@@ -77,12 +82,23 @@ public partial class SettingsViewModel
         if (DarkModeSwitch)
         {
             Application.Current!.UserAppTheme = AppTheme.Dark;
-            await settingsService.Save<bool>("useDarkTheme", true);
+            await settingsService.Save("useDarkTheme", true);
         }
         else
         {
             Application.Current!.UserAppTheme = AppTheme.Light;
-            await settingsService.Save<bool>("useDarkTheme", false);
+            await settingsService.Save("useDarkTheme", false);
         }
     });
+
+    public void UpdateRealmCount() => ObjectCount = Realm.All<ContentObject>().Count().ToString();
+
+
+    public async Task LoadAssetToString(string fileName)
+    {
+        using var fileStream = await FileSystem.Current.OpenAppPackageFileAsync(fileName);
+        using var reader = new StreamReader(fileStream);
+
+        Path = await reader.ReadToEndAsync();
+    }
 }

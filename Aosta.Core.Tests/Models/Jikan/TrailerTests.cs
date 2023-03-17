@@ -1,4 +1,4 @@
-﻿using Aosta.Core.Data.Models.Jikan;
+using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
 using JikanDotNet;
 
@@ -7,12 +7,10 @@ namespace Aosta.Core.Tests.Models.Jikan;
 [TestFixture]
 public class TrailerTests
 {
-    private AnimeTrailer _trailer = null!;
-
     [SetUp]
     public void SetUp()
     {
-        _trailer = new()
+        _trailer = new AnimeTrailer
         {
             Url = "Url",
             EmbedUrl = "Embed Url",
@@ -20,6 +18,8 @@ public class TrailerTests
             Image = new Image()
         };
     }
+
+    private AnimeTrailer _trailer = null!;
 
     [Test]
     public void ConversionTest()

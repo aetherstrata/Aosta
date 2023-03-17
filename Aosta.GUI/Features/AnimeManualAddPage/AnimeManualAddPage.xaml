@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:constants="clr-namespace:Aosta.GUI.Globals"
-             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:animeManualAddPage="using:Aosta.GUI.Features.AnimeManualAddPage"
              x:Class="Aosta.GUI.Features.AnimeManualAddPage.AddAnimePage"
              x:DataType="animeManualAddPage:AnimeManualAddViewModel"
@@ -10,38 +10,33 @@
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False"
              Shell.BackgroundColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor60L}}">
-  <Grid>
-    <VerticalStackLayout
-    Margin="10"
-    Spacing="10">
+    <Grid>
+        <VerticalStackLayout
+            Margin="10"
+            Spacing="10">
 
-      <Label 
-      Text="Welcome to .NET MAUI!"
-      VerticalOptions="Center" 
-      HorizontalOptions="Center" />
+            <Label
+                Text="Welcome to .NET MAUI!"
+                VerticalOptions="Center"
+                HorizontalOptions="Center" />
 
-      <Entry 
-        Placeholder="Title" 
-        Text="{Binding AnimeTitle}"/>
-      <Entry 
-        Placeholder="Score" 
-        Text="{Binding AnimeScore}"
-        Keyboard="Numeric">
-        <Entry.Behaviors>
-          <toolkit:NumericValidationBehavior
-            IsValid="{Binding IsScoreValid}"/>
-        </Entry.Behaviors>
-      </Entry>
-      
-      <Label Text="{Binding AnimeTitleBack}"/>
+            <Entry
+                Placeholder="Title"
+                Text="{Binding AnimeTitle}" />
+            <Entry
+                Placeholder="Score"
+                Text="{Binding AnimeScore}"
+                Keyboard="Numeric"/>
 
-    </VerticalStackLayout>
+            <Label Text="{Binding AnimeTitleBack}" />
 
-    <Button
-      Margin="0,0,20,20"
-      Style="{x:StaticResource FloatingActionButton}"
-      Text="{x:Static constants:FontAwesomeIcons.Plus}"
-      Command="{Binding AddToRealm}"/>
+        </VerticalStackLayout>
 
-  </Grid>
+        <Button
+            Margin="0,0,20,20"
+            Style="{x:StaticResource FloatingActionButton}"
+            Text="{x:Static constants:FontAwesomeIcons.Plus}"
+            Command="{Binding AddToRealm}" />
+
+    </Grid>
 </ContentPage>

@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using JikanDotNet;
 
 namespace Aosta.Core.Data.Enums;
@@ -15,21 +15,27 @@ public enum Seasons
 
 internal static class SeasonExtensions
 {
-    internal static string ToStringCached(this Seasons season) => season switch
+    internal static string ToStringCached(this Seasons season)
     {
-        Seasons.Winter => "Winter",
-        Seasons.Spring => "Spring",
-        Seasons.Summer => "Summer",
-        Seasons.Fall => "Fall",
-        _ => throw new UnreachableException()
-    };
+        return season switch
+        {
+            Seasons.Winter => "Winter",
+            Seasons.Spring => "Spring",
+            Seasons.Summer => "Summer",
+            Seasons.Fall => "Fall",
+            _ => throw new UnreachableException()
+        };
+    }
 
-    internal static Seasons ToLocalEnum(this Season? jikan) => jikan switch
+    internal static Seasons ToLocalEnum(this Season? jikan)
     {
-        Season.Fall => Seasons.Fall,
-        Season.Spring => Seasons.Spring,
-        Season.Summer => Seasons.Summer,
-        Season.Winter => Seasons.Winter,
-        _ => throw new UnreachableException()
-    };
+        return jikan switch
+        {
+            Season.Fall => Seasons.Fall,
+            Season.Spring => Seasons.Spring,
+            Season.Summer => Seasons.Summer,
+            Season.Winter => Seasons.Winter,
+            _ => Seasons.None
+        };
+    }
 }
