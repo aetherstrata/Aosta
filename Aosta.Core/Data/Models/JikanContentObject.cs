@@ -26,7 +26,7 @@ public partial class JikanContentObject : IRealmObject
         Airing = jikanAnime.Airing;
         Aired = jikanAnime.Aired?.ToRealmObject();
         Duration = jikanAnime.Duration; //TODO: implement parsing
-        Rating = ParseToRating(jikanAnime.Rating);
+        AgeRating = ParseToRating(jikanAnime.Rating);
         Score = jikanAnime.Score;
         ScoredBy = jikanAnime.ScoredBy;
         Rank = jikanAnime.Rank;
@@ -117,7 +117,7 @@ public partial class JikanContentObject : IRealmObject
 
     /// <summary>Anime's age rating.</summary>
     [Ignored]
-    public AudienceRating Rating
+    public AudienceRating AgeRating
     {
         get => (AudienceRating)_Rating;
         set => _Rating = (int)value;
