@@ -35,6 +35,24 @@ public partial class OnboardingScreenViewModel : ObservableObject
                 OnboardingTitle = "Second page",
                 OnboardingDescription = "Description number 2",
                 OnboardingImage = "hehe.jpg"
+            },
+            new OnboardingScreenModel
+            {
+                OnboardingTitle = "Third page",
+                OnboardingDescription = "Description number 3",
+                OnboardingImage = "hehe.jpg"
+            },
+            new OnboardingScreenModel
+            {
+                OnboardingTitle = "Fourth page",
+                OnboardingDescription = "Description number 4",
+                OnboardingImage = "hehe.jpg"
+            },
+            new OnboardingScreenModel
+            {
+                OnboardingTitle = "Fifth page",
+                OnboardingDescription = "Description number 5",
+                OnboardingImage = "hehe.jpg"
             }
         });
     }
