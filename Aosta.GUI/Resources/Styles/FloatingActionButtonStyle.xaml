@@ -5,6 +5,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Style x:Key="FloatingActionButton" TargetType="Button">
+        <Setter Property="BorderWidth" Value="0" />
         <Setter Property="HorizontalOptions" Value="End" />
         <Setter Property="VerticalOptions" Value="End" />
         <Setter Property="HeightRequest" Value="80" />
