@@ -18,16 +18,16 @@
 
     <ContentPage.Content>
         <Grid>
-            <CarouselView
-                Loop="False"
-                IndicatorView="OnboardingIndicator"
-                Position="{Binding Position}"
-                PositionChangedCommand="{Binding PositionChangedCommand}"
-                ItemsSource="{Binding OnboardingScreens}">
+            <CarouselView Loop="False"
+                          IndicatorView="OnboardingIndicator"
+                          Position="{Binding Position}"
+                          PositionChangedCommand="{Binding PositionChangedCommand}"
+                          ItemsSource="{Binding OnboardingScreens}">
 
                 <CarouselView.ItemTemplate>
                     <DataTemplate x:DataType="onboardingPage:OnboardingScreenModel">
-                        <VerticalStackLayout Spacing="15"
+                        <VerticalStackLayout VerticalOptions="Center"
+                                             Spacing="15"
                                              Margin="15">
 
                             <Image Source="{Binding OnboardingImage}"
@@ -35,16 +35,16 @@
                                    Margin="0,0,0,15"
                                    MaximumHeightRequest="400"/>
 
+                            <Label Text="{Binding OnboardingTitle}"
+                                   FontFamily="ComfortaaBold"
+                                   FontSize="28"
+                                   HorizontalTextAlignment="Center" />
 
-                            <Label  Text="{Binding OnboardingTitle}"
-                                    FontFamily="ComfortaaBold"
-                                    FontSize="28"
-                                    HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding OnboardingDescription}"
+                                   FontFamily="ComfortaaRegular"
+                                   FontSize="20"
+                                   HorizontalTextAlignment="Center" />
 
-                            <Label  Text="{Binding OnboardingDescription}"
-                                    FontFamily="ComfortaaRegular"
-                                    FontSize="20"
-                                    HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
@@ -58,27 +58,19 @@
                            Margin="15"
                            SelectedIndicatorColor="{x:StaticResource BaseColor}" />
 
-            <Frame Margin="25"
-                   VerticalOptions="End"
-                   HorizontalOptions="End"
-                   HeightRequest="70"
-                   WidthRequest="70"
-                   CornerRadius="35">
-
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NextPageCommand}" />
-                </Frame.GestureRecognizers>
-
-                <Image>
-                    <Image.Source>
-                        <FontImageSource
-                                FontFamily="FontAwesome"
-                                Glyph="{Binding ButtonGlyph}"
-                                Color="{StaticResource BaseColor}" />
-                    </Image.Source>
-                </Image>
-
-            </Frame>
+            <Button Margin="25"
+                    HeightRequest="70"
+                    WidthRequest="70"
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                    CornerRadius="35"
+                    FontFamily="FontAwesome"
+                    FontAttributes="None"
+                    FontSize="30"
+                    Text="{Binding ButtonGlyph}"
+                    Command="{Binding NextPageCommand}">
+                
+            </Button>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
