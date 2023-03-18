@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Aosta.Core.Tests.Enums;
 
 [TestFixture]
-public class SeasonsTests
+public class SeasonsTests : IEnumTests
 {
     [Test]
     public void ValuesChangedTest()
