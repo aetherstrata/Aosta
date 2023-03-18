@@ -17,7 +17,7 @@ public class AnimeObjectTests
     [Test]
     public async Task CreateNewAnimeTest()
     {
-        var id = await _core.WriteContentAsync(new ContentObject());
+        var id = await _core.CreateLocalContentAsync(new ContentObject());
 
         using var realm = _core.GetInstance();
 

@@ -1,3 +1,4 @@
+using Aosta.GUI.Features.AnimeManualAddPage;
 using Aosta.GUI.Features.ProfileMainPage;
 using Aosta.GUI.Features.SettingsPage;
 
@@ -11,5 +12,6 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
         Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
+        Routing.RegisterRoute(nameof(AddAnimePage), typeof(AddAnimePage));
     }
 }

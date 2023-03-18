@@ -49,7 +49,7 @@ public partial class SettingsViewModel : RealmViewModel
     {
         if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
         {
-            await App.Core.WriteJikanContentAsync(count);
+            await App.Core.CreateJikanContentAsync(count);
 
             await Realm.WriteAsync(() =>
             {
@@ -69,11 +69,12 @@ public partial class SettingsViewModel : RealmViewModel
         }
     });
 
-    public ICommand DeleteRealmFile => new Command(() =>
+    public ICommand DeleteAllData => new Command(async () =>
     {
-        Realm.Dispose();
-        File.Delete(Location.Database);
-        base.NewInstance();
+        await Realm.WriteAsync(() =>
+        {
+            Realm.RemoveAll();
+        });
         UpdateRealmCount();
     });
 
@@ -92,7 +93,6 @@ public partial class SettingsViewModel : RealmViewModel
     });
 
     public void UpdateRealmCount() => ObjectCount = Realm.All<ContentObject>().Count().ToString();
-
 
     public async Task LoadAssetToString(string fileName)
     {

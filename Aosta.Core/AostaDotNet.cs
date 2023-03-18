@@ -3,6 +3,7 @@ using Aosta.Core.Data.Models;
 using Aosta.Core.Extensions;
 using JikanDotNet;
 using Realms;
+using Realms.Exceptions;
 
 namespace Aosta.Core;
 
@@ -61,11 +62,23 @@ public class AostaDotNet
         */
     }
 
+    /// <summary>
+    /// Retrieve new data about a content from MyAnimeList
+    /// </summary>
+    /// <param name="malId">The ID of this content on MyAnimeList</param>
+    /// <remarks>By default, this does not override local user data. If you want that, set <c>overrideLocal</c> to true. </remarks>
+    /// <exception cref="ArgumentException">The specified <paramref name="malId"/> is not present in the Realm.</exception>
     public Task UpdateJikanContentAsync(long malId, CancellationToken ct = default)
     {
         return UpdateJikanContentAsync(malId, false, ct);
     }
 
+    /// <summary>
+    /// Retrieve new data about a content from MyAnimeList
+    /// </summary>
+    /// <param name="malId">The ID of this content on MyAnimeList</param>
+    /// <param name="overrideLocal">If this is set to true, local user data will be overridden with new data from MyAnimeList</param>
+    /// <exception cref="ArgumentException">The specified <paramref name="malId"/> is not present in the Realm.</exception>
     public async Task UpdateJikanContentAsync(long malId, bool overrideLocal, CancellationToken ct = default)
     {
         // Throw if task was cancelled already
@@ -122,12 +135,12 @@ public class AostaDotNet
         }, ct);
     }
 
-    public Task<Guid> WriteJikanContentAsync(long malId, CancellationToken ct = default)
+    public Task<Guid> CreateJikanContentAsync(long malId, CancellationToken ct = default)
     {
-        return WriteJikanContentAsync(malId, true, ct);
+        return CreateJikanContentAsync(malId, true, ct);
     }
 
-    public async Task<Guid> WriteJikanContentAsync(long malId, bool update, CancellationToken ct = default)
+    public async Task<Guid> CreateJikanContentAsync(long malId, bool update, CancellationToken ct = default)
     {
         //Throw if task was cancelled already
         ct.ThrowIfCancellationRequested();
@@ -139,15 +152,15 @@ public class AostaDotNet
         Debug.WriteLine($"Got anime: {response.Data.Titles.First()} ({response.Data.MalId})");
 
         //Write the data to local realm and return the primary key
-        return await WriteJikanContentAsync(response.Data, update, ct);
+        return await CreateJikanContentAsync(response.Data, update, ct);
     }
 
-    public Task<Guid> WriteJikanContentAsync(Anime jikanAnime, CancellationToken ct = default)
+    public Task<Guid> CreateJikanContentAsync(Anime jikanAnime, CancellationToken ct = default)
     {
-        return WriteJikanContentAsync(jikanAnime, true, ct);
+        return CreateJikanContentAsync(jikanAnime, true, ct);
     }
 
-    public async Task<Guid> WriteJikanContentAsync(Anime jikanAnime, bool update, CancellationToken ct = default)
+    public async Task<Guid> CreateJikanContentAsync(Anime jikanAnime, bool update, CancellationToken ct = default)
     {
         //Throw if task was cancelled already
         ct.ThrowIfCancellationRequested();
@@ -171,12 +184,12 @@ public class AostaDotNet
         return id;
     }
 
-    public Task<Guid> WriteContentAsync(ContentObject content, CancellationToken ct = default)
+    public Task<Guid> CreateLocalContentAsync(ContentObject content, CancellationToken ct = default)
     {
-        return WriteContentAsync(content, false, ct);
+        return CreateLocalContentAsync(content, false, ct);
     }
 
-    public async Task<Guid> WriteContentAsync(ContentObject content, bool update, CancellationToken ct = default)
+    public async Task<Guid> CreateLocalContentAsync(ContentObject content, bool update, CancellationToken ct = default)
     {
         //Throw if task was cancelled already
         ct.ThrowIfCancellationRequested();
@@ -221,6 +234,26 @@ public class AostaDotNet
     {
         using var realm = GetInstance();
         return realm.Find<JikanContentObject>(malId) != null;
+    }
+
+    public bool TryDeleteRealm()
+    {
+        try
+        {
+            DeleteRealm();
+        }
+        catch (RealmInUseException ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
+
+        return true; 
+    }
+
+    public void DeleteRealm()
+    {
+        Realm.DeleteRealm(RealmConfig);
     }
 
     public Realm GetInstance()

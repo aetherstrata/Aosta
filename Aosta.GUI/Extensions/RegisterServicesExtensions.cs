@@ -51,8 +51,6 @@ internal static partial class MauiAppBuilderExtensions
 
         #endregion
 
-        builder.Services.AddSingletonWithShellRoute<AddAnimePage, AnimeManualAddViewModel>(nameof(AddAnimePage));
-
         // Default method
         //builder.Services.Add();
         // Scoped objects are the same within a request, but different across different requests.

@@ -17,7 +17,7 @@ internal static class Program
 
     public static async Task Main(string[] args)
     {
-        await Core.WriteJikanContentAsync(1);
+        await Core.CreateJikanContentAsync(1);
 
         /*
         using var realm = Core.GetInstance();
