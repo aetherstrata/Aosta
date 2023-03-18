@@ -8,8 +8,6 @@ namespace Aosta.Core.Tests.Enums;
 [TestFixture]
 public class SeasonsTests
 {
-    //TODO: fai test sugli enum
-
     [Test]
     public void ValuesChangedTest()
     {
