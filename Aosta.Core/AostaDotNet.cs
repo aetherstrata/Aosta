@@ -211,8 +211,6 @@ public class AostaDotNet
 
     public Task WriteSingleEpisodeAsync(int animeId, int episodeId)
     {
-        //TODO: da finire
-
         throw new NotImplementedException();
 
         /*
