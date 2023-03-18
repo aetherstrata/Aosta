@@ -1,18 +1,20 @@
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Aosta.GUI.Globals;
 using Aosta.GUI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Aosta.GUI.Features.OnboardingPage;
 
-[ObservableObject]
-public partial class OnboardingScreenViewModel
+public partial class OnboardingScreenViewModel : ObservableObject
 {
-    [ObservableProperty] private string _buttonGlyph = FontAwesomeIcons.ArrowRight;
+    [ObservableProperty]
+    private string _buttonGlyph = FontAwesomeIcons.ArrowRight;
 
-    [ObservableProperty] private List<OnboardingScreenModel> _onboardingScreens = new();
+    [ObservableProperty]
+    private List<OnboardingScreenModel> _onboardingScreens = new();
 
-    [ObservableProperty] private int _position;
+    [ObservableProperty]
+    private int _position;
 
     private readonly ISettingsService settingsService;
 

@@ -1,4 +1,4 @@
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Aosta.Core.Data.Enums;
 using Aosta.Core.Data.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -16,9 +16,6 @@ public partial class AnimeManualAddViewModel : ObservableObject
     [ObservableProperty]
     private string _animeTitleBack = string.Empty;
 
-    [ObservableProperty]
-    private bool _isScoreValid;
-
     private readonly CancellationTokenSource _cts = new();
 
     public AnimeManualAddViewModel()
@@ -30,25 +27,20 @@ public partial class AnimeManualAddViewModel : ObservableObject
     {
         var token = _cts.Token;
 
-        if (IsScoreValid)
+        var anime = new ContentObject()
         {
-            var anime = new ContentObject()
-            {
-                Title = AnimeTitle,
-                Score = string.IsNullOrWhiteSpace(AnimeScore) ? -1 : int.Parse(AnimeScore),
-                Type = ContentType.TV
-            };
+            Title = AnimeTitle,
+            Score = float.TryParse(AnimeScore, out float score) ? -1 : (int)Math.Floor(score*10),
+            Type = ContentType.TV
+        };
 
-            var guid = anime.Id;
+        var guid = anime.Id;
 
 
-            Guid id = await App.Core.WriteContentAsync(anime, token);
+        Guid id = await App.Core.WriteContentAsync(anime, token);
 
-            var palle = App.Core.GetInstance().All<ContentObject>();
+        AnimeTitleBack = App.Core.GetInstance().Find<ContentObject>(guid).Title;
 
-            _cts.Dispose();
-
-            AnimeTitleBack = App.Core.GetInstance().Find<ContentObject>(guid).Title;
-        }
+        _cts.Dispose();
     });
 }
