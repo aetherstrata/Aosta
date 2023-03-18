@@ -6,8 +6,8 @@ public enum AiringStatus
 {
     NotAvailable = -1,
     Cancelled,
-    NotYetAired,
     FinishedAiring,
+    NotYetAired,
     CurrentlyAiring
 }
 
@@ -15,11 +15,11 @@ internal static class AiringStatusExtensions
 {
     internal static string ToStringCached(this AiringStatus status) => status switch
     {
-        AiringStatus.NotAvailable => "Not Available",
-        AiringStatus.CurrentlyAiring => "Currently Airing",
-        AiringStatus.FinishedAiring => "Finished Airing",
-        AiringStatus.NotYetAired => "Not Yet Aired",
+        AiringStatus.NotAvailable => "Not available",
         AiringStatus.Cancelled => "Cancelled",
+        AiringStatus.FinishedAiring => "Finished airing",
+        AiringStatus.NotYetAired => "Not yet aired",
+        AiringStatus.CurrentlyAiring => "Currently airing",
         _ => throw new UnreachableException()
     };
 }

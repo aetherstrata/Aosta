@@ -22,7 +22,6 @@ public class ContentTypeTests : IEnumTests
         });
     }
 
-
     [Test]
     public void QuantityChangedTest()
     {
