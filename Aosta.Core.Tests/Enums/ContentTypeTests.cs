@@ -1,5 +1,4 @@
 using Aosta.Core.Data.Enums;
-using Aosta.Core.Data.Models;
 using Aosta.Core.Extensions;
 using JikanDotNet;
 
@@ -46,17 +45,23 @@ public class ContentTypeTests
     }
 
     [Test]
-    public void StringParseTest()
+    public void JikanStringParseTest()
     {
-        var content = new Anime { MalId = 0, Type = "TV", }.ToRealmObject();
-
+        var content = new Anime { MalId = 0, Type = "TV" }.ToRealmObject();
         Assert.That(content.Type, Is.EqualTo(ContentType.TV));
     }
 
     [Test]
-    public void InvalidStringParseTest()
+    public void JikanInvalidStringParseTest()
     {
-        Assert.Throws<ArgumentException>(() => Enum.Parse<ContentType>(string.Empty));
-        Assert.Throws<ArgumentException>(() => Enum.Parse<ContentType>("Invalid"));
+        var content = new Anime { MalId = 0, Type = "Invalid" }.ToRealmObject();
+        Assert.That(content.Type, Is.EqualTo(ContentType.Unknown));
+    }
+
+    [Test]
+    public void JikanNullStringParseTest()
+    {
+        var content = new Anime { MalId = 0, Type = null }.ToRealmObject();
+        Assert.That(content.Type, Is.EqualTo(ContentType.Unknown));
     }
 }
