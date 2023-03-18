@@ -19,6 +19,7 @@ internal static class SeasonExtensions
     {
         return season switch
         {
+            Seasons.None => "None",
             Seasons.Winter => "Winter",
             Seasons.Spring => "Spring",
             Seasons.Summer => "Summer",
