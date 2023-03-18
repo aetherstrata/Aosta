@@ -5,7 +5,7 @@ using JikanDotNet;
 namespace Aosta.Core.Tests.Enums;
 
 [TestFixture]
-public class ContentTypeTests
+public class ContentTypeTests : IEnumTests
 {
     [Test]
     public void ValuesChangedTest()
