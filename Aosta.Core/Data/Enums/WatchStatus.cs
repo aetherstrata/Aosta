@@ -5,8 +5,8 @@ namespace Aosta.Core.Data.Enums;
 public enum WatchStatus
 {
     PlanToWatch = -1,
-    Completed,
     Dropped,
+    Completed,
     OnHold,
     Watching
 }
@@ -17,9 +17,9 @@ public static class WatchStatusExtensions
     {
         return status switch
         {
-            WatchStatus.PlanToWatch => "Plan To Watch",
-            WatchStatus.Completed => "Completed",
+            WatchStatus.PlanToWatch => "Plan to watch",
             WatchStatus.Dropped => "Dropped",
+            WatchStatus.Completed => "Completed",
             WatchStatus.OnHold => "On Hold",
             WatchStatus.Watching => "Watching",
             _ => throw new UnreachableException()
