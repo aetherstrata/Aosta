@@ -16,16 +16,14 @@ public static class RealmExtensions
         return realm.All<T>().FirstOrDefault();
     }
 
-
     public static IOrderedQueryable<ContentObject> OrderBy(this IQueryable<ContentObject> query, AnimeOrdering ordering)
     {
         return ordering switch
         {
-            AnimeOrdering.ByTitle => query.OrderBy(x => x.Title).ThenBy(x => x.JikanResponseData.DefaultTitle)
-                .ThenBy(x => x.Id),
+            AnimeOrdering.ByTitle => query.OrderBy(x => x.Title).ThenBy(x => x.Id),
             AnimeOrdering.ByScore => query.OrderBy(x => x.Score).ThenBy(x => x.Id),
             AnimeOrdering.ByYear => query.OrderBy(x => x.Year).ThenBy(x => x.Id),
-            AnimeOrdering.ByAiringStatus => query.OrderBy(x => x.AiringStatus).ThenBy(x => x.Id),
+            AnimeOrdering.ByAiringStatus => query.OrderBy(x => x._AiringStatus).ThenBy(x => x.Id),
             AnimeOrdering.ByWatchStatus => query.OrderByDescending(x => x._WatchStatus).ThenBy(x => x.Id),
             _ => query.OrderBy(x => x.Id)
         };

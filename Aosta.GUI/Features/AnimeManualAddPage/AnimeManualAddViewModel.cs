@@ -36,7 +36,7 @@ public partial class AnimeManualAddViewModel : ObservableObject
 
         var guid = anime.Id;
 
-        Guid id = await App.Core.WriteContentAsync(anime, token);
+        Guid id = await App.Core.CreateLocalContentAsync(anime, token);
 
         AnimeTitleBack = App.Core.GetInstance().Find<ContentObject>(guid).Title;
 

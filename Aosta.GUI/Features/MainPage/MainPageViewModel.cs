@@ -1,6 +1,7 @@
 using System.Windows.Input;
 using Aosta.Core.Data.Models;
 using Aosta.Core.Data.Ordering;
+using Aosta.Core.Extensions;
 using Aosta.GUI.Features.AnimeManualAddPage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Realms;
@@ -14,7 +15,7 @@ public partial class MainPageViewModel : RealmViewModel
 
     public MainPageViewModel()
     {
-        RealmAnimeList = Realm.All<ContentObject>();
+        RealmAnimeList = Realm.All<ContentObject>().OrderBy(AnimeOrdering.ByTitle);
     }
 
     public ICommand AddAnimeCommand => new Command(async () =>
@@ -26,12 +27,4 @@ public partial class MainPageViewModel : RealmViewModel
     {
         await Shell.Current.GoToAsync($"{pageType.Name}");
     });
-}
-
-public static class SOS
-{
-    internal static IOrderedEnumerable<ContentObject> OrderBy(this IQueryable<ContentObject> query, AnimeOrdering order)
-    {
-        return query.AsEnumerable().OrderBy(x => x.Title);
-    }
 }

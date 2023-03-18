@@ -68,7 +68,7 @@
 
                 <Button Text="Print Anime Title" Command="{Binding PrintAnimeCount}" />
 
-                <Button Text="Delete Realm File" Command="{Binding DeleteRealmFile}" />
+                <Button Text="Delete All Data" Command="{Binding DeleteAllData}" />
 
                 <Label
                     Text="{Binding Anime}"
