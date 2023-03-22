@@ -1,18 +1,27 @@
-namespace Aosta.Core;
+namespace Aosta.Core.API;
 
+/// <summary> <see cref="TaskLimiter"/> configuration class </summary>
+/// <seealso cref="CompositeTaskLimiter"/>
 public class TaskLimiterConfiguration : IEquatable<TaskLimiterConfiguration>, IComparable<TaskLimiterConfiguration>, IComparable
 {
+    /// <summary> Maximum number of task executions per unit of time </summary>
     public required int Count { get; init; }
-    public required TimeSpan TimeSpan{ get; init; }
 
-    internal static List<TaskLimiterConfiguration> DefaultConfiguration { get; } = new()
+    /// <summary> Unit of time </summary>
+    public required TimeSpan TimeSpan { get; init; }
+
+    /// <summary> Maximum execution rate of the configuration </summary>
+    /// <remarks> Rate is expressed in times per second </remarks>
+    public double MaximumRate => Count / TimeSpan.TotalSeconds;
+
+    internal static IEnumerable<TaskLimiterConfiguration> DefaultConfiguration { get; } = new List<TaskLimiterConfiguration>()
     {
-        new TaskLimiterConfiguration
+        new TaskLimiterConfiguration()
         {
             Count = 1,
-            TimeSpan = TimeSpan.FromMilliseconds(750)
+            TimeSpan = TimeSpan.FromMilliseconds(500)
         },
-        new TaskLimiterConfiguration
+        new TaskLimiterConfiguration()
         {
             Count = 4,
             TimeSpan = TimeSpan.FromMilliseconds(4000)
@@ -59,7 +68,7 @@ public class TaskLimiterConfiguration : IEquatable<TaskLimiterConfiguration>, IC
     {
         if (ReferenceEquals(this, other)) return 0;
         if (ReferenceEquals(null, other)) return 1;
-        return TimeSpan.CompareTo(other.TimeSpan);
+        return MaximumRate.CompareTo(other.MaximumRate);
     }
 
     public int CompareTo(object? obj)
