@@ -1,5 +1,8 @@
-namespace Aosta.Core;
+namespace Aosta.Core.API;
 
+/// <summary>
+/// Base task limiter implementation
+/// </summary>
 internal interface ITaskLimiter
 {
     Task LimitAsync(Func<Task> taskFactory);

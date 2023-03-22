@@ -1,11 +1,13 @@
-using System.Diagnostics;
+namespace Aosta.Core.API;
 
-namespace Aosta.Core;
-
+/// <summary>
+/// A task limiter that throttles task executions using <see cref="SemaphoreSlim"/> with respect to <see cref="TaskLimiterConfiguration"/>
+/// </summary>
 internal class TaskLimiter : ITaskLimiter, IEquatable<TaskLimiter>, IComparable<TaskLimiter>, IComparable
 {
     private readonly SemaphoreSlim _semaphore;
 
+    /// <summary> Configuration of the task limiter </summary>
     internal TaskLimiterConfiguration Configuration { get; }
 
     internal TaskLimiter(TaskLimiterConfiguration config)
@@ -15,6 +17,10 @@ internal class TaskLimiter : ITaskLimiter, IEquatable<TaskLimiter>, IComparable<
         _semaphore = new SemaphoreSlim(Configuration.Count, Configuration.Count);
     }
 
+    /// <summary>
+    /// Throttle the passed task execution according to the limiter <see cref="Configuration"/>
+    /// </summary>
+    /// <param name="taskFactory">Delegate that represents a method that returns a <see cref="Task"/></param>
     public async Task LimitAsync(Func<Task> taskFactory)
     {
         await _semaphore.WaitAsync().ConfigureAwait(false);
@@ -31,6 +37,11 @@ internal class TaskLimiter : ITaskLimiter, IEquatable<TaskLimiter>, IComparable<
         await task;
     }
 
+    /// <summary>
+    /// Throttle the passed task execution according to the limiter <see cref="Configuration"/>
+    /// </summary>
+    /// <param name="taskFactory">Delegate that represents a method that returns a <see cref="Task{T}"/></param>
+    /// <returns> The awaited <see cref="Task{T}"/> result </returns>
     public async Task<T> LimitAsync<T>(Func<Task<T>> taskFactory)
     {
         await _semaphore.WaitAsync().ConfigureAwait(false);
