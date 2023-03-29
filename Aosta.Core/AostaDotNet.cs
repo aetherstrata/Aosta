@@ -14,10 +14,14 @@ namespace Aosta.Core;
 /// </summary>
 public class AostaDotNet
 {
-    public AostaDotNet(string? dataLocation = null)
+    public AostaDotNet(string? dataLocation = null) : this(new AostaConfiguration(dataLocation ?? AppContext.BaseDirectory))
     {
-        Configuration = new(dataLocation ?? AppContext.BaseDirectory);
+    }
 
+    internal AostaDotNet(AostaConfiguration configuration)
+    {
+        Configuration = configuration;
+        Limiter = new CompositeTaskLimiter(TaskLimiterConfiguration.Default);
         Logger = Configuration.LoggerConfig.CreateLogger();
     }
 
