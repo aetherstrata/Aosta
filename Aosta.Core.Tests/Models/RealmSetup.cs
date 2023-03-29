@@ -7,7 +7,13 @@ namespace Aosta.Core.Tests.Models;
 [SetUpFixture]
 public class RealmSetup
 {
+    private static readonly string InstancePath = Path.Combine(AppContext.BaseDirectory, "instances");
+
+    private static string NewInstancePath => Path.Combine(InstancePath, $"{Guid.NewGuid}");
+
     private static readonly string RealmPath = Path.Combine(AppContext.BaseDirectory, "realms");
+
+    private static string NewRealmPath => Path.Combine(RealmPath, $"{Guid.NewGuid()}.realm");
 
     [OneTimeSetUp]
     public void Initialize()
@@ -16,11 +22,17 @@ public class RealmSetup
         Directory.CreateDirectory(RealmPath);
     }
 
-    internal static RealmConfiguration NewConfig()
+    internal static AostaDotNet NewInstance()
     {
-        return new RealmConfiguration(Path.Combine(AppContext.BaseDirectory, "realms", $"{Guid.NewGuid()}.realm"));
+        string path = NewInstancePath;
+        Directory.CreateDirectory(path);
+        return new AostaDotNet(path);
     }
 
+    internal static RealmConfiguration NewConfig()
+    {
+        return new RealmConfiguration(NewRealmPath);
+    }
 
     internal static Realm CreateNewRealm(InitConfig init = InitConfig.Empty)
     {
