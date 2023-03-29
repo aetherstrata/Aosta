@@ -1,7 +1,7 @@
 using System.Diagnostics;
-using Aosta.Core.API;
 using Aosta.Core.Data.Models;
 using Aosta.Core.Extensions;
+using Aosta.Core.Limiter;
 using JikanDotNet;
 using Realms;
 using Realms.Exceptions;
@@ -22,17 +22,19 @@ public class AostaDotNet
     /// <summary> Realm configuration </summary>
     internal RealmConfigurationBase RealmConfig { get; }
 
-    public AostaDotNet() : this(new RealmConfiguration("aosta.realm"), TaskLimiterConfiguration.DefaultConfiguration) { }
+    public AostaDotNet() : this(new RealmConfiguration("aosta.realm"), TaskLimiterConfiguration.Default) { }
 
-    public AostaDotNet(RealmConfigurationBase realmConfig) : this(realmConfig, TaskLimiterConfiguration.DefaultConfiguration) { }
+    public AostaDotNet(RealmConfigurationBase realmConfig) : this(realmConfig, TaskLimiterConfiguration.Default) { }
 
     public AostaDotNet(RealmConfigurationBase realmConfig, IEnumerable<TaskLimiterConfiguration> limiterConfigurations)
     {
         RealmConfig = realmConfig;
 
-        Limiter = new CompositeTaskLimiter(limiterConfigurations);
+        var configList = limiterConfigurations.ToList();
 
-        foreach (var taskLimiterConfiguration in limiterConfigurations)
+        Limiter = new CompositeTaskLimiter(configList);
+
+        foreach (var taskLimiterConfiguration in configList)
         {
             Console.WriteLine(taskLimiterConfiguration);
         }
