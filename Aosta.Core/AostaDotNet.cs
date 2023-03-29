@@ -4,6 +4,7 @@ using Aosta.Core.Extensions;
 using JikanDotNet;
 using Realms;
 using Realms.Exceptions;
+using Serilog;
 
 namespace Aosta.Core;
 
@@ -12,18 +13,20 @@ namespace Aosta.Core;
 /// </summary>
 public class AostaDotNet
 {
-    public AostaDotNet() : this(new RealmConfiguration("aosta.realm")) { }
-
-    public AostaDotNet(RealmConfigurationBase config)
+    public AostaDotNet(string? dataLocation = null)
     {
-        RealmConfig = config;
+        Configuration = new(dataLocation ?? AppContext.BaseDirectory);
+
+        Logger = Configuration.LoggerConfig.CreateLogger();
     }
+
+    public AostaConfiguration Configuration { get; }
 
     /// <summary> Jikan.net client </summary>
     internal IJikan Jikan { get; } = new Jikan();
 
-    /// <summary> Realm configuration </summary>
-    internal RealmConfigurationBase RealmConfig { get; }
+    /// <summary> Serilog logger instance </summary>
+    public ILogger Logger { get; }
 
     #region Jikan tasks
 
@@ -93,7 +96,7 @@ public class AostaDotNet
         // Always await responses, never use .Result
         var response = await Jikan.GetAnimeAsync(malId, ct);
 
-        Debug.WriteLine($"Got anime: {response.Data.Titles.First()} ({response.Data.MalId})");
+        Logger.Information("Got anime: {0} ({1})", response.Data.Titles.First().Title, response.Data.MalId);
 
         // Update the entities with retrieved data
         await UpdateJikanContentAsync(response.Data, overrideLocal, ct);
@@ -149,7 +152,7 @@ public class AostaDotNet
         //Always await responses, never use .Result
         var response = await Jikan.GetAnimeAsync(malId, ct);
 
-        Debug.WriteLine($"Got anime: {response.Data.Titles.First()} ({response.Data.MalId})");
+        Logger.Information("Got anime: {0} ({1})", response.Data.Titles.First().Title, response.Data.MalId);
 
         //Write the data to local realm and return the primary key
         return await CreateJikanContentAsync(response.Data, update, ct);
@@ -251,11 +254,11 @@ public class AostaDotNet
 
     public void DeleteRealm()
     {
-        Realm.DeleteRealm(RealmConfig);
+        Realm.DeleteRealm(Configuration.RealmConfig);
     }
 
     public Realm GetInstance()
     {
-        return Realm.GetInstance(RealmConfig);
+        return Realm.GetInstance(Configuration.RealmConfig);
     }
 }
