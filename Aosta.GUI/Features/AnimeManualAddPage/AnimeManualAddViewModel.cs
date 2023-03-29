@@ -16,7 +16,7 @@ public partial class AnimeManualAddViewModel : ObservableObject
     [ObservableProperty]
     private string _animeTitleBack = string.Empty;
 
-    private readonly CancellationTokenSource _cts = new();
+    private CancellationTokenSource _cts = null!;
 
     public AnimeManualAddViewModel()
     {
@@ -25,6 +25,8 @@ public partial class AnimeManualAddViewModel : ObservableObject
 
     public ICommand AddToRealm => new Command(async () =>
     {
+        _cts = new();
+
         var token = _cts.Token;
 
         var anime = new ContentObject()

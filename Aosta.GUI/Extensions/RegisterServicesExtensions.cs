@@ -8,6 +8,7 @@ using Aosta.GUI.Features.SettingsPage;
 using Aosta.GUI.Services;
 using CommunityToolkit.Maui;
 using JikanDotNet;
+using Serilog;
 
 namespace Aosta.GUI.Extensions;
 
@@ -20,7 +21,6 @@ internal static partial class MauiAppBuilderExtensions
         builder.Services.AddSingleton<ISecureStorageService, SecureStorageService>();
         builder.Services.AddSingleton<ISettingsService, SettingsService>();
         builder.Services.AddSingleton<IJikan, Jikan>();
-        builder.Services.AddSingleton<AostaDotNet>();
 
         #endregion
 
@@ -48,6 +48,12 @@ internal static partial class MauiAppBuilderExtensions
         //Transient Views
         builder.Services.AddTransient<AnimeSummaryPage>();
         builder.Services.AddTransient<AddAnimePage>();
+
+        #endregion
+
+        #region Logging
+
+        builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(App.Core.Logger, dispose: true));
 
         #endregion
 

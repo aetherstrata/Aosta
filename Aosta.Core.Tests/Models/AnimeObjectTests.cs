@@ -9,7 +9,7 @@ public class AnimeObjectTests
     [SetUp]
     public void SetUp()
     {
-        _core = new AostaDotNet(RealmSetup.NewConfig());
+        _core = RealmSetup.NewInstance();
     }
 
     private AostaDotNet _core;
