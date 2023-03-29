@@ -28,7 +28,11 @@
 _UpgradeReport_Files/
 [Pp]ackages/
 
+# Misc user configurations
 *.suo
 *.user
 .vs/
 .vscode/
+
+# WIP CLI project
+Aosta.CLI/

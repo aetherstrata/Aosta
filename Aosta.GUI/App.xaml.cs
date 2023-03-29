@@ -1,18 +1,11 @@
 using Aosta.Core;
 using Aosta.GUI.Services;
-using Realms;
-using Location = Aosta.GUI.Globals.Location;
 
 namespace Aosta.GUI;
 
 public partial class App : Application
 {
-    public static readonly AostaDotNet Core = new(new RealmConfiguration(Location.Database)
-    {
-        SchemaVersion = 2,
-        IsReadOnly = false,
-        ShouldDeleteIfMigrationNeeded = true
-    });
+    public static readonly Core.AostaDotNet Core = new Core.AostaDotNet(FileSystem.Current.AppDataDirectory);
 
     private readonly ISettingsService _settingsService;
 
