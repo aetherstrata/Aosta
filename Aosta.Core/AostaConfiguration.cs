@@ -29,7 +29,26 @@ namespace Aosta.Core
 
         internal AostaConfiguration(string appdata)
         {
-            AppDataPath = appdata;
+            try
+            {
+                AppDataPath = Path.GetFullPath(appdata);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Provided path is not valid!");
+                throw;
+            }
+
+            try
+            {
+                Directory.CreateDirectory(AppDataPath);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Could not create application folder!");
+                throw;
+            }
+
             DatabasePath = Path.Combine(AppDataPath, "aosta.realm");
             LogPath = Path.Combine(AppDataPath, "logs", "aosta-.log");
 
