@@ -1,4 +1,4 @@
-namespace Aosta.Core.API;
+namespace Aosta.Core.Limiter;
 
 /// <summary>
 /// Base task limiter implementation

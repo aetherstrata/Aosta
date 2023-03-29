@@ -1,7 +1,7 @@
-namespace Aosta.Core.API;
+namespace Aosta.Core.Limiter;
 
 /// <summary>
-/// A task limiter that throttles task executions using <see cref="SemaphoreSlim"/> with respect to <see cref="TaskLimiterConfiguration"/>
+/// A task limiter that throttles task executions using <see cref="SemaphoreSlim"/>
 /// </summary>
 internal class TaskLimiter : ITaskLimiter, IEquatable<TaskLimiter>, IComparable<TaskLimiter>, IComparable
 {
@@ -60,14 +60,14 @@ internal class TaskLimiter : ITaskLimiter, IEquatable<TaskLimiter>, IComparable<
 
     #region Equality methods
 
-    public bool Equals(TaskLimiter? other)
+    public bool Equals(TaskLimiter other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
         return Configuration.Equals(other.Configuration);
     }
 
-    public override bool Equals(object? obj)
+    public override bool Equals(object obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
@@ -80,12 +80,12 @@ internal class TaskLimiter : ITaskLimiter, IEquatable<TaskLimiter>, IComparable<
         return Configuration.GetHashCode();
     }
 
-    public static bool operator ==(TaskLimiter? left, TaskLimiter? right)
+    public static bool operator ==(TaskLimiter left, TaskLimiter right)
     {
         return Equals(left, right);
     }
 
-    public static bool operator !=(TaskLimiter? left, TaskLimiter? right)
+    public static bool operator !=(TaskLimiter left, TaskLimiter right)
     {
         return !Equals(left, right);
     }
@@ -94,36 +94,36 @@ internal class TaskLimiter : ITaskLimiter, IEquatable<TaskLimiter>, IComparable<
 
     #region Comparer methods
 
-    public int CompareTo(TaskLimiter? other)
+    public int CompareTo(TaskLimiter other)
     {
         if (ReferenceEquals(this, other)) return 0;
         if (ReferenceEquals(null, other)) return 1;
         return Configuration.CompareTo(other.Configuration);
     }
 
-    public int CompareTo(object? obj)
+    public int CompareTo(object obj)
     {
         if (ReferenceEquals(null, obj)) return 1;
         if (ReferenceEquals(this, obj)) return 0;
         return obj is TaskLimiter other ? CompareTo(other) : throw new ArgumentException($"Object must be of type {nameof(TaskLimiter)}");
     }
 
-    public static bool operator <(TaskLimiter? left, TaskLimiter? right)
+    public static bool operator <(TaskLimiter left, TaskLimiter right)
     {
         return Comparer<TaskLimiter>.Default.Compare(left, right) < 0;
     }
 
-    public static bool operator >(TaskLimiter? left, TaskLimiter? right)
+    public static bool operator >(TaskLimiter left, TaskLimiter right)
     {
         return Comparer<TaskLimiter>.Default.Compare(left, right) > 0;
     }
 
-    public static bool operator <=(TaskLimiter? left, TaskLimiter? right)
+    public static bool operator <=(TaskLimiter left, TaskLimiter right)
     {
         return Comparer<TaskLimiter>.Default.Compare(left, right) <= 0;
     }
 
-    public static bool operator >=(TaskLimiter? left, TaskLimiter? right)
+    public static bool operator >=(TaskLimiter left, TaskLimiter right)
     {
         return Comparer<TaskLimiter>.Default.Compare(left, right) >= 0;
     }
