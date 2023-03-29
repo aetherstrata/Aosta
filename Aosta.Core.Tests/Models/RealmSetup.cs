@@ -9,7 +9,7 @@ public class RealmSetup
 {
     private static readonly string InstancePath = Path.Combine(AppContext.BaseDirectory, "instances");
 
-    private static string NewInstancePath => Path.Combine(InstancePath, $"{Guid.NewGuid}");
+    private static string NewInstancePath => Path.Combine(InstancePath, $"{Guid.NewGuid()}");
 
     private static readonly string RealmPath = Path.Combine(AppContext.BaseDirectory, "realms");
 
