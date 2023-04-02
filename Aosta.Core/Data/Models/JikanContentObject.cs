@@ -1,7 +1,7 @@
 using Aosta.Core.Data.Enums;
 using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 using Realms;
 using AiringStatus = Aosta.Core.Data.Enums.AiringStatus;
 
@@ -10,42 +10,42 @@ namespace Aosta.Core.Data.Models;
 /// <summary> MyAnimeList data model </summary>
 public partial class JikanContentObject : IRealmObject
 {
-    public JikanContentObject(Anime jikanAnime) : this()
+    public JikanContentObject(AnimeResponse animeResponse) : this()
     {
-        ArgumentNullException.ThrowIfNull(jikanAnime.MalId, nameof(jikanAnime.MalId));
+        ArgumentNullException.ThrowIfNull(animeResponse.MalId, nameof(animeResponse.MalId));
 
-        MalId = jikanAnime.MalId.Value;
-        Url = jikanAnime.Url ?? string.Empty;
-        Images = jikanAnime.Images?.ToRealmObject();
-        Trailer = jikanAnime.Trailer?.ToRealmObject();
-        Titles.AddRange(jikanAnime.Titles);
-        Type = ParseToContentType(jikanAnime.Type);
-        Source = jikanAnime.Source ?? string.Empty;
-        Episodes = jikanAnime.Episodes;
-        Status = ParseToAiringStatus(jikanAnime.Status);
-        Airing = jikanAnime.Airing;
-        Aired = jikanAnime.Aired?.ToRealmObject();
-        Duration = jikanAnime.Duration; //TODO: implement parsing
-        AgeRating = ParseToRating(jikanAnime.Rating);
-        Score = jikanAnime.Score;
-        ScoredBy = jikanAnime.ScoredBy;
-        Rank = jikanAnime.Rank;
-        Popularity = jikanAnime.Popularity;
-        Members = jikanAnime.Members;
-        Favorites = jikanAnime.Favorites;
-        Synopsis = jikanAnime.Synopsis;
-        Background = jikanAnime.Background;
-        Season = jikanAnime.Season.ToLocalEnum();
-        Year = jikanAnime.Year;
-        Broadcast = jikanAnime.Broadcast?.ToRealmObject();
-        Producers.AddRange(jikanAnime.Producers);
-        Licensors.AddRange(jikanAnime.Licensors);
-        Studios.AddRange(jikanAnime.Studios);
-        Genres.AddRange(jikanAnime.Genres);
-        ExplicitGenres.AddRange(jikanAnime.ExplicitGenres);
-        Themes.AddRange(jikanAnime.Themes);
-        Demographics.AddRange(jikanAnime.Demographics);
-        Approved = jikanAnime.Approved;
+        MalId = animeResponse.MalId.Value;
+        Url = animeResponse.Url ?? string.Empty;
+        Images = animeResponse.Images?.ToRealmObject();
+        Trailer = animeResponse.Trailer?.ToRealmObject();
+        Titles.AddRange(animeResponse.Titles);
+        Type = ParseToContentType(animeResponse.Type ?? string.Empty);
+        Source = animeResponse.Source ?? string.Empty;
+        Episodes = animeResponse.Episodes;
+        Status = ParseToAiringStatus(animeResponse.Status ?? string.Empty);
+        Airing = animeResponse.Airing;
+        Aired = animeResponse.Aired?.ToRealmObject();
+        Duration = animeResponse.Duration ?? string.Empty; //TODO: implement parsing
+        AgeRating = ParseToRating(animeResponse.Rating ?? string.Empty);
+        Score = animeResponse.Score;
+        ScoredBy = animeResponse.ScoredBy;
+        Rank = animeResponse.Rank;
+        Popularity = animeResponse.Popularity;
+        Members = animeResponse.Members;
+        Favorites = animeResponse.Favorites;
+        Synopsis = animeResponse.Synopsis ?? string.Empty;
+        Background = animeResponse.Background ?? string.Empty;
+        Season = animeResponse.Season?.ToGroupEnum() ?? GroupSeason.None;
+        Year = animeResponse.Year;
+        Broadcast = animeResponse.Broadcast?.ToRealmObject();
+        Producers.AddRange(animeResponse.Producers);
+        Licensors.AddRange(animeResponse.Licensors);
+        Studios.AddRange(animeResponse.Studios);
+        Genres.AddRange(animeResponse.Genres);
+        ExplicitGenres.AddRange(animeResponse.ExplicitGenres);
+        Themes.AddRange(animeResponse.Themes);
+        Demographics.AddRange(animeResponse.Demographics);
+        Approved = animeResponse.Approved;
     }
 
     #region Backing fields
@@ -149,9 +149,9 @@ public partial class JikanContentObject : IRealmObject
 
     /// <summary>Seasons of the year the anime premiered.</summary>
     [Ignored]
-    public Seasons Season
+    public GroupSeason Season
     {
-        get => (Seasons)_Season;
+        get => (GroupSeason)_Season;
         set => _Season = (int)value;
     }
 

@@ -1,6 +1,6 @@
 using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
@@ -10,7 +10,7 @@ public class UrlTests
     [SetUp]
     public void SetUp()
     {
-        _url = new MalUrl
+        _urlResponse = new MalUrlResponse
         {
             MalId = 1,
             Type = "type",
@@ -19,12 +19,12 @@ public class UrlTests
         };
     }
 
-    private MalUrl _url = null!;
+    private MalUrlResponse _urlResponse = null!;
 
     [Test]
     public void ConversionTest()
     {
-        var converted = _url.ToRealmObject();
+        var converted = _urlResponse.ToRealmObject();
 
         Assert.Multiple(() =>
         {
@@ -38,7 +38,7 @@ public class UrlTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newUrl = new UrlObject(new MalUrl());
+        var newUrl = new UrlObject(new MalUrlResponse());
 
         Assert.Multiple(() =>
         {

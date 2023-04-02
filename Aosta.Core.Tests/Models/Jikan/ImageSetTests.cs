@@ -1,31 +1,31 @@
 using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
 [TestFixture]
 public class ImageSetTests
 {
-    private ImagesSet _set = null!;
+    private ImagesSetResponse _setResponse = null!;
 
     [SetUp]
     public void SetUp()
     {
-        _set = new ImagesSet
+        _setResponse = new ImagesSetResponse
         {
-            JPG = new Image(),
-            WebP = new Image()
+            JPG = new ImageResponse(),
+            WebP = new ImageResponse()
         };
     }
 
     [Test]
     public void SetConversionTest()
     {
-        _set.WebP.ImageUrl = "webp";
-        _set.JPG.ImageUrl = "jpg";
+        _setResponse.WebP.ImageUrl = "webp";
+        _setResponse.JPG.ImageUrl = "jpg";
 
-        var converted = _set.ToRealmObject();
+        var converted = _setResponse.ToRealmObject();
 
         Assert.Multiple(() =>
         {
@@ -43,7 +43,7 @@ public class ImageSetTests
     [Test]
     public void SetDefaultValuesTest()
     {
-        var newSet = new ImageSetObject(new ImagesSet());
+        var newSet = new ImageSetObject(new ImagesSetResponse());
 
         Assert.Multiple(() =>
         {

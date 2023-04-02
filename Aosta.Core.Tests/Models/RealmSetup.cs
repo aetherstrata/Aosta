@@ -26,7 +26,7 @@ public class RealmSetup
     {
         string path = NewInstancePath;
         Directory.CreateDirectory(path);
-        return new AostaDotNet(path);
+        return new AostaDotNet(new AostaConfiguration(path));
     }
 
     internal static RealmConfiguration NewConfig()
@@ -42,14 +42,17 @@ public class RealmSetup
     internal static Realm CreateNewRealm(RealmConfigurationBase cfg, InitConfig init = InitConfig.Empty)
     {
         using var realm = Realm.GetInstance(cfg);
-
+        
         switch (init)
         {
             case InitConfig.Empty:
                 break;
 
-            case InitConfig.OneContent:
-                realm.Write(() => { realm.Add(new ContentObject()); });
+            case InitConfig.OneAnime:
+                realm.Write(() =>
+                {
+                    realm.Add(new AnimeObject());
+                });
                 break;
 
             default:
@@ -63,5 +66,5 @@ public class RealmSetup
 public enum InitConfig
 {
     Empty,
-    OneContent
+    OneAnime
 }

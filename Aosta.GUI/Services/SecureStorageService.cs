@@ -7,8 +7,8 @@ internal class SecureStorageService : ISecureStorageService
         return await SecureStorage.Default.GetAsync(key);
     }
 
-    public async Task Save(string Key, string value)
+    public async Task Save(string key, string value)
     {
-        await SecureStorage.Default.SetAsync(Key, value);
+        await SecureStorage.Default.SetAsync(key, value);
     }
 }

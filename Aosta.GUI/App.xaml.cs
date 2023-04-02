@@ -1,11 +1,20 @@
 using Aosta.Core;
+using Aosta.Core.Jikan;
+using Aosta.Core.Limiter;
 using Aosta.GUI.Services;
 
 namespace Aosta.GUI;
 
-public partial class App : Application
+public partial class App
 {
-    public static readonly Core.AostaDotNet Core = new Core.AostaDotNet(FileSystem.Current.AppDataDirectory);
+    public static readonly AostaDotNet Core = new(new AostaConfiguration(FileSystem.Current.AppDataDirectory)
+    {
+        CachePath = FileSystem.Current.CacheDirectory,
+        JikanConfig = new JikanConfiguration()
+        {
+            LimiterConfigurations = TaskLimiterConfiguration.Default
+        }
+    });
 
     private readonly ISettingsService _settingsService;
 

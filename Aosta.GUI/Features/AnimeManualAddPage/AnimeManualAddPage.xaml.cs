@@ -1,8 +1,8 @@
 namespace Aosta.GUI.Features.AnimeManualAddPage;
 
-public partial class AddAnimePage : ContentPage
+public partial class AnimeManualAddPage
 {
-    public AddAnimePage(AnimeManualAddViewModel aavm)
+    public AnimeManualAddPage(AnimeManualAddViewModel aavm)
     {
         InitializeComponent();
 

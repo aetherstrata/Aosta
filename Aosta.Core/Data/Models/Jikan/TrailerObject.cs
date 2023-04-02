@@ -1,5 +1,5 @@
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 using Realms;
 
 namespace Aosta.Core.Data.Models.Jikan;
@@ -12,12 +12,12 @@ public partial class TrailerObject : IEmbeddedObject
     /// <remarks>The parameterless constructor is made private because this model should only be created from a Jikan response.</remarks>
     private TrailerObject() { }
 
-    internal TrailerObject(AnimeTrailer trailer)
+    internal TrailerObject(AnimeTrailerResponse trailerResponse)
     {
-        YoutubeId = trailer.YoutubeId ?? string.Empty;
-        Url = trailer.Url ?? string.Empty;
-        EmbedUrl = trailer.EmbedUrl ?? string.Empty;
-        Image = trailer.Image?.ToRealmObject();
+        YoutubeId = trailerResponse.YoutubeId ?? string.Empty;
+        Url = trailerResponse.Url ?? string.Empty;
+        EmbedUrl = trailerResponse.EmbedUrl ?? string.Empty;
+        Image = trailerResponse.Image?.ToRealmObject();
     }
 
     /// <summary>YouTube id of the trailer. </summary>

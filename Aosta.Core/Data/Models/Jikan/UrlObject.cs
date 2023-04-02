@@ -1,4 +1,4 @@
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 using Realms;
 
 namespace Aosta.Core.Data.Models.Jikan;
@@ -10,12 +10,12 @@ public partial class UrlObject : IEmbeddedObject
     {
     }
 
-    internal UrlObject(MalUrl url)
+    internal UrlObject(MalUrlResponse urlResponse)
     {
-        MalId = url.MalId;
-        Type = url.Type ?? string.Empty;
-        Url = url.Url ?? string.Empty;
-        Name = url.Name ?? string.Empty;
+        MalId = urlResponse.MalId;
+        Type = urlResponse.Type ?? string.Empty;
+        Url = urlResponse.Url ?? string.Empty;
+        Name = urlResponse.Name ?? string.Empty;
     }
 
     /// <summary>ID associated with MyAnimeList.</summary>

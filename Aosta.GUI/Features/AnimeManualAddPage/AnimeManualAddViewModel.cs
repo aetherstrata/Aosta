@@ -29,7 +29,7 @@ public partial class AnimeManualAddViewModel : ObservableObject
 
         var token = _cts.Token;
 
-        var anime = new ContentObject()
+        var anime = new AnimeObject()
         {
             Title = AnimeTitle,
             Score = float.TryParse(AnimeScore, out float score) ? -1 : (int)Math.Floor(score*10),
@@ -40,7 +40,7 @@ public partial class AnimeManualAddViewModel : ObservableObject
 
         Guid id = await App.Core.CreateLocalContentAsync(anime, token);
 
-        AnimeTitleBack = App.Core.GetInstance().Find<ContentObject>(guid).Title;
+        AnimeTitleBack = App.Core.GetInstance().Find<AnimeObject>(guid).Title;
 
         _cts.Dispose();
     });

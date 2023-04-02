@@ -1,13 +1,9 @@
 using System.Diagnostics;
 using System.Windows.Input;
-using Aosta.Core.Data.Enums;
 using Aosta.Core.Data.Models;
+using Aosta.Core.Jikan;
 using Aosta.GUI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
-using JikanDotNet;
-using Realms;
-using AiringStatus = Aosta.Core.Data.Enums.AiringStatus;
-using Location = Aosta.GUI.Globals.Location;
 
 namespace Aosta.GUI.Features.SettingsPage;
 
@@ -24,7 +20,7 @@ public partial class SettingsViewModel : RealmViewModel
     private string _objectCount = "N/A";
 
     [ObservableProperty] 
-    private string _path = Location.AppData;
+    private string _path = App.Core.Configuration.AppDataPath;
 
     private IJikan jikan;
 
@@ -53,7 +49,7 @@ public partial class SettingsViewModel : RealmViewModel
 
             await Realm.WriteAsync(() =>
             {
-                Realm.Add(new ContentObject()
+                Realm.Add(new AnimeObject()
                 {
                     Title = "Pippo " + count,
                     JikanResponseData = Realm.Find<JikanContentObject>(count)
@@ -61,7 +57,7 @@ public partial class SettingsViewModel : RealmViewModel
             });
 
             count++;
-            ObjectCount = Realm.All<ContentObject>().Count().ToString();
+            ObjectCount = Realm.All<AnimeObject>().Count().ToString();
         }
         else
         {
@@ -92,7 +88,7 @@ public partial class SettingsViewModel : RealmViewModel
         }
     });
 
-    public void UpdateRealmCount() => ObjectCount = Realm.All<ContentObject>().Count().ToString();
+    public void UpdateRealmCount() => ObjectCount = Realm.All<AnimeObject>().Count().ToString();
 
     public async Task LoadAssetToString(string fileName)
     {

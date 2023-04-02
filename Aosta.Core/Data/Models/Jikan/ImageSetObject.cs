@@ -1,5 +1,5 @@
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 using Realms;
 
 namespace Aosta.Core.Data.Models.Jikan;
@@ -10,10 +10,10 @@ public partial class ImageSetObject : IEmbeddedObject
     /// <remarks>The parameterless constructor is made private because this model should only be created from a Jikan response.</remarks>
     private ImageSetObject() { }
 
-    internal ImageSetObject(ImagesSet set)
+    internal ImageSetObject(ImagesSetResponse setResponse)
     {
-        JPG = set?.JPG?.ToRealmObject();
-        WebP = set?.WebP?.ToRealmObject();
+        JPG = setResponse?.JPG?.ToRealmObject();
+        WebP = setResponse?.WebP?.ToRealmObject();
     }
 
     public ImageObject? JPG { get; set; }

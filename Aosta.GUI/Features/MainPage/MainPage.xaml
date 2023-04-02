@@ -5,6 +5,7 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:constants="clr-namespace:Aosta.GUI.Globals"
              xmlns:realm="clr-namespace:Aosta.Core.Data.Models;assembly=Aosta.Core"
+             xmlns:animeManualAdd="clr-namespace:Aosta.GUI.Features.AnimeManualAddPage"
              xmlns:profileMainPage="using:Aosta.GUI.Features.ProfileMainPage"
              xmlns:settingsPage="using:Aosta.GUI.Features.SettingsPage"
              xmlns:mainPage="using:Aosta.GUI.Features.MainPage"
@@ -54,7 +55,7 @@
 
                 <CollectionView ItemsSource="{Binding RealmAnimeList}">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="realm:ContentObject">
+                        <DataTemplate x:DataType="realm:AnimeObject">
                             <ContentView
                                 Padding="5">
 
@@ -81,7 +82,8 @@
             Style="{x:StaticResource Key=FloatingActionButton}"
             Margin="0,0,20,20"
             Text="{x:Static constants:FontAwesomeIcons.Plus}"
-            Command="{Binding AddAnimeCommand}">
+            Command="{Binding GoToPageCommand}"
+            CommandParameter="{x:Type animeManualAdd:AnimeManualAddPage}">
 
             <Button.Shadow>
                 <Shadow
@@ -118,13 +120,13 @@
                 <Button
                     Style="{x:StaticResource FloatingActionButton}"
                     Text="{x:Static constants:FontAwesomeIcons.User}"
-                    Command="{Binding GoToCommand}"
+                    Command="{Binding GoToPageCommand}"
                     CommandParameter="{x:Type profileMainPage:ProfilePage}" />
 
                 <Button
                     Style="{x:StaticResource FloatingActionButton}"
                     Text="{x:Static constants:FontAwesomeIcons.Gear}"
-                    Command="{Binding GoToCommand}"
+                    Command="{Binding GoToPageCommand}"
                     CommandParameter="{x:Type settingsPage:SettingsPage}" />
 
             </HorizontalStackLayout>
