@@ -2,6 +2,7 @@
 using Aosta.GUI.Globals;
 using Aosta.GUI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Aosta.GUI.Features.OnboardingPage;
 
@@ -16,11 +17,11 @@ public partial class OnboardingScreenViewModel : ObservableObject
     [ObservableProperty]
     private int _position;
 
-    private readonly ISettingsService settingsService;
+    private readonly ISettingsService _settingsService;
 
     public OnboardingScreenViewModel(ISettingsService settingsService)
     {
-        this.settingsService = settingsService;
+        this._settingsService = settingsService;
 
         _onboardingScreens.AddRange(new[]
         {
@@ -69,15 +70,16 @@ public partial class OnboardingScreenViewModel : ObservableObject
             ButtonGlyph = FontAwesomeIcons.ArrowRight;
     });
 
-    public ICommand NextPageCommand => new Command(async () =>
+    [RelayCommand]
+    private async Task NextPage()
     {
         if (Position == OnboardingScreens.Count - 1)
         {
-            await settingsService.Save("firstRun", false);
+            await _settingsService.Save("firstRun", false);
             await Shell.Current.GoToAsync($"//{nameof(MainPage.MainPage)}");
         }
 
         if (Position < OnboardingScreens.Count - 1)
             Position++;
-    });
+    }
 }

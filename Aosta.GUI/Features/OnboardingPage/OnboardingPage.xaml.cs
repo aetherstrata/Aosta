@@ -1,6 +1,6 @@
 namespace Aosta.GUI.Features.OnboardingPage;
 
-public partial class OnboardingPage : ContentPage
+public partial class OnboardingPage
 {
     public OnboardingPage(OnboardingScreenViewModel vm)
     {

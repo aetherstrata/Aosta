@@ -33,14 +33,14 @@ public class TaskLimiterConfiguration : IEquatable<TaskLimiterConfiguration>, IC
 
     #region Equality methods
 
-    public bool Equals(TaskLimiterConfiguration other)
+    public bool Equals(TaskLimiterConfiguration? other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
         return Count == other.Count && TimeSpan.Equals(other.TimeSpan);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
@@ -70,14 +70,14 @@ public class TaskLimiterConfiguration : IEquatable<TaskLimiterConfiguration>, IC
 
     #region Comparator methods
 
-    public int CompareTo(TaskLimiterConfiguration other)
+    public int CompareTo(TaskLimiterConfiguration? other)
     {
         if (ReferenceEquals(this, other)) return 0;
         if (ReferenceEquals(null, other)) return 1;
         return MaximumRate.CompareTo(other.MaximumRate);
     }
 
-    public int CompareTo(object obj)
+    public int CompareTo(object? obj)
     {
         if (ReferenceEquals(null, obj)) return 1;
         if (ReferenceEquals(this, obj)) return 0;

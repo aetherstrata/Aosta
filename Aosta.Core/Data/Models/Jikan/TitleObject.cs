@@ -1,4 +1,4 @@
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 using Realms;
 
 namespace Aosta.Core.Data.Models.Jikan;
@@ -11,7 +11,7 @@ public partial class TitleObject : IEmbeddedObject
     {
     }
 
-    internal TitleObject(TitleEntry title)
+    internal TitleObject(TitleEntryResponse title)
     {
         Type = title.Type ?? string.Empty;
         Title = title.Title ?? string.Empty;

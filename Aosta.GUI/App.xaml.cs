@@ -1,12 +1,12 @@
 using Aosta.Core;
+using Aosta.Core.Jikan;
+using Aosta.Core.Limiter;
 using Aosta.GUI.Services;
 
 namespace Aosta.GUI;
 
-public partial class App : Application
+public partial class App
 {
-    public static readonly Core.AostaDotNet Core = new Core.AostaDotNet(FileSystem.Current.AppDataDirectory);
-
     private readonly ISettingsService _settingsService;
 
     public App(ISettingsService settingsService)

@@ -1,13 +1,10 @@
 using System.Diagnostics;
 using System.Windows.Input;
-using Aosta.Core.Data.Enums;
+using Aosta.Core;
 using Aosta.Core.Data.Models;
+using Aosta.Core.Jikan;
 using Aosta.GUI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
-using JikanDotNet;
-using Realms;
-using AiringStatus = Aosta.Core.Data.Enums.AiringStatus;
-using Location = Aosta.GUI.Globals.Location;
 
 namespace Aosta.GUI.Features.SettingsPage;
 
@@ -24,18 +21,19 @@ public partial class SettingsViewModel : RealmViewModel
     private string _objectCount = "N/A";
 
     [ObservableProperty] 
-    private string _path = Location.AppData;
+    private string _path;
 
-    private IJikan jikan;
+    private readonly AostaDotNet _aosta;
 
     private int count = 1;
 
-    private readonly ISettingsService settingsService;
+    private readonly ISettingsService _settingsService;
 
-    public SettingsViewModel(ISettingsService settingsService, IJikan jikan)
+    public SettingsViewModel(ISettingsService settingsService, AostaDotNet aosta) : base(aosta)
     {
-        this.jikan = jikan;
-        this.settingsService = settingsService;
+        _aosta = aosta;
+        _settingsService = settingsService;
+        _path = _aosta.Configuration.AppDataPath;
 
         UpdateRealmCount();
     }
@@ -49,11 +47,11 @@ public partial class SettingsViewModel : RealmViewModel
     {
         if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
         {
-            await App.Core.CreateJikanContentAsync(count);
+            await _aosta.CreateJikanContentAsync(count);
 
             await Realm.WriteAsync(() =>
             {
-                Realm.Add(new ContentObject()
+                Realm.Add(new AnimeObject()
                 {
                     Title = "Pippo " + count,
                     JikanResponseData = Realm.Find<JikanContentObject>(count)
@@ -61,7 +59,7 @@ public partial class SettingsViewModel : RealmViewModel
             });
 
             count++;
-            ObjectCount = Realm.All<ContentObject>().Count().ToString();
+            ObjectCount = Realm.All<AnimeObject>().Count().ToString();
         }
         else
         {
@@ -83,22 +81,14 @@ public partial class SettingsViewModel : RealmViewModel
         if (DarkModeSwitch)
         {
             Application.Current!.UserAppTheme = AppTheme.Dark;
-            await settingsService.Save("useDarkTheme", true);
+            await _settingsService.Save("useDarkTheme", true);
         }
         else
         {
             Application.Current!.UserAppTheme = AppTheme.Light;
-            await settingsService.Save("useDarkTheme", false);
+            await _settingsService.Save("useDarkTheme", false);
         }
     });
 
-    public void UpdateRealmCount() => ObjectCount = Realm.All<ContentObject>().Count().ToString();
-
-    public async Task LoadAssetToString(string fileName)
-    {
-        using var fileStream = await FileSystem.Current.OpenAppPackageFileAsync(fileName);
-        using var reader = new StreamReader(fileStream);
-
-        Path = await reader.ReadToEndAsync();
-    }
+    public void UpdateRealmCount() => ObjectCount = Realm.All<AnimeObject>().Count().ToString();
 }

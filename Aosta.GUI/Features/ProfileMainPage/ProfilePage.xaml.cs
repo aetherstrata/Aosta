@@ -1,6 +1,6 @@
 namespace Aosta.GUI.Features.ProfileMainPage;
 
-public partial class ProfilePage : ContentPage
+public partial class ProfilePage
 {
     public ProfilePage()
     {

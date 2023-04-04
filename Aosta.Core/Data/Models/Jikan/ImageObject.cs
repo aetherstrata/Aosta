@@ -1,4 +1,4 @@
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 using Realms;
 
 namespace Aosta.Core.Data.Models.Jikan;
@@ -11,13 +11,13 @@ public partial class ImageObject : IEmbeddedObject
     {
     }
 
-    internal ImageObject(Image image)
+    internal ImageObject(ImageResponse imageResponse)
     {
-        ImageUrl = image.ImageUrl ?? string.Empty;
-        SmallImageUrl = image.SmallImageUrl ?? string.Empty;
-        MediumImageUrl = image.MediumImageUrl ?? string.Empty;
-        LargeImageUrl = image.LargeImageUrl ?? string.Empty;
-        MaximumImageUrl = image.MaximumImageUrl ?? string.Empty;
+        ImageUrl = imageResponse.ImageUrl ?? string.Empty;
+        SmallImageUrl = imageResponse.SmallImageUrl ?? string.Empty;
+        MediumImageUrl = imageResponse.MediumImageUrl ?? string.Empty;
+        LargeImageUrl = imageResponse.LargeImageUrl ?? string.Empty;
+        MaximumImageUrl = imageResponse.MaximumImageUrl ?? string.Empty;
     }
 
     /// <summary>Url to default version of the image.</summary>

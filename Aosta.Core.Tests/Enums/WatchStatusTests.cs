@@ -5,6 +5,7 @@ namespace Aosta.Core.Tests.Enums;
 [TestFixture]
 public class WatchStatusTests : IEnumTests
 {
+    [Test]
     public void ValuesChangedTest()
     {
         Assert.Multiple(() =>
@@ -17,11 +18,13 @@ public class WatchStatusTests : IEnumTests
         });
     }
 
+    [Test]
     public void QuantityChangedTest()
     {
         Assert.That(Enum.GetValues<WatchStatus>(), Has.Length.EqualTo(5));
     }
 
+    [Test]
     public void CachedStringsChangedTest()
     {
         Assert.Multiple(() =>
