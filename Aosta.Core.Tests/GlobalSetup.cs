@@ -3,7 +3,7 @@ using Serilog;
 namespace Aosta.Core.Tests;
 
 [SetUpFixture]
-[Parallelizable(ParallelScope.Fixtures)]
+[Parallelizable(ParallelScope.Children)]
 public class GlobalSetup
 {
     [OneTimeSetUp]

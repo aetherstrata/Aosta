@@ -4,7 +4,7 @@ namespace Aosta.Core.Jikan;
 
 public class JikanConfiguration
 {
-    public const string DefaultEndpoint = "https://api.jikan.moe/v4/";
+    private const string DefaultEndpoint = "https://api.jikan.moe/v4/";
 
     public string Endpoint { get; init; } = DefaultEndpoint;
 

@@ -19,7 +19,7 @@ public partial class MainPageViewModel : RealmViewModel
     [RelayCommand]
     private async Task GoToPage(Type pageType)
     {
-        App.Core.Logger.Debug("Navigated to: {Name}", pageType.Name);
+        App.Core.Log.Debug("Navigated to: {Name}", pageType.Name);
         await Shell.Current.GoToAsync($"{pageType.Name}");
     }
 }

@@ -58,6 +58,10 @@ internal class JikanClient : IJikan
 	{
 	}
 
+	internal JikanClient(JikanConfiguration config) : this(Log.Logger, config)
+	{
+	}
+
 	internal JikanClient() : this(Log.Logger, new JikanConfiguration())
 	{
 	}

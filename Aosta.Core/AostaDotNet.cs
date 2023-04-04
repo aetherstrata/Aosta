@@ -21,17 +21,17 @@ public class AostaDotNet
     public AostaDotNet(AostaConfiguration configuration)
     {
         Configuration = configuration;
-        Logger = Configuration.LoggerConfig.CreateLogger();
-        Jikan = new JikanClient(Logger);
+        Log = Configuration.LoggerConfig.CreateLogger();
+        Jikan = new JikanClient(Log, Configuration.JikanConfig);
     }
 
     public AostaConfiguration Configuration { get; set; }
 
     /// <summary> Jikan.net client </summary>
-    public IJikan Jikan { get; private set; }
+    public IJikan Jikan { get; }
 
     /// <summary> Serilog logger instance </summary>
-    public ILogger Logger { get; private set; }
+    public ILogger Log { get; }
 
     #region Jikan tasks
 
@@ -99,7 +99,7 @@ public class AostaDotNet
         // Always await responses, never use .Result
         var response = await Jikan.GetAnimeAsync(malId, ct);
 
-        Logger.Information("Got anime: {0} ({1})", response.Data.Titles.First().Title, response.Data.MalId);
+        Log.Information("Got anime: {0} ({1})", response.Data.Titles.First().Title, response.Data.MalId);
 
         // Update the entities with retrieved data
         await UpdateJikanContentAsync(response.Data, overrideLocal, ct);
@@ -158,7 +158,7 @@ public class AostaDotNet
         //Always await responses, never use .Result
         var response = await Jikan.GetAnimeAsync(malId, ct);
 
-        Logger.Information("Got anime: {Title} ({Id})", response.Data.Titles?.First().Title, response.Data.MalId);
+        Log.Information("Got anime: {Title} ({Id})", response.Data.Titles?.First().Title, response.Data.MalId);
 
         //Write the data to local realm and return the primary key
         return await CreateJikanContentAsync(response.Data, update, ct);

@@ -22,24 +22,22 @@ public class AostaConfiguration
     /// <summary> Cache folder location </summary>
     public string CachePath { get; init; }
 
-    /// <summary> Control the minimum log level </summary>
-    public LoggingLevelSwitch LoggerLevelSwitch { get; } = new();
+    ///<summary> Output template </summary>
+    private const string OutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message:lj} <{ThreadId}><{ThreadName}>{NewLine}{Exception}";
 
     /// <summary> Get a copy of the Serilog logger configuration </summary>
     internal LoggerConfiguration LoggerConfig => new LoggerConfiguration()
-        .MinimumLevel.ControlledBy(LoggerLevelSwitch)
+        .MinimumLevel.Verbose()
         .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
         .Enrich.WithThreadId()
         .Enrich.WithThreadName()
         .Enrich.FromLogContext()
-        .WriteTo.Console(LogEventLevel.Debug)
+        .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Debug, outputTemplate: OutputTemplate)
 #if DEBUG
-        .WriteTo.Debug(LogEventLevel.Verbose)
+        .WriteTo.Debug(restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: OutputTemplate)
 #endif
-        .WriteTo.Async(a => a.File(LogPath, buffered: true, flushToDiskInterval: TimeSpan.FromSeconds(1),
-            encoding: Encoding.UTF8, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7,
-            outputTemplate:
-            "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message:lj} <{ThreadId}><{ThreadName}>{NewLine}{Exception}"));
+        .WriteTo.Async(sink => sink.File(path: LogPath, restrictedToMinimumLevel: LogEventLevel.Debug, buffered: true, flushToDiskInterval: TimeSpan.FromSeconds(1),
+            encoding: Encoding.UTF8, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7, outputTemplate: OutputTemplate));
 
     /// <summary> Realm configuration </summary>
     public RealmConfiguration RealmConfig { get; init; }
@@ -57,7 +55,7 @@ public class AostaConfiguration
         {
             AppDataPath = Path.GetFullPath(dataDir);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Console.WriteLine("Provided path is not valid!");
             throw;
@@ -67,7 +65,7 @@ public class AostaConfiguration
         {
             Directory.CreateDirectory(AppDataPath);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Console.WriteLine("Could not create application folder!");
             throw;
@@ -76,8 +74,6 @@ public class AostaConfiguration
         DatabasePath = Path.Combine(AppDataPath, "aosta.realm");
         LogPath = Path.Combine(AppDataPath, "logs", "aosta-.log");
         CachePath = Path.Combine(AppDataPath, "cache");
-
-        LoggerLevelSwitch.MinimumLevel = LogEventLevel.Verbose;
 
         RealmConfig = new RealmConfiguration(DatabasePath)
         {
@@ -88,6 +84,4 @@ public class AostaConfiguration
 
         JikanConfig = new JikanConfiguration();
     }
-
-
 }
