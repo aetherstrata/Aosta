@@ -11,16 +11,19 @@ namespace Aosta.Core;
 public class AostaConfiguration
 {
     /// <summary> Data location </summary>
-    public string AppDataPath { get; init; }
+    public string AppDataPath { get; }
 
     /// <summary> Realm database location </summary>
-    public string DatabasePath { get; init; }
+    public string DatabasePath { get; }
 
     /// <summary> Logs folder location </summary>
-    public string LogPath { get; init; }
+    public string LogPath { get; }
 
     /// <summary> Cache folder location </summary>
     public string CachePath { get; init; }
+
+    /// <summary> Jikan configuration </summary>
+    public JikanConfiguration JikanConfig { get; init; }
 
     ///<summary> Output template </summary>
     private const string OutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message:lj} <{ThreadId}><{ThreadName}>{NewLine}{Exception}";
@@ -40,10 +43,7 @@ public class AostaConfiguration
             encoding: Encoding.UTF8, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7, outputTemplate: OutputTemplate));
 
     /// <summary> Realm configuration </summary>
-    public RealmConfiguration RealmConfig { get; init; }
-
-    /// <summary> Jikan configuration </summary>
-    public JikanConfiguration JikanConfig { get; init; }
+    internal RealmConfiguration RealmConfig { get; }
 
     internal AostaConfiguration() : this(AppContext.BaseDirectory)
     {

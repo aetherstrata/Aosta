@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using Aosta.Core;
 using Aosta.Core.Data.Enums;
 using Aosta.Core.Data.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -18,9 +19,11 @@ public partial class AnimeManualAddViewModel : ObservableObject
 
     private CancellationTokenSource _cts = null!;
 
-    public AnimeManualAddViewModel()
-    {
+    private readonly AostaDotNet _aosta;
 
+    public AnimeManualAddViewModel(AostaDotNet aosta)
+    {
+        _aosta = aosta;
     }
 
     public ICommand AddToRealm => new Command(async () =>
@@ -38,9 +41,9 @@ public partial class AnimeManualAddViewModel : ObservableObject
 
         var guid = anime.Id;
 
-        Guid id = await App.Core.CreateLocalContentAsync(anime, token);
+        Guid id = await _aosta.CreateLocalContentAsync(anime, token);
 
-        AnimeTitleBack = App.Core.GetInstance().Find<AnimeObject>(guid).Title;
+        AnimeTitleBack = _aosta.GetInstance().Find<AnimeObject>(guid).Title;
 
         _cts.Dispose();
     });

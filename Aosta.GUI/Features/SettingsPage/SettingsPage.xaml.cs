@@ -2,7 +2,7 @@ namespace Aosta.GUI.Features.SettingsPage;
 
 public partial class SettingsPage
 {
-    private SettingsViewModel _viewModel;
+    private readonly SettingsViewModel _viewModel;
 
     public SettingsPage(SettingsViewModel vm)
     {

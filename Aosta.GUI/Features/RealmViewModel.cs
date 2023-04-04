@@ -1,3 +1,4 @@
+using Aosta.Core;
 using Realms;
 
 namespace Aosta.GUI.Features;
@@ -6,15 +7,18 @@ public abstract class RealmViewModel
     /// <summary> Realm instance of this UI page </summary>
     protected Realm Realm { get; private set; }
 
-    protected RealmViewModel() 
+    private readonly AostaDotNet _aosta;
+
+    protected RealmViewModel(AostaDotNet aosta)
     {
-        Realm = App.Core.GetInstance();
+        _aosta = aosta;
+        Realm = _aosta.GetInstance();
     }
 
     protected Realm NewInstance()
     {
         Realm.Dispose();
-        Realm = App.Core.GetInstance();
+        Realm = _aosta.GetInstance();
         return Realm;
     }
 }

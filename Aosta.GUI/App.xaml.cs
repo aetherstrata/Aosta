@@ -7,15 +7,6 @@ namespace Aosta.GUI;
 
 public partial class App
 {
-    public static readonly AostaDotNet Core = new(new AostaConfiguration(FileSystem.Current.AppDataDirectory)
-    {
-        CachePath = FileSystem.Current.CacheDirectory,
-        JikanConfig = new JikanConfiguration()
-        {
-            LimiterConfigurations = TaskLimiterConfiguration.Default
-        }
-    });
-
     private readonly ISettingsService _settingsService;
 
     public App(ISettingsService settingsService)
