@@ -1,4 +1,7 @@
 using Aosta.Core;
+using Aosta.Core.Jikan;
+using Aosta.Core.Limiter;
+using Aosta.GUI.Features.OnboardingPage;
 using Aosta.GUI.Services;
 using Realms;
 using Location = Aosta.GUI.Globals.Location;
@@ -31,7 +34,7 @@ public partial class App : Application
             ? AppTheme.Dark
             : AppTheme.Light;
 
-        if (!_settingsService.Get("firstRun", true).Result)
-            Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+        if (_settingsService.Get("firstRun", true).Result)
+            Shell.Current.GoToAsync($"{nameof(OnboardingPage)}");
     }
 }

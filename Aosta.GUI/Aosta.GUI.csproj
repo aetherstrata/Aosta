@@ -61,12 +61,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Features\AnimeManualAddPage\AnimeManualAddPage.xaml.cs">
-            <DependentUpon>AnimeManualAddPage.xaml</DependentUpon>
-        </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
         <MauiXaml Update="Features\AnimeManualAddPage\AnimeManualAddPage.xaml">
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
@@ -81,6 +75,9 @@
         </MauiXaml>
         <MauiXaml Update="Features\SettingsPage\SettingsPage.xaml">
             <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="Resources\Styles\FloatingActionButtonShadow.xaml">
+          <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
     </ItemGroup>
 

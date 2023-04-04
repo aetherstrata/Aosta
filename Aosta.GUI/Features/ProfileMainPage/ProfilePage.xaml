@@ -5,7 +5,7 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              x:Class="Aosta.GUI.Features.ProfileMainPage.ProfilePage"
              Title="Profile Page"
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="True"
              Shell.TabBarIsVisible="False">
 
     <ContentPage.Behaviors>

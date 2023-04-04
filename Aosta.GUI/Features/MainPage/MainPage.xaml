@@ -5,13 +5,14 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:constants="clr-namespace:Aosta.GUI.Globals"
              xmlns:realm="clr-namespace:Aosta.Core.Data.Models;assembly=Aosta.Core"
+             xmlns:animeManualAdd="clr-namespace:Aosta.GUI.Features.AnimeManualAddPage"
              xmlns:profileMainPage="using:Aosta.GUI.Features.ProfileMainPage"
              xmlns:settingsPage="using:Aosta.GUI.Features.SettingsPage"
              xmlns:mainPage="using:Aosta.GUI.Features.MainPage"
              x:Class="Aosta.GUI.Features.MainPage.MainPage"
              x:DataType="mainPage:MainPageViewModel"
              Title="Main Page"
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="True"
              Shell.TabBarIsVisible="False">
 
     <ContentPage.Behaviors>
@@ -54,7 +55,7 @@
 
                 <CollectionView ItemsSource="{Binding RealmAnimeList}">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="realm:ContentObject">
+                        <DataTemplate x:DataType="realm:AnimeObject">
                             <ContentView
                                 Padding="5">
 
@@ -76,58 +77,18 @@
 
         </ScrollView>
 
-        <Button
-            Grid.Row="0"
-            Style="{x:StaticResource Key=FloatingActionButton}"
-            Margin="0,0,20,20"
-            Text="{x:Static constants:FontAwesomeIcons.Plus}"
-            Command="{Binding AddAnimeCommand}">
+        <Button Grid.Row="0"
+                Margin="0,0,20,20"
+                Style="{x:StaticResource Key=FloatingActionButton}"
+                Text="{x:Static constants:FontAwesomeIcons.Plus}"
+                Command="{Binding GoToPageCommand}"
+                CommandParameter="{x:Type animeManualAdd:AnimeManualAddPage}">
 
             <Button.Shadow>
-                <Shadow
-                    Brush="Black"
-                    Offset="10,10"
-                    Radius="20"
-                    Opacity="0.2" />
+                <Shadow StyleId="{StaticResource Key=FloatingActionButtonShadow}"/>
             </Button.Shadow>
 
         </Button>
 
-        <Border
-            Grid.Row="0"
-            Margin="20,0,120,20"
-            Style="{x:StaticResource FloatingActionMenu}"
-            StrokeThickness="0">
-
-            <Border.Shadow>
-                <Shadow
-                    Brush="Black"
-                    Offset="10,10"
-                    Radius="20"
-                    Opacity="0.2" />
-            </Border.Shadow>
-
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="40" />
-            </Border.StrokeShape>
-
-            <HorizontalStackLayout
-                Spacing="10"
-                VerticalOptions="Center">
-
-                <Button
-                    Style="{x:StaticResource FloatingActionButton}"
-                    Text="{x:Static constants:FontAwesomeIcons.User}"
-                    Command="{Binding GoToCommand}"
-                    CommandParameter="{x:Type profileMainPage:ProfilePage}" />
-
-                <Button
-                    Style="{x:StaticResource FloatingActionButton}"
-                    Text="{x:Static constants:FontAwesomeIcons.Gear}"
-                    Command="{Binding GoToCommand}"
-                    CommandParameter="{x:Type settingsPage:SettingsPage}" />
-
-            </HorizontalStackLayout>
-        </Border>
     </Grid>
 </ContentPage>

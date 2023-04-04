@@ -8,7 +8,7 @@
              x:Class="Aosta.GUI.Features.SettingsPage.SettingsPage"
              x:DataType="settingsPage:SettingsViewModel"
              Title="Settings Page"
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="True"
              Shell.TabBarIsVisible="False">
 
     <ContentPage.Behaviors>
@@ -103,11 +103,9 @@
             Style="{x:StaticResource Key=FloatingActionButton}"
             Margin="0,0,20,20"
             Text="{x:Static constants:FontAwesomeIcons.FloppyDisk}">
+            
             <Button.Shadow>
-                <Shadow Brush="Black"
-                        Offset="10,10"
-                        Radius="20"
-                        Opacity="0.2" />
+                <Shadow StyleId="{StaticResource Key=FloatingActionButtonShadow}"/>
             </Button.Shadow>
         </Button>
     </Grid>
