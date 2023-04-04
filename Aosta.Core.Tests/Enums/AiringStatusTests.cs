@@ -1,6 +1,6 @@
 using Aosta.Core.Data.Enums;
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 using AiringStatus = Aosta.Core.Data.Enums.AiringStatus;
 
 namespace Aosta.Core.Tests.Enums;
@@ -43,21 +43,21 @@ public class AiringStatusTests : IEnumTests
     [Test]
     public void JikanStringParseTest()
     {
-        var converted = new Anime() { MalId = 0, Status = "Not yet aired" }.ToRealmObject();
+        var converted = new AnimeResponse() { MalId = 0, Status = "Not yet aired" }.ToRealmObject();
         Assert.That(converted.Status, Is.EqualTo(AiringStatus.NotYetAired));
     }
 
     [Test]
     public void JikanInvalidStringParseTest()
     {
-        var converted = new Anime() { MalId = 0, Status = "Invalid" }.ToRealmObject();
+        var converted = new AnimeResponse() { MalId = 0, Status = "Invalid" }.ToRealmObject();
         Assert.That(converted.Status, Is.EqualTo(AiringStatus.NotAvailable));
     }
 
     [Test]
     public void JikanNullStringParseTest()
     {
-        var converted = new Anime() { MalId = 0, Status = null }.ToRealmObject();
+        var converted = new AnimeResponse() { MalId = 0, Status = null }.ToRealmObject();
         Assert.That(converted.Status, Is.EqualTo(AiringStatus.NotAvailable));
     }
 }

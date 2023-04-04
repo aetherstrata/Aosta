@@ -1,28 +1,28 @@
 using Aosta.Core.Data.Models;
 using Aosta.Core.Data.Models.Jikan;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 
 namespace Aosta.Core.Extensions;
 
 internal static class JikanExtensions
 {
-    internal static JikanContentObject ToRealmObject(this Anime anime) => new(anime);
+    internal static JikanContentObject ToRealmObject(this AnimeResponse animeResponse) => new(animeResponse);
 
-    internal static BroadcastObject ToRealmObject(this AnimeBroadcast broadcast) => new(broadcast);
+    internal static BroadcastObject ToRealmObject(this AnimeBroadcastResponse broadcastResponse) => new(broadcastResponse);
 
-    internal static ImageObject ToRealmObject(this Image image) => new(image);
+    internal static ImageObject ToRealmObject(this ImageResponse imageResponse) => new(imageResponse);
 
-    internal static ImageSetObject ToRealmObject(this ImagesSet set) => new(set);
+    internal static ImageSetObject ToRealmObject(this ImagesSetResponse setResponse) => new(setResponse);
 
-    internal static TimePeriodObject ToRealmObject(this TimePeriod period) => new(period);
+    internal static TimePeriodObject ToRealmObject(this TimePeriodResponse periodResponse) => new(periodResponse);
 
-    internal static TitleObject ToRealmObject(this TitleEntry title) => new(title);
+    internal static TitleObject ToRealmObject(this TitleEntryResponse title) => new(title);
 
-    internal static TrailerObject ToRealmObject(this AnimeTrailer trailer) => new(trailer);
+    internal static TrailerObject ToRealmObject(this AnimeTrailerResponse trailerResponse) => new(trailerResponse);
 
-    internal static UrlObject ToRealmObject(this MalUrl url) => new(url);
+    internal static UrlObject ToRealmObject(this MalUrlResponse urlResponse) => new(urlResponse);
 
-    internal static void AddRange(this IList<UrlObject> list, ICollection<MalUrl>? collection)
+    internal static void AddRange(this IList<UrlObject> list, ICollection<MalUrlResponse>? collection)
     {
         if (collection is null) return;
 
@@ -32,7 +32,7 @@ internal static class JikanExtensions
         }
     }
 
-    internal static void AddRange(this IList<TitleObject> list, ICollection<TitleEntry>? collection)
+    internal static void AddRange(this IList<TitleObject> list, ICollection<TitleEntryResponse>? collection)
     {
         if (collection is null) return;
 

@@ -102,9 +102,10 @@ public class EmbeddedObjectTest
 
 public partial class EmbedTestObject : IRealmObject
 {
-    [PrimaryKey] public Guid Id { get; set; } = Guid.NewGuid();
+    [PrimaryKey]
+    public Guid Id { get; set; } = Guid.NewGuid();
 
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; } = string.Empty;
 
     public EmbeddedData? EmbeddedData { get; set; }
 

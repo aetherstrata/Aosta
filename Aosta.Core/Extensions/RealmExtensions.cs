@@ -16,7 +16,7 @@ public static class RealmExtensions
         return realm.All<T>().FirstOrDefault();
     }
 
-    public static IOrderedQueryable<ContentObject> OrderBy(this IQueryable<ContentObject> query, AnimeOrdering ordering)
+    public static IOrderedQueryable<AnimeObject> OrderBy(this IQueryable<AnimeObject> query, AnimeOrdering ordering)
     {
         return ordering switch
         {

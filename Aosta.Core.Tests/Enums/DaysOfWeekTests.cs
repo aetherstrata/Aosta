@@ -1,6 +1,6 @@
 using Aosta.Core.Data.Enums;
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 
 namespace Aosta.Core.Tests.Enums;
 
@@ -48,21 +48,21 @@ public class DaysOfWeekTests : IEnumTests
     [Test]
     public void JikanStringParseTest()
     {
-        var converted = new AnimeBroadcast { Day = "Mondays" }.ToRealmObject();
+        var converted = new AnimeBroadcastResponse { Day = "Mondays" }.ToRealmObject();
         Assert.That(converted.Day, Is.EqualTo(DaysOfWeek.Monday));
     }
 
     [Test]
     public void JikanInvalidStringParseTest()
     {
-        var converted = new AnimeBroadcast { Day = "Invalid" }.ToRealmObject();
+        var converted = new AnimeBroadcastResponse { Day = "Invalid" }.ToRealmObject();
         Assert.That(converted.Day, Is.EqualTo(DaysOfWeek.None));
     }
 
     [Test]
     public void JikanNullStringParseTest()
     {
-        var converted = new AnimeBroadcast { Day = null }.ToRealmObject();
+        var converted = new AnimeBroadcastResponse { Day = null }.ToRealmObject();
         Assert.That(converted.Day, Is.EqualTo(DaysOfWeek.None));
     }
 }

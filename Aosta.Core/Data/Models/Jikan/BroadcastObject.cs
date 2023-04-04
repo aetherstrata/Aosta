@@ -1,5 +1,5 @@
 using Aosta.Core.Data.Enums;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 using Realms;
 
 namespace Aosta.Core.Data.Models.Jikan;
@@ -14,12 +14,12 @@ public partial class BroadcastObject : IEmbeddedObject
     {
     }
 
-    internal BroadcastObject(AnimeBroadcast broadcast)
+    internal BroadcastObject(AnimeBroadcastResponse broadcastResponse)
     {
-        Day = ParseDayOfWeek(broadcast.Day);
-        LocalTime = broadcast.Time is null ? null : TimeOnly.Parse(broadcast.Time);
-        Timezone = broadcast.Timezone is null ? null : TimeZoneInfo.FindSystemTimeZoneById(broadcast.Timezone);
-        String = broadcast.String ?? string.Empty;
+        Day = ParseDayOfWeek(broadcastResponse.Day);
+        LocalTime = broadcastResponse.Time is null ? null : TimeOnly.Parse(broadcastResponse.Time);
+        Timezone = broadcastResponse.Timezone is null ? null : TimeZoneInfo.FindSystemTimeZoneById(broadcastResponse.Timezone);
+        String = broadcastResponse.String ?? string.Empty;
     }
 
     private int _Day { get; set; }
