@@ -77,12 +77,11 @@
 
         </ScrollView>
 
-        <Button Grid.Row="0"
-                Margin="0,0,20,20"
+        <Button Margin="0,0,20,20"
                 Style="{x:StaticResource Key=FloatingActionButton}"
                 Text="{x:Static constants:FontAwesomeIcons.Plus}"
                 Command="{Binding GoToPageCommand}"
-                CommandParameter="{x:Type animeManualAdd:AnimeManualAddPage}">
+                CommandParameter="{x:Type animeManualAdd:AnimeManualAddPage}" >
 
             <Button.Shadow>
                 <Shadow Radius="20"

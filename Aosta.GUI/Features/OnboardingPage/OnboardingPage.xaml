@@ -58,18 +58,17 @@
                            Margin="15"
                            SelectedIndicatorColor="{x:StaticResource BaseColor}" />
 
-            <Button Margin="25"
-                    HeightRequest="70"
-                    WidthRequest="70"
-                    VerticalOptions="End"
-                    HorizontalOptions="End"
-                    CornerRadius="35"
-                    FontFamily="FontAwesome"
-                    FontAttributes="None"
-                    FontSize="30"
+            <Button Margin="0,0,20,20"
+                    Style="{StaticResource Key=FloatingActionButton}"
                     Text="{Binding ButtonGlyph}"
                     Command="{Binding NextPageCommand}">
-                
+
+                <Button.Shadow>
+                    <Shadow Radius="20"
+                        Offset="10,10"
+                        Opacity="0.2"
+                        Brush="Black"/>
+                </Button.Shadow>
             </Button>
         </Grid>
     </ContentPage.Content>

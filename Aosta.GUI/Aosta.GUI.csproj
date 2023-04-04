@@ -77,9 +77,6 @@
         <MauiXaml Update="Features\SettingsPage\SettingsPage.xaml">
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
-        <MauiXaml Update="Resources\Styles\FloatingActionButtonShadow.xaml">
-          <Generator>MSBuild:Compile</Generator>
-        </MauiXaml>
     </ItemGroup>
 
     <ItemGroup>

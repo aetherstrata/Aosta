@@ -99,13 +99,15 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <Button
-            Style="{x:StaticResource Key=FloatingActionButton}"
-            Margin="0,0,20,20"
-            Text="{x:Static constants:FontAwesomeIcons.FloppyDisk}">
-            
+        <Button Margin="0,0,20,20"
+                Style="{x:StaticResource Key=FloatingActionButton}"
+                Text="{x:Static constants:FontAwesomeIcons.FloppyDisk}">
+
             <Button.Shadow>
-                <Shadow StyleId="{StaticResource Key=FloatingActionButtonShadow}"/>
+                <Shadow Radius="20"
+                        Offset="10,10"
+                        Opacity="0.2"
+                        Brush="Black"/>
             </Button.Shadow>
         </Button>
     </Grid>
