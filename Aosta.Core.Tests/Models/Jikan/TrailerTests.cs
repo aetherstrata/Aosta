@@ -1,6 +1,6 @@
 using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
@@ -10,27 +10,27 @@ public class TrailerTests
     [SetUp]
     public void SetUp()
     {
-        _trailer = new AnimeTrailer
+        _trailerResponse = new AnimeTrailerResponse
         {
             Url = "Url",
             EmbedUrl = "Embed Url",
             YoutubeId = "== ID ==",
-            Image = new Image()
+            Image = new ImageResponse()
         };
     }
 
-    private AnimeTrailer _trailer = null!;
+    private AnimeTrailerResponse _trailerResponse = null!;
 
     [Test]
     public void ConversionTest()
     {
-        var converted = _trailer.ToRealmObject();
+        var converted = _trailerResponse.ToRealmObject();
 
         Assert.Multiple(() =>
         {
-            Assert.That(converted.Url, Is.EqualTo(_trailer.Url));
-            Assert.That(converted.EmbedUrl, Is.EqualTo(_trailer.EmbedUrl));
-            Assert.That(converted.YoutubeId, Is.EqualTo(_trailer.YoutubeId));
+            Assert.That(converted.Url, Is.EqualTo(_trailerResponse.Url));
+            Assert.That(converted.EmbedUrl, Is.EqualTo(_trailerResponse.EmbedUrl));
+            Assert.That(converted.YoutubeId, Is.EqualTo(_trailerResponse.YoutubeId));
             Assert.That(converted.Image, Is.Not.Null);
         });
     }
@@ -38,7 +38,7 @@ public class TrailerTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newTrailer = new TrailerObject(new AnimeTrailer());
+        var newTrailer = new TrailerObject(new AnimeTrailerResponse());
 
         Assert.Multiple(() =>
         {

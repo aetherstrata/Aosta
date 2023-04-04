@@ -1,6 +1,6 @@
 using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
@@ -13,7 +13,7 @@ public class TimePeriodTests
         _from = new DateTime(2000, 10, 24);
         _to = new DateTime(2001, 1, 8);
 
-        _period = new TimePeriod
+        _period = new TimePeriodResponse
         {
             From = _from,
             To = _to
@@ -23,7 +23,7 @@ public class TimePeriodTests
     private DateTime _from;
     private DateTime _to;
 
-    private TimePeriod _period = null!;
+    private TimePeriodResponse _period = null!;
 
     [Test]
     public void ConversionTest()
@@ -49,7 +49,7 @@ public class TimePeriodTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newPeriod = new TimePeriodObject(new TimePeriod());
+        var newPeriod = new TimePeriodObject(new TimePeriodResponse());
 
         Assert.Multiple(() =>
         {

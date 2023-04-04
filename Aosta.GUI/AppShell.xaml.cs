@@ -4,7 +4,7 @@ using Aosta.GUI.Features.OnboardingPage;
 
 namespace Aosta.GUI;
 
-public partial class AppShell : Shell
+public partial class AppShell
 {
     public AppShell()
     {
@@ -12,6 +12,5 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute(nameof(AnimeManualAddPage), typeof(AnimeManualAddPage));
         Routing.RegisterRoute(nameof(OnboardingPage), typeof(OnboardingPage));
-
     }
 }

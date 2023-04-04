@@ -6,8 +6,6 @@ using Aosta.GUI.Features.OnboardingPage;
 using Aosta.GUI.Features.ProfileMainPage;
 using Aosta.GUI.Features.SettingsPage;
 using Aosta.GUI.Services;
-using CommunityToolkit.Maui;
-using JikanDotNet;
 
 namespace Aosta.GUI.Extensions;
 
@@ -19,8 +17,10 @@ internal static partial class MauiAppBuilderExtensions
 
         builder.Services.AddSingleton<ISecureStorageService, SecureStorageService>();
         builder.Services.AddSingleton<ISettingsService, SettingsService>();
-        builder.Services.AddSingleton<IJikan, Jikan>();
-        builder.Services.AddSingleton<AostaDotNet>();
+        builder.Services.AddSingleton<AostaDotNet>(_ => new AostaDotNet(new AostaConfiguration(FileSystem.Current.AppDataDirectory)
+        {
+            CachePath = FileSystem.Current.CacheDirectory,
+        }));
 
         #endregion
 
@@ -47,7 +47,7 @@ internal static partial class MauiAppBuilderExtensions
 
         //Transient Views
         builder.Services.AddTransient<AnimeSummaryPage>();
-        builder.Services.AddTransient<AddAnimePage>();
+        builder.Services.AddTransient<AnimeManualAddPage>();
 
         #endregion
 

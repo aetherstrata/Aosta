@@ -1,9 +1,10 @@
-using JikanDotNet;
+using Aosta.Core.Jikan;
+using Aosta.Core.Jikan.Models.Response;
 using Realms;
 
 //using Aosta.Core.Data.RealmObjects.Mal;
 
-//using ContentObject = Aosta.Core.Data.RealmObjects.ContentObject;
+//using AnimeObject = Aosta.Core.Data.RealmObjects.AnimeObject;
 
 namespace Aosta.Core.Tests.Models;
 
@@ -11,10 +12,10 @@ public class JikanContentTests
 {
     private RealmConfiguration _config = null!;
     private IJikan _jikan = null!;
-    private Anime _jikanAime = null!;
+    private AnimeResponse _jikanAime = null!;
 
     /*
-    private ContentObject expected = new ContentObject
+    private AnimeObject expected = new AnimeObject
     {
         Type = ContentType.TV,
         Title = "Cowboy Bebop",
@@ -31,7 +32,7 @@ public class JikanContentTests
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        _jikan = new JikanDotNet.Jikan();
+        _jikan = new JikanClient();
         _jikanAime = _jikan.GetAnimeAsync(1).Result.Data;
         _config = RealmSetup.NewConfig();
     }
@@ -60,7 +61,7 @@ public class JikanContentTests
             _realm.Add(_jikanAime.ToAnimeObject());
         });
 
-        var inserted = _realm.First<ContentObject>();
+        var inserted = _realm.First<AnimeObject>();
 
         Assert.That(inserted.Airing, Is.False);
         Assert.That(inserted.AiringStatus, Is.EqualTo(AiringStatus.FinishedAiring));

@@ -1,30 +1,29 @@
-using System.Windows.Input;
+using Aosta.Core;
 using Aosta.Core.Data.Models;
 using Aosta.Core.Data.Ordering;
 using Aosta.Core.Extensions;
-using Aosta.GUI.Features.AnimeManualAddPage;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Realms;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Aosta.GUI.Features.MainPage;
 
 [ObservableObject]
 public partial class MainPageViewModel : RealmViewModel
 {
-    public IEnumerable<ContentObject> RealmAnimeList { get; set; }
+    public IEnumerable<AnimeObject> RealmAnimeList { get; set; }
 
-    public MainPageViewModel()
+    private readonly AostaDotNet _aosta;
+
+    public MainPageViewModel(AostaDotNet aosta) : base(aosta)
     {
-        RealmAnimeList = Realm.All<ContentObject>().OrderBy(AnimeOrdering.ByTitle);
+        _aosta = aosta;
+        RealmAnimeList = Realm.All<AnimeObject>().OrderBy(AnimeOrdering.ByTitle);
     }
 
-    public ICommand AddAnimeCommand => new Command(async () =>
+    [RelayCommand]
+    private async Task GoToPage(Type pageType)
     {
-        await Shell.Current.GoToAsync(nameof(AddAnimePage));
-    });
-
-    public ICommand GoToCommand => new Command<Type>(async pageType =>
-    {
+        _aosta.Log.Debug("Navigated to: {Name}", pageType.Name);
         await Shell.Current.GoToAsync($"{pageType.Name}");
-    });
+    }
 }

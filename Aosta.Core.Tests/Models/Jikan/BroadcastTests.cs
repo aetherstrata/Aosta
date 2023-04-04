@@ -1,7 +1,7 @@
 using Aosta.Core.Data.Enums;
 using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
@@ -11,7 +11,7 @@ public class BroadcastTests
     [SetUp]
     public void SetUp()
     {
-        _broadcast = new AnimeBroadcast
+        _broadcastResponse = new AnimeBroadcastResponse
         {
             Day = "Mondays",
             Time = "07:00",
@@ -24,7 +24,7 @@ public class BroadcastTests
         _days = DaysOfWeek.Monday;
     }
 
-    private AnimeBroadcast _broadcast = null!;
+    private AnimeBroadcastResponse _broadcastResponse = null!;
 
     private TimeOnly _time;
     private TimeZoneInfo _timeZone = null!;
@@ -33,7 +33,7 @@ public class BroadcastTests
     [Test]
     public void FullConversionTest()
     {
-        var converted = _broadcast.ToRealmObject();
+        var converted = _broadcastResponse.ToRealmObject();
 
         Assert.Multiple(() =>
         {
@@ -54,9 +54,9 @@ public class BroadcastTests
     [Test]
     public void NoTimezoneConversionTest()
     {
-        _broadcast.Timezone = null;
+        _broadcastResponse.Timezone = null;
 
-        var converted = _broadcast.ToRealmObject();
+        var converted = _broadcastResponse.ToRealmObject();
 
         Assert.Multiple(() =>
         {
@@ -77,7 +77,7 @@ public class BroadcastTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newBroadcast = new BroadcastObject(new AnimeBroadcast());
+        var newBroadcast = new BroadcastObject(new AnimeBroadcastResponse());
 
         Assert.Multiple(() =>
         {

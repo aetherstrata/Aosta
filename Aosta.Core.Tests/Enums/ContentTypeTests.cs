@@ -1,6 +1,6 @@
 using Aosta.Core.Data.Enums;
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 
 namespace Aosta.Core.Tests.Enums;
 
@@ -46,21 +46,21 @@ public class ContentTypeTests : IEnumTests
     [Test]
     public void JikanStringParseTest()
     {
-        var content = new Anime { MalId = 0, Type = "TV" }.ToRealmObject();
+        var content = new AnimeResponse { MalId = 0, Type = "TV" }.ToRealmObject();
         Assert.That(content.Type, Is.EqualTo(ContentType.TV));
     }
 
     [Test]
     public void JikanInvalidStringParseTest()
     {
-        var content = new Anime { MalId = 0, Type = "Invalid" }.ToRealmObject();
+        var content = new AnimeResponse { MalId = 0, Type = "Invalid" }.ToRealmObject();
         Assert.That(content.Type, Is.EqualTo(ContentType.Unknown));
     }
 
     [Test]
     public void JikanNullStringParseTest()
     {
-        var content = new Anime { MalId = 0, Type = null }.ToRealmObject();
+        var content = new AnimeResponse { MalId = 0, Type = null }.ToRealmObject();
         Assert.That(content.Type, Is.EqualTo(ContentType.Unknown));
     }
 }

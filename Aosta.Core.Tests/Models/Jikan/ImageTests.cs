@@ -1,6 +1,6 @@
 using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
@@ -10,7 +10,7 @@ public class ImageTests
     [SetUp]
     public void SetUp()
     {
-        _image1 = new Image
+        _image1 = new ImageResponse
         {
             ImageUrl = "https://url.com/image.jpg",
             SmallImageUrl = "https://url.com/smallImage.jpg",
@@ -18,19 +18,9 @@ public class ImageTests
             LargeImageUrl = "https://url.com/largeImage.jpg",
             MaximumImageUrl = "https://url.com/MaximumImage.jpg"
         };
-
-        _image2 = new Image
-        {
-            ImageUrl = "https://url.com/image.webp",
-            SmallImageUrl = "https://url.com/smallImage.webp",
-            MediumImageUrl = "https://url.com/mediumImage.webp",
-            LargeImageUrl = "https://url.com/largeImage.webp",
-            MaximumImageUrl = "https://url.com/MaximumImage.webp"
-        };
     }
 
-    private Image _image1 = null!;
-    private Image _image2 = null!;
+    private ImageResponse _image1 = null!;
 
     [Test]
     public void ConversionTest()
@@ -43,7 +33,7 @@ public class ImageTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newImage = new ImageObject(new Image());
+        var newImage = new ImageObject(new ImageResponse());
 
         Assert.Multiple(() =>
         {
@@ -55,7 +45,7 @@ public class ImageTests
         });
     }
 
-    internal static void AssertImagesAreEqual(ImageObject converted, Image input)
+    private static void AssertImagesAreEqual(ImageObject converted, ImageResponse input)
     {
         Assert.Multiple(() =>
         {

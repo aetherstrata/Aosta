@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using Aosta.Core;
 using Aosta.Core.Data.Enums;
 using Aosta.Core.Data.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -16,18 +17,22 @@ public partial class AnimeManualAddViewModel : ObservableObject
     [ObservableProperty]
     private string _animeTitleBack = string.Empty;
 
-    private readonly CancellationTokenSource _cts = new();
+    private CancellationTokenSource _cts = null!;
 
-    public AnimeManualAddViewModel()
+    private readonly AostaDotNet _aosta;
+
+    public AnimeManualAddViewModel(AostaDotNet aosta)
     {
-
+        _aosta = aosta;
     }
 
     public ICommand AddToRealm => new Command(async () =>
     {
+        _cts = new();
+
         var token = _cts.Token;
 
-        var anime = new ContentObject()
+        var anime = new AnimeObject()
         {
             Title = AnimeTitle,
             Score = float.TryParse(AnimeScore, out float score) ? -1 : (int)Math.Floor(score*10),
@@ -36,9 +41,9 @@ public partial class AnimeManualAddViewModel : ObservableObject
 
         var guid = anime.Id;
 
-        Guid id = await App.Core.CreateLocalContentAsync(anime, token);
+        Guid id = await _aosta.CreateLocalContentAsync(anime, token);
 
-        AnimeTitleBack = App.Core.GetInstance().Find<ContentObject>(guid).Title;
+        AnimeTitleBack = _aosta.GetInstance().Find<AnimeObject>(guid).Title;
 
         _cts.Dispose();
     });

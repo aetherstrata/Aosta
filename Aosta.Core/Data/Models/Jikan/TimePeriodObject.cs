@@ -1,4 +1,4 @@
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 using Realms;
 
 namespace Aosta.Core.Data.Models.Jikan;
@@ -13,10 +13,10 @@ public partial class TimePeriodObject : IEmbeddedObject
     {
     }
 
-    internal TimePeriodObject(TimePeriod period)
+    internal TimePeriodObject(TimePeriodResponse periodResponse)
     {
-        From = period.From;
-        To = period.To;
+        From = periodResponse.From;
+        To = periodResponse.To;
     }
 
     private DateTimeOffset? _From { get; set; }

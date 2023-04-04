@@ -1,7 +1,6 @@
 using Aosta.Core.Data.Enums;
 using Aosta.Core.Extensions;
-using JikanDotNet;
-using NUnit.Framework;
+using Aosta.Core.Jikan.Models.Response;
 
 namespace Aosta.Core.Tests.Enums;
 
@@ -47,21 +46,21 @@ public class AudienceRatingTests : IEnumTests
     [Test]
     public void JikanStringParseTest()
     {
-        var converted = new Anime { MalId = 0, Rating = "Rx - Hentai" }.ToRealmObject();
+        var converted = new AnimeResponse { MalId = 0, Rating = AudienceRating.Hentai.ToStringCached() }.ToRealmObject();
         Assert.That(converted.AgeRating, Is.EqualTo(AudienceRating.Hentai));
     }
 
     [Test]
     public void JikanInvalidStringParseTest()
     {
-        var converted = new Anime { MalId = 0, Rating = "Invalid" }.ToRealmObject();
+        var converted = new AnimeResponse { MalId = 0, Rating = "Invalid" }.ToRealmObject();
         Assert.That(converted.AgeRating, Is.EqualTo(AudienceRating.Unknown));
     }
 
     [Test]
     public void JikanNullStringParseTest()
     {
-        var converted = new Anime { MalId = 0, Rating = null }.ToRealmObject();
+        var converted = new AnimeResponse { MalId = 0, Rating = null}.ToRealmObject();
         Assert.That(converted.AgeRating, Is.EqualTo(AudienceRating.Unknown));
     }
 }

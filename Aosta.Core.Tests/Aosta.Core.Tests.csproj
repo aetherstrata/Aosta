@@ -22,7 +22,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Realm" Version="10.20.0" />
+        <PackageReference Include="Realm" Version="10.21.0" />
     </ItemGroup>
 
     <ItemGroup>

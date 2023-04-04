@@ -1,6 +1,6 @@
 using Aosta.Core.Data.Models.Jikan;
 using Aosta.Core.Extensions;
-using JikanDotNet;
+using Aosta.Core.Jikan.Models.Response;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
@@ -10,14 +10,14 @@ public class TitleTests
     [SetUp]
     public void SetUp()
     {
-        _title = new TitleEntry
+        _title = new TitleEntryResponse
         {
             Type = "type",
             Title = "title"
         };
     }
 
-    private TitleEntry _title = null!;
+    private TitleEntryResponse _title = null!;
 
     [Test]
     public void ConversionTest()
@@ -34,7 +34,7 @@ public class TitleTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newTitle = new TitleObject(new TitleEntry());
+        var newTitle = new TitleObject(new TitleEntryResponse());
 
         Assert.Multiple(() =>
         {
