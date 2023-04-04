@@ -1,6 +1,8 @@
 using Aosta.Core;
 using Aosta.Core.Jikan;
 using Aosta.Core.Limiter;
+using Aosta.GUI.Features.OnboardingPage;
+
 using Aosta.GUI.Services;
 
 namespace Aosta.GUI;
@@ -24,7 +26,7 @@ public partial class App
             ? AppTheme.Dark
             : AppTheme.Light;
 
-        if (!_settingsService.Get("firstRun", true).Result)
-            Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+        if (_settingsService.Get("firstRun", true).Result)
+            Shell.Current.GoToAsync($"{nameof(OnboardingPage)}");
     }
 }

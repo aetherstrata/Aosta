@@ -13,8 +13,7 @@
         <Setter Property="CornerRadius" Value="40" />
         <Setter Property="FontFamily" Value="FontAwesome" />
         <Setter Property="FontSize" Value="30" />
-        <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Dark={StaticResource BaseColor20L}, Light={StaticResource BaseColor60L}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BaseColor20L}, Light={StaticResource BaseColor60L}}" />
     </Style>
 
 </ResourceDictionary>

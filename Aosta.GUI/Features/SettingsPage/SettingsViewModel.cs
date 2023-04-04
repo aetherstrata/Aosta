@@ -40,7 +40,7 @@ public partial class SettingsViewModel : RealmViewModel
 
     public ICommand GotoOnboardingCommand => new Command(async () =>
     {
-        await Shell.Current.GoToAsync($"//{nameof(OnboardingPage.OnboardingPage)}");
+        await Shell.Current.GoToAsync($"{nameof(OnboardingPage.OnboardingPage)}");
     });
 
     public ICommand PrintAnimeCount => new Command(async () =>

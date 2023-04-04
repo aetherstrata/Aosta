@@ -4,19 +4,25 @@
     x:Class="Aosta.GUI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:onboardingPage="using:Aosta.GUI.Features.OnboardingPage"
     xmlns:mainPage="using:Aosta.GUI.Features.MainPage"
-    BackgroundColor="{x:StaticResource BaseColor20B}"
-    FlyoutBehavior="Disabled">
+    xmlns:settingsPage="clr-namespace:Aosta.GUI.Features.SettingsPage"
+    xmlns:profilePage="clr-namespace:Aosta.GUI.Features.ProfileMainPage"
+    BackgroundColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor}}"
+    FlyoutBehavior="Flyout">
 
     <ShellContent
-        Title="OnboardingPage"
-        ContentTemplate="{DataTemplate onboardingPage:OnboardingPage}"
-        Route="OnboardingPage" />
-
-    <ShellContent
-        Title="MainPage"
+        Title="Main Page"
         ContentTemplate="{DataTemplate mainPage:MainPage}"
         Route="MainPage" />
 
+    <ShellContent
+        Title="Settings Page"
+        ContentTemplate="{DataTemplate settingsPage:SettingsPage}"
+        Route="SettingsPage" />
+
+    <ShellContent
+        Title="Profile Page"
+        ContentTemplate="{DataTemplate profilePage:ProfilePage}"
+        Route="ProfilePage" />
+    
 </Shell>
