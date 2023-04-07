@@ -1,4 +1,5 @@
 using System.Text;
+using Aosta.Core.Utils.Extensions;
 using Aosta.Core.Utils.Helpers;
 using Aosta.Jikan.Enums;
 using FastEnumUtility;
@@ -46,7 +47,7 @@ public class UserSearchConfig: ISearchConfig
     /// <returns>Query from current parameters for search request</returns>
     public string ConfigToString()
     {
-    	var builder = new StringBuilder().Append('?');
+    	var builder = new StringBuilder();
 
         if (Page.HasValue)
         {
@@ -80,6 +81,6 @@ public class UserSearchConfig: ISearchConfig
 	        builder.Append($"maxAge={MaxAge.Value}&");
         }
 
-    	return builder.ToString().Trim('&');
+    	return builder.Length == 0 ? string.Empty : builder.Prepend("?").ToString().Trim('&');;
     }
 }
