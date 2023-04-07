@@ -207,7 +207,7 @@ public interface IJikan
 	/// <param name="id">MAL id of anime.</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Anime with additional data.</returns>
-	Task<BaseJikanResponse<AnimeResponseFull>> GetAnimeFullDataAsync(long id, CancellationToken ct = default);
+	Task<BaseJikanResponse<AnimeResponse>> GetAnimeFullDataAsync(long id, CancellationToken ct = default);
 
 	#endregion Anime requests
 
@@ -385,7 +385,7 @@ public interface IJikan
 	/// <param name="id">MAL id of character.</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Character with additional data.</returns>
-	Task<BaseJikanResponse<CharacterResponseFull>> GetCharacterFullDataAsync(long id, CancellationToken ct = default);
+	Task<BaseJikanResponse<CharacterResponse>> GetCharacterFullDataAsync(long id, CancellationToken ct = default);
 
 	#endregion Character requests
 

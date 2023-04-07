@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
+using Aosta.Core.Utils;
 using Aosta.Core.Utils.Consts;
 using Aosta.Core.Utils.Exceptions;
-using Aosta.Core.Utils.Helpers;
 using Aosta.Core.Utils.Limiter;
 using Aosta.Jikan.Consts;
 using Aosta.Jikan.Enums;
@@ -10,6 +10,7 @@ using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Models.Search;
 using FastEnumUtility;
+using Realms;
 using Serilog;
 
 namespace Aosta.Jikan;
@@ -89,35 +90,35 @@ public class JikanClient : IJikan, IDisposable
     /// <returns>Requested object if successful, null otherwise.</returns>
     private async Task<T> ExecuteGetRequestAsync<T>(IEnumerable<string> routeSections, CancellationToken ct = default) where T : class
     {
-        string requestUrl = string.Join("/", routeSections);
+        string requestEndpoint = string.Join("/", routeSections);
+        string fullUrl = _httpClient.BaseAddress + requestEndpoint;
         try
         {
-            _logger?.Debug("Performing GET request: \"{Request}\"", _httpClient.BaseAddress + requestUrl);
-            using var response = await _limiter.LimitAsync(() => _httpClient.GetAsync(requestUrl, ct));
+            _logger?.Debug("Performing GET request: \"{Request}\"", fullUrl);
+            using var response = await _limiter.LimitAsync(() => _httpClient.GetAsync(requestEndpoint, ct));
 
             string json = await response.Content.ReadAsStringAsync(ct);
             _logger?.Verbose("Retrieved JSON string: {Json}", json);
 
             if (response.IsSuccessStatusCode)
             {
-                _logger?.Debug("Got HTTP response for \"{Request}\" successfully", requestUrl);
+                _logger?.Debug("Got HTTP response for \"{Request}\" successfully", fullUrl);
                 var deserialized =  JsonSerializer.Deserialize<T>(json) ?? throw new JikanRequestException(
                     ErrorMessages.SerializationNullResult + Environment.NewLine + "Raw JSON string:" +
                     Environment.NewLine + json);
-                _logger?.Verbose("Deserialized resources from \"{Request}\" into:\n{@Data}", requestUrl, deserialized);
+                //deserialized.QueryEndpoint = fullUrl;
+                _logger?.Verbose("Deserialized resources from \"{Request}\" into:\n{@Data}", requestEndpoint, deserialized);
                 return deserialized;
             }
 
-            _logger?.Error("Failed to get HTTP resource for \"{Resource}\", Status Code: {Status}", requestUrl, response.StatusCode);
+            _logger?.Error("Failed to get HTTP resource for \"{Resource}\", Status Code: {Status}", requestEndpoint, response.StatusCode);
             var errorData = JsonSerializer.Deserialize<JikanApiError>(json);
-            throw new JikanRequestException(
-                string.Format(ErrorMessages.FailedRequest, response.StatusCode, response.Content), errorData);
+            throw new JikanRequestException(string.Format(ErrorMessages.FailedRequest, response.StatusCode, response.Content), errorData);
         }
         catch (JsonException ex)
         {
             throw new JikanRequestException(
-                ErrorMessages.SerializationFailed + Environment.NewLine + "Inner exception message: " + ex.Message,
-                ex);
+                ErrorMessages.SerializationFailed + Environment.NewLine + "Inner exception message: " + ex.Message, ex);
         }
     }
 
@@ -459,7 +460,7 @@ public class JikanClient : IJikan, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<BaseJikanResponse<AnimeResponseFull>> GetAnimeFullDataAsync(long id, CancellationToken ct = default)
+    public async Task<BaseJikanResponse<AnimeResponse>> GetAnimeFullDataAsync(long id, CancellationToken ct = default)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
 
@@ -469,7 +470,7 @@ public class JikanClient : IJikan, IDisposable
             id.ToString(),
             JikanEndpointConsts.Full
         };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<AnimeResponseFull>>(endpointParts, ct);
+        return await ExecuteGetRequestAsync<BaseJikanResponse<AnimeResponse>>(endpointParts, ct);
     }
 
     #endregion Anime methods
@@ -546,7 +547,7 @@ public class JikanClient : IJikan, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<BaseJikanResponse<CharacterResponseFull>> GetCharacterFullDataAsync(long id, CancellationToken ct = default)
+    public async Task<BaseJikanResponse<CharacterResponse>> GetCharacterFullDataAsync(long id, CancellationToken ct = default)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
         string[] endpointParts =
@@ -555,7 +556,7 @@ public class JikanClient : IJikan, IDisposable
             id.ToString(),
             JikanEndpointConsts.Full
         };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<CharacterResponseFull>>(endpointParts, ct);
+        return await ExecuteGetRequestAsync<BaseJikanResponse<CharacterResponse>>(endpointParts, ct);
     }
 
     #endregion Character methods
