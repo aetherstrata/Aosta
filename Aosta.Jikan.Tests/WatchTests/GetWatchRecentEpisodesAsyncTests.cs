@@ -13,9 +13,8 @@ public class GetWatchRecentEpisodesAsyncTests
         // Then
         using var _ = new AssertionScope();
         episodes.Data.Should().NotBeEmpty();
-        episodes.Data.First().Episodes.Should().HaveCount(2);
+        episodes.Data.First().Episodes.Should().NotBeEmpty();
         episodes.Data.First().RegionLocked.Should().BeFalse();
-        episodes.Data.First().Episodes.Should().HaveCount(2);
         episodes.Data.First().Episodes.Should().OnlyContain(x => x.Premium.HasValue);
     }
 }

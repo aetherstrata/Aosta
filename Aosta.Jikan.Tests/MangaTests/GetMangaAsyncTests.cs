@@ -112,10 +112,10 @@ public class GetMangaAsyncTests
 			onePieceManga.Data.Authors.Should().ContainSingle();
 			onePieceManga.Data.Serializations.Should().ContainSingle();
 			onePieceManga.Data.Genres.Should().HaveCount(3);
-			onePieceManga.Data.Authors.First().ToString().Should().Be("Oda, Eiichiro");
-			onePieceManga.Data.Serializations.First().ToString().Should().Be("Shounen Jump (Weekly)");
-			onePieceManga.Data.Genres.First().ToString().Should().Be("Action");
-			onePieceManga.Data.Demographics.First().ToString().Should().Be("Shounen");
+			onePieceManga.Data.Authors.First().Name.Should().Be("Oda, Eiichiro");
+			onePieceManga.Data.Serializations.First().Name.Should().Be("Shounen Jump (Weekly)");
+			onePieceManga.Data.Genres.First().Name.Should().Be("Action");
+			onePieceManga.Data.Demographics.First().Name.Should().Be("Shounen");
 			onePieceManga.Data.Themes.Should().BeEmpty();
 		}
 	}
