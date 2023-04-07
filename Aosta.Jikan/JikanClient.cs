@@ -92,11 +92,11 @@ public class JikanClient : IJikan, IDisposable
         string requestUrl = string.Join("/", routeSections);
         try
         {
-            _logger?.Debug("Performing GET request: \"{Request}\"", requestUrl);
+            _logger?.Debug("Performing GET request: \"{Request}\"", _httpClient.BaseAddress + requestUrl);
             using var response = await _limiter.LimitAsync(() => _httpClient.GetAsync(requestUrl, ct));
 
             string json = await response.Content.ReadAsStringAsync(ct);
-            _logger?.Verbose("JSON string: {Json}", json);
+            _logger?.Verbose("Retrieved JSON string: {Json}", json);
 
             if (response.IsSuccessStatusCode)
             {
