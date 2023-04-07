@@ -48,13 +48,13 @@ public class MangaListEntryResponse
 	/// Start date of user reading.
 	/// </summary>
 	[JsonPropertyName("read_start_date")]
-	public DateTime? ReadStartDate { get; set; }
+	public DateTimeOffset? ReadStartDate { get; set; }
 
 	/// <summary>
 	/// End date of user reading.
 	/// </summary>
 	[JsonPropertyName("read_end_date")]
-	public DateTime? ReadEndDate { get; set; }
+	public DateTimeOffset? ReadEndDate { get; set; }
 
 	/// <summary>
 	/// Time user has been reading manga.

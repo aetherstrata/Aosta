@@ -32,29 +32,36 @@ public class GetAnimeEpisodeAsyncTests
 	{
 		var cardcaptorFirstEpisode = await JikanTests.Instance.GetAnimeEpisodeAsync(232, 1);
 
-		using (new AssertionScope())
-		{
-			cardcaptorFirstEpisode.Data.Title.Should().Be("Sakura and the Strange Magical Book");
-			cardcaptorFirstEpisode.Data.TitleRomanji.Should().Be("Sakura to Fushigi na Mahou no Hon");
-			cardcaptorFirstEpisode.Data.TitleJapanese.Should().Be("さくらと不思議な魔法の本");
-		}
+		using var _ = new AssertionScope();
+		cardcaptorFirstEpisode.Data.Title.Should().Be("Sakura and the Strange Magical Book");
+		cardcaptorFirstEpisode.Data.TitleRomanji.Should().Be("Sakura to Fushigi na Mahou no Hon");
+		cardcaptorFirstEpisode.Data.TitleJapanese.Should().Be("さくらと不思議な魔法の本");
 	}
 
 	[Test]
-	public async Task CardcaptorSakuraIdFirstEpisode_ShouldParseCardcaptorFirstEpisodeBasicData()
+	public async Task CardcaptorFirstEpisode_ShouldParseCardcaptorFirstEpisodeBasicData()
 	{
 		var cardcaptorFirstEpisode = await JikanTests.Instance.GetAnimeEpisodeAsync(232, 1);
 
-		using (new AssertionScope())
-		{
-			cardcaptorFirstEpisode.Data.Duration.Should().Be(1500);
-			cardcaptorFirstEpisode.Data.Filler.Should().BeFalse();
-			cardcaptorFirstEpisode.Data.Recap.Should().BeFalse();
-		}
+		using var _ = new AssertionScope();
+		cardcaptorFirstEpisode.Data.Duration.Should().Be(1500);
+		cardcaptorFirstEpisode.Data.Filler.Should().BeFalse();
+		cardcaptorFirstEpisode.Data.Recap.Should().BeFalse();
 	}
 
 	[Test]
-	public async Task CardcaptorSakuraIdTenthEpisode_ShouldParseSynopsis()
+	public async Task CardcaptorFirstEpisode_ShouldParseCardcaptorFirstEpisodeAiredDateTime()
+	{
+		var cardcaptorFirstEpisode = await JikanTests.Instance.GetAnimeEpisodeAsync(232, 1);
+
+		using var _ = new AssertionScope();
+		cardcaptorFirstEpisode.Data.Aired.Should().HaveDay(7).And.HaveMonth(4).And.HaveYear(1998);
+		cardcaptorFirstEpisode.Data.Aired.Should().HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
+		cardcaptorFirstEpisode.Data.Aired.Should().HaveOffset(TimeSpan.FromHours(9));
+	}
+
+	[Test]
+	public async Task CardcaptorTenthEpisode_ShouldParseSynopsis()
 	{
 		var cardcaptorTenthEpisode = await JikanTests.Instance.GetAnimeEpisodeAsync(232, 10);
 

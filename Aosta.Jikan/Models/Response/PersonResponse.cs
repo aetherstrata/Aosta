@@ -47,7 +47,7 @@ public class PersonResponse
 	/// Person's birthday.
 	/// </summary>
 	[JsonPropertyName("birthday")]
-	public DateTime? Birthday { get; set; }
+	public DateTimeOffset? Birthday { get; set; }
 
 	/// <summary>
 	/// Person's website URL.

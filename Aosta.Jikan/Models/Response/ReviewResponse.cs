@@ -29,7 +29,7 @@ public class ReviewResponse
 	/// Date of review creation.
 	/// </summary>
 	[JsonPropertyName("date")]
-	public DateTime? Date { get; set; }
+	public DateTimeOffset? Date { get; set; }
 
 	/// <summary>
 	/// Review's content.

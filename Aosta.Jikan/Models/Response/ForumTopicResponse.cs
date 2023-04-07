@@ -29,7 +29,7 @@ public class ForumTopicResponse
 	/// Date of topic start.
 	/// </summary>
 	[JsonPropertyName("date")]
-	public DateTime? Date { get; set; }
+	public DateTimeOffset? Date { get; set; }
 
 	/// <summary>
 	/// Topic's author username.

@@ -47,7 +47,7 @@ public class AnimeEpisodeResponse
 	/// Date when episode aired at first.
 	/// </summary>
 	[JsonPropertyName("aired")]
-	public DateTime? Aired { get; set; }
+	public DateTimeOffset? Aired { get; set; }
 
 	/// <summary>
 	/// Is the episode filler.

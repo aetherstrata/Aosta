@@ -460,7 +460,7 @@ public class JikanClient : IJikan, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<BaseJikanResponse<AnimeResponse>> GetAnimeFullDataAsync(long id, CancellationToken ct = default)
+    public async Task<BaseJikanResponse<AnimeResponseFull>> GetAnimeFullDataAsync(long id, CancellationToken ct = default)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
 
@@ -470,7 +470,7 @@ public class JikanClient : IJikan, IDisposable
             id.ToString(),
             JikanEndpointConsts.Full
         };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<AnimeResponse>>(endpointParts, ct);
+        return await ExecuteGetRequestAsync<BaseJikanResponse<AnimeResponseFull>>(endpointParts, ct);
     }
 
     #endregion Anime methods
@@ -547,16 +547,17 @@ public class JikanClient : IJikan, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<BaseJikanResponse<CharacterResponse>> GetCharacterFullDataAsync(long id, CancellationToken ct = default)
+    public async Task<BaseJikanResponse<CharacterResponseFull>> GetCharacterFullDataAsync(long id, CancellationToken ct = default)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
+
         string[] endpointParts =
         {
             JikanEndpointConsts.Characters,
             id.ToString(),
             JikanEndpointConsts.Full
         };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<CharacterResponse>>(endpointParts, ct);
+        return await ExecuteGetRequestAsync<BaseJikanResponse<CharacterResponseFull>>(endpointParts, ct);
     }
 
     #endregion Character methods
@@ -594,6 +595,7 @@ public class JikanClient : IJikan, IDisposable
     public async Task<PaginatedJikanResponse<ICollection<NewsResponse>>> GetMangaNewsAsync(long id, CancellationToken ct = default)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
+
         string[] endpointParts =
         {
             JikanEndpointConsts.Manga,

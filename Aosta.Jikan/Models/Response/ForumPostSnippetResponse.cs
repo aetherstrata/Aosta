@@ -29,5 +29,5 @@ public class ForumPostSnippetResponse
 	/// Date when the post was publicated.
 	/// </summary>
 	[JsonPropertyName("date")]
-	public DateTime? Date { get; set; }
+	public DateTimeOffset? Date { get; set; }
 }

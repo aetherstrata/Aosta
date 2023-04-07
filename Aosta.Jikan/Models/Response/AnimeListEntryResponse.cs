@@ -42,13 +42,13 @@ public class AnimeListEntryResponse
 	/// Start date of user watching.
 	/// </summary>
 	[JsonPropertyName("watch_start_date")]
-	public DateTime? WatchStartDate { get; set; }
+	public DateTimeOffset? WatchStartDate { get; set; }
 
 	/// <summary>
 	/// End date of user watching.
 	/// </summary>
 	[JsonPropertyName("watch_end_date")]
-	public DateTime? WatchEndDate { get; set; }
+	public DateTimeOffset? WatchEndDate { get; set; }
 
 	/// <summary>
 	/// Time user has been watching anime.
@@ -72,107 +72,5 @@ public class AnimeListEntryResponse
 	/// Anime details.
 	/// </summary>
 	[JsonPropertyName("anime")]
-	public AnimeListEntryDetails? Anime { get; set; }
-}
-
-/// <summary>
-/// Anime details on the user list.
-/// </summary>
-public class AnimeListEntryDetails
-{
-	/// <summary>
-	/// ID associated with MyAnimeList.
-	/// </summary>
-	[JsonPropertyName("mal_id")]
-	public long? MalId { get; set; }
-
-	/// <summary>
-	/// Anime's canonical link.
-	/// </summary>
-	[JsonPropertyName("url")]
-	public string? Url { get; set; }
-
-	/// <summary>
-	/// Anime's images in various formats.
-	/// </summary>
-	[JsonPropertyName("images")]
-	public ImagesSetResponse? Images { get; set; }
-
-	/// <summary>
-	/// Title of the anime.
-	/// </summary>
-	[JsonPropertyName("title")]
-	public string? Title { get; set; }
-
-	/// <summary>
-	/// Anime type (e. g. "TV", "Movie").
-	/// </summary>
-	[JsonPropertyName("type")]
-	public string? Type { get; set; }
-
-	/// <summary>
-	/// Anime's episode count.
-	/// </summary>
-	[JsonPropertyName("episodes")]
-	public int? Episodes { get; set; }
-
-	/// <summary>
-	/// Anime's airing status (e. g. "Currently Airing").
-	/// </summary>
-	[JsonPropertyName("status")]
-	public string? Status { get; set; }
-
-	/// <summary>
-	/// Is anime currently airing.
-	/// </summary>
-	[JsonPropertyName("airing")]
-	public bool Airing { get; set; }
-
-	/// <summary>
-	/// Associative keys "from" and "to" which are alternative version of AiredString in ISO8601 format.
-	/// </summary>
-	[JsonPropertyName("aired")]
-	public TimePeriodResponse? Aired { get; set; }
-
-	/// <summary>
-	/// Anime's age rating.
-	/// </summary>
-	[JsonPropertyName("rating")]
-	public string? Rating { get; set; }
-
-	/// <summary>
-	/// Season of the year the anime premiered.
-	/// </summary>
-	[JsonPropertyName("season")]
-	public string? Season { get; set; }
-
-	/// <summary>
-	/// Year the anime premiered.
-	/// </summary>
-	[JsonPropertyName("year")]
-	public int? Year { get; set; }
-
-	/// <summary>
-	/// Anime's licensors numerically indexed with array values.
-	/// </summary>
-	[JsonPropertyName("licensors")]
-	public ICollection<MalUrlResponse>? Licensors { get; set; }
-
-	/// <summary>
-	/// Anime's studio(s) numerically indexed with array values.
-	/// </summary>
-	[JsonPropertyName("studios")]
-	public ICollection<MalUrlResponse>? Studios { get; set; }
-
-	/// <summary>
-	/// Anime's genres numerically indexed with array values.
-	/// </summary>
-	[JsonPropertyName("genres")]
-	public ICollection<MalUrlResponse>? Genres { get; set; }
-
-	/// <summary>
-	/// Anime's demographics
-	/// </summary>
-	[JsonPropertyName("demographics")]
-	public ICollection<MalUrlResponse>? Demographics { get; set; }
+	public AnimeListEntryDetailsResponse? Anime { get; set; }
 }

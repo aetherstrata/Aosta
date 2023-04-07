@@ -15,8 +15,8 @@ public partial class TimePeriodObject : IEmbeddedObject
 
     internal TimePeriodObject(TimePeriodResponse periodResponse)
     {
-        From = periodResponse.From;
-        To = periodResponse.To;
+        From = periodResponse.From.Value.UtcDateTime;
+        To = periodResponse.To.Value.UtcDateTime;
     }
 
     private DateTimeOffset? _From { get; set; }

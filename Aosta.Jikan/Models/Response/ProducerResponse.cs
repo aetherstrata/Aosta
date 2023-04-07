@@ -35,7 +35,7 @@ public class ProducerResponse
 	/// Date of establishing.
 	/// </summary>
 	[JsonPropertyName("established")]
-	public DateTime? Established { get; set; }
+	public DateTimeOffset? Established { get; set; }
 
 	/// <summary>
 	/// Total count of anime assigned to this producer.

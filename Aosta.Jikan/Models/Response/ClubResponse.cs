@@ -53,5 +53,5 @@ public class ClubResponse
 	/// Club's date of creation.
 	/// </summary>
 	[JsonPropertyName("created")]
-	public DateTime? Created { get; set; }
+	public DateTimeOffset? Created { get; set; }
 }

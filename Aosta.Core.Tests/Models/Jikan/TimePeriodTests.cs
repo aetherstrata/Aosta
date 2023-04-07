@@ -38,8 +38,8 @@ public class TimePeriodTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(converted.From, Is.EqualTo(_period.From));
-            Assert.That(converted.To, Is.EqualTo(_period.To));
+            Assert.That(converted.From, Is.EqualTo(_period.From.Value.UtcDateTime));
+            Assert.That(converted.To, Is.EqualTo(_period.To.Value.UtcDateTime));
 
             Assert.That(converted.From, Is.EqualTo(_from));
             Assert.That(converted.To, Is.EqualTo(_to));

@@ -47,17 +47,17 @@ public class UserProfileResponse
 	/// Timestamp of user's last activity.
 	/// </summary>
 	[JsonPropertyName("last_online")]
-	public DateTime? LastOnline { get; set; }
+	public DateTimeOffset? LastOnline { get; set; }
 
 	/// <summary>
 	/// User's birthday.
 	/// </summary>
 	[JsonPropertyName("birthday")]
-	public DateTime? Birthday { get; set; }
+	public DateTimeOffset? Birthday { get; set; }
 
 	/// <summary>
 	/// Timestamp of user's account creation
 	/// </summary>
 	[JsonPropertyName("joined")]
-	public DateTime? Joined { get; set; }
+	public DateTimeOffset? Joined { get; set; }
 }

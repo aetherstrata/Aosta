@@ -29,7 +29,7 @@ public class UserUpdateResponse
 	/// Date ofd the update.
 	/// </summary>
 	[JsonPropertyName("date")]
-	public DateTime? Date { get; set; }
+	public DateTimeOffset? Date { get; set; }
 
 	/// <summary>
 	/// Status (reading, watching, completed, etc.)

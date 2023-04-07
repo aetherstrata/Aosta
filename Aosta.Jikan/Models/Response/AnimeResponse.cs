@@ -227,28 +227,4 @@ public class AnimeResponse
 	/// </summary>
 	[JsonPropertyName("approved")]
 	public bool Approved  { get; set; }
-
-	/// <summary>
-	/// Anime related entries.
-	/// </summary>
-	[JsonPropertyName("relations")]
-	public ICollection<RelatedEntryResponse>? Relations { get; set; }
-
-	/// <summary>
-	/// Anime music themes (openings and endings).
-	/// </summary>
-	[JsonPropertyName("theme")]
-	public AnimeThemesResponse? MusicThemes { get; set; }
-
-	/// <summary>
-	/// Anime external links.
-	/// </summary>
-	[JsonPropertyName("external")]
-	public ICollection<ExternalLinkResponse>? ExternalLinks { get; set; }
-
-	/// <summary>
-	/// Anime streaming links.
-	/// </summary>
-	[JsonPropertyName("streaming")]
-	public ICollection<ExternalLinkResponse>? StreamingLinks { get; set; }
 }
