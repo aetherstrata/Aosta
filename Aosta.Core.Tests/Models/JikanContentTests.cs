@@ -1,5 +1,5 @@
-using Aosta.Core.Jikan;
-using Aosta.Core.Jikan.Models.Response;
+using Aosta.Jikan;
+using Aosta.Jikan.Models.Response;
 using Realms;
 
 //using Aosta.Core.Data.RealmObjects.Mal;

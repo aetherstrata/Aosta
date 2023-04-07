@@ -2,7 +2,7 @@
 using Serilog;
 using Serilog.Events;
 using System.Text;
-using Aosta.Core.Jikan;
+using Aosta.Jikan;
 
 namespace Aosta.Core;
 

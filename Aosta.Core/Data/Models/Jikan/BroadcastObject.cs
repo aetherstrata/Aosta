@@ -1,5 +1,5 @@
 using Aosta.Core.Data.Enums;
-using Aosta.Core.Jikan.Models.Response;
+using Aosta.Jikan.Models.Response;
 using Realms;
 
 namespace Aosta.Core.Data.Models.Jikan;

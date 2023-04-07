@@ -1,5 +1,4 @@
 using Aosta.Core;
-using Aosta.Core.Jikan;
 using Aosta.GUI.Features.AnimeManualAddPage;
 using Aosta.GUI.Features.AnimeSummaryPage;
 using Aosta.GUI.Features.MainPage;
@@ -7,6 +6,7 @@ using Aosta.GUI.Features.OnboardingPage;
 using Aosta.GUI.Features.ProfileMainPage;
 using Aosta.GUI.Features.SettingsPage;
 using Aosta.GUI.Services;
+using Aosta.Jikan;
 
 namespace Aosta.GUI.Extensions;
 

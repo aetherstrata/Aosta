@@ -1,6 +1,6 @@
 using Aosta.Core.Data;
 using Aosta.Core.Data.Models.Jikan;
-using Aosta.Core.Jikan.Models.Response;
+using Aosta.Jikan.Models.Response;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 

@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Aosta.Core.Jikan.Enums;
+using Aosta.Jikan.Enums;
 
 namespace Aosta.Core.Data.Enums;
 

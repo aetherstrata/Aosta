@@ -1,6 +1,6 @@
 using Aosta.Core.Data.Enums;
 using Aosta.Core.Data.Models.Jikan;
-using Aosta.Core.Jikan.Models.Response;
+using Aosta.Jikan.Models.Response;
 using Realms;
 using AiringStatus = Aosta.Core.Data.Enums.AiringStatus;
 

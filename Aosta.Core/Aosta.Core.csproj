@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Aosta.Core.Jikan\Aosta.Core.Jikan.csproj" />
+        <ProjectReference Include="..\Aosta.Jikan\Aosta.Jikan.csproj" />
     </ItemGroup>
 
     <ItemGroup>

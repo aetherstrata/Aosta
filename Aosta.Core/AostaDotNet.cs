@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Aosta.Core.Data;
 using Aosta.Core.Data.Models;
-using Aosta.Core.Jikan;
-using Aosta.Core.Jikan.Models.Response;
+using Aosta.Jikan;
+using Aosta.Jikan.Models.Response;
 using Realms;
 using Realms.Exceptions;
 using Serilog;
