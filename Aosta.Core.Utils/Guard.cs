@@ -1,4 +1,5 @@
 ﻿using Aosta.Core.Utils.Exceptions;
+using FastEnumUtility;
 
 namespace Aosta.Core.Utils;
 
@@ -59,9 +60,9 @@ public static class Guard
 		throw new ParameterValidationException(message, argumentName);
 	}
 
-	public static void IsValidEnum<TEnum>(TEnum arg, string argumentName) where TEnum : Enum
+	public static void IsValidEnum<TEnum>(TEnum arg, string argumentName) where TEnum : struct, Enum
 	{
-		if (!Enum.IsDefined(typeof(TEnum), arg))
+		if (!FastEnum.IsDefined(arg))
 		{
 			throw new ParameterValidationException("Enum value must be valid", argumentName);
 		}
