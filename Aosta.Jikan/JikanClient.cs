@@ -121,6 +121,14 @@ public class JikanClient : IJikan, IDisposable
         }
     }
 
+    private void ThrowIfDefaultEndpoint(string methodName)
+    {
+        if (_httpClient.BaseAddress.ToString().Equals(JikanConfiguration.DefaultEndpoint))
+        {
+            throw new NotSupportedException($"Operation {methodName} is not supported on the default endpoint.");
+        }
+    }
+
     #endregion Private Methods
 
     #region Public Methods
@@ -1463,6 +1471,7 @@ public class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public async Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, CancellationToken ct = default)
     {
+        ThrowIfDefaultEndpoint(nameof(GetUserAnimeListAsync));
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
 
         string[] endpointParts =
@@ -1477,6 +1486,7 @@ public class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public async Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, int page, CancellationToken ct = default)
     {
+        ThrowIfDefaultEndpoint(nameof(GetUserAnimeListAsync));
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsGreaterThanZero(page, nameof(page));
 
@@ -1493,6 +1503,7 @@ public class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public async Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, CancellationToken ct = default)
     {
+        ThrowIfDefaultEndpoint(nameof(GetUserMangaListAsync));
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
 
         string[] endpointParts =
@@ -1507,6 +1518,7 @@ public class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public async Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, int page, CancellationToken ct = default)
     {
+        ThrowIfDefaultEndpoint(nameof(GetUserMangaListAsync));
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsGreaterThanZero(page, nameof(page));
 
