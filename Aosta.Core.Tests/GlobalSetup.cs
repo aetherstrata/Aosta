@@ -9,6 +9,6 @@ public class GlobalSetup
     [OneTimeSetUp]
     public void Initialize()
     {
-        Log.Logger = new AostaConfiguration().LoggerConfig.CreateLogger();
+        Log.Logger = AostaConfiguration.GetLoggerConfig(AppContext.BaseDirectory).CreateLogger();
     }
 }

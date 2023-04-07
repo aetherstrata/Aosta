@@ -1,4 +1,3 @@
-using Aosta.Core.Extensions;
 using Aosta.Core.Jikan.Models.Response;
 using Realms;
 

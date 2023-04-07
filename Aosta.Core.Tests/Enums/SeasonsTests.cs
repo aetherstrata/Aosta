@@ -1,5 +1,5 @@
+using Aosta.Core.Data;
 using Aosta.Core.Data.Enums;
-using Aosta.Core.Extensions;
 using Aosta.Core.Jikan.Enums;
 using Aosta.Core.Jikan.Models.Response;
 

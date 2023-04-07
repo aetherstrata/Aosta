@@ -1,6 +1,6 @@
 using System.Diagnostics;
+using Aosta.Core.Data;
 using Aosta.Core.Data.Models;
-using Aosta.Core.Extensions;
 using Aosta.Core.Jikan;
 using Aosta.Core.Jikan.Models.Response;
 using Realms;
@@ -14,24 +14,19 @@ namespace Aosta.Core;
 /// </summary>
 public class AostaDotNet
 {
-    internal AostaDotNet() : this(new AostaConfiguration())
-    {
-    }
-
-    public AostaDotNet(AostaConfiguration configuration)
-    {
-        Configuration = configuration;
-        Log = Configuration.LoggerConfig.CreateLogger();
-        Jikan = new JikanClient(Log, Configuration.JikanConfig);
-    }
-
-    public AostaConfiguration Configuration { get; set; }
-
     /// <summary> Jikan.net client </summary>
-    public IJikan Jikan { get; }
+    public required IJikan Jikan { get; init; }
 
     /// <summary> Serilog logger instance </summary>
-    public ILogger Log { get; }
+    public required ILogger Log { get; init; }
+
+    /// <summary> Realm configuration </summary>
+    public required RealmConfiguration RealmConfig { get; init; }
+
+    /// <summary> Explicit parameterless constructor internal to forbid direct initialization </summary>
+    internal AostaDotNet()
+    {
+    }
 
     #region Jikan tasks
 
@@ -270,11 +265,11 @@ public class AostaDotNet
 
     public void DeleteRealm()
     {
-        Realm.DeleteRealm(Configuration.RealmConfig);
+        Realm.DeleteRealm(RealmConfig);
     }
 
     public Realm GetInstance()
     {
-        return Realm.GetInstance(Configuration.RealmConfig);
+        return Realm.GetInstance(RealmConfig);
     }
 }

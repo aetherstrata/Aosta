@@ -1,6 +1,7 @@
-using Aosta.Core.Exceptions;
+using Aosta.Core.Jikan;
 using Aosta.Core.Jikan.Enums;
-using Aosta.Core.Jikan.Exceptions;
+using Aosta.Core.Utils.Exceptions;
+using FluentAssertions.Execution;
 
 namespace Aosta.Core.Tests.Jikan.AnimeTests;
 
@@ -11,9 +12,11 @@ public class GetAnimeAsyncTests
 	[TestCase(long.MinValue)]
 	[TestCase(-1)]
 	[TestCase(0)]
-	public void InvalidId_ShouldThrowValidationException(long malId)
+	public async Task InvalidId_ShouldThrowValidationException(long malId)
 	{
-		Assert.ThrowsAsync<AostaValidationException>(async () => await JikanSetup.Instance.GetAnimeAsync(malId));
+		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeAsync(malId));
+
+		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
 	}
 
 	[Test]
@@ -22,146 +25,137 @@ public class GetAnimeAsyncTests
 	[TestCase(6)]
 	public async Task CorrectId_ShouldReturnNotNullAnime(long malId)
 	{
-		var response = await JikanSetup.Instance.GetAnimeAsync(malId);
+		var response = await JikanTests.Instance.GetAnimeAsync(malId);
 
-		Assert.That(response.Data, Is.Not.Null);
+		response.Data.Should().NotBeNull();
 	}
 
 	[Test]
 	[TestCase(2)]
 	[TestCase(3)]
 	[TestCase(4)]
-	public void WrongId_ShouldThrowException(long malId)
+	public async Task WrongId_ShouldThrowException(long malId)
 	{
-		Assert.ThrowsAsync<JikanRequestException>(async () => await JikanSetup.Instance.GetAnimeAsync(malId));
+		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeAsync(malId));
+
+		await func.Should().ThrowExactlyAsync<JikanRequestException>();
 	}
 
 	[Test]
 	public async Task GundamId_ShouldParseTitle()
 	{
-		var gundamAnime = await JikanSetup.Instance.GetAnimeAsync(80);
+		var gundamAnime = await JikanTests.Instance.GetAnimeAsync(80);
 
-		Assert.That(gundamAnime.Data.Titles, Has.Count.GreaterThanOrEqualTo(1));
-		Assert.That(gundamAnime.Data.Titles!.First().Title, Is.EqualTo("Kidou Senshi Gundam"));
+		gundamAnime.Data.Titles.Should().HaveCountGreaterOrEqualTo(1);
+		gundamAnime.Data.Titles!.First().Title.Should().Be("Kidou Senshi Gundam");
 	}
 
 	[Test]
 	public async Task BebopId_ShouldParseTitle()
 	{
-		var bebopAnime = await JikanSetup.Instance.GetAnimeAsync(1);
+		var bebopAnime = await JikanTests.Instance.GetAnimeAsync(1);
 
-		Assert.That(bebopAnime.Data.Titles, Has.Count.GreaterThanOrEqualTo(1));
-		Assert.That(bebopAnime.Data.Titles!.First().Title, Is.EqualTo("Cowboy Bebop"));
+		bebopAnime.Data.Titles.Should().HaveCountGreaterOrEqualTo(1);
+		bebopAnime.Data.Titles.First().Title.Should().Be("Cowboy Bebop");
 	}
 
 	[Test]
 	public async Task BebopId_ShouldParseImages()
 	{
-		var bebopAnime = await JikanSetup.Instance.GetAnimeAsync(1);
+		var bebopAnime = await JikanTests.Instance.GetAnimeAsync(1);
 
-		Assert.Multiple(() =>
+		using (new AssertionScope())
 		{
-			Assert.That(bebopAnime.Data.Images!.JPG.ImageUrl, Is.EqualTo("https://cdn.myanimelist.net/images/anime/1130/134970.jpg"));
-			Assert.That(bebopAnime.Data.Images.JPG.SmallImageUrl, Is.EqualTo("https://cdn.myanimelist.net/images/anime/1130/134970t.jpg"));
-			Assert.That(bebopAnime.Data.Images.JPG.MediumImageUrl, Is.Null);
-			Assert.That(bebopAnime.Data.Images.JPG.LargeImageUrl, Is.EqualTo("https://cdn.myanimelist.net/images/anime/1130/134970l.jpg"));
-			Assert.That(bebopAnime.Data.Images.JPG.MaximumImageUrl, Is.Null);
+			bebopAnime.Data.Images.JPG.ImageUrl.Should().Be("https://cdn.myanimelist.net/images/anime/4/19644.jpg");
+			bebopAnime.Data.Images.JPG.SmallImageUrl.Should().Be("https://cdn.myanimelist.net/images/anime/4/19644t.jpg");
+			bebopAnime.Data.Images.JPG.MediumImageUrl.Should().BeNull();
+			bebopAnime.Data.Images.JPG.LargeImageUrl.Should().Be("https://cdn.myanimelist.net/images/anime/4/19644l.jpg");
+			bebopAnime.Data.Images.JPG.MaximumImageUrl.Should().BeNull();
 
-			Assert.That(bebopAnime.Data.Images.WebP.ImageUrl, Is.EqualTo("https://cdn.myanimelist.net/images/anime/1130/134970.webp"));
-			Assert.That(bebopAnime.Data.Images.WebP.SmallImageUrl, Is.EqualTo("https://cdn.myanimelist.net/images/anime/1130/134970t.webp"));
-			Assert.That(bebopAnime.Data.Images.WebP.MediumImageUrl, Is.Null);
-			Assert.That(bebopAnime.Data.Images.WebP.LargeImageUrl, Is.EqualTo("https://cdn.myanimelist.net/images/anime/1130/134970l.webp"));
-			Assert.That(bebopAnime.Data.Images.WebP.MaximumImageUrl, Is.Null);
-		});
+			bebopAnime.Data.Images.WebP.ImageUrl.Should().Be("https://cdn.myanimelist.net/images/anime/4/19644.webp");
+			bebopAnime.Data.Images.WebP.SmallImageUrl.Should().Be("https://cdn.myanimelist.net/images/anime/4/19644t.webp");
+			bebopAnime.Data.Images.WebP.MediumImageUrl.Should().BeNull();
+			bebopAnime.Data.Images.WebP.LargeImageUrl.Should().Be("https://cdn.myanimelist.net/images/anime/4/19644l.webp");
+			bebopAnime.Data.Images.WebP.MaximumImageUrl.Should().BeNull();
+		}
 	}
 
 	[Test]
-	public async Task BebopId_ShouldParseCowboyBebopTitles()
+	public async Task BebopId_ShouldParseTitles()
 	{
-		var bebopAnime = await JikanSetup.Instance.GetAnimeAsync(1);
+		var bebopAnime = await JikanTests.Instance.GetAnimeAsync(1);
 
-		Assert.That(bebopAnime.Data.Titles, Has.Count.EqualTo(3));
+		bebopAnime.Data.Titles.Should().HaveCount(3);
 
-		var defaultTitle = bebopAnime.Data.Titles!.Where(x => x.Type.Equals("Default")).ToList();
-		var englishTitle = bebopAnime.Data.Titles!.Where(x => x.Type.Equals("English")).ToList();
-		var japaneseTitle = bebopAnime.Data.Titles!.Where(x => x.Type.Equals("Japanese")).ToList();
-
-		Assert.Multiple(() =>
+		using (new AssertionScope())
 		{
-			Assert.That(defaultTitle, Has.Count.EqualTo(1));
-			Assert.That(defaultTitle.First().Title, Is.EqualTo("Cowboy Bebop"));
-
-			Assert.That(englishTitle, Has.Count.EqualTo(1));
-			Assert.That(englishTitle.First().Title, Is.EqualTo("Cowboy Bebop"));
-
-			Assert.That(japaneseTitle, Has.Count.EqualTo(1));
-			Assert.That(japaneseTitle.First().Title, Is.EqualTo("カウボーイビバップ"));
-		});
+			bebopAnime.Data.Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("Cowboy Bebop");
+			bebopAnime.Data.Titles.First(x => x.Type.Equals("English")).Title.Should().Be("Cowboy Bebop");
+			bebopAnime.Data.Titles.First(x => x.Type.Equals("Japanese")).Title.Should().Be("カウボーイビバップ");
+		}
 	}
 
 	[Test]
-	public async Task BebopId_ShouldParseCowboyBebopTrailer()
+	public async Task BebopId_ShouldParseTrailer()
 	{
-		var bebopAnime = await JikanSetup.Instance.GetAnimeAsync(1);
+		var bebopAnime = await JikanTests.Instance.GetAnimeAsync(1);
 
-		Assert.Multiple(() =>
+		using (new AssertionScope())
 		{
-			Assert.That(bebopAnime.Data.Trailer, Is.Not.Null);
+			bebopAnime.Data.Trailer.Should().NotBeNull();
 
-			Assert.That(bebopAnime.Data.Trailer!.YoutubeId, Is.EqualTo("qig4KOK2R2g"));
-			Assert.That(bebopAnime.Data.Trailer.Url, Is.EqualTo("https://www.youtube.com/watch?v=qig4KOK2R2g"));
-			Assert.That(bebopAnime.Data.Trailer.EmbedUrl, Is.EqualTo("https://www.youtube.com/embed/qig4KOK2R2g?enablejsapi=1&wmode=opaque&autoplay=1"));
+			bebopAnime.Data.Trailer.YoutubeId.Should().Be("qig4KOK2R2g");
+			bebopAnime.Data.Trailer.Url.Should().Be("https://www.youtube.com/watch?v=qig4KOK2R2g");
+			bebopAnime.Data.Trailer.EmbedUrl.Should().Be("https://www.youtube.com/embed/qig4KOK2R2g?enablejsapi=1&wmode=opaque&autoplay=1");
 
-			Assert.That(bebopAnime.Data.Trailer.Image!.ImageUrl, Is.EqualTo("https://img.youtube.com/vi/qig4KOK2R2g/default.jpg"));
-			Assert.That(bebopAnime.Data.Trailer.Image.SmallImageUrl, Is.EqualTo("https://img.youtube.com/vi/qig4KOK2R2g/sddefault.jpg"));
-			Assert.That(bebopAnime.Data.Trailer.Image.MediumImageUrl, Is.EqualTo("https://img.youtube.com/vi/qig4KOK2R2g/mqdefault.jpg"));
-			Assert.That(bebopAnime.Data.Trailer.Image.LargeImageUrl, Is.EqualTo("https://img.youtube.com/vi/qig4KOK2R2g/hqdefault.jpg"));
-			Assert.That(bebopAnime.Data.Trailer.Image.MaximumImageUrl, Is.EqualTo("https://img.youtube.com/vi/qig4KOK2R2g/maxresdefault.jpg"));
-		});
+			bebopAnime.Data.Trailer.Image.ImageUrl.Should().Be("https://img.youtube.com/vi/qig4KOK2R2g/default.jpg");
+			bebopAnime.Data.Trailer.Image.SmallImageUrl.Should().Be("https://img.youtube.com/vi/qig4KOK2R2g/sddefault.jpg");
+			bebopAnime.Data.Trailer.Image.MediumImageUrl.Should().Be("https://img.youtube.com/vi/qig4KOK2R2g/mqdefault.jpg");
+			bebopAnime.Data.Trailer.Image.LargeImageUrl.Should().Be("https://img.youtube.com/vi/qig4KOK2R2g/hqdefault.jpg");
+			bebopAnime.Data.Trailer.Image.MaximumImageUrl.Should().Be("https://img.youtube.com/vi/qig4KOK2R2g/maxresdefault.jpg");
+		}
 	}
 
 	[Test]
 	public async Task CardcaptorId_ShouldParseInformation()
 	{
-		// When
-		var cardcaptor = await JikanSetup.Instance.GetAnimeAsync(232);
+		var cardcaptor = await JikanTests.Instance.GetAnimeAsync(232);
 
-		// Then
-		Assert.Multiple(() =>
+		using (new AssertionScope())
 		{
-			Assert.That(cardcaptor.Data.Episodes, Is.EqualTo(70));
-			Assert.That(cardcaptor.Data.Type, Is.EqualTo("TV"));
-			Assert.That(cardcaptor.Data.Year, Is.EqualTo(1998));
-			Assert.That(cardcaptor.Data.Season, Is.EqualTo(Season.Spring));
-			Assert.That(cardcaptor.Data.Duration, Is.EqualTo("25 min per ep"));
-			Assert.That(cardcaptor.Data.Rating, Is.EqualTo("PG - Children"));
-			Assert.That(cardcaptor.Data.Source, Is.EqualTo("Manga"));
-			Assert.That(cardcaptor.Data.Approved, Is.True);
-			
-			Assert.That(cardcaptor.Data.Broadcast!.Day, Is.EqualTo("Tuesdays"));
-			Assert.That(cardcaptor.Data.Broadcast.String, Is.EqualTo("Tuesdays at 18:00 (JST)"));
-			Assert.That(cardcaptor.Data.Broadcast.Time, Is.EqualTo("18:00"));
-			Assert.That(cardcaptor.Data.Broadcast.Timezone, Is.EqualTo("Asia/Tokyo"));
-		});
+			cardcaptor.Data.Episodes.Should().Be(70);
+			cardcaptor.Data.Type.Should().Be("TV");
+			cardcaptor.Data.Year.Should().Be(1998);
+			cardcaptor.Data.Season.Should().Be(Season.Spring);
+			cardcaptor.Data.Duration.Should().Be("25 min per ep");
+			cardcaptor.Data.Rating.Should().Be("PG - Children");
+			cardcaptor.Data.Source.Should().Be("Manga");
+			cardcaptor.Data.Approved.Should().BeTrue();
+
+			cardcaptor.Data.Broadcast.Day.Should().Be("Tuesdays");
+			cardcaptor.Data.Broadcast.String.Should().Be("Tuesdays at 18:00 (JST)");
+			cardcaptor.Data.Broadcast.Time.Should().Be("18:00");
+			cardcaptor.Data.Broadcast.Timezone.Should().Be("Asia/Tokyo");
+		}
 	}
 
 	[Test]
 	public async Task AkiraId_ShouldParseCollections()
 	{
-		var akiraAnime = await JikanSetup.Instance.GetAnimeAsync(47);
+		var akiraAnime = await JikanTests.Instance.GetAnimeAsync(47);
 
-		Assert.Multiple(() =>
+		using (new AssertionScope())
 		{
-			Assert.That(akiraAnime.Data.Approved, Is.True);
+			akiraAnime.Data.Approved.Should().BeTrue();
 
-			Assert.That(akiraAnime.Data.Producers,Has.Count.EqualTo(4));
-			Assert.That(akiraAnime.Data.Licensors, Has.Count.EqualTo(3));
-			Assert.That(akiraAnime.Data.Studios, Has.Count.EqualTo(1));
-			Assert.That(akiraAnime.Data.Genres, Has.Count.EqualTo(5));
+			akiraAnime.Data.Producers.Should().HaveCount(4);
+			akiraAnime.Data.Licensors.Should().HaveCount(3);
+			akiraAnime.Data.Studios.Should().HaveCount(1);
+			akiraAnime.Data.Genres.Should().HaveCount(5);
 
-			Assert.That(akiraAnime.Data.Licensors!.First().Name, Is.EqualTo("Funimation"));
-			Assert.That(akiraAnime.Data.Studios!.First().Name, Is.EqualTo("Tokyo Movie Shinsha"));
-			Assert.That(akiraAnime.Data.Genres!.First().Name, Is.EqualTo("Action"));
-		});
+			akiraAnime.Data.Licensors.First().Name.Should().Be("Funimation");
+			akiraAnime.Data.Studios.First().Name.Should().Be("Tokyo Movie Shinsha");
+			akiraAnime.Data.Genres.First().Name.Should().Be("Action");
+		}
 	}
 }

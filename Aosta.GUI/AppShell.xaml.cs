@@ -1,5 +1,4 @@
 using Aosta.GUI.Features.AnimeManualAddPage;
-using Aosta.GUI.Features.ProfileMainPage;
 using Aosta.GUI.Features.OnboardingPage;
 
 namespace Aosta.GUI;

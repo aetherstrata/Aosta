@@ -1,7 +1,7 @@
 using Aosta.Core;
+using Aosta.Core.Data;
 using Aosta.Core.Data.Models;
 using Aosta.Core.Data.Ordering;
-using Aosta.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 

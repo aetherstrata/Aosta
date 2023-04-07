@@ -2,9 +2,9 @@ using System.Diagnostics;
 using System.Windows.Input;
 using Aosta.Core;
 using Aosta.Core.Data.Models;
-using Aosta.Core.Jikan;
 using Aosta.GUI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Aosta.GUI.Features.SettingsPage;
 
@@ -33,15 +33,16 @@ public partial class SettingsViewModel : RealmViewModel
     {
         _aosta = aosta;
         _settingsService = settingsService;
-        _path = _aosta.Configuration.AppDataPath;
+        _path = FileSystem.Current.AppDataDirectory;
 
         UpdateRealmCount();
     }
 
-    public ICommand GotoOnboardingCommand => new Command(async () =>
+    [RelayCommand]
+    public async Task GotoOnboarding()
     {
-        await Shell.Current.GoToAsync($"{nameof(OnboardingPage.OnboardingPage)}");
-    });
+        await Shell.Current.GoToAsync($"{nameof(OnboardingPage)}");
+    }
 
     public ICommand PrintAnimeCount => new Command(async () =>
     {

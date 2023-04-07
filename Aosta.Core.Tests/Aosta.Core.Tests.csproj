@@ -11,6 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentAssertions" Version="6.10.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
         <PackageReference Include="NUnit" Version="3.13.3" />
         <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
@@ -27,6 +28,60 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Aosta.Core\Aosta.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Jikan\CharacterTests\**" />
+      <Compile Remove="Jikan\ClubTests\**" />
+      <Compile Remove="Jikan\GenreTests\**" />
+      <Compile Remove="Jikan\GetRandomTests\**" />
+      <Compile Remove="Jikan\MagazineTests\**" />
+      <Compile Remove="Jikan\MangaTests\**" />
+      <Compile Remove="Jikan\PersonTests\**" />
+      <Compile Remove="Jikan\ProducerTests\**" />
+      <Compile Remove="Jikan\RecommendationTests\**" />
+      <Compile Remove="Jikan\ReviewTests\**" />
+      <Compile Remove="Jikan\ScheduleTests\**" />
+      <Compile Remove="Jikan\SeasonTests\**" />
+      <Compile Remove="Jikan\TopTests\**" />
+      <Compile Remove="Jikan\UserTests\**" />
+      <Compile Remove="Jikan\WatchTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Jikan\CharacterTests\**" />
+      <EmbeddedResource Remove="Jikan\ClubTests\**" />
+      <EmbeddedResource Remove="Jikan\GenreTests\**" />
+      <EmbeddedResource Remove="Jikan\GetRandomTests\**" />
+      <EmbeddedResource Remove="Jikan\MagazineTests\**" />
+      <EmbeddedResource Remove="Jikan\MangaTests\**" />
+      <EmbeddedResource Remove="Jikan\PersonTests\**" />
+      <EmbeddedResource Remove="Jikan\ProducerTests\**" />
+      <EmbeddedResource Remove="Jikan\RecommendationTests\**" />
+      <EmbeddedResource Remove="Jikan\ReviewTests\**" />
+      <EmbeddedResource Remove="Jikan\ScheduleTests\**" />
+      <EmbeddedResource Remove="Jikan\SeasonTests\**" />
+      <EmbeddedResource Remove="Jikan\TopTests\**" />
+      <EmbeddedResource Remove="Jikan\UserTests\**" />
+      <EmbeddedResource Remove="Jikan\WatchTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Jikan\CharacterTests\**" />
+      <None Remove="Jikan\ClubTests\**" />
+      <None Remove="Jikan\GenreTests\**" />
+      <None Remove="Jikan\GetRandomTests\**" />
+      <None Remove="Jikan\MagazineTests\**" />
+      <None Remove="Jikan\MangaTests\**" />
+      <None Remove="Jikan\PersonTests\**" />
+      <None Remove="Jikan\ProducerTests\**" />
+      <None Remove="Jikan\RecommendationTests\**" />
+      <None Remove="Jikan\ReviewTests\**" />
+      <None Remove="Jikan\ScheduleTests\**" />
+      <None Remove="Jikan\SeasonTests\**" />
+      <None Remove="Jikan\TopTests\**" />
+      <None Remove="Jikan\UserTests\**" />
+      <None Remove="Jikan\WatchTests\**" />
     </ItemGroup>
 
 </Project>

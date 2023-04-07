@@ -23,4 +23,12 @@
         </AssemblyAttribute>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Aosta.Core.Jikan\Aosta.Core.Jikan.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Aosta.Core.Utils\Aosta.Core.Utils.csproj" />
+    </ItemGroup>
+    
 </Project>

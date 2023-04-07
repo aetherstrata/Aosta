@@ -1,4 +1,5 @@
 using Aosta.Core;
+using Aosta.Core.Jikan;
 using Aosta.GUI.Features.AnimeManualAddPage;
 using Aosta.GUI.Features.AnimeSummaryPage;
 using Aosta.GUI.Features.MainPage;
@@ -17,10 +18,11 @@ internal static partial class MauiAppBuilderExtensions
 
         builder.Services.AddSingleton<ISecureStorageService, SecureStorageService>();
         builder.Services.AddSingleton<ISettingsService, SettingsService>();
-        builder.Services.AddSingleton<AostaDotNet>(_ => new AostaDotNet(new AostaConfiguration(FileSystem.Current.AppDataDirectory)
-        {
-            CachePath = FileSystem.Current.CacheDirectory,
-        }));
+        builder.Services.AddSingleton<AostaDotNet>(_ => new AostaConfiguration(FileSystem.Current.AppDataDirectory)
+                .With.CacheDirectory(FileSystem.Current.CacheDirectory)
+                .Source.From(new JikanConfiguration())
+                .Build());
+
 
         #endregion
 

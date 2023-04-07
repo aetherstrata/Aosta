@@ -1,6 +1,3 @@
-using Aosta.Core;
-using Aosta.Core.Jikan;
-using Aosta.Core.Limiter;
 using Aosta.GUI.Features.OnboardingPage;
 
 using Aosta.GUI.Services;

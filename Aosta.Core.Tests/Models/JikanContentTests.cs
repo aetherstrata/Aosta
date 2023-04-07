@@ -32,7 +32,7 @@ public class JikanContentTests
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        _jikan = new JikanClient();
+        _jikan = new JikanConfiguration().Build();
         _jikanAime = _jikan.GetAnimeAsync(1).Result.Data;
         _config = RealmSetup.NewConfig();
     }

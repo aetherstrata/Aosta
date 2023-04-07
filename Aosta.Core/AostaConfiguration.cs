@@ -1,6 +1,5 @@
 ﻿using Realms;
 using Serilog;
-using Serilog.Core;
 using Serilog.Events;
 using System.Text;
 using Aosta.Core.Jikan;
@@ -10,26 +9,31 @@ namespace Aosta.Core;
 /// <summary> Aosta client configuration </summary>
 public class AostaConfiguration
 {
-    /// <summary> Data location </summary>
-    public string AppDataPath { get; }
+    private string _databasePath;
+    private string _logPath;
+    private string _cachePath;
+    private IJikan _jikan = null!;
+    private ILogger _logger;
+    private RealmConfiguration _realmConfig = null!;
 
-    /// <summary> Realm database location </summary>
-    public string DatabasePath { get; }
+    /// <summary> Access the directory builder </summary>
+    public AostaDirectoryBuilder With => new(this);
 
-    /// <summary> Logs folder location </summary>
-    public string LogPath { get; }
+    /// <summary> Access the logger builder </summary>
+    public AostaLoggerBuilder Log => new(this);
 
-    /// <summary> Cache folder location </summary>
-    public string CachePath { get; init; }
+    /// <summary> Access the sources builder </summary>
+    public AostaSourceBuilder Source => new(this);
 
-    /// <summary> Jikan configuration </summary>
-    public JikanConfiguration JikanConfig { get; init; }
+    ///<summary> Log filename template </summary>
+    private const string LogFilename = "aosta-.log";
 
     ///<summary> Output template </summary>
-    private const string OutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message:lj} <{ThreadId}><{ThreadName}>{NewLine}{Exception}";
+    private const string OutputTemplate =
+        "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u}] {Message:lj} <{ThreadId}><{ThreadName}>{NewLine}{Exception}";
 
     /// <summary> Get a copy of the Serilog logger configuration </summary>
-    internal LoggerConfiguration LoggerConfig => new LoggerConfiguration()
+    internal static LoggerConfiguration GetLoggerConfig(string logPath) => new LoggerConfiguration()
         .MinimumLevel.Verbose()
         .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
         .Enrich.WithThreadId()
@@ -39,11 +43,9 @@ public class AostaConfiguration
 #if DEBUG
         .WriteTo.Debug(restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: OutputTemplate)
 #endif
-        .WriteTo.Async(sink => sink.File(path: LogPath, restrictedToMinimumLevel: LogEventLevel.Debug, buffered: true, flushToDiskInterval: TimeSpan.FromSeconds(1),
-            encoding: Encoding.UTF8, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7, outputTemplate: OutputTemplate));
-
-    /// <summary> Realm configuration </summary>
-    internal RealmConfiguration RealmConfig { get; }
+        .WriteTo.Async(sink => sink.File(path: Path.Combine(logPath, LogFilename), restrictedToMinimumLevel: LogEventLevel.Debug,
+            buffered: true, flushToDiskInterval: TimeSpan.FromSeconds(1), encoding: Encoding.UTF8, rollingInterval: RollingInterval.Day,
+            retainedFileCountLimit: 7, outputTemplate: OutputTemplate));
 
     internal AostaConfiguration() : this(AppContext.BaseDirectory)
     {
@@ -51,9 +53,11 @@ public class AostaConfiguration
 
     public AostaConfiguration(string dataDir)
     {
+        string dataPath;
+        
         try
         {
-            AppDataPath = Path.GetFullPath(dataDir);
+            dataPath = Path.GetFullPath(dataDir);
         }
         catch (Exception)
         {
@@ -63,7 +67,7 @@ public class AostaConfiguration
 
         try
         {
-            Directory.CreateDirectory(AppDataPath);
+            Directory.CreateDirectory(dataPath);
         }
         catch (Exception)
         {
@@ -71,17 +75,101 @@ public class AostaConfiguration
             throw;
         }
 
-        DatabasePath = Path.Combine(AppDataPath, "aosta.realm");
-        LogPath = Path.Combine(AppDataPath, "logs", "aosta-.log");
-        CachePath = Path.Combine(AppDataPath, "cache");
+        _databasePath = Path.Combine(dataPath, "aosta.realm");
+        _logPath = Path.Combine(dataPath, "logs");
+        _cachePath = Path.Combine(dataPath, "cache");
 
-        RealmConfig = new RealmConfiguration(DatabasePath)
+        _logger = GetLoggerConfig(_logPath).CreateLogger();
+    }
+
+    public AostaConfiguration WithDatabaseDirectory(string dbPath)
+    {
+        _databasePath = dbPath;
+        return this;
+    }
+    
+    public AostaConfiguration WithLogDirectory(string logPath)
+    {
+        _logPath = logPath;
+        return this;
+    }
+
+    public AostaDotNet Build()
+    {
+        _realmConfig = new RealmConfiguration(_databasePath)
         {
             SchemaVersion = 2,
             IsReadOnly = false,
             ShouldDeleteIfMigrationNeeded = true
         };
 
-        JikanConfig = new JikanConfiguration();
+        _jikan ??= new JikanConfiguration().Build();
+
+        return new AostaDotNet
+        {
+            Jikan = _jikan,
+            Log = _logger,
+            RealmConfig = _realmConfig
+        };
+    }
+
+    public class AostaDirectoryBuilder
+    {
+        private readonly AostaConfiguration _aosta;
+
+        internal AostaDirectoryBuilder(AostaConfiguration aosta)
+        {
+            _aosta = aosta;
+        }
+        
+        public AostaConfiguration CacheDirectory(string cachePath)
+        {
+            _aosta._cachePath = cachePath;
+            return _aosta;
+        }
+    }
+
+    public class AostaLoggerBuilder
+    {
+        private readonly AostaConfiguration _aosta;
+
+        internal AostaLoggerBuilder(AostaConfiguration aosta)
+        {
+            _aosta = aosta;
+        }
+
+        public AostaConfiguration With(LoggerConfiguration logConfig)
+        {
+            _aosta._logger = logConfig.CreateLogger();
+            return _aosta;
+        }
+
+        public AostaConfiguration With(ILogger logger)
+        {
+            _aosta._logger = logger;
+            return _aosta;
+        }
+    }
+
+    public class AostaSourceBuilder : AostaConfiguration
+    {
+        private readonly AostaConfiguration _aosta;
+
+        internal AostaSourceBuilder(AostaConfiguration aosta)
+        {
+            _aosta = aosta;
+        }
+
+        public AostaConfiguration From(IJikan jikan)
+        {
+            _aosta._jikan = jikan;
+            return _aosta;
+        }
+
+        public AostaConfiguration From(JikanConfiguration jikanConfig)
+        {
+            _aosta._jikan = jikanConfig.Use.Logger(_logger).Build();
+            return _aosta;
+        }
     }
 }
