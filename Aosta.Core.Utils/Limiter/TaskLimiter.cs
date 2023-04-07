@@ -3,7 +3,7 @@ namespace Aosta.Core.Utils.Limiter;
 /// <summary>
 /// A task limiter that throttles task executions using <see cref="SemaphoreSlim"/>
 /// </summary>
-internal class TaskLimiter : ITaskLimiter, IDisposable, IEquatable<TaskLimiter>, IComparable<TaskLimiter>, IComparable
+internal class TaskLimiter : ITaskLimiter, IDisposable
 {
     private readonly SemaphoreSlim _semaphore;
 
@@ -63,86 +63,8 @@ internal class TaskLimiter : ITaskLimiter, IDisposable, IEquatable<TaskLimiter>,
         return await task;
     }
 
-    #region Equality methods
-
-    public bool Equals(TaskLimiter other)
-    {
-        if (ReferenceEquals(null, other)) return false;
-        if (ReferenceEquals(this, other)) return true;
-        return Configuration.Equals(other.Configuration);
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals((TaskLimiter)obj);
-    }
-
-    public override int GetHashCode()
-    {
-        return Configuration.GetHashCode();
-    }
-
-    public static bool operator ==(TaskLimiter left, TaskLimiter right)
-    {
-        return Equals(left, right);
-    }
-
-    public static bool operator !=(TaskLimiter left, TaskLimiter right)
-    {
-        return !Equals(left, right);
-    }
-
-    #endregion
-
-    #region Comparer methods
-
-    public int CompareTo(TaskLimiter other)
-    {
-        if (ReferenceEquals(this, other)) return 0;
-        if (ReferenceEquals(null, other)) return 1;
-        return Configuration.CompareTo(other.Configuration);
-    }
-
-    public int CompareTo(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return 1;
-        if (ReferenceEquals(this, obj)) return 0;
-        return obj is TaskLimiter other ? CompareTo(other) : throw new ArgumentException($"Object must be of type {nameof(TaskLimiter)}");
-    }
-
-    public static bool operator <(TaskLimiter left, TaskLimiter right)
-    {
-        return Comparer<TaskLimiter>.Default.Compare(left, right) < 0;
-    }
-
-    public static bool operator >(TaskLimiter left, TaskLimiter right)
-    {
-        return Comparer<TaskLimiter>.Default.Compare(left, right) > 0;
-    }
-
-    public static bool operator <=(TaskLimiter left, TaskLimiter right)
-    {
-        return Comparer<TaskLimiter>.Default.Compare(left, right) <= 0;
-    }
-
-    public static bool operator >=(TaskLimiter left, TaskLimiter right)
-    {
-        return Comparer<TaskLimiter>.Default.Compare(left, right) >= 0;
-    }
-
-    #endregion
-
-    private void ReleaseUnmanagedResources()
-    {
-        // TODO release unmanaged resources here
-    }
-
     private void Dispose(bool disposing)
     {
-        ReleaseUnmanagedResources();
         if (disposing)
         {
             _semaphore.Dispose();
