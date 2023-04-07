@@ -840,40 +840,6 @@ public interface IJikan
 	Task<PaginatedJikanResponse<ICollection<FriendResponse>>> GetUserFriendsAsync(string username, int page, CancellationToken ct = default);
 
 	/// <summary>
-	/// Returns entries on user's anime list.
-	/// </summary>
-	/// <param name="username">Username.</param>
-	/// <param name="ct">Cancellation token.</param>
-	/// <returns>Entries on user's anime list.</returns>
-	Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, CancellationToken ct = default);
-
-	/// <summary>
-	/// Returns entries on user's anime list.
-	/// </summary>
-	/// <param name="username">Username.</param>
-	/// <param name="page">Index of page folding 300 records of top ranging (e.g. 1 will return first 300 records, 2 will return record from 301 to 600 etc.)</param>
-	/// <param name="ct">Cancellation token.</param>
-	/// <returns>Entries on user's anime list.</returns>
-	Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, int page, CancellationToken ct = default);
-
-	/// <summary>
-	/// Returns entries on user's manga list.
-	/// </summary>
-	/// <param name="username">Username.</param>
-	/// <param name="ct">Cancellation token.</param>
-	/// <returns>Entries on user's manga list.</returns>
-	Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, CancellationToken ct = default);
-
-	/// <summary>
-	/// Returns entries on user's manga list.
-	/// </summary>
-	/// <param name="username">Username.</param>
-	/// <param name="page">Index of page folding 300 records of top ranging (e.g. 1 will return first 300 records, 2 will return record from 301 to 600 etc.)</param>
-	/// <param name="ct">Cancellation token.</param>
-	/// <returns>Entries on user's manga list.</returns>
-	Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, int page, CancellationToken ct = default);
-
-	/// <summary>
 	/// Returns user's reviews.
 	/// </summary>
 	/// <param name="username">Username.</param>

@@ -1461,66 +1461,6 @@ public class JikanClient : IJikan, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, CancellationToken ct = default)
-    {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.AnimeList
-        };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<ICollection<AnimeListEntryResponse>>>(endpointParts, ct);
-    }
-
-    /// <inheritdoc />
-    public async Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, int page, CancellationToken ct = default)
-    {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        Guard.IsGreaterThanZero(page, nameof(page));
-
-        var queryParams = $"?page={page}";
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.AnimeList + queryParams
-        };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<ICollection<AnimeListEntryResponse>>>(endpointParts, ct);
-    }
-
-    /// <inheritdoc />
-    public async Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, CancellationToken ct = default)
-    {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.MangaList
-        };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<ICollection<MangaListEntryResponse>>>(endpointParts, ct);
-    }
-
-    /// <inheritdoc />
-    public async Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, int page, CancellationToken ct = default)
-    {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        Guard.IsGreaterThanZero(page, nameof(page));
-
-        var queryParams = $"?page={page}";
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.MangaList + queryParams
-        };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<ICollection<MangaListEntryResponse>>>(endpointParts, ct);
-    }
-
-    /// <inheritdoc />
     public async Task<PaginatedJikanResponse<ICollection<FriendResponse>>> GetUserFriendsAsync(string username, CancellationToken ct = default)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
