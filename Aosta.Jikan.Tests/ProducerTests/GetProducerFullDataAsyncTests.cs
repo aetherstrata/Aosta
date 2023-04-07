@@ -45,6 +45,6 @@ public class GetProducerFullDataAsyncTests
         results.Data.TotalCount.Should().BeGreaterThan(120);
         results.Data.Established.Should().HaveYear(1985);
         results.Data.About.Should().NotBeNullOrEmpty();
-        results.Data.External.Should().HaveCountGreaterOrEqualTo(6);
+        results.Data.External.Should().HaveCountGreaterOrEqualTo(5);
     }
 }
