@@ -1,6 +1,4 @@
 using System.Text.Json.Serialization;
-using Aosta.Core.Utils;
-using Realms;
 
 namespace Aosta.Jikan.Models.Response;
 
