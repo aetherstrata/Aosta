@@ -1,26 +1,25 @@
 ﻿using Aosta.Core.Utils.Exceptions;
 
-namespace Aosta.Jikan.Tests.AnimeTests
+namespace Aosta.Jikan.Tests.AnimeTests;
+
+public class GetAnimeMoreInfoAsyncTests
 {
-	public class GetAnimeMoreInfoAsyncTests
+	[Test]
+	[TestCase(long.MinValue)]
+	[TestCase(-1)]
+	[TestCase(0)]
+	public async Task InvalidId_ShouldThrowValidationException(long malId)
 	{
-		[Test]
-		[TestCase(long.MinValue)]
-		[TestCase(-1)]
-		[TestCase(0)]
-		public async Task InvalidId_ShouldThrowValidationException(long malId)
-		{
-			var func = JikanTests.Instance.Awaiting(x => x.GetAnimeMoreInfoAsync(malId));
+		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeMoreInfoAsync(malId));
 
-			await func.Should().ThrowExactlyAsync<ParameterValidationException>();
-		}
+		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+	}
 
-		[Test]
-		public async Task BebopId_ShouldParseCowboyBebopMoreInfo()
-		{
-			var bebop = await JikanTests.Instance.GetAnimeMoreInfoAsync(1);
+	[Test]
+	public async Task BebopId_ShouldParseCowboyBebopMoreInfo()
+	{
+		var bebop = await JikanTests.Instance.GetAnimeMoreInfoAsync(1);
 
-			bebop.Data.Info.Should().StartWith("Suggested Order of Viewing");
-		}
+		bebop.Data.Info.Should().StartWith("Suggested Order of Viewing");
 	}
 }

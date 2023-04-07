@@ -1,5 +1,4 @@
 ﻿using Aosta.Core.Utils.Exceptions;
-using FastEnumUtility;
 
 namespace Aosta.Core.Utils.Helpers;
 

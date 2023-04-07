@@ -94,7 +94,7 @@ public class AostaDotNet
         // Always await responses, never use .Result
         var response = await Jikan.GetAnimeAsync(malId, ct);
 
-        Log.Information("Got anime: {0} ({1})", response.Data.Titles.First().Title, response.Data.MalId);
+        Log.Information("Got anime: {Name} ({Id})", response.Data.Titles.First().Title, response.Data.MalId);
 
         // Update the entities with retrieved data
         await UpdateJikanContentAsync(response.Data, overrideLocal, ct);

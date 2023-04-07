@@ -2,6 +2,7 @@
 using Serilog;
 using Serilog.Events;
 using System.Text;
+using Aosta.Core.Utils.Consts;
 using Aosta.Jikan;
 
 namespace Aosta.Core;
@@ -28,10 +29,6 @@ public class AostaConfiguration
     ///<summary> Log filename template </summary>
     private const string LogFilename = "aosta-.log";
 
-    ///<summary> Output template </summary>
-    private const string OutputTemplate =
-        "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u}] {Message:lj} <{ThreadId}><{ThreadName}>{NewLine}{Exception}";
-
     /// <summary> Get a copy of the Serilog logger configuration </summary>
     internal static LoggerConfiguration GetLoggerConfig(string logPath) => new LoggerConfiguration()
         .MinimumLevel.Verbose()
@@ -39,13 +36,13 @@ public class AostaConfiguration
         .Enrich.WithThreadId()
         .Enrich.WithThreadName()
         .Enrich.FromLogContext()
-        .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Debug, outputTemplate: OutputTemplate)
+        .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Debug, outputTemplate: Logging.OutputTemplate)
 #if DEBUG
-        .WriteTo.Debug(restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: OutputTemplate)
+        .WriteTo.Debug(restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: Logging.OutputTemplate)
 #endif
         .WriteTo.Async(sink => sink.File(path: Path.Combine(logPath, LogFilename), restrictedToMinimumLevel: LogEventLevel.Debug,
             buffered: true, flushToDiskInterval: TimeSpan.FromSeconds(1), encoding: Encoding.UTF8, rollingInterval: RollingInterval.Day,
-            retainedFileCountLimit: 7, outputTemplate: OutputTemplate));
+            retainedFileCountLimit: 7, outputTemplate: Logging.OutputTemplate));
 
     internal AostaConfiguration() : this(AppContext.BaseDirectory)
     {

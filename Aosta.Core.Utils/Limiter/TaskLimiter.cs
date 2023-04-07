@@ -33,7 +33,7 @@ internal class TaskLimiter : ITaskLimiter, IDisposable
         var task = taskFactory();
 
         // Fire and forget semaphore release
-        _ = task.ContinueWith(async e =>
+        _ = task.ContinueWith(async _ =>
         {
             await Task.Delay(Configuration.TimeSpan);
             _semaphore.Release(1);
@@ -54,7 +54,7 @@ internal class TaskLimiter : ITaskLimiter, IDisposable
         var task = taskFactory();
 
         // Fire and forget semaphore release
-        _ = task.ContinueWith(async e =>
+        _ = task.ContinueWith(async _ =>
         {
             await Task.Delay(Configuration.TimeSpan);
             _semaphore.Release(1);

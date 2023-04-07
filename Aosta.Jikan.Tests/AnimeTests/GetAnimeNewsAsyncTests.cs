@@ -1,65 +1,64 @@
 ﻿using Aosta.Core.Utils.Exceptions;
 using FluentAssertions.Execution;
 
-namespace Aosta.Jikan.Tests.AnimeTests
+namespace Aosta.Jikan.Tests.AnimeTests;
+
+public class GetAnimeNewsAsyncTests
 {
-	public class GetAnimeNewsAsyncTests
+	[Test]
+	[TestCase(long.MinValue)]
+	[TestCase(-1)]
+	[TestCase(0)]
+	public async Task InvalidId_ShouldThrowValidationException(long malId)
 	{
-		[Test]
-		[TestCase(long.MinValue)]
-		[TestCase(-1)]
-		[TestCase(0)]
-		public async Task InvalidId_ShouldThrowValidationException(long malId)
+		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeNewsAsync(malId));
+
+		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+	}
+
+	[Test]
+	[TestCase(int.MinValue)]
+	[TestCase(-1)]
+	[TestCase(0)]
+	public async Task InvalidPage_ShouldThrowValidationException(int page)
+	{
+		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeNewsAsync(1, page));
+
+		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+	}
+
+	[Test]
+	public async Task BebopId_ShouldParseCowboyBebopNews()
+	{
+		var bebop = await JikanTests.Instance.GetAnimeNewsAsync(1);
+
+		using (new AssertionScope())
 		{
-			var func = JikanTests.Instance.Awaiting(x => x.GetAnimeNewsAsync(malId));
-
-			await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+			bebop.Data.Should().HaveCount(7);
+			bebop.Data.Select(x => x.Author).Should().Contain("Snow");
+			bebop.Pagination.Items.Should().BeNull();
+			bebop.Pagination.CurrentPage.Should().BeNull();
+			bebop.Pagination.LastVisiblePage.Should().BePositive();
 		}
+	}
 
-		[Test]
-		[TestCase(int.MinValue)]
-		[TestCase(-1)]
-		[TestCase(0)]
-		public async Task InvalidPage_ShouldThrowValidationException(int page)
+	[Test]
+	public async Task BebopIdWithPage_ShouldParseCowboyBebopNews()
+	{
+		var bebop = await JikanTests.Instance.GetAnimeNewsAsync(1, 1);
+
+		using (new AssertionScope())
 		{
-			var func = JikanTests.Instance.Awaiting(x => x.GetAnimeNewsAsync(1, page));
-
-			await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+			bebop.Data.Should().HaveCount(8);
+			bebop.Data.Select(x => x.Author).Should().Contain("Snow");
 		}
+	}
 
-		[Test]
-		public async Task BebopId_ShouldParseCowboyBebopNews()
-		{
-			var bebop = await JikanTests.Instance.GetAnimeNewsAsync(1);
+	[Test]
+	public async Task BebopIdWithNextPage_ShouldParseZeroNews()
+	{
+		var bebop = await JikanTests.Instance.GetAnimeNewsAsync(1, 2);
 
-			using (new AssertionScope())
-			{
-				bebop.Data.Should().HaveCount(7);
-				bebop.Data.Select(x => x.Author).Should().Contain("Snow");
-				bebop.Pagination.Items.Should().BeNull();
-				bebop.Pagination.CurrentPage.Should().BeNull();
-				bebop.Pagination.LastVisiblePage.Should().BePositive();
-			}
-		}
-
-		[Test]
-		public async Task BebopIdWithPage_ShouldParseCowboyBebopNews()
-		{
-			var bebop = await JikanTests.Instance.GetAnimeNewsAsync(1, 1);
-
-			using (new AssertionScope())
-			{
-				bebop.Data.Should().HaveCount(8);
-				bebop.Data.Select(x => x.Author).Should().Contain("Snow");
-			}
-		}
-
-		[Test]
-		public async Task BebopIdWithNextPage_ShouldParseZeroNews()
-		{
-			var bebop = await JikanTests.Instance.GetAnimeNewsAsync(1, 2);
-
-			bebop.Data.Should().BeEmpty();
-		}
+		bebop.Data.Should().BeEmpty();
 	}
 }

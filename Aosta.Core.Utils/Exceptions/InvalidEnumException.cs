@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using Aosta.Core.Utils.Consts;
 
 namespace Aosta.Core.Utils.Exceptions;

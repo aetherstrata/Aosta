@@ -1,30 +1,29 @@
 ﻿using Aosta.Core.Utils.Exceptions;
 
-namespace Aosta.Jikan.Tests.MangaTests
+namespace Aosta.Jikan.Tests.MangaTests;
+
+public class GetMangaPicturesAsyncTests
 {
-	public class GetMangaPicturesAsyncTests
+	[Test]
+	[TestCase(long.MinValue)]
+	[TestCase(-1)]
+	[TestCase(0)]
+	public async Task InvalidId_ShouldThrowValidationException(long id)
 	{
-		[Test]
-		[TestCase(long.MinValue)]
-		[TestCase(-1)]
-		[TestCase(0)]
-		public async Task InvalidId_ShouldThrowValidationException(long id)
-		{
-			// When
-			var func = JikanTests.Instance.Awaiting(x => x.GetMangaPicturesAsync(id));
+		// When
+		var func = JikanTests.Instance.Awaiting(x => x.GetMangaPicturesAsync(id));
 
-			// Then
-			await func.Should().ThrowExactlyAsync<ParameterValidationException>();
-		}
+		// Then
+		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+	}
 
-		[Test]
-		public async Task MonsterId_ShouldParseMonsterImages()
-		{
-			// When
-			var monster = await JikanTests.Instance.GetMangaPicturesAsync(1);
+	[Test]
+	public async Task MonsterId_ShouldParseMonsterImages()
+	{
+		// When
+		var monster = await JikanTests.Instance.GetMangaPicturesAsync(1);
 
-			// Then
-			monster.Data.Should().HaveCount(8);
-		}
+		// Then
+		monster.Data.Should().HaveCount(8);
 	}
 }
