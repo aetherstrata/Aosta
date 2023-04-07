@@ -14,7 +14,7 @@ public class AostaConfiguration
     private string _logPath;
     private string _cachePath;
     private IJikan _jikan = null!;
-    private ILogger _logger;
+    private ILogger _logger = null!;
     private RealmConfiguration _realmConfig = null!;
 
     /// <summary> Access the directory builder </summary>
@@ -31,7 +31,11 @@ public class AostaConfiguration
 
     /// <summary> Get a copy of the Serilog logger configuration </summary>
     internal static LoggerConfiguration GetLoggerConfig(string logPath) => new LoggerConfiguration()
+#if DEBUG
         .MinimumLevel.Verbose()
+#else
+        .MinimumLevel.Debug()
+#endif
         .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
         .Enrich.WithThreadId()
         .Enrich.WithThreadName()
@@ -75,20 +79,6 @@ public class AostaConfiguration
         _databasePath = Path.Combine(dataPath, "aosta.realm");
         _logPath = Path.Combine(dataPath, "logs");
         _cachePath = Path.Combine(dataPath, "cache");
-
-        _logger = GetLoggerConfig(_logPath).CreateLogger();
-    }
-
-    public AostaConfiguration WithDatabaseDirectory(string dbPath)
-    {
-        _databasePath = dbPath;
-        return this;
-    }
-    
-    public AostaConfiguration WithLogDirectory(string logPath)
-    {
-        _logPath = logPath;
-        return this;
     }
 
     public AostaDotNet Build()
@@ -100,6 +90,7 @@ public class AostaConfiguration
             ShouldDeleteIfMigrationNeeded = true
         };
 
+        _logger ??= GetLoggerConfig(_logPath).CreateLogger();
         _jikan ??= new JikanConfiguration().Build();
 
         return new AostaDotNet
