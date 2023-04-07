@@ -1,6 +1,6 @@
 ﻿using Aosta.Core.Utils.Exceptions;
 
-namespace Aosta.Core.Utils.Helpers;
+namespace Aosta.Core.Utils;
 
 public static class Guard
 {

@@ -83,15 +83,18 @@ public class AostaConfiguration
 
     public AostaDotNet Build()
     {
+        _jikan ??= new JikanConfiguration().Build();
+        _logger ??= GetLoggerConfig(_logPath).CreateLogger();
         _realmConfig = new RealmConfiguration(_databasePath)
         {
             SchemaVersion = 2,
             IsReadOnly = false,
+#if DEBUG
             ShouldDeleteIfMigrationNeeded = true
+#else
+            ShouldDeleteIfMigrationNeeded = false
+#endif
         };
-
-        _logger ??= GetLoggerConfig(_logPath).CreateLogger();
-        _jikan ??= new JikanConfiguration().Build();
 
         return new AostaDotNet
         {
