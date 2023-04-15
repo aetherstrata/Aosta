@@ -14,17 +14,14 @@ public class ImageSetTests
     {
         _setResponse = new ImagesSetResponse
         {
-            JPG = new ImageResponse(),
-            WebP = new ImageResponse()
+            JPG = new ImageResponse { ImageUrl = "jpg" },
+            WebP = new ImageResponse { ImageUrl = "webp" }
         };
     }
 
     [Test]
     public void SetConversionTest()
     {
-        _setResponse.WebP.ImageUrl = "webp";
-        _setResponse.JPG.ImageUrl = "jpg";
-
         var converted = _setResponse.ToRealmObject();
 
         Assert.Multiple(() =>

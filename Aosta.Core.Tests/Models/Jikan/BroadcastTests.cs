@@ -54,7 +54,13 @@ public class BroadcastTests
     [Test]
     public void NoTimezoneConversionTest()
     {
-        _broadcastResponse.Timezone = null;
+        _broadcastResponse = new AnimeBroadcastResponse
+        {
+            Day = "Mondays",
+            Time = "07:00",
+            Timezone = null,
+            String = null
+        };
 
         var converted = _broadcastResponse.ToRealmObject();
 
