@@ -14,7 +14,7 @@ public enum SortDirection
 	Ascending,
 
 	/// <summary>
-	/// Use descending.
+	/// Sort descending.
 	/// </summary>
 	[EnumMember(Value = "desc")]
 	Descending,
