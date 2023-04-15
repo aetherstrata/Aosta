@@ -11,11 +11,11 @@ public class PersonMangaographyEntryResponse
 	/// Person's mangaography entry.
 	/// </summary>
 	[JsonPropertyName("manga")]
-	public MalImageSubItemResponse? Manga { get; set; }
+	public MalImageSubItemResponse? Manga { get; init; }
 
 	/// <summary>
 	/// Position of the person in the manga production
 	/// </summary>
 	[JsonPropertyName("position")]
-	public string? Position { get; set; }
+	public string? Position { get; init; }
 }

@@ -11,7 +11,7 @@ public class BaseJikanResponse<TResponse>
 	/// Data of the request.
 	/// </summary>
 	[JsonPropertyName("data")]
-	public required TResponse Data { get; set; }
+	public required TResponse Data { get; init; }
 
 	/// <summary>
 	/// Parametereless constructor, required for serialization

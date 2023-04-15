@@ -11,5 +11,5 @@ public class MoreInfoResponse
 	/// Extra information stored in "more info" tab.
 	/// </summary>
 	[JsonPropertyName("moreinfo")]
-	public string? Info { get; set; }
+	public string? Info { get; init; }
 }

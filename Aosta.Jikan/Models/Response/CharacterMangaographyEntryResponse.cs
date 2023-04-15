@@ -11,11 +11,11 @@ public class CharacterMangaographyEntryResponse
 	/// Character's animeography entry.
 	/// </summary>
 	[JsonPropertyName("manga")]
-	public MalImageSubItemResponse? Manga { get; set; }
+	public MalImageSubItemResponse? Manga { get; init; }
 
 	/// <summary>
 	/// Role of character in sub item (anime or manga). Not available in all requests.
 	/// </summary>
 	[JsonPropertyName("role")]
-	public string? Role { get; set; }
+	public string? Role { get; init; }
 }

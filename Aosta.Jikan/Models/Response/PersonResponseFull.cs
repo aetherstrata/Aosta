@@ -11,17 +11,17 @@ public class PersonResponseFull: PersonResponse
     /// Animeography of person.
     /// </summary>
     [JsonPropertyName("anime")]
-    public ICollection<PersonAnimeographyEntryResponse>? Animeography { get; set; }
+    public ICollection<PersonAnimeographyEntryResponse>? Animeography { get; init; }
     
     /// <summary>
     /// Mangaography of person.
     /// </summary>
     [JsonPropertyName("manga")]
-    public ICollection<PersonMangaographyEntryResponse>? Mangaography { get; set; }
+    public ICollection<PersonMangaographyEntryResponse>? Mangaography { get; init; }
     
     /// <summary>
     /// Voice actors of person.
     /// </summary>
     [JsonPropertyName("voices")]
-    public ICollection<VoiceActingRoleResponse>? VoiceActingRoles { get; set; }
+    public ICollection<VoiceActingRoleResponse>? VoiceActingRoles { get; init; }
 }

@@ -11,11 +11,11 @@ public class ExternalLinkResponse
     /// Name of the external service.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; set; }
+    public string? Name { get; init; }
     
     /// <summary>
     /// Url to external service.
     /// </summary>
     [JsonPropertyName("url")]
-    public string? Url { get; set; }
+    public string? Url { get; init; }
 }

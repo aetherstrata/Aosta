@@ -11,23 +11,23 @@ public class MagazineResponse
 	/// ID associated with MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("mal_id")]
-	public long MalId { get; set; }
+	public long MalId { get; init; }
 
 	/// <summary>
 	/// Url to sub item main page.
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 
 	/// <summary>
 	/// Name of the magazine
 	/// </summary>
 	[JsonPropertyName("name")]
-	public string? Name { get; set; }
+	public string? Name { get; init; }
 
 	/// <summary>
 	/// Total count of manga assigned to this magazine
 	/// </summary>
 	[JsonPropertyName("count")]
-	public int TotalCount { get; set; }
+	public int TotalCount { get; init; }
 }

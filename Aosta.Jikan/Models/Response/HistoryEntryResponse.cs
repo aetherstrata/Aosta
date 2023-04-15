@@ -11,17 +11,17 @@ public class HistoryEntryResponse
 	/// Metadata about updated manga/anime.
 	/// </summary>
 	[JsonPropertyName("meta")]
-	public MalUrlResponse? Metadata { get; set; }
+	public MalUrlResponse? Metadata { get; init; }
 
 	/// <summary>
 	/// New value for watched episodes/read chapters.
 	/// </summary>
 	[JsonPropertyName("increment")]
-	public int Increment { get; set; }
+	public int Increment { get; init; }
 
 	/// <summary>
 	/// Date of the update.
 	/// </summary>
 	[JsonPropertyName("date")]
-	public DateTimeOffset? Date { get; set; }
+	public DateTimeOffset? Date { get; init; }
 }

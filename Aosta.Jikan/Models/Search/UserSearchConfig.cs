@@ -14,32 +14,32 @@ public class UserSearchConfig: ISearchConfig
     /// <summary>
 	/// Index of page folding 50 records of top ranging (e.g. 1 will return first 50 records, 2 will return record from 51 to 100 etc.)
 	/// </summary>
-	public int? Page { get; set; }
+	public int? Page { get; init; }
     
     /// <summary>
 	/// Search query.
 	/// </summary>
-	public string? Query { get; set; }
+	public string? Query { get; init; }
 	
 	/// <summary>
 	/// Gender of the user.
 	/// </summary>
-	public UserGender Gender { get; set; }
+	public UserGender Gender { get; init; }
 	
 	/// <summary>
 	/// Location of the searched users.
 	/// </summary>
-	public string? Location { get; set; }
+	public string? Location { get; init; }
 	
 	/// <summary>
 	/// Max age of the searched users.
 	/// </summary>
-	public int? MaxAge { get; set; }
+	public int? MaxAge { get; init; }
 	
 	/// <summary>
 	/// Min age of the searched users.
 	/// </summary>
-	public int? MinAge { get; set; }
+	public int? MinAge { get; init; }
 	
     /// <summary>
     /// Create query from current parameters for search request.

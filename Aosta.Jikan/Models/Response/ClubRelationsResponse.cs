@@ -11,17 +11,17 @@ public class ClubRelationsResponse
 	/// Club's anime relations.
 	/// </summary>
 	[JsonPropertyName("anime")]
-	public ICollection<MalUrlResponse>? Anime { get; set; }
+	public ICollection<MalUrlResponse>? Anime { get; init; }
 
 	/// <summary>
 	/// Club's manga relations.
 	/// </summary>
 	[JsonPropertyName("manga")]
-	public ICollection<MalUrlResponse>? Manga { get; set; }
+	public ICollection<MalUrlResponse>? Manga { get; init; }
 
 	/// <summary>
 	/// Club's character relations.
 	/// </summary>
 	[JsonPropertyName("characters")]
-	public ICollection<MalUrlResponse>? Characters { get; set; }
+	public ICollection<MalUrlResponse>? Characters { get; init; }
 }

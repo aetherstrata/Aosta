@@ -11,11 +11,11 @@ public class TimePeriodResponse
 	/// Start date.
 	/// </summary>
 	[JsonPropertyName("from")]
-	public DateTimeOffset? From { get; set; }
+	public DateTimeOffset? From { get; init; }
 
 	/// <summary>
 	/// End date.
 	/// </summary>
 	[JsonPropertyName("to")]
-	public DateTimeOffset? To { get; set; }
+	public DateTimeOffset? To { get; init; }
 }

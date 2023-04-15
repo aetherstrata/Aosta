@@ -11,5 +11,5 @@ public class UserAboutResponse
 	/// User self description
 	/// </summary>
 	[JsonPropertyName("about")]
-	public string? About { get; set; }
+	public string? About { get; init; }
 }

@@ -11,23 +11,23 @@ public class CharacterEntryResponse
 	/// ID associated with MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("mal_id")]
-	public long MalId { get; set; }
+	public long MalId { get; init; }
 
 	/// <summary>
 	/// Character's name.
 	/// </summary>
 	[JsonPropertyName("name")]
-	public string? Name { get; set; }
+	public string? Name { get; init; }
 
 	/// <summary>
 	/// Url to character's main page.
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 
 	/// <summary>
 	/// Character's set of images
 	/// </summary>
 	[JsonPropertyName("images")]
-	public ImagesSetResponse? Images { get; set; }
+	public ImagesSetResponse? Images { get; init; }
 }

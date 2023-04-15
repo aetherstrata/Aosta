@@ -11,17 +11,17 @@ public class UserMetadataResponse
 	/// Username.
 	/// </summary>
 	[JsonPropertyName("username")]
-	public string? Username { get; set; }
+	public string? Username { get; init; }
 
 	/// <summary>
 	/// User's image URL
 	/// </summary>
 	[JsonPropertyName("images")]
-	public ImagesSetResponse? Images { get; set; }
+	public ImagesSetResponse? Images { get; init; }
 
 	/// <summary>
 	/// User's URL
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 }

@@ -12,11 +12,11 @@ public class ImagesSetResponse
 	/// Images in JPG format.
 	/// </summary>
 	[JsonPropertyName("jpg")]
-	public ImageResponse? JPG { get; set; }
+	public ImageResponse? JPG { get; init; }
 
 	/// <summary>
 	/// Images in webp format.
 	/// </summary>
 	[JsonPropertyName("webp")]
-	public ImageResponse? WebP { get; set; }
+	public ImageResponse? WebP { get; init; }
 }

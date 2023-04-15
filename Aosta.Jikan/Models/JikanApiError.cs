@@ -13,23 +13,23 @@ public class JikanApiError
 	/// </summary>
 	[JsonPropertyName("status")]
 	[JsonConverter(typeof(JsonStringEnumConverter))]
-	public HttpStatusCode Status { get; set; }
+	public HttpStatusCode Status { get; init; }
 
 	/// <summary>
 	/// Type of http error.
 	/// </summary>
 	[JsonPropertyName("type")]
-	public string? Type { get; set; }
+	public string? Type { get; init; }
 
 	/// <summary>
 	/// Message of the error.
 	/// </summary>
 	[JsonPropertyName("message")]
-	public string? Message { get; set; }
+	public string? Message { get; init; }
 
 	/// <summary>
 	/// Additional data.
 	/// </summary>
 	[JsonPropertyName("error")]
-	public string? Error { get; set; }
+	public string? Error { get; init; }
 }

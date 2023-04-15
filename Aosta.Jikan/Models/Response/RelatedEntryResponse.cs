@@ -11,11 +11,11 @@ public class RelatedEntryResponse
 	/// Type of relation, e.g. "Adaptation" or "Side Story".
 	/// </summary>
 	[JsonPropertyName("relation")]
-	public string? Relation { get; set; }
+	public string? Relation { get; init; }
 
 	/// <summary>
 	/// Collection of related anime/manga of given relation type.
 	/// </summary>
 	[JsonPropertyName("entry")]
-	public ICollection<MalUrlResponse>? Entry { get; set; }
+	public ICollection<MalUrlResponse>? Entry { get; init; }
 }

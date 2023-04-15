@@ -11,5 +11,5 @@ public class ProducerResponseFull: ProducerResponse
     /// Producer's external links
     /// </summary>
     [JsonPropertyName("external")]
-    public ICollection<ExternalLinkResponse>? External { get; set; }
+    public ICollection<ExternalLinkResponse>? External { get; init; }
 }

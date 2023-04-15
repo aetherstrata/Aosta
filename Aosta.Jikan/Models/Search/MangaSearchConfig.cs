@@ -14,72 +14,72 @@ public class MangaSearchConfig : ISearchConfig
 	/// <summary>
 	/// Index of page folding 50 records of top ranging (e.g. 1 will return first 50 records, 2 will return record from 51 to 100 etc.)
 	/// </summary>
-	public int? Page { get; set; }
+	public int? Page { get; init; }
 	
 	/// <summary>
 	/// Size of the page (25 is the max).
 	/// </summary>
-	public int? PageSize { get; set; }
+	public int? PageSize { get; init; }
 	
 	/// <summary>
 	/// Search query.
 	/// </summary>
-	public string? Query { get; set; }
+	public string? Query { get; init; }
 	
 	/// <summary>
 	/// Return entries starting with the given letter.
 	/// </summary>
-	public char? Letter { get; set; }
+	public char? Letter { get; init; }
 		
 	/// <summary>
 	/// Manga type of searched result.
 	/// </summary>
-	public MangaType Type { get; set; } = MangaType.EveryType;
+	public MangaType Type { get; init; } = MangaType.EveryType;
 
 	/// <summary>
 	/// Minimum score results (1-10).
 	/// </summary>
-	public int? MinimumScore { get; set; }
+	public int? MinimumScore { get; init; }
 		
 	/// <summary>
 	/// Maximum score results (1-10).
 	/// </summary>
-	public int? MaximumScore { get; set; }
+	public int? MaximumScore { get; init; }
 
 	/// <summary>
 	/// Current status.
 	/// </summary>
-	public PublishingStatus Status { get; set; }
+	public PublishingStatus Status { get; init; }
 
 	/// <summary>
 	/// Select order property.
 	/// </summary>
-	public MangaSearchOrderBy OrderBy { get; set; }
+	public MangaSearchOrderBy OrderBy { get; init; }
 
 	/// <summary>
 	/// Define sort direction for <see cref="OrderBy">OrderBy</see> property.
 	/// </summary>
-	public SortDirection SortDirection { get; set; }
+	public SortDirection SortDirection { get; init; }
 
 	/// <summary>
 	/// Genres to include.
 	/// </summary>
-	public ICollection<MangaGenreSearch> Genres { get; set; } = new List<MangaGenreSearch>();
+	public ICollection<MangaGenreSearch> Genres { get; init; } = new List<MangaGenreSearch>();
 		
 	/// <summary>
 	/// Genres to exclude.
 	/// </summary>
-	public ICollection<MangaGenreSearch> ExcludedGenres { get; set; } = new List<MangaGenreSearch>();
+	public ICollection<MangaGenreSearch> ExcludedGenres { get; init; } = new List<MangaGenreSearch>();
 
 	/// <summary>
 	/// Filter by magazine id.
 	/// </summary>
-	public ICollection<long> MagazineIds { get; set; } = new List<long>();
+	public ICollection<long> MagazineIds { get; init; } = new List<long>();
 		
 	/// <summary>
 	/// Should only search for sfw title. Filter out adult entries.
 	/// </summary>
-	public bool Sfw { get; set; } = true;
+	public bool Sfw { get; init; } = true;
 		
 	/// <summary>
 	/// Create query from current parameters for search request.

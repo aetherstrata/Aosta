@@ -11,29 +11,29 @@ public class UserRecommendationResponse
 	/// Combined mal ids of both recommended entries.
 	/// </summary>
 	[JsonPropertyName("mal_id")]
-	public string? MalIds { get; set; }
+	public string? MalIds { get; init; }
 
 	/// <summary>
 	/// Both recommended entries/
 	/// </summary>
 	[JsonPropertyName("entry")]
-	public ICollection<MalImageSubItemResponse>? Entries { get; set; }
+	public ICollection<MalImageSubItemResponse>? Entries { get; init; }
 
 	/// <summary>
 	/// Recommendation content
 	/// </summary>
 	[JsonPropertyName("content")]
-	public string? Content { get; set; }
+	public string? Content { get; init; }
 
 	/// <summary>
 	/// Date of creation
 	/// </summary>
 	[JsonPropertyName("date")]
-	public DateTime Date { get; set; }
+	public DateTime Date { get; init; }
 
 	/// <summary>
 	/// Reviewing user.
 	/// </summary>
 	[JsonPropertyName("user")]
-	public UserMetadataResponse? User { get; set; }
+	public UserMetadataResponse? User { get; init; }
 }

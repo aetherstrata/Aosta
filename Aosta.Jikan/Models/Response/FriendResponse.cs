@@ -11,17 +11,17 @@ public class FriendResponse
 	/// Friend's user metadata.
 	/// </summary>
 	[JsonPropertyName("user")]
-	public UserMetadataResponse? User { get; set; }
+	public UserMetadataResponse? User { get; init; }
 
 	/// <summary>
 	/// Timestamp of friend's last online activity.
 	/// </summary>
 	[JsonPropertyName("last_online")]
-	public DateTimeOffset? LastOnline { get; set; }
+	public DateTimeOffset? LastOnline { get; init; }
 
 	/// <summary>
 	/// Timestamp of friend addidition.
 	/// </summary>
 	[JsonPropertyName("friends_since")]
-	public DateTimeOffset? FriendsSince { get; set; }
+	public DateTimeOffset? FriendsSince { get; init; }
 }

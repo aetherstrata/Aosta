@@ -11,23 +11,23 @@ public class AnimeCharacterResponse
 	/// Character details
 	/// </summary>
 	[JsonPropertyName("character")]
-	public CharacterEntryResponse? Character { get; set; }
+	public CharacterEntryResponse? Character { get; init; }
 
 	/// <summary>
 	/// Character's role (e. g. "main", "supporting")
 	/// </summary>
 	[JsonPropertyName("role")]
-	public string? Role { get; set; }
+	public string? Role { get; init; }
 
 	/// <summary>
 	/// Character favourite count on MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("favorites")]
-	public int? Favorites { get; set; }
+	public int? Favorites { get; init; }
 
 	/// <summary>
 	/// Character's list of voice actor in this entry (anime only).
 	/// </summary>
 	[JsonPropertyName("voice_actors")]
-	public ICollection<VoiceActorEntryResponse>? VoiceActors { get; set; }
+	public ICollection<VoiceActorEntryResponse>? VoiceActors { get; init; }
 }

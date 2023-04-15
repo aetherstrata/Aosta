@@ -11,17 +11,17 @@ public class CharacterResponseFull : CharacterResponse
     /// Animeography of character.
     /// </summary>
     [JsonPropertyName("anime")]
-    public ICollection<CharacterAnimeographyEntryResponse> Animeography { get; set; }
+    public ICollection<CharacterAnimeographyEntryResponse> Animeography { get; init; }
 
     /// <summary>
     /// Mangaography of character.
     /// </summary>
     [JsonPropertyName("manga")]
-    public ICollection<CharacterMangaographyEntryResponse> Mangaography { get; set; }
+    public ICollection<CharacterMangaographyEntryResponse> Mangaography { get; init; }
 
     /// <summary>
     /// Voice actors of character.
     /// </summary>
     [JsonPropertyName("voices")]
-    public ICollection<VoiceActorEntryResponse> VoiceActors { get; set; }
+    public ICollection<VoiceActorEntryResponse> VoiceActors { get; init; }
 }

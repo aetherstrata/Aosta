@@ -14,42 +14,42 @@ public class ClubSearchConfig: ISearchConfig
     /// <summary>
 	/// Index of page folding 50 records of top ranging (e.g. 1 will return first 50 records, 2 will return record from 51 to 100 etc.)
 	/// </summary>
-	public int? Page { get; set; }
+	public int? Page { get; init; }
 	
 	/// <summary>
 	/// Size of the page (25 is the max).
 	/// </summary>
-	public int? PageSize { get; set; }
+	public int? PageSize { get; init; }
 	
 	/// <summary>
 	/// Search query.
 	/// </summary>
-	public string? Query { get; set; }
+	public string? Query { get; init; }
 	
 	/// <summary>
 	/// Return entries starting with the given letter.
 	/// </summary>
-	public char? Letter { get; set; }
+	public char? Letter { get; init; }
 	
 	/// <summary>
 	/// Filter by club category.
 	/// </summary>
-	public ClubCategory Category { get; set; }
+	public ClubCategory Category { get; init; }
 	
 	/// <summary>
 	/// Filter by club category.
 	/// </summary>
-	public ClubType Type { get; set; }
+	public ClubType Type { get; init; }
 
 	/// <summary>
 	/// Select order by property.
 	/// </summary>
-	public ClubSearchOrderBy OrderBy { get; set; }
+	public ClubSearchOrderBy OrderBy { get; init; }
 
 	/// <summary>
 	/// Define sort direction for <see cref="OrderBy">OrderBy</see> property.
 	/// </summary>
-	public SortDirection SortDirection { get; set; }
+	public SortDirection SortDirection { get; init; }
 	
     /// <summary>
     /// Create query from current parameters for search request.

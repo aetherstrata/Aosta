@@ -11,23 +11,23 @@ public class AnimeTrailerResponse
 	/// ID associated with Youtube.
 	/// </summary>
 	[JsonPropertyName("youtube_id")]
-	public string? YoutubeId { get; set; }
+	public string? YoutubeId { get; init; }
 
 	/// <summary>
 	/// Url to the video.
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 
 	/// <summary>
 	/// Embed url to the video.
 	/// </summary>
 	[JsonPropertyName("embed_url")]
-	public string? EmbedUrl { get; set; }
+	public string? EmbedUrl { get; init; }
 
 	/// <summary>
 	/// Image related to the trailer in various resolutions.
 	/// </summary>
 	[JsonPropertyName("images")]
-	public ImageResponse? Image { get; set; }
+	public ImageResponse? Image { get; init; }
 }

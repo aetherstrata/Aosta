@@ -11,11 +11,11 @@ public class MangaResponseFull: MangaResponse
     /// Manga related entries.
     /// </summary>
     [JsonPropertyName("relations")]
-    public ICollection<RelatedEntryResponse>? Relations { get; set; }
+    public ICollection<RelatedEntryResponse>? Relations { get; init; }
 
     /// <summary>
     /// Manga external links.
     /// </summary>
     [JsonPropertyName("external")]
-    public ICollection<ExternalLinkResponse>? ExternalLinks { get; set; }
+    public ICollection<ExternalLinkResponse>? ExternalLinks { get; init; }
 }

@@ -11,7 +11,7 @@ public class PaginatedJikanResponse<TResponse> : BaseJikanResponse<TResponse>
 	/// Pagination
 	/// </summary>
 	[JsonPropertyName("pagination")]
-	public required Pagination Pagination { get; set; }
+	public required Pagination Pagination { get; init; }
 
 	/// <summary>
 	/// Parameterless constructor, required for serialization

@@ -11,17 +11,17 @@ public class ClubMemberResponse
 	/// Club member's Username.
 	/// </summary>
 	[JsonPropertyName("username")]
-	public string? Username { get; set; }
+	public string? Username { get; init; }
 
 	/// <summary>
 	/// Club member's image set
 	/// </summary>
 	[JsonPropertyName("images")]
-	public ImagesSetResponse? Images { get; set; }
+	public ImagesSetResponse? Images { get; init; }
 
 	/// <summary>
 	/// Club member's URL
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 }

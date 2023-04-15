@@ -11,11 +11,11 @@ public class VoiceActorEntryResponse
 	/// Voice actor's language.
 	/// </summary>
 	[JsonPropertyName("language")]
-	public string? Language { get; set; }
+	public string? Language { get; init; }
 
 	/// <summary>
 	/// Voice actor's details.
 	/// </summary>
 	[JsonPropertyName("person")]
-	public MalImageSubItemResponse? Person { get; set; }
+	public MalImageSubItemResponse? Person { get; init; }
 }

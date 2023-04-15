@@ -11,17 +11,17 @@ public class PaginationSummary
     /// Count of items returned
     /// </summary>
     [JsonPropertyName("count")]
-    public required int Count { get; set; }
+    public required int Count { get; init; }
     
     /// <summary>
     /// Total items count.
     /// </summary>
     [JsonPropertyName("total")]
-    public required int Total { get; set; }
+    public required int Total { get; init; }
     
     /// <summary>
     /// Count of items in the single page
     /// </summary>
     [JsonPropertyName("per_page")]
-    public required int PerPage { get; set; }
+    public required int PerPage { get; init; }
 }

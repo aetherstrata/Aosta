@@ -11,5 +11,5 @@ public class WatchPromoVideoResponse : PromoVideoResponse
     /// Related anime entry
     /// </summary>
     [JsonPropertyName("entry")]
-    public MalImageSubItemResponse? Entry { get; set; }
+    public MalImageSubItemResponse? Entry { get; init; }
 }

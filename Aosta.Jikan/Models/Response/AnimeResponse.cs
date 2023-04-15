@@ -12,219 +12,219 @@ public class AnimeResponse
 	/// ID associated with MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("mal_id")]
-	public long? MalId { get; set; }
+	public long? MalId { get; init; }
 
 	/// <summary>
 	/// Anime's canonical link.
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 
 	/// <summary>
 	/// Anime's images in various formats.
 	/// </summary>
 	[JsonPropertyName("images")]
-	public ImagesSetResponse? Images { get; set; }
+	public ImagesSetResponse? Images { get; init; }
 
 	/// <summary>
 	/// Anime's trailer.
 	/// </summary>
 	[JsonPropertyName("trailer")]
-	public AnimeTrailerResponse? Trailer { get; set; }
+	public AnimeTrailerResponse? Trailer { get; init; }
 
 	/// <summary>
 	/// Title of the anime.
 	/// </summary>
 	[Obsolete("This will be removed in the future. Use titles property instead.")]
 	[JsonPropertyName("title")]
-	public string? Title { get; set; }
+	public string? Title { get; init; }
 
 	/// <summary>
 	/// Title of the anime in English.
 	/// </summary>
 	[Obsolete("This will be removed in the future. Use titles property instead.")]
 	[JsonPropertyName("title_english")]
-	public string? TitleEnglish { get; set; }
+	public string? TitleEnglish { get; init; }
 
 	/// <summary>
 	/// Title of the anime in Japanese.
 	/// </summary>
 	[Obsolete("This will be removed in the future. Use titles property instead.")]
 	[JsonPropertyName("title_japanese")]
-	public string? TitleJapanese { get; set; }
+	public string? TitleJapanese { get; init; }
 
 	/// <summary>
 	/// Anime's multiple titles (if any). Return null if there is none.
 	/// </summary>
 	[Obsolete("This will be removed in the future. Use titles property instead.")]
 	[JsonPropertyName("title_synonyms")]
-	public ICollection<string>? TitleSynonyms { get; set; }
+	public ICollection<string>? TitleSynonyms { get; init; }
 
 	/// <summary>
 	/// Anime's multiple titles (if any).
 	/// </summary>
 	[JsonPropertyName("titles")]
-	public ICollection<TitleEntryResponse>? Titles { get; set; }
+	public ICollection<TitleEntryResponse>? Titles { get; init; }
 
 	/// <summary>
 	/// Anime type (e. g. "TV", "Movie").
 	/// </summary>
 	[JsonPropertyName("type")]
-	public string? Type { get; set; }
+	public string? Type { get; init; }
 
 	/// <summary>
 	/// Anime source (e .g. "Manga" or "Original").
 	/// </summary>
 	[JsonPropertyName("source")]
-	public string? Source { get; set; }
+	public string? Source { get; init; }
 
 	/// <summary>
 	/// Anime's episode count.
 	/// </summary>
 	[JsonPropertyName("episodes")]
-	public int? Episodes { get; set; }
+	public int? Episodes { get; init; }
 
 	/// <summary>
 	/// Anime's airing status (e. g. "Currently Airing").
 	/// </summary>
 	[JsonPropertyName("status")]
-	public string? Status { get; set; }
+	public string? Status { get; init; }
 
 	/// <summary>
 	/// Is anime currently airing.
 	/// </summary>
 	[JsonPropertyName("airing")]
-	public bool Airing { get; set; }
+	public bool Airing { get; init; }
 
 	/// <summary>
 	/// Assiociative keys "from" and "to" which are alternative version of AiredString in ISO8601 format.
 	/// </summary>
 	[JsonPropertyName("aired")]
-	public TimePeriodResponse? Aired { get; set; }
+	public TimePeriodResponse? Aired { get; init; }
 
 	/// <summary>
 	/// Anime's duration per episode.
 	/// </summary>
 	[JsonPropertyName("duration")]
-	public string? Duration { get; set; }
+	public string? Duration { get; init; }
 
 	/// <summary>
 	/// Anime's age rating.
 	/// </summary>
 	[JsonPropertyName("rating")]
-	public string? Rating { get; set; }
+	public string? Rating { get; init; }
 
 	/// <summary>
 	/// Anime's score on MyAnimeList up to 2 decimal places.
 	/// </summary>
 	[JsonPropertyName("score")]
-	public double? Score { get; set; }
+	public double? Score { get; init; }
 
 	/// <summary>
 	/// Number of people the anime has been scored by.
 	/// </summary>
 	[JsonPropertyName("scored_by")]
-	public int? ScoredBy { get; set; }
+	public int? ScoredBy { get; init; }
 
 	/// <summary>
 	/// Anime rank on MyAnimeList (score).
 	/// </summary>
 	[JsonPropertyName("rank")]
-	public int? Rank { get; set; }
+	public int? Rank { get; init; }
 
 	/// <summary>
 	/// Anime popularity rank on MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("popularity")]
-	public int? Popularity { get; set; }
+	public int? Popularity { get; init; }
 
 	/// <summary>
 	/// Anime members count on MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("members")]
-	public int? Members { get; set; }
+	public int? Members { get; init; }
 
 	/// <summary>
 	/// Anime favourite count on MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("favorites")]
-	public int? Favorites { get; set; }
+	public int? Favorites { get; init; }
 
 	/// <summary>
 	/// Anime's synopsis.
 	/// </summary>
 	[JsonPropertyName("synopsis")]
-	public string? Synopsis { get; set; }
+	public string? Synopsis { get; init; }
 
 	/// <summary>
 	/// Anime's background info.
 	/// </summary>
 	[JsonPropertyName("background")]
-	public string? Background { get; set; }
+	public string? Background { get; init; }
 
 	/// <summary>
 	/// Season of the year the anime premiered.
 	/// </summary>
 	[JsonPropertyName("season")]
-	public Season? Season { get; set; }
+	public Season? Season { get; init; }
 
 	/// <summary>
 	/// Year the anime premiered.
 	/// </summary>
 	[JsonPropertyName("year")]
-	public int? Year { get; set; }
+	public int? Year { get; init; }
 
 	/// <summary>
 	/// Anime broadcast day and timings (usually JST).
 	/// </summary>
 	[JsonPropertyName("broadcast")]
-	public AnimeBroadcastResponse? Broadcast { get; set; }
+	public AnimeBroadcastResponse? Broadcast { get; init; }
 
 	/// <summary>
 	/// Anime's producers numerically indexed with array values.
 	/// </summary>
 	[JsonPropertyName("producers")]
-	public ICollection<MalUrlResponse>? Producers { get; set; }
+	public ICollection<MalUrlResponse>? Producers { get; init; }
 
 	/// <summary>
 	/// Anime's licensors numerically indexed with array values.
 	/// </summary>
 	[JsonPropertyName("licensors")]
-	public ICollection<MalUrlResponse>? Licensors { get; set; }
+	public ICollection<MalUrlResponse>? Licensors { get; init; }
 
 	/// <summary>
 	/// Anime's studio(s) numerically indexed with array values.
 	/// </summary>
 	[JsonPropertyName("studios")]
-	public ICollection<MalUrlResponse>? Studios { get; set; }
+	public ICollection<MalUrlResponse>? Studios { get; init; }
 
 	/// <summary>
 	/// Anime's genres numerically indexed with array values.
 	/// </summary>
 	[JsonPropertyName("genres")]
-	public ICollection<MalUrlResponse>? Genres { get; set; }
+	public ICollection<MalUrlResponse>? Genres { get; init; }
 
 	/// <summary>
 	/// Explicit genres
 	/// </summary>
 	[JsonPropertyName("explicit_genres")]
-	public ICollection<MalUrlResponse>? ExplicitGenres { get; set; }
+	public ICollection<MalUrlResponse>? ExplicitGenres { get; init; }
 
 	/// <summary>
 	/// Anime's themes
 	/// </summary>
 	[JsonPropertyName("themes")]
-	public ICollection<MalUrlResponse>? Themes { get; set; }
+	public ICollection<MalUrlResponse>? Themes { get; init; }
 
 	/// <summary>
 	/// Anime's demographics
 	/// </summary>
 	[JsonPropertyName("demographics")]
-	public ICollection<MalUrlResponse>? Demographics { get; set; }
+	public ICollection<MalUrlResponse>? Demographics { get; init; }
 
 	/// <summary>
 	/// If Approved is false then this means the entry is still pending review on MAL.
 	/// </summary>
 	[JsonPropertyName("approved")]
-	public bool Approved  { get; set; }
+	public bool Approved  { get; init; }
 }

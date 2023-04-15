@@ -11,23 +11,23 @@ public class ForumPostSnippetResponse
 	/// Url to post.
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 
 	/// <summary>
 	/// Post's author username.
 	/// </summary>
 	[JsonPropertyName("author_username")]
-	public string? AuthorUsername { get; set; }
+	public string? AuthorUsername { get; init; }
 
 	/// <summary>
 	/// URL to profile of post author.
 	/// </summary>
 	[JsonPropertyName("author_url")]
-	public string? AuthorUrl { get; set; }
+	public string? AuthorUrl { get; init; }
 
 	/// <summary>
 	/// Date when the post was publicated.
 	/// </summary>
 	[JsonPropertyName("date")]
-	public DateTimeOffset? Date { get; set; }
+	public DateTimeOffset? Date { get; init; }
 }

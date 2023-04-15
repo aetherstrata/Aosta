@@ -11,11 +11,11 @@ public class AnimeThemesResponse
 	/// Anime openings.
 	/// </summary>
 	[JsonPropertyName("openings")]
-	public ICollection<string>? Openings { get; set; }
+	public ICollection<string>? Openings { get; init; }
 
 	/// <summary>
 	/// Anime endings.
 	/// </summary>
 	[JsonPropertyName("endings")]
-	public ICollection<string>? Endings { get; set; }
+	public ICollection<string>? Endings { get; init; }
 }

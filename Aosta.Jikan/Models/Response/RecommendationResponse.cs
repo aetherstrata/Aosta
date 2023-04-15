@@ -11,17 +11,17 @@ public class RecommendationResponse
 	/// Url to recommendation.
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 
 	/// <summary>
 	/// Number of users who have recommended this entry.
 	/// </summary>
 	[JsonPropertyName("votes")]
-	public int Votes { get; set; }
+	public int Votes { get; init; }
 
 	/// <summary>
 	/// Details about recommendation.
 	/// </summary>
 	[JsonPropertyName("entry")]
-	public RecommendationEntryResponse? Entry { get; set; }
+	public RecommendationEntryResponse? Entry { get; init; }
 }

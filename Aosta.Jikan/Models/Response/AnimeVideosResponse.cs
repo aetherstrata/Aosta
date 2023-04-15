@@ -11,17 +11,17 @@ public class AnimeVideosResponse
 	/// Anime's related promo videos URLs.
 	/// </summary>
 	[JsonPropertyName("promo")]
-	public ICollection<PromoVideoResponse>? PromoVideos { get; set; }
+	public ICollection<PromoVideoResponse>? PromoVideos { get; init; }
 
 	/// <summary>
 	/// Anime's related episode videos URLs.
 	/// </summary>
 	[JsonPropertyName("episodes")]
-	public ICollection<EpisodeVideoResponse>? EpisodeVideos { get; set; }
+	public ICollection<EpisodeVideoResponse>? EpisodeVideos { get; init; }
 		
 	/// <summary>
 	/// Anime's related music videos URLs.
 	/// </summary>
 	[JsonPropertyName("music_videos")]
-	public ICollection<MusicVideoResponse>? MusicVideos { get; set; }
+	public ICollection<MusicVideoResponse>? MusicVideos { get; init; }
 }

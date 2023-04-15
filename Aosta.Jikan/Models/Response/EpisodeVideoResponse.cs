@@ -11,29 +11,29 @@ public class EpisodeVideoResponse
 	/// Episode's MyAnimeList Id.
 	/// </summary>
 	[JsonPropertyName("mal_id")]
-	public long MalId { get; set; }
+	public long MalId { get; init; }
 
 	/// <summary>
 	/// Title of the episode video.
 	/// </summary>
 	[JsonPropertyName("title")]
-	public string? Title { get; set; }
+	public string? Title { get; init; }
 
 	/// <summary>
 	/// Numbered title of the episode video.
 	/// </summary>
 	[JsonPropertyName("episode")]
-	public string? NumberedTitle { get; set; }
+	public string? NumberedTitle { get; init; }
 
 	/// <summary>
 	/// Url to episode video.
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 
 	/// <summary>
 	/// Episode's images set.
 	/// </summary>
 	[JsonPropertyName("Images")]
-	public ImagesSetResponse? Images { get; set; }
+	public ImagesSetResponse? Images { get; init; }
 }

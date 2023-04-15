@@ -11,11 +11,11 @@ public class TitleEntryResponse
     /// Type of title (usually the language).
     /// </summary>
     [JsonPropertyName("type")]
-    public string? Type { get; set; }
+    public string? Type { get; init; }
     
     /// <summary>
     /// Value of the Title.
     /// </summary>
     [JsonPropertyName("title")]
-    public string? Title { get; set; }
+    public string? Title { get; init; }
 }

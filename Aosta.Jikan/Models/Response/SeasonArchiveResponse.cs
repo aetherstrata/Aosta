@@ -12,11 +12,11 @@ public class SeasonArchiveResponse
 	/// Available year to query.
 	/// </summary>
 	[JsonPropertyName("year")]
-	public int Year { get; set; }
+	public int Year { get; init; }
 
 	/// <summary>
 	/// Collection of available seasons in year to query.
 	/// </summary>
 	[JsonPropertyName("seasons")]
-	public ICollection<Season>? Season { get; set; }
+	public ICollection<Season>? Season { get; init; }
 }

@@ -11,11 +11,11 @@ public class PromoVideoResponse
 	/// Title of the promotional video.
 	/// </summary>
 	[JsonPropertyName("title")]
-	public string? Title { get; set; }
+	public string? Title { get; init; }
 
 	/// <summary>
 	/// Trailer to promo video
 	/// </summary>
 	[JsonPropertyName("trailer")]
-	public AnimeTrailerResponse? Trailer { get; set; }
+	public AnimeTrailerResponse? Trailer { get; init; }
 }

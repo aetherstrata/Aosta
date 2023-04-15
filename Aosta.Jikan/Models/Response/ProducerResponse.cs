@@ -11,41 +11,41 @@ public class ProducerResponse
 	/// ID associated with MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("mal_id")]
-	public long MalId { get; set; }
+	public long MalId { get; init; }
 
 	/// <summary>
 	/// Url to sub item main page.
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 
 	/// <summary>
 	/// Names of the producer.
 	/// </summary>
 	[JsonPropertyName("titles")]
-	public ICollection<TitleEntryResponse>? Titles { get; set; }
+	public ICollection<TitleEntryResponse>? Titles { get; init; }
 
 	/// <summary>
 	/// Image URLs
 	/// </summary>
 	[JsonPropertyName("images")]
-	public ImagesSetResponse? Images { get; set; }
+	public ImagesSetResponse? Images { get; init; }
 
 	/// <summary>
 	/// Date of establishing.
 	/// </summary>
 	[JsonPropertyName("established")]
-	public DateTimeOffset? Established { get; set; }
+	public DateTimeOffset? Established { get; init; }
 
 	/// <summary>
 	/// Total count of anime assigned to this producer.
 	/// </summary>
 	[JsonPropertyName("count")]
-	public int TotalCount { get; set; }
+	public int TotalCount { get; init; }
 
 	/// <summary>
 	/// About the producer
 	/// </summary>
 	[JsonPropertyName("about")]
-	public string? About { get; set; }
+	public string? About { get; init; }
 }

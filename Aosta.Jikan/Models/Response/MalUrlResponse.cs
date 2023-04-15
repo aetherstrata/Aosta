@@ -11,23 +11,23 @@ public class MalUrlResponse
 	/// ID associated with MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("mal_id")]
-	public long MalId { get; set; }
+	public long MalId { get; init; }
 
 	/// <summary>
 	/// Type of resource
 	/// </summary>
 	[JsonPropertyName("type")]
-	public string? Type { get; set; }
+	public string? Type { get; init; }
 
 	/// <summary>
 	/// Url to sub item main page.
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 
 	/// <summary>
 	/// Title/Name of the item
 	/// </summary>
 	[JsonPropertyName("name")]
-	public string? Name { get; set; }
+	public string? Name { get; init; }
 }

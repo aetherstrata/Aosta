@@ -11,11 +11,11 @@ public class UserStatisticsResponse
 	/// User's anime statistics.
 	/// </summary>
 	[JsonPropertyName("anime")]
-	public UserAnimeStatisticsResponse? AnimeStatistics { get; set; }
+	public UserAnimeStatisticsResponse? AnimeStatistics { get; init; }
 
 	/// <summary>
 	/// User's manga statistics.
 	/// </summary>
 	[JsonPropertyName("manga")]
-	public UserMangaStatisticsResponse? MangaStatistics { get; set; }
+	public UserMangaStatisticsResponse? MangaStatistics { get; init; }
 }

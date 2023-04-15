@@ -11,11 +11,11 @@ public class MusicVideoMetadata
     /// Title of the music.
     /// </summary>
     [JsonPropertyName("title")]
-    public string? Title { get; set; }
+    public string? Title { get; init; }
     
     /// <summary>
     /// Author of the music.
     /// </summary>
     [JsonPropertyName("author")]
-    public string? Author { get; set; }
+    public string? Author { get; init; }
 }

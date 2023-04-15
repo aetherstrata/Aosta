@@ -11,11 +11,11 @@ public class AnimeUserUpdateResponse : UserUpdateResponse
 	/// Amount of episodes seen by the user.
 	/// </summary>
 	[JsonPropertyName("episodes_seen")]
-	public int? EpisodesSeen { get; set; }
+	public int? EpisodesSeen { get; init; }
 
 	/// <summary>
 	/// Total amount of the episodes.
 	/// </summary>
 	[JsonPropertyName("episodes_total")]
-	public int? EpisodesTotal { get; set; }
+	public int? EpisodesTotal { get; init; }
 }

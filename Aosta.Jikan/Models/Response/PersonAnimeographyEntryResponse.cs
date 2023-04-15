@@ -11,11 +11,11 @@ public class PersonAnimeographyEntryResponse
 	/// Person's animeography entry.
 	/// </summary>
 	[JsonPropertyName("anime")]
-	public MalImageSubItemResponse? Anime { get; set; }
+	public MalImageSubItemResponse? Anime { get; init; }
 
 	/// <summary>
 	/// Position of the person in the anime production
 	/// </summary>
 	[JsonPropertyName("position")]
-	public string? Position { get; set; }
+	public string? Position { get; init; }
 }

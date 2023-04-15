@@ -11,11 +11,11 @@ public class AnimeStaffPositionResponse
 	/// Person details.
 	/// </summary>
 	[JsonPropertyName("person")]
-	public MalImageSubItemResponse? Person { get; set; }
+	public MalImageSubItemResponse? Person { get; init; }
 
 	/// <summary>
 	/// Positions associated with staff member.
 	/// </summary>
 	[JsonPropertyName("positions")]
-	public ICollection<string>? Position { get; set; }
+	public ICollection<string>? Position { get; init; }
 }

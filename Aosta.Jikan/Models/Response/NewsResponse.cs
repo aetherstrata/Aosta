@@ -11,59 +11,59 @@ public class NewsResponse
 	/// ID associated with MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("mal_id")]
-	public long MalId { get; set; }
+	public long MalId { get; init; }
 
 	/// <summary>
 	/// News' URL.
 	/// </summary>
 	[JsonPropertyName("url")]
-	public string? Url { get; set; }
+	public string? Url { get; init; }
 
 	/// <summary>
 	/// Title of the news.
 	/// </summary>
 	[JsonPropertyName("title")]
-	public string? Title { get; set; }
+	public string? Title { get; init; }
 
 	/// <summary>
 	/// News' publication date.
 	/// </summary>
 	[JsonPropertyName("date")]
-	public DateTimeOffset? Date { get; set; }
+	public DateTimeOffset? Date { get; init; }
 
 	/// <summary>
 	/// News' author username.
 	/// </summary>
 	[JsonPropertyName("author_username")]
-	public string? Author { get; set; }
+	public string? Author { get; init; }
 
 	/// <summary>
 	/// News' author url.
 	/// </summary>
 	[JsonPropertyName("author_url")]
-	public string? AuthorUrl { get; set; }
+	public string? AuthorUrl { get; init; }
 
 	/// <summary>
 	/// News' forum URL.
 	/// </summary>
 	[JsonPropertyName("forum_url")]
-	public string? ForumUrl { get; set; }
+	public string? ForumUrl { get; init; }
 
 	/// <summary>
 	/// News' images set.
 	/// </summary>
 	[JsonPropertyName("images")]
-	public ImagesSetResponse? Images{ get; set; }
+	public ImagesSetResponse? Images{ get; init; }
 
 	/// <summary>
 	/// Amount of comments under news.
 	/// </summary>
 	[JsonPropertyName("comments")]
-	public int? Comments { get; set; }
+	public int? Comments { get; init; }
 
 	/// <summary>
 	/// News' excerptL.
 	/// </summary>
 	[JsonPropertyName("excerpt")]
-	public string? Excerpt { get; set; }
+	public string? Excerpt { get; init; }
 }

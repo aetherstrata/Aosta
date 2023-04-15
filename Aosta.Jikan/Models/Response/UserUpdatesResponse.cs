@@ -11,11 +11,11 @@ public class UserUpdatesResponse
     /// Anime updates.
     /// </summary>
     [JsonPropertyName("anime")]
-    public ICollection<AnimeUserUpdateResponse>? AnimeUpdates { get; set; }
+    public ICollection<AnimeUserUpdateResponse>? AnimeUpdates { get; init; }
 
     /// <summary>
     /// Manga updates.
     /// </summary>
     [JsonPropertyName("manga")]
-    public ICollection<MangaUserUpdateResponse>? MangaUpdates { get; set; }
+    public ICollection<MangaUserUpdateResponse>? MangaUpdates { get; init; }
 }

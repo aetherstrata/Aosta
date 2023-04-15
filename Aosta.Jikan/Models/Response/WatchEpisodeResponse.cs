@@ -11,17 +11,17 @@ public class WatchEpisodeResponse
     /// Is the episode region locked.
     /// </summary>
     [JsonPropertyName("region_locked")]
-    public bool? RegionLocked { get; set; }
+    public bool? RegionLocked { get; init; }
         
     /// <summary>
     /// Related anime entry
     /// </summary>
     [JsonPropertyName("entry")]
-    public MalImageSubItemResponse? Entry { get; set; }
+    public MalImageSubItemResponse? Entry { get; init; }
         
     /// <summary>
     /// List of available episodes
     /// </summary>
     [JsonPropertyName("episodes")]
-    public ICollection<WatchEpisodeDetailsResponse>? Episodes { get; set; }
+    public ICollection<WatchEpisodeDetailsResponse>? Episodes { get; init; }
 }

@@ -11,17 +11,17 @@ public class MusicVideoResponse
     /// Title of the version of music video.
     /// </summary>
     [JsonPropertyName("title")]
-    public string? Title { get; set; }
+    public string? Title { get; init; }
     
     /// <summary>
     /// Video of the music video.
     /// </summary>
     [JsonPropertyName("video")]
-    public AnimeTrailerResponse? Video { get; set; }
+    public AnimeTrailerResponse? Video { get; init; }
     
     /// <summary>
     /// Metadata of the music video.
     /// </summary>
     [JsonPropertyName("meta")]
-    public MusicVideoMetadata? Metadata { get; set; }
+    public MusicVideoMetadata? Metadata { get; init; }
 }

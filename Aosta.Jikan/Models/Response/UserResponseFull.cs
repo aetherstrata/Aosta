@@ -11,29 +11,29 @@ public class UserResponseFull: UserProfileResponse
     /// User's anime and manga statistics
     /// </summary>
     [JsonPropertyName("statistics")]
-    public UserStatisticsResponse? Statistics { get; set; }
+    public UserStatisticsResponse? Statistics { get; init; }
     
     /// <summary>
     /// User's favorites
     /// </summary>
     [JsonPropertyName("favorites")]
-    public UserFavoritesResponse? Favorites { get; set; }
+    public UserFavoritesResponse? Favorites { get; init; }
     
     /// <summary>
     /// User's anime and manga updates
     /// </summary>
     [JsonPropertyName("updates")]
-    public UserUpdatesResponse? Updates { get; set; }
+    public UserUpdatesResponse? Updates { get; init; }
     
     /// <summary>
     /// User's about
     /// </summary>
     [JsonPropertyName("about")]
-    public string? About { get; set; }
+    public string? About { get; init; }
     
     /// <summary>
     /// User's external links
     /// </summary>
     [JsonPropertyName("external")]
-    public ICollection<ExternalLinkResponse>? External { get; set; }
+    public ICollection<ExternalLinkResponse>? External { get; init; }
 }

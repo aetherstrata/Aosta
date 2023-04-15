@@ -11,23 +11,23 @@ public class UserFavoritesResponse
 	/// User's favorite anime.
 	/// </summary>
 	[JsonPropertyName("anime")]
-	public ICollection<FavoritesEntryResponse>? Anime { get; set; }
+	public ICollection<FavoritesEntryResponse>? Anime { get; init; }
 
 	/// <summary>
 	/// User's favorite manga.
 	/// </summary>
 	[JsonPropertyName("manga")]
-	public ICollection<FavoritesEntryResponse>? Manga { get; set; }
+	public ICollection<FavoritesEntryResponse>? Manga { get; init; }
 
 	/// <summary>
 	/// User's favorite characters.
 	/// </summary>
 	[JsonPropertyName("characters")]
-	public ICollection<MalImageSubItemResponse>? Characters { get; set; }
+	public ICollection<MalImageSubItemResponse>? Characters { get; init; }
 
 	/// <summary>
 	/// User's favorite people.
 	/// </summary>
 	[JsonPropertyName("people")]
-	public ICollection<MalImageSubItemResponse>? People { get; set; }
+	public ICollection<MalImageSubItemResponse>? People { get; init; }
 }

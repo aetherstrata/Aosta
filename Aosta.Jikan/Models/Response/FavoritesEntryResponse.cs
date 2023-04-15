@@ -11,11 +11,11 @@ public class FavoritesEntryResponse : MalImageSubItemResponse
 	/// Type of resource
 	/// </summary>
 	[JsonPropertyName("type")]
-	public string? Type { get; set; }
+	public string? Type { get; init; }
 
 	/// <summary>
 	/// Year when manga was published or anime started airing
 	/// </summary>
 	[JsonPropertyName("start_year")]
-	public int? StartYear { get; set; }
+	public int? StartYear { get; init; }
 }
