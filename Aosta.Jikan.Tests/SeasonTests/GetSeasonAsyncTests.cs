@@ -88,8 +88,8 @@ public class GetSeasonAsyncTests
 				
 			var youjoSenki = winter2017.Data.FirstOrDefault(x => x.Title.Equals("Youjo Senki"));
 
-			youjoSenki.Type.Should().Be("TV");
-			youjoSenki.Status.Should().Be("Finished Airing");
+			youjoSenki.Type.Should().Be(AnimeType.TV);
+			youjoSenki.Status.Should().Be(AiringStatus.Completed);
 			youjoSenki.Episodes.Should().Be(12);
 			youjoSenki.Airing.Should().BeFalse();
 			youjoSenki.Duration.Should().Be("24 min per ep");
@@ -132,8 +132,8 @@ public class GetSeasonAsyncTests
 
 		var yowamushiPedal = winter2017.Data.FirstOrDefault(x => x.Title.Equals("Yowamushi Pedal: New Generation"));
 
-		yowamushiPedal.Type.Should().Be("TV");
-		yowamushiPedal.Status.Should().Be("Finished Airing");
+		yowamushiPedal.Type.Should().Be(AnimeType.TV);
+		yowamushiPedal.Status.Should().Be(AiringStatus.Completed);
 		yowamushiPedal.Episodes.Should().Be(25);
 		yowamushiPedal.Airing.Should().BeFalse();
 		yowamushiPedal.Duration.Should().Be("23 min per ep");

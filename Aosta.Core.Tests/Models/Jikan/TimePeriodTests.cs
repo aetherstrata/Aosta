@@ -1,60 +1,33 @@
-using Aosta.Core.Data;
-using Aosta.Core.Data.Models.Jikan;
+using Aosta.Core.Database.Mapper;
 using Aosta.Jikan.Models.Response;
+using FluentAssertions.Execution;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
 [TestFixture]
 public class TimePeriodTests
 {
-    [SetUp]
-    public void SetUp()
-    {
-        _from = new DateTime(2000, 10, 24);
-        _to = new DateTime(2001, 1, 8);
-
-        _period = new TimePeriodResponse
-        {
-            From = _from,
-            To = _to
-        };
-    }
-
-    private DateTime _from;
-    private DateTime _to;
-
-    private TimePeriodResponse _period = null!;
-
     [Test]
     public void ConversionTest()
     {
-        var converted = _period.ToRealmObject();
-
-        Assert.Multiple(() =>
+        var converted = new TimePeriodResponse
         {
-            Assert.That(converted.From.HasValue, Is.True);
-            Assert.That(converted.To.HasValue, Is.True);
-        });
+            From = new DateTime(2000, 10, 24),
+            To = new DateTime(2001, 1, 8)
+        }.ToRealmModel();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(converted.From, Is.EqualTo(_period.From.Value.UtcDateTime));
-            Assert.That(converted.To, Is.EqualTo(_period.To.Value.UtcDateTime));
-
-            Assert.That(converted.From, Is.EqualTo(_from));
-            Assert.That(converted.To, Is.EqualTo(_to));
-        });
+        using var _ = new AssertionScope();
+        converted.From.Should().HaveYear(2000).And.HaveMonth(10).And.HaveDay(24);
+        converted.To.Should().HaveYear(2001).And.HaveMonth(1).And.HaveDay(8);
     }
 
     [Test]
     public void DefaultValuesTest()
     {
-        var newPeriod = new TimePeriodObject(new TimePeriodResponse());
+        var newPeriod = new TimePeriodResponse().ToRealmModel();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(newPeriod.From, Is.Null);
-            Assert.That(newPeriod.To, Is.Null);
-        });
+        using var _ = new AssertionScope();
+        newPeriod.From.Should().BeNull();
+        newPeriod.To.Should().BeNull();
     }
 }

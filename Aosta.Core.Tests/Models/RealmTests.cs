@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Aosta.Core.Data.Models;
+using Aosta.Core.Database.Models;
 using Realms;
 
 namespace Aosta.Core.Tests.Models;
@@ -43,7 +43,7 @@ internal static class RealmSetup
             case InitConfig.OneAnime:
                 realm.Write(() =>
                 {
-                    realm.Add(new AnimeObject());
+                    realm.Add(new Anime());
                 });
                 break;
 

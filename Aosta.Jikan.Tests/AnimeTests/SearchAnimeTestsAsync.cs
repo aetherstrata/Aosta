@@ -99,8 +99,8 @@ public class SearchAnimeTestsAsync
 		var config = new AnimeSearchConfig()
 		{
 			Query = "one p",
-			Status = AiringStatus.Airing,
-			Type = AnimeType.TV
+			Status = AiringStatusFilter.Airing,
+			Type = AnimeTypeFilter.TV
 		};
 
 		var onePieceAnime = await JikanTests.Instance.SearchAnimeAsync(config);
@@ -116,7 +116,7 @@ public class SearchAnimeTestsAsync
 		var firstResult = result.Data.First();
 		using var _ = new AssertionScope();
 		firstResult.Title.Should().Be("Haibane Renmei");
-		firstResult.Type.Should().Be("TV");
+		firstResult.Type.Should().Be(AnimeType.TV);
 		firstResult.Episodes.Should().Be(13);
 		firstResult.MalId.Should().Be(387);
 	}
@@ -130,7 +130,7 @@ public class SearchAnimeTestsAsync
 		var config = new AnimeSearchConfig
 		{
 			Query = query,
-			Type = AnimeType.TV
+			Type = AnimeTypeFilter.TV
 		};
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(config);
@@ -144,7 +144,7 @@ public class SearchAnimeTestsAsync
 		var config = new AnimeSearchConfig
 		{
 			Query = "danganronpa",
-			Type = AnimeType.TV
+			Type = AnimeTypeFilter.TV
 		};
 
 		var anime = await JikanTests.Instance.SearchAnimeAsync(config);
@@ -158,7 +158,7 @@ public class SearchAnimeTestsAsync
 		var searchConfig = new AnimeSearchConfig
 		{
 			Query = "Fairy Tail",
-			Type = AnimeType.TV,
+			Type = AnimeTypeFilter.TV,
 			MinimumScore = 7
 		};
 
@@ -187,7 +187,7 @@ public class SearchAnimeTestsAsync
 		var searchConfig = new AnimeSearchConfig
 		{
 			Query = "Blame",
-			Type = AnimeType.Movie
+			Type = AnimeTypeFilter.Movie
 		};
 		searchConfig.Genres.Add(AnimeGenreSearch.SciFi);
 
@@ -266,12 +266,12 @@ public class SearchAnimeTestsAsync
 	}
 
 	[Test]
-	[TestCase((AiringStatus)int.MaxValue, null, null, null, null, null)]
-	[TestCase((AiringStatus)int.MinValue, null, null, null, null, null)]
+	[TestCase((AiringStatusFilter)int.MaxValue, null, null, null, null, null)]
+	[TestCase((AiringStatusFilter)int.MinValue, null, null, null, null, null)]
 	[TestCase(null, (AnimeAgeRating)int.MaxValue, null, null, null, null)]
 	[TestCase(null, (AnimeAgeRating)int.MinValue, null, null, null, null)]
-	[TestCase(null, null, (AnimeType)int.MaxValue, null, null, null)]
-	[TestCase(null, null, (AnimeType)int.MinValue, null, null, null)]
+	[TestCase(null, null, (AnimeTypeFilter)int.MaxValue, null, null, null)]
+	[TestCase(null, null, (AnimeTypeFilter)int.MinValue, null, null, null)]
 	[TestCase(null, null, null, (AnimeSearchOrderBy)int.MaxValue, null, null)]
 	[TestCase(null, null, null, (AnimeSearchOrderBy)int.MinValue, null, null)]
 	[TestCase(null, null, null, AnimeSearchOrderBy.Episodes, (SortDirection)int.MaxValue, null)]
@@ -279,9 +279,9 @@ public class SearchAnimeTestsAsync
 	[TestCase(null, null, null, null, null, (AnimeGenreSearch)int.MaxValue)]
 	[TestCase(null, null, null, null, null, (AnimeGenreSearch)int.MinValue)]
 	public async Task EmptyQueryWithConfigWithInvalidEnums_ShouldThrowValidationException(
-		AiringStatus? airingStatus,
+		AiringStatusFilter? airingStatus,
 		AnimeAgeRating? rating,
-		AnimeType? mangaType,
+		AnimeTypeFilter? mangaType,
 		AnimeSearchOrderBy? orderBy,
 		SortDirection? sortDirection,
 		AnimeGenreSearch? genreSearch
@@ -307,7 +307,7 @@ public class SearchAnimeTestsAsync
 	{
 		var searchConfig = new AnimeSearchConfig
 		{
-			Type = AnimeType.TV,
+			Type = AnimeTypeFilter.TV,
 			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
 		};
 
@@ -328,7 +328,7 @@ public class SearchAnimeTestsAsync
 		var searchConfig = new AnimeSearchConfig
 		{
 			Page = page,
-			Type = AnimeType.TV,
+			Type = AnimeTypeFilter.TV,
 			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
 		};
 
@@ -343,7 +343,7 @@ public class SearchAnimeTestsAsync
 		var searchConfig = new AnimeSearchConfig
 		{
 			Page = 1,
-			Type = AnimeType.TV,
+			Type = AnimeTypeFilter.TV,
 			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
 		};
 
@@ -361,7 +361,7 @@ public class SearchAnimeTestsAsync
 		var searchConfig = new AnimeSearchConfig
 		{
 			Page = 3,
-			Type = AnimeType.TV,
+			Type = AnimeTypeFilter.TV,
 			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
 		};
 
@@ -383,7 +383,7 @@ public class SearchAnimeTestsAsync
 		{
 			Page = page,
 			Query = "girl",
-			Status = AiringStatus.Complete,
+			Status = AiringStatusFilter.Complete,
 			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
 		};
 
@@ -399,7 +399,7 @@ public class SearchAnimeTestsAsync
 		{
 			Query = "one",
 			Page = 2,
-			Status = AiringStatus.Complete,
+			Status = AiringStatusFilter.Complete,
 			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
 		};
 

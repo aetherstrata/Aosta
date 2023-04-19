@@ -39,7 +39,7 @@ public class GetTopAnimeAsyncTests
 
 		// Then
 		var logh = top.Data.Single(x => x.Title == "Ginga Eiyuu Densetsu");
-		logh.Type.Should().Be("OVA");
+		logh.Type.Should().Be(AnimeType.OVA);
 	}
 
 	[Test]

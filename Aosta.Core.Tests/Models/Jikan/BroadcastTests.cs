@@ -1,97 +1,57 @@
-using Aosta.Core.Data;
-using Aosta.Core.Data.Enums;
-using Aosta.Core.Data.Models.Jikan;
+using Aosta.Core.Database.Mapper;
+using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Response;
+using FluentAssertions.Execution;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
 [TestFixture]
 public class BroadcastTests
 {
-    [SetUp]
-    public void SetUp()
-    {
-        _broadcastResponse = new AnimeBroadcastResponse
-        {
-            Day = "Mondays",
-            Time = "07:00",
-            Timezone = "Europe/Rome",
-            String = null
-        };
-
-        _time = new TimeOnly(7, 0, 0);
-        _timeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Rome");
-        _days = DaysOfWeek.Monday;
-    }
-
-    private AnimeBroadcastResponse _broadcastResponse = null!;
-
-    private TimeOnly _time;
-    private TimeZoneInfo _timeZone = null!;
-    private DaysOfWeek _days;
-
     [Test]
     public void FullConversionTest()
     {
-        var converted = _broadcastResponse.ToRealmObject();
-
-        Assert.Multiple(() =>
+        var converted = new AnimeBroadcastResponse
         {
-            Assert.That(converted.LocalTime.HasValue, Is.True);
-            Assert.That(converted.UtcTime.HasValue, Is.True);
-            Assert.That(converted.String, Is.Empty);
-        });
+            Day = DaysOfWeek.Mondays,
+            Time = "07:00",
+            Timezone = "UTC+2:00",
+            String = "Mondays at 7:00 (CEST)"
+        }.ToRealmModel();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(converted.Day, Is.EqualTo(_days));
-            Assert.That(converted.LocalTime, Is.EqualTo(_time));
-            Assert.That(converted.UtcTime, Is.EqualTo(_time.Add(-_timeZone.BaseUtcOffset)));
-            Assert.That(converted.Timezone, Is.EqualTo(_timeZone));
-        });
+        using var _ = new AssertionScope();
+        converted.Day.Should().Be(DaysOfWeek.Mondays);
+        converted.String.Should().Be("Mondays at 7:00 (CEST)");
+        converted.Time.Should().HaveOffset(TimeSpan.FromHours(2));
+        converted.Time.Should().HaveHour(7);
     }
 
     [Test]
     public void NoTimezoneConversionTest()
     {
-        _broadcastResponse = new AnimeBroadcastResponse
+        var converted = new AnimeBroadcastResponse
         {
-            Day = "Mondays",
+            Day = DaysOfWeek.Mondays,
             Time = "07:00",
             Timezone = null,
             String = null
-        };
+        }.ToRealmModel();
 
-        var converted = _broadcastResponse.ToRealmObject();
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(converted.LocalTime.HasValue, Is.True);
-            Assert.That(converted.UtcTime.HasValue, Is.True);
-            Assert.That(converted.Timezone, Is.Null);
-            Assert.That(converted.String, Is.Empty);
-        });
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(converted.Day, Is.EqualTo(_days));
-            Assert.That(converted.LocalTime, Is.EqualTo(_time));
-            Assert.That(converted.UtcTime, Is.EqualTo(_time));
-        });
+        using var _ = new AssertionScope();
+        converted.Day.Should().Be(DaysOfWeek.Mondays);
+        converted.String.Should().Be("Mondays at 7:00 (CEST)");
+        converted.Time.Should().HaveOffset(TimeSpan.Zero);
+        converted.Time.Should().HaveHour(7);
     }
 
     [Test]
     public void DefaultValuesTest()
     {
-        var newBroadcast = new BroadcastObject(new AnimeBroadcastResponse());
+        var newBroadcast = new AnimeBroadcastResponse().ToRealmModel();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(newBroadcast.Day, Is.EqualTo(DaysOfWeek.None));
-            Assert.That(newBroadcast.LocalTime.HasValue, Is.False);
-            Assert.That(newBroadcast.UtcTime.HasValue, Is.False);
-            Assert.That(newBroadcast.Timezone, Is.Null);
-            Assert.That(newBroadcast.String, Is.Empty);
-        });
+        using var _ = new AssertionScope();
+        newBroadcast.Day.Should().BeNull();
+        newBroadcast.String.Should().BeNull();
+        newBroadcast.Time.Should().BeNull();
     }
 }

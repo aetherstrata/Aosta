@@ -1,51 +1,39 @@
-using Aosta.Core.Data;
-using Aosta.Core.Data.Models.Jikan;
+using Aosta.Core.Database.Mapper;
 using Aosta.Jikan.Models.Response;
+using FluentAssertions.Execution;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
 [TestFixture]
 public class UrlTests
 {
-    [SetUp]
-    public void SetUp()
+    [Test]
+    public void ConversionTest()
     {
-        _urlResponse = new MalUrlResponse
+        var converted = new MalUrlResponse
         {
             MalId = 1,
             Type = "type",
             Url = "url",
             Name = "name"
-        };
-    }
+        }.ToRealmModel();
 
-    private MalUrlResponse _urlResponse = null!;
-
-    [Test]
-    public void ConversionTest()
-    {
-        var converted = _urlResponse.ToRealmObject();
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(converted.MalId, Is.EqualTo(1));
-            Assert.That(converted.Type, Is.EqualTo("type"));
-            Assert.That(converted.Url, Is.EqualTo("url"));
-            Assert.That(converted.Name, Is.EqualTo("name"));
-        });
+        using var _ = new AssertionScope();
+        converted.MalId.Should().Be(1);
+        converted.Type.Should().Be("type");
+        converted.Url.Should().Be("url");
+        converted.Name.Should().Be("name");
     }
 
     [Test]
     public void DefaultValuesTest()
     {
-        var newUrl = new UrlObject(new MalUrlResponse());
+        var newUrl = new MalUrlResponse().ToRealmModel();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(newUrl.MalId, Is.EqualTo(0));
-            Assert.That(newUrl.Type, Is.Empty);
-            Assert.That(newUrl.Url, Is.Empty);
-            Assert.That(newUrl.Name, Is.Empty);
-        });
+        using var _ = new AssertionScope();
+        newUrl.MalId.Should().Be(0);
+        newUrl.Type.Should().BeNull();
+        newUrl.Url.Should().BeNull();
+        newUrl.Name.Should().BeNull();
     }
 }

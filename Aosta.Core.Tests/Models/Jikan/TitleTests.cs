@@ -1,45 +1,33 @@
-using Aosta.Core.Data;
-using Aosta.Core.Data.Models.Jikan;
+using Aosta.Core.Database.Mapper;
 using Aosta.Jikan.Models.Response;
+using FluentAssertions.Execution;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
 [TestFixture]
 public class TitleTests
 {
-    [SetUp]
-    public void SetUp()
-    {
-        _title = new TitleEntryResponse
-        {
-            Type = "type",
-            Title = "title"
-        };
-    }
-
-    private TitleEntryResponse _title = null!;
-
     [Test]
     public void ConversionTest()
     {
-        var converted = _title.ToRealmObject();
-
-        Assert.Multiple(() =>
+        var converted = new TitleEntryResponse
         {
-            Assert.That(converted.Type, Is.EqualTo("type"));
-            Assert.That(converted.Title, Is.EqualTo("title"));
-        });
+            Type = "type",
+            Title = "title"
+        }.ToRealmModel();
+
+        using var _ = new AssertionScope();
+        converted.Type.Should().Be("type");
+        converted.Title.Should().Be("title");
     }
 
     [Test]
     public void DefaultValuesTest()
     {
-        var newTitle = new TitleObject(new TitleEntryResponse());
+        var newTitle = new TitleEntryResponse().ToRealmModel();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(newTitle.Type, Is.Empty);
-            Assert.That(newTitle.Title, Is.Empty);
-        });
+        using var _ = new AssertionScope();
+        newTitle.Type.Should().BeNull();
+        newTitle.Title.Should().BeNull();
     }
 }

@@ -1,59 +1,42 @@
-using Aosta.Core.Data;
-using Aosta.Core.Data.Models.Jikan;
+using Aosta.Core.Database.Mapper;
 using Aosta.Jikan.Models.Response;
+using FluentAssertions.Execution;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
 [TestFixture]
 public class ImageTests
 {
-    [SetUp]
-    public void SetUp()
+    [Test]
+    public void ConversionTest()
     {
-        _image1 = new ImageResponse
+        var converted = new ImageResponse
         {
             ImageUrl = "https://url.com/image.jpg",
             SmallImageUrl = "https://url.com/smallImage.jpg",
             MediumImageUrl = "https://url.com/mediumImage.jpg",
             LargeImageUrl = "https://url.com/largeImage.jpg",
             MaximumImageUrl = "https://url.com/MaximumImage.jpg"
-        };
-    }
+        }.ToRealmModel();
 
-    private ImageResponse _image1 = null!;
-
-    [Test]
-    public void ConversionTest()
-    {
-        var converted = _image1.ToRealmObject();
-
-        AssertImagesAreEqual(converted, _image1);
+        using var _ = new AssertionScope();
+        converted.ImageUrl.Should().Be("https://url.com/image.jpg");
+        converted.SmallImageUrl.Should().Be("https://url.com/smallImage.jpg");
+        converted.MediumImageUrl.Should().Be("https://url.com/mediumImage.jpg");
+        converted.LargeImageUrl.Should().Be("https://url.com/largeImage.jpg");
+        converted.MaximumImageUrl.Should().Be("https://url.com/MaximumImage.jpg");
     }
 
     [Test]
     public void DefaultValuesTest()
     {
-        var newImage = new ImageObject(new ImageResponse());
+        var newImage = new ImageResponse().ToRealmModel();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(newImage.ImageUrl, Is.Empty);
-            Assert.That(newImage.SmallImageUrl, Is.Empty);
-            Assert.That(newImage.MediumImageUrl, Is.Empty);
-            Assert.That(newImage.LargeImageUrl, Is.Empty);
-            Assert.That(newImage.MaximumImageUrl, Is.Empty);
-        });
-    }
-
-    private static void AssertImagesAreEqual(ImageObject converted, ImageResponse input)
-    {
-        Assert.Multiple(() =>
-        {
-            Assert.That(converted.ImageUrl, Is.EqualTo(input.ImageUrl));
-            Assert.That(converted.MaximumImageUrl, Is.EqualTo(input.MaximumImageUrl));
-            Assert.That(converted.LargeImageUrl, Is.EqualTo(input.LargeImageUrl));
-            Assert.That(converted.MediumImageUrl, Is.EqualTo(input.MediumImageUrl));
-            Assert.That(converted.SmallImageUrl, Is.EqualTo(input.SmallImageUrl));
-        });
+        using var _ = new AssertionScope();
+        newImage.ImageUrl.Should().BeNull();
+        newImage.SmallImageUrl.Should().BeNull();
+        newImage.MediumImageUrl.Should().BeNull();
+        newImage.LargeImageUrl.Should().BeNull();
+        newImage.MaximumImageUrl.Should().BeNull();
     }
 }

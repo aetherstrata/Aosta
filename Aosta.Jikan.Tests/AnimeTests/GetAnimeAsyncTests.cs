@@ -123,7 +123,7 @@ public class GetAnimeAsyncTests
 		using (new AssertionScope())
 		{
 			cardcaptor.Data.Episodes.Should().Be(70);
-			cardcaptor.Data.Type.Should().Be("TV");
+			cardcaptor.Data.Type.Should().Be(AnimeType.TV);
 			cardcaptor.Data.Year.Should().Be(1998);
 			cardcaptor.Data.Season.Should().Be(Season.Spring);
 			cardcaptor.Data.Duration.Should().Be("25 min per ep");
@@ -131,7 +131,7 @@ public class GetAnimeAsyncTests
 			cardcaptor.Data.Source.Should().Be("Manga");
 			cardcaptor.Data.Approved.Should().BeTrue();
 
-			cardcaptor.Data.Broadcast.Day.Should().Be("Tuesdays");
+			cardcaptor.Data.Broadcast.Day.Should().Be(DaysOfWeek.Tuesdays);
 			cardcaptor.Data.Broadcast.String.Should().Be("Tuesdays at 18:00 (JST)");
 			cardcaptor.Data.Broadcast.Time.Should().Be("18:00");
 			cardcaptor.Data.Broadcast.Timezone.Should().Be("Asia/Tokyo");

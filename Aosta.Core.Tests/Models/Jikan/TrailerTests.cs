@@ -1,51 +1,39 @@
-using Aosta.Core.Data;
-using Aosta.Core.Data.Models.Jikan;
+using Aosta.Core.Database.Mapper;
 using Aosta.Jikan.Models.Response;
+using FluentAssertions.Execution;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
 [TestFixture]
 public class TrailerTests
 {
-    [SetUp]
-    public void SetUp()
+    [Test]
+    public void ConversionTest()
     {
-        _trailerResponse = new AnimeTrailerResponse
+        var converted = new AnimeTrailerResponse
         {
             Url = "Url",
             EmbedUrl = "Embed Url",
             YoutubeId = "== ID ==",
             Image = new ImageResponse()
-        };
-    }
+        }.ToRealmModel();
 
-    private AnimeTrailerResponse _trailerResponse = null!;
-
-    [Test]
-    public void ConversionTest()
-    {
-        var converted = _trailerResponse.ToRealmObject();
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(converted.Url, Is.EqualTo(_trailerResponse.Url));
-            Assert.That(converted.EmbedUrl, Is.EqualTo(_trailerResponse.EmbedUrl));
-            Assert.That(converted.YoutubeId, Is.EqualTo(_trailerResponse.YoutubeId));
-            Assert.That(converted.Image, Is.Not.Null);
-        });
+        using var _ = new AssertionScope();
+        converted.Url.Should().Be("Url");
+        converted.EmbedUrl.Should().Be("Embed Url");
+        converted.YoutubeId.Should().Be("== ID ==");
+        converted.Image.Should().NotBeNull();
     }
 
     [Test]
     public void DefaultValuesTest()
     {
-        var newTrailer = new TrailerObject(new AnimeTrailerResponse());
+        var newTrailer = new AnimeTrailerResponse().ToRealmModel();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(newTrailer.Url, Is.Empty);
-            Assert.That(newTrailer.EmbedUrl, Is.Empty);
-            Assert.That(newTrailer.YoutubeId, Is.Empty);
-            Assert.That(newTrailer.Image, Is.Null);
-        });
+        using var _ = new AssertionScope();
+        newTrailer.Url.Should().BeNull();
+        newTrailer.EmbedUrl.Should().BeNull();
+        newTrailer.YoutubeId.Should().BeNull();
+        newTrailer.Image.Should().BeNull();
     }
 }

@@ -1,51 +1,33 @@
-using Aosta.Core.Data;
-using Aosta.Core.Data.Models.Jikan;
+using Aosta.Core.Database.Mapper;
 using Aosta.Jikan.Models.Response;
+using FluentAssertions.Execution;
 
 namespace Aosta.Core.Tests.Models.Jikan;
 
 [TestFixture]
 public class ImageSetTests
 {
-    private ImagesSetResponse _setResponse = null!;
-
-    [SetUp]
-    public void SetUp()
-    {
-        _setResponse = new ImagesSetResponse
-        {
-            JPG = new ImageResponse { ImageUrl = "jpg" },
-            WebP = new ImageResponse { ImageUrl = "webp" }
-        };
-    }
-
     [Test]
     public void SetConversionTest()
     {
-        var converted = _setResponse.ToRealmObject();
-
-        Assert.Multiple(() =>
+        var converted = new ImagesSetResponse
         {
-            Assert.That(converted.WebP, Is.Not.Null);
-            Assert.That(converted.JPG, Is.Not.Null);
-        });
+            JPG = new ImageResponse { ImageUrl = "jpg" },
+            WebP = new ImageResponse { ImageUrl = "webp" }
+        }.ToRealmModel();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(converted.WebP?.ImageUrl, Is.EqualTo("webp"));
-            Assert.That(converted.JPG?.ImageUrl, Is.EqualTo("jpg"));
-        });
+        using var _ = new AssertionScope();
+        converted.WebP.ImageUrl.Should().Be("webp");
+        converted.JPG.ImageUrl.Should().Be("jpg");
     }
 
     [Test]
     public void SetDefaultValuesTest()
     {
-        var newSet = new ImageSetObject(new ImagesSetResponse());
+        var newSet = new ImagesSetResponse().ToRealmModel();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(newSet.JPG, Is.Null);
-            Assert.That(newSet.WebP, Is.Null);
-        });
+        using var _ = new AssertionScope();
+        newSet.WebP.ImageUrl.Should().BeNull();
+        newSet.JPG.ImageUrl.Should().BeNull();
     }
 }
