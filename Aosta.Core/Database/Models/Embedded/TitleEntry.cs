@@ -1,0 +1,19 @@
+using Realms;
+
+namespace Aosta.Core.Database.Models.Embedded;
+
+/// <summary>
+/// Title model class
+/// </summary>
+public partial class TitleEntry : IEmbeddedObject
+{
+    /// <summary>
+    /// Type of title (usually the language).
+    /// </summary>
+    public string? Type { get; set; }
+    
+    /// <summary>
+    /// Value of the Title.
+    /// </summary>
+    public string? Title { get; set; }
+}
