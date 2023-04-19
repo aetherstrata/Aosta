@@ -1,5 +1,3 @@
-using Aosta.Core.Data.Models;
-using Aosta.Core.Data.Ordering;
 using Realms;
 
 namespace Aosta.Core.Data;
@@ -16,7 +14,8 @@ public static class RealmExtensions
         return realm.All<T>().FirstOrDefault();
     }
 
-    public static IOrderedQueryable<AnimeObject> OrderBy(this IQueryable<AnimeObject> query, AnimeOrdering ordering)
+    /* TODO: fix after models
+    public static IOrderedQueryable<Anime> OrderBy(this IQueryable<Anime> query, AnimeOrdering ordering)
     {
         return ordering switch
         {
@@ -28,4 +27,5 @@ public static class RealmExtensions
             _ => query.OrderBy(x => x.Id)
         };
     }
+    */
 }
