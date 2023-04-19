@@ -1,11 +1,9 @@
-using System.Diagnostics;
-using Aosta.Core.Data;
-using Aosta.Core.Data.Models;
 using Aosta.Jikan;
 using Aosta.Jikan.Models.Response;
 using Realms;
-using Realms.Exceptions;
 using Serilog;
+using Anime = Aosta.Core.Database.Models.Anime;
+using JikanAnime = Aosta.Core.Database.Models.Jikan.JikanAnime;
 
 namespace Aosta.Core;
 
@@ -75,7 +73,7 @@ public class AostaDotNet
     /// Retrieve new data about a anime from MyAnimeList and save it to Realm
     /// </summary>
     /// <param name="malId">The MyAnimeList ID of the anime </param>
-    /// <param name="overrideLocal">If set to <c>true</c>, <see cref="AnimeObject">local user data</see> will be overridden with new data from MyAnimeList</param>
+    /// <param name="overrideLocal">If set to <c>true</c>, <see cref="Anime">local user data</see> will be overridden with new data from MyAnimeList</param>
     /// <param name="ct">Cancellation token</param>
     /// <exception cref="ArgumentException">The specified <paramref name="malId"/> is not present in the Realm.</exception>
     public async Task UpdateJikanContentAsync(long malId, bool overrideLocal, CancellationToken ct = default)
@@ -84,7 +82,7 @@ public class AostaDotNet
         ct.ThrowIfCancellationRequested();
 
         // Throw if the ID is not present in Realm
-        if (!JikanDataExists(malId))
+        if (!RealmDataExists<JikanAnime>(malId))
         {
             throw new ArgumentException("The specified MyAnimeList ID is not present in Realm. " +
                                         $"Can't update something that does not exist! MalID: {malId}", nameof(malId));
@@ -110,10 +108,12 @@ public class AostaDotNet
     /// Save new Jikan API anime data to Realm
     /// </summary>
     /// <param name="animeResponse">Response data from Jikan API</param>
-    /// <param name="overrideLocal">If set to <c>true</c>, <see cref="AnimeObject">local user data</see> will be overridden with data from <paramref name="animeResponse"/></param>
+    /// <param name="overrideLocal">If set to <c>true</c>, <see cref="Anime">local user data</see> will be overridden with data from <paramref name="animeResponse"/></param>
     /// <param name="ct">Cancellation token</param>
     public async Task UpdateJikanContentAsync(AnimeResponse animeResponse, bool overrideLocal, CancellationToken ct = default)
     {
+        throw new NotImplementedException();
+/*
         //Throw if task was cancelled already
         ct.ThrowIfCancellationRequested();
 
@@ -132,11 +132,12 @@ public class AostaDotNet
             if (!overrideLocal) return;
 
             // If local data override is requested, also update the local data object
-            foreach (var entity in realm.All<AnimeObject>().Where(o => o.JikanResponseData == jikanObject))
+            foreach (var entity in realm.All<Anime>().Where(o => o.JikanResponseData == jikanObject))
             {
                 entity.UpdateFromJikan(jikanObject);
             }
         }, ct);
+*/
     }
 
     public Task<Guid> CreateJikanContentAsync(long malId, CancellationToken ct = default)
@@ -166,6 +167,8 @@ public class AostaDotNet
 
     public async Task<Guid> CreateJikanContentAsync(AnimeResponse animeResponse, bool update, CancellationToken ct = default)
     {
+        throw new NotImplementedException();
+/*
         //Throw if task was cancelled already
         ct.ThrowIfCancellationRequested();
 
@@ -181,24 +184,25 @@ public class AostaDotNet
             // Realm requires explicit consent for row upsertion.
             // Every time the anime data is retrieved from Jikan, its row must be updated.
             realm.Add(jikanObject, update);
-            id = realm.Add(new AnimeObject(jikanObject)).Id;
+            id = realm.Add(new Anime(jikanObject)).Id;
         }, ct);
 
         //Return the primary key
         return id;
+*/
     }
 
     public Task<Guid> CreateLocalContentAsync(CancellationToken ct = default)
     {
-        return CreateLocalContentAsync(new AnimeObject(), false, ct);
+        return CreateLocalContentAsync(new Anime(), false, ct);
     }
 
-    public Task<Guid> CreateLocalContentAsync(AnimeObject anime, CancellationToken ct = default)
+    public Task<Guid> CreateLocalContentAsync(Anime anime, CancellationToken ct = default)
     {
         return CreateLocalContentAsync(anime, false, ct);
     }
 
-    public async Task<Guid> CreateLocalContentAsync(AnimeObject anime, bool update, CancellationToken ct = default)
+    public async Task<Guid> CreateLocalContentAsync(Anime anime, bool update, CancellationToken ct = default)
     {
         //Throw if task was cancelled already
         ct.ThrowIfCancellationRequested();
@@ -242,25 +246,10 @@ public class AostaDotNet
     /// </summary>
     /// <param name="malId">The MyAnimeList ID of the anime</param>
     /// <returns><c>true</c> if an object with that key is present, <c>false</c> otherwise</returns>
-    public bool JikanDataExists(long malId)
+    public bool RealmDataExists<T>(long malId) where T : IRealmObject
     {
         using var realm = GetInstance();
-        return realm.Find<JikanContentObject>(malId) != null;
-    }
-
-    public bool TryDeleteRealm()
-    {
-        try
-        {
-            DeleteRealm();
-        }
-        catch (RealmInUseException ex)
-        {
-            Debug.WriteLine(ex.Message);
-            return false;
-        }
-
-        return true; 
+        return realm.Find<T>(malId) != null;
     }
 
     public void DeleteRealm()
