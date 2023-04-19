@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Aosta.Jikan.Enums;
 
 namespace Aosta.Jikan.Models.Response;
 
@@ -9,7 +10,8 @@ public class AnimeBroadcastResponse
 {
 	/// <summary>Day of the week</summary>
 	[JsonPropertyName("day")]
-	public string? Day { get; init; }
+	[JsonConverter(typeof(JsonStringEnumConverter))]
+	public DaysOfWeek? Day { get; init; }
 
 	/// <summary>Time in 24 hour format</summary>
 	[JsonPropertyName("time")]

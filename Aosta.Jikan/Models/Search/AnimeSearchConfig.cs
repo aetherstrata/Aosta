@@ -34,7 +34,7 @@ public class AnimeSearchConfig : ISearchConfig
 	/// <summary>
 	/// Anime type of searched result.
 	/// </summary>
-	public AnimeType Type { get; init; } = AnimeType.EveryType;
+	public AnimeTypeFilter Type { get; init; } = AnimeTypeFilter.EveryType;
 
 	/// <summary>
 	/// Minimum score results (1-10).
@@ -54,7 +54,7 @@ public class AnimeSearchConfig : ISearchConfig
 	/// <summary>
 	/// Current status.
 	/// </summary>
-	public AiringStatus Status { get; init; }
+	public AiringStatusFilter Status { get; init; }
 
 	/// <summary>
 	/// Select order property.
@@ -118,7 +118,7 @@ public class AnimeSearchConfig : ISearchConfig
 			builder.Append($"letter={Letter.Value}&");
 		}
 			
-		if (Type != AnimeType.EveryType)
+		if (Type != AnimeTypeFilter.EveryType)
 		{
 			Guard.IsValidEnum(Type, nameof(Type));
 			builder.Append($"type={Type.GetEnumMemberValue()}&");
@@ -140,7 +140,7 @@ public class AnimeSearchConfig : ISearchConfig
 			builder.Append($"rated={Rating.GetEnumMemberValue()}&");
 		}
 
-		if (Status != AiringStatus.EveryStatus)
+		if (Status != AiringStatusFilter.EveryStatus)
 		{
 			Guard.IsValidEnum(Status, nameof(Status));
 			builder.Append($"status={Status.GetEnumMemberValue()}&");

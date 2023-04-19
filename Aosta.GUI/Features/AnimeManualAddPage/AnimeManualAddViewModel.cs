@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using Aosta.Core;
-using Aosta.Core.Data.Enums;
 using Aosta.Core.Data.Models;
+using Aosta.Database.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Aosta.GUI.Features.AnimeManualAddPage;

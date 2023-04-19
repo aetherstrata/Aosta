@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Aosta.Jikan.Converters;
 using Aosta.Jikan.Enums;
 
 namespace Aosta.Jikan.Models.Response;
@@ -12,7 +13,7 @@ public class AnimeResponse
 	/// ID associated with MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("mal_id")]
-	public long? MalId { get; init; }
+	public long MalId { get; init; }
 
 	/// <summary>
 	/// Anime's canonical link.
@@ -70,7 +71,8 @@ public class AnimeResponse
 	/// Anime type (e. g. "TV", "Movie").
 	/// </summary>
 	[JsonPropertyName("type")]
-	public string? Type { get; init; }
+	[JsonConverter(typeof(JsonStringEnumConverter))]
+	public AnimeType? Type { get; init; }
 
 	/// <summary>
 	/// Anime source (e .g. "Manga" or "Original").
@@ -88,7 +90,8 @@ public class AnimeResponse
 	/// Anime's airing status (e. g. "Currently Airing").
 	/// </summary>
 	[JsonPropertyName("status")]
-	public string? Status { get; init; }
+	[JsonConverter(typeof(AiringStatusEnumConverter))]
+	public AiringStatus? Status { get; init; }
 
 	/// <summary>
 	/// Is anime currently airing.
@@ -97,7 +100,7 @@ public class AnimeResponse
 	public bool Airing { get; init; }
 
 	/// <summary>
-	/// Assiociative keys "from" and "to" which are alternative version of AiredString in ISO8601 format.
+	/// Associative keys "from" and "to" which are alternative version of AiredString in ISO8601 format.
 	/// </summary>
 	[JsonPropertyName("aired")]
 	public TimePeriodResponse? Aired { get; init; }

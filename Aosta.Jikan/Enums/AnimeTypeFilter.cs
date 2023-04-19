@@ -6,7 +6,7 @@ namespace Aosta.Jikan.Enums;
 /// <summary>
 /// Enumeration for anime types (search config).
 /// </summary>
-public enum AnimeType
+public enum AnimeTypeFilter
 {
 	/// <summary>
 	/// TV series.

@@ -1,33 +1,29 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using Aosta.Jikan.Converters;
 
 namespace Aosta.Jikan.Enums;
 
 /// <summary>
-/// Current status of anime or (search config).
+/// Current status of anime.
 /// </summary>
 public enum AiringStatus
 {
     /// <summary>
-    /// Allow all statuses to be displayed in results.
-    /// </summary>
-    [EnumMember(Value = "")]
-    EveryStatus,
-
-    /// <summary>
     /// Airing status.
     /// </summary>
-    [EnumMember(Value = "airing")]
+    [EnumMember(Value = "Currently Airing")]
     Airing,
 
     /// <summary>
-    /// Complete status.
+    /// Completed status.
     /// </summary>
-    [EnumMember(Value = "complete")]
-    Complete,
+    [EnumMember(Value = "Finished Airing")]
+    Completed,
 
     /// <summary>
     /// Upcoming status.
     /// </summary>
-    [EnumMember(Value = "upcoming")]
+    [EnumMember(Value = "Not yet aired")]
     Upcoming
 }

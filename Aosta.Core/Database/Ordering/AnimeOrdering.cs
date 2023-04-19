@@ -1,4 +1,4 @@
-namespace Aosta.Core.Data.Ordering;
+namespace Aosta.Core.Database.Ordering;
 
 public enum AnimeOrdering
 {
