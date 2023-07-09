@@ -10,10 +10,10 @@ public partial class AnimeThemes : IEmbeddedObject
 	/// <summary>
 	/// Anime openings.
 	/// </summary>
-	public IList<string> Openings { get; }
+	public IList<string> Openings { get; } = null!;
 
 	/// <summary>
 	/// Anime endings.
 	/// </summary>
-	public IList<string> Endings { get; }
+	public IList<string> Endings { get; } = null!;
 }

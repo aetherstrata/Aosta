@@ -22,7 +22,7 @@ public partial class JikanEpisode : IRealmObject
 	/// <summary>
 	/// Titles of the episode.
 	/// </summary>
-	public IList<TitleEntry> Titles { get; }
+	public IList<TitleEntry> Titles { get; } = null!;
 
 	/// <summary>
 	/// Episode's duration.

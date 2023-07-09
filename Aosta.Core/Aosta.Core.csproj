@@ -7,6 +7,10 @@
         <RootNamespace>Aosta.Core</RootNamespace>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <DIsableFody>true</DIsableFody>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Realm" Version="10.21.0" />
         <PackageReference Include="Riok.Mapperly" Version="2.7.0" />

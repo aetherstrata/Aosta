@@ -1,7 +1,8 @@
 using System.Diagnostics;
 using System.Windows.Input;
 using Aosta.Core;
-using Aosta.Core.Data.Models;
+using Aosta.Core.Database.Models;
+using Aosta.Core.Database.Models.Jikan;
 using Aosta.GUI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,16 +12,16 @@ namespace Aosta.GUI.Features.SettingsPage;
 [ObservableObject]
 public partial class SettingsViewModel : RealmViewModel
 {
-    [ObservableProperty] 
+    [ObservableProperty]
     private string _anime = "AHA";
 
-    [ObservableProperty] 
+    [ObservableProperty]
     private bool _darkModeSwitch = Application.Current?.UserAppTheme == AppTheme.Dark;
 
-    [ObservableProperty] 
+    [ObservableProperty]
     private string _objectCount = "N/A";
 
-    [ObservableProperty] 
+    [ObservableProperty]
     private string _path;
 
     private readonly AostaDotNet _aosta;
@@ -44,29 +45,28 @@ public partial class SettingsViewModel : RealmViewModel
         await Shell.Current.GoToAsync($"{nameof(OnboardingPage)}");
     }
 
-    public ICommand PrintAnimeCount => new Command(async () =>
+    [RelayCommand]
+    public async Task PrintAnimeCount()
     {
-        if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
-        {
-            await _aosta.CreateJikanContentAsync(count);
-
-            await Realm.WriteAsync(() =>
-            {
-                Realm.Add(new AnimeObject()
-                {
-                    Title = "Pippo " + count,
-                    JikanResponseData = Realm.Find<JikanContentObject>(count)
-                });
-            });
-
-            count++;
-            ObjectCount = Realm.All<AnimeObject>().Count().ToString();
-        }
-        else
+        if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
         {
             Debug.WriteLine("No internet! Jikan will fail...");
         }
-    });
+
+        await _aosta.CreateJikanContentAsync(count);
+
+        await Realm.WriteAsync(() =>
+        {
+            Realm.Add(new Anime()
+            {
+                Title = "Pippo " + count,
+                Jikan = Realm.Find<JikanAnime>(count)
+            });
+        });
+
+        count++;
+        ObjectCount = Realm.All<Anime>().Count().ToString();
+    }
 
     public ICommand DeleteAllData => new Command(async () =>
     {
@@ -91,5 +91,5 @@ public partial class SettingsViewModel : RealmViewModel
         }
     });
 
-    public void UpdateRealmCount() => ObjectCount = Realm.All<AnimeObject>().Count().ToString();
+    public void UpdateRealmCount() => ObjectCount = Realm.All<Anime>().Count().ToString();
 }

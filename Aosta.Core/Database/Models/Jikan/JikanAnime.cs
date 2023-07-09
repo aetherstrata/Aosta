@@ -11,9 +11,9 @@ namespace Aosta.Core.Database.Models.Jikan;
 /// </summary>
 public partial class JikanAnime : IRealmObject
 {
-	private byte? _season { get; set; }
-	private byte? _status { get; set; }
-	private byte? _type { get; set; }
+	private byte _season { get; set; }
+	private byte _status { get; set; }
+	private byte _type { get; set; }
 
 	/// <summary>
 	/// ID associated with MyAnimeList.
@@ -45,10 +45,10 @@ public partial class JikanAnime : IRealmObject
 	/// Anime type (e. g. "TV", "Movie").
 	/// </summary>
 	[Ignored]
-	public AnimeType? Type
+	public AnimeType Type
 	{
-		get => (AnimeType?)_type;
-		set => _type = (byte?)_type;
+		get => (AnimeType)_type;
+		set => _type = (byte)value;
 	}
 
 	/// <summary>
@@ -59,16 +59,16 @@ public partial class JikanAnime : IRealmObject
 	/// <summary>
 	/// Anime's episode count.
 	/// </summary>
-	public int? Episodes { get; set; }
+	public int Episodes { get; set; }
 
 	/// <summary>
 	/// Anime's airing status (e. g. "Currently Airing").
 	/// </summary>
 	[Ignored]
-	public AiringStatus? Status
+	public AiringStatus Status
 	{
-		get => (AiringStatus?)_status;
-		set => _status = (byte?)value;
+		get => (AiringStatus)_status;
+		set => _status = (byte)value;
 
 	}
 
@@ -100,27 +100,27 @@ public partial class JikanAnime : IRealmObject
 	/// <summary>
 	/// Number of people the anime has been scored by.
 	/// </summary>
-	public int? ScoredBy { get; set; }
+	public int ScoredBy { get; set; }
 
 	/// <summary>
 	/// Anime rank on MyAnimeList (score).
 	/// </summary>
-	public int? Rank { get; set; }
+	public int Rank { get; set; }
 
 	/// <summary>
 	/// Anime popularity rank on MyAnimeList.
 	/// </summary>
-	public int? Popularity { get; set; }
+	public int Popularity { get; set; }
 
 	/// <summary>
 	/// Anime members count on MyAnimeList.
 	/// </summary>
-	public int? Members { get; set; }
+	public int Members { get; set; }
 
 	/// <summary>
 	/// Anime favourite count on MyAnimeList.
 	/// </summary>
-	public int? Favorites { get; set; }
+	public int Favorites { get; set; }
 
 	/// <summary>
 	/// Anime's synopsis.
@@ -136,16 +136,16 @@ public partial class JikanAnime : IRealmObject
 	/// Season of the year the anime premiered.
 	/// </summary>
 	[Ignored]
-	public Season? Season
+	public Season Season
 	{
-		get => (Season?)_season;
-		set => _season = (byte?)value;
+		get => (Season)_season;
+		set => _season = (byte)value;
 	}
 
 	/// <summary>
 	/// Year the anime premiered.
 	/// </summary>
-	public int? Year { get; set; }
+	public int Year { get; set; }
 
 	/// <summary>
 	/// Anime broadcast day and timings (usually JST).
@@ -155,37 +155,37 @@ public partial class JikanAnime : IRealmObject
 	/// <summary>
 	/// Anime's producers numerically indexed with array values.
 	/// </summary>
-	public IList<MalUrl> Producers { get; }
+	public IList<MalUrl> Producers { get; } = null!;
 
 	/// <summary>
 	/// Anime's licensors numerically indexed with array values.
 	/// </summary>
-	public IList<MalUrl> Licensors { get; }
+	public IList<MalUrl> Licensors { get; } = null!;
 
 	/// <summary>
 	/// Anime's studio(s) numerically indexed with array values.
 	/// </summary>
-	public IList<MalUrl> Studios { get; }
+	public IList<MalUrl> Studios { get; } = null!;
 
 	/// <summary>
 	/// Anime's genres numerically indexed with array values.
 	/// </summary>
-	public IList<MalUrl> Genres { get; }
+	public IList<MalUrl> Genres { get; } = null!;
 
 	/// <summary>
 	/// Explicit genres
 	/// </summary>
-	public IList<MalUrl> ExplicitGenres { get; }
+	public IList<MalUrl> ExplicitGenres { get; } = null!;
 
 	/// <summary>
 	/// Anime's themes
 	/// </summary>
-	public IList<MalUrl> Themes { get; }
+	public IList<MalUrl> Themes { get; } = null!;
 
 	/// <summary>
 	/// Anime's demographics
 	/// </summary>
-	public IList<MalUrl> Demographics { get; }
+	public IList<MalUrl> Demographics { get; } = null!;
 
 	/// <summary>
 	/// If Approved is false then this means the entry is still pending review on MAL.
@@ -195,7 +195,7 @@ public partial class JikanAnime : IRealmObject
 	/// <summary>
 	/// Anime related entries.
 	/// </summary>
-	public IList<RelatedEntry> Relations { get; }
+	public IList<RelatedEntry> Relations { get; } = null!;
 
 	/// <summary>
 	/// Anime music themes (openings and endings).
@@ -205,10 +205,10 @@ public partial class JikanAnime : IRealmObject
 	/// <summary>
 	/// Anime external links.
 	/// </summary>
-	public IList<ExternalLink> ExternalLinks { get; }
+	public IList<ExternalLink> ExternalLinks { get; } = null!;
 
 	/// <summary>
 	/// Anime streaming links.
 	/// </summary>
-	public IList<ExternalLink> StreamingLinks { get; }
+	public IList<ExternalLink> StreamingLinks { get; } = null!;
 }

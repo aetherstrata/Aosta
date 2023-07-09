@@ -3,6 +3,11 @@ namespace Aosta.Jikan.Enums;
 public enum DaysOfWeek
 {
     /// <summary>
+    /// Unknown
+    /// </summary>
+    Unknown,
+
+    /// <summary>
     /// Aired on mondays
     /// </summary>
     Mondays,

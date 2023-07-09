@@ -58,7 +58,8 @@ public partial class OnboardingScreenViewModel : ObservableObject
         });
     }
 
-    public ICommand PositionChangedCommand => new Command(() =>
+    [RelayCommand]
+    public void PositionChanged()
     {
         if (Position == OnboardingScreens.Count - 1)
         {
@@ -68,7 +69,7 @@ public partial class OnboardingScreenViewModel : ObservableObject
 
         if (ButtonGlyph == FontAwesomeIcons.Check)
             ButtonGlyph = FontAwesomeIcons.ArrowRight;
-    });
+    }
 
     [RelayCommand]
     private async Task NextPage()

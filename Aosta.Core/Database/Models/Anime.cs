@@ -4,6 +4,9 @@ using Realms;
 
 namespace Aosta.Core.Database.Models;
 
+/// <summary>
+/// Anime model class
+/// </summary>
 public partial class Anime : IRealmObject, IHasGuidPrimaryKey
 {
     #region Backing fields
@@ -47,7 +50,6 @@ public partial class Anime : IRealmObject, IHasGuidPrimaryKey
     /// <summary>The episode count of this content</summary>
     public int? EpisodeCount { get; set; }
 
-    //TODO: Modellare gli episodi
     /// <summary>The episodes of this content</summary>
     public IList<Episode> Episodes { get; }
 

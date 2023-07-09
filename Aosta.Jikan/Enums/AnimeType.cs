@@ -9,38 +9,44 @@ namespace Aosta.Jikan.Enums;
 public enum AnimeType
 {
     /// <summary>
+    /// Unknown type
+    /// </summary>
+    [EnumMember(Value = "unknown"), Label("Unknown")]
+    Unknown,
+    
+    /// <summary>
     /// TV series.
     /// </summary>
-    [EnumMember(Value = "tv")] [Label("TV")]
+    [EnumMember(Value = "tv"), Label("TV")]
     TV,
 
     /// <summary>
     /// Original video animation.
     /// </summary>
-    [EnumMember(Value = "ova")] [Label("OVA")]
+    [EnumMember(Value = "ova"), Label("OVA")]
     OVA,
 
     /// <summary>
     /// Feature-lenght movie.
     /// </summary>
-    [EnumMember(Value = "Movie")] [Label("movie")]
+    [EnumMember(Value = "Movie"), Label("movie")]
     Movie,
 
     /// <summary>
     /// A special episode.
     /// </summary>
-    [EnumMember(Value = "special")] [Label("Special")]
+    [EnumMember(Value = "special"), Label("Special")]
     Special,
 
     /// <summary>
     /// Original net animation.
     /// </summary>
-    [EnumMember(Value = "ona")] [Label("ONA")]
+    [EnumMember(Value = "ona"), Label("ONA")]
     ONA,
 
     /// <summary>
     /// Music video.
     /// </summary>
-    [EnumMember(Value = "music")] [Label("Music")]
+    [EnumMember(Value = "music"), Label("Music")]
     Music
 }

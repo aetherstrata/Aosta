@@ -38,22 +38,16 @@ public class ReviewResponse
 	public string? Content { get; init; }
 
 	/// <summary>
-	/// Count of votes when the review was marked as helpful.
-	/// </summary>
-	[JsonPropertyName("votes")]
-	public int? Votes { get; init; }
-
-	/// <summary>
 	/// Reviewing user.
 	/// </summary>
 	[JsonPropertyName("user")]
 	public UserMetadataResponse? User { get; init; }
 		
 	/// <summary>
-	/// Review scores.
+	/// Review reactions.
 	/// </summary>
-	[JsonPropertyName("scores")]
-	public ReviewScoresResponse? ReviewScores { get; init; }
+	[JsonPropertyName("reactions")]
+	public ReviewReactionsResponse? Reactions { get; init; }
 		
 	/// <summary>
 	/// Number of episodes watched by the reviewer (if review is about anime).
@@ -66,4 +60,17 @@ public class ReviewResponse
 	/// </summary>
 	[JsonPropertyName("chapters_read")]
 	public int? ChaptersRead { get; init; }
+
+
+	/// <summary>
+	/// The score of the review.
+	/// </summary>
+	[JsonPropertyName("score")]
+	public int Score { get; set; }
+
+	/// <summary>
+	/// If the review contains spoilers.
+	/// </summary>
+	[JsonPropertyName("is_spoiler")]
+	public bool IsSpoiler { get; set; }
 }

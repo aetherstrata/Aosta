@@ -8,14 +8,15 @@ namespace Aosta.Core.Database.Models.Embedded;
 /// </summary>
 public partial class AnimeBroadcast : IEmbeddedObject
 {
-	private byte? _day { get; set; }
+	[MapTo("Day")]
+	private byte _day { get; set; }
 
 	/// <summary>Day of the week</summary>
 	[Ignored]
-	public DaysOfWeek? Day
+	public DaysOfWeek Day
 	{
-		get => (DaysOfWeek?)_day;
-		set => _day = (byte?)value;
+		get => (DaysOfWeek)_day;
+		set => _day = (byte)value;
 	}
 
 	/// <summary>Time in 24 hour format</summary>

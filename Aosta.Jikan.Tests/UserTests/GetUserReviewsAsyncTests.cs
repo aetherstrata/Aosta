@@ -91,6 +91,6 @@ public class GetUserReviewsAsyncTests
 		// Then
 		using var _ = new AssertionScope();
 		reviews.Data.Should().NotBeEmpty().And.HaveCount(10);
-		reviews.Data.Should().OnlyContain(x => x.Type.Equals("anime") && x.EpisodesWatched != null && x.ReviewScores.Animation != null);
+		reviews.Data.Should().OnlyContain(x => x.Type.Equals("anime") && x.EpisodesWatched != null);
 	}
 }

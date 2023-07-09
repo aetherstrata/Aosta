@@ -1,7 +1,8 @@
 ﻿using System.Windows.Input;
 using Aosta.Core;
-using Aosta.Core.Data.Models;
-using Aosta.Database.Enums;
+using Aosta.Core.Database.Models.Jikan;
+using Aosta.Core.Database.Enums;
+using Aosta.Core.Database.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Aosta.GUI.Features.AnimeManualAddPage;
@@ -32,7 +33,7 @@ public partial class AnimeManualAddViewModel : ObservableObject
 
         var token = _cts.Token;
 
-        var anime = new AnimeObject()
+        var anime = new Anime()
         {
             Title = AnimeTitle,
             Score = float.TryParse(AnimeScore, out float score) ? -1 : (int)Math.Floor(score*10),
@@ -43,7 +44,7 @@ public partial class AnimeManualAddViewModel : ObservableObject
 
         Guid id = await _aosta.CreateLocalContentAsync(anime, token);
 
-        AnimeTitleBack = _aosta.GetInstance().Find<AnimeObject>(guid).Title;
+        AnimeTitleBack = _aosta.GetInstance().Find<Anime>(guid).Title;
 
         _cts.Dispose();
     });

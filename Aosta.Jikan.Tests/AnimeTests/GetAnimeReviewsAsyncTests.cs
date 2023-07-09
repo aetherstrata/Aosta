@@ -26,11 +26,10 @@ public class GetAnimeReviewsAsyncTests
 		{
 			firstReview.User.Username.Should().Be("TheLlama");
 			firstReview.MalId.Should().Be(7406);
-			firstReview.EpisodesWatched.Should().Be(26);
-			firstReview.Votes.Should().BeGreaterThan(1400);
+			firstReview.Score.Should().BeGreaterThan(8);
 
-			firstReview.ReviewScores.Overall.Should().Be(10);
-			firstReview.ReviewScores.Animation.Should().Be(9);
+			firstReview.Reactions.TotalReactions.Should().BeGreaterThan(2000);
+			firstReview.Reactions.Confusing.Should().BeGreaterThan(0);
 		}
 	}
 
@@ -64,7 +63,7 @@ public class GetAnimeReviewsAsyncTests
 		var firstReview = bebop.Data.First();
 
 		using var _ = new AssertionScope();
-		firstReview.EpisodesWatched.Should().Be(26);
-		firstReview.Votes.Should().BeGreaterThan(5);
+		firstReview.EpisodesWatched.Should().Be(null);
+		firstReview.Score.Should().BeGreaterOrEqualTo(7);
 	}
 }
