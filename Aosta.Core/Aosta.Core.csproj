@@ -7,14 +7,10 @@
         <RootNamespace>Aosta.Core</RootNamespace>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <DIsableFody>true</DIsableFody>
-    </PropertyGroup>
-
     <ItemGroup>
-        <PackageReference Include="Realm" Version="10.21.0" />
-        <PackageReference Include="Riok.Mapperly" Version="2.7.0" />
-        <PackageReference Include="Serilog" Version="2.12.0" />
+        <PackageReference Include="Realm" Version="11.2.0" />
+        <PackageReference Include="Riok.Mapperly" Version="2.8.0" />
+        <PackageReference Include="Serilog" Version="3.0.1" />
         <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
         <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
@@ -30,9 +26,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Aosta.Jikan\Aosta.Jikan.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\Aosta.Core.Utils\Aosta.Core.Utils.csproj" />
     </ItemGroup>
     

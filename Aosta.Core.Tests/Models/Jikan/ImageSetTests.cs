@@ -27,7 +27,7 @@ public class ImageSetTests
         var newSet = new ImagesSetResponse().ToRealmModel();
 
         using var _ = new AssertionScope();
-        newSet.WebP.ImageUrl.Should().BeNull();
-        newSet.JPG.ImageUrl.Should().BeNull();
+        newSet.WebP.Should().BeNull();
+        newSet.JPG.Should().BeNull();
     }
 }

@@ -1,10 +1,8 @@
-using System.Collections.Immutable;
-using Aosta.Core.Database.Enums;
+using System.Globalization;
 using Aosta.Core.Database.Models.Embedded;
 using Aosta.Core.Database.Models.Jikan;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Response;
-using FastEnumUtility;
 using Riok.Mapperly.Abstractions;
 
 namespace Aosta.Core.Database.Mapper;
@@ -12,6 +10,8 @@ namespace Aosta.Core.Database.Mapper;
 [Mapper]
 public static partial class JikanMapper
 {
+    private static readonly IFormatProvider _formatProvider = new CultureInfo("en-US");
+
     public static partial JikanAnime ToJikanAnime(this AnimeResponse source);
 
     internal static AnimeBroadcast ToRealmModel(this AnimeBroadcastResponse source)
@@ -20,9 +20,12 @@ public static partial class JikanMapper
         if (source.Time != null)
         {
             var zoneinfo = TimeZoneInfo.FindSystemTimeZoneById(source.Timezone ?? "UTC");
-            target.Time = DateTimeOffset.Parse(source.Time).Subtract(zoneinfo.BaseUtcOffset).ToOffset(zoneinfo.BaseUtcOffset);
+            target.Time = DateTimeOffset
+                .Parse(source.Time, _formatProvider, DateTimeStyles.AssumeUniversal)
+                .Subtract(zoneinfo.BaseUtcOffset)
+                .ToOffset(zoneinfo.BaseUtcOffset);
         }
-        target.Day = source.Day;
+        target.Day = source.Day ?? DaysOfWeek.Unknown;
         target.String = source.String;
         return target;
     }
