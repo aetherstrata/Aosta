@@ -23,7 +23,7 @@ public class GetAnimeFullDataAsyncTests
         var bebopAnime = await JikanTests.Instance.GetAnimeFullDataAsync(1);
 
         using var _ = new AssertionScope();
-        bebopAnime.Data.Title.Should().Be("Cowboy Bebop");
+        bebopAnime.Data.Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("Cowboy Bebop");
         bebopAnime.Data.ExternalLinks.Should().Contain(x => x.Name.Equals("Wikipedia") && x.Url.Equals("http://en.wikipedia.org/wiki/Cowboy_Bebop"));
         bebopAnime.Data.ExternalLinks.Should().Contain(x => x.Name.Equals("AnimeDB") && x.Url.Equals("http://anidb.info/perl-bin/animedb.pl?show=anime&aid=23"));
         bebopAnime.Data.MusicThemes.Openings.Should().ContainSingle().Which

@@ -66,7 +66,7 @@ public class GetScheduleAsyncTests
 		var currentSeason = await JikanTests.Instance.GetScheduleAsync(ScheduledDay.Monday);
 
 		// Then
-		var mondayScheduleTitles = currentSeason.Data.Select(x => x.Title);
+		var mondayScheduleTitles = currentSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
 		using (new AssertionScope())
 		{
 			currentSeason.Pagination.HasNextPage.Should().BeFalse();
@@ -82,7 +82,7 @@ public class GetScheduleAsyncTests
 		var currentSeason = await JikanTests.Instance.GetScheduleAsync(ScheduledDay.Friday);
 
 		// Then
-		var fridayScheduleTitles = currentSeason.Data.Select(x => x.Title);
+		var fridayScheduleTitles = currentSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
 		using (new AssertionScope())
 		{
 			fridayScheduleTitles.Should().Contain("Doraemon (2005)");

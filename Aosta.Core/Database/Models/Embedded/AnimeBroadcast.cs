@@ -6,6 +6,7 @@ namespace Aosta.Core.Database.Models.Embedded;
 /// <summary>
 /// Broadcast Details
 /// </summary>
+[Preserve(AllMembers = true)]
 public partial class AnimeBroadcast : IEmbeddedObject
 {
 	[MapTo("Day")]

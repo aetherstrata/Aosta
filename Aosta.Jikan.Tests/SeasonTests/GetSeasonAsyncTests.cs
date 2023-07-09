@@ -56,7 +56,7 @@ public class GetSeasonAsyncTests
 		var winter2000 = await JikanTests.Instance.GetSeasonAsync(2000, Season.Winter);
 
 		// Then
-		var titles = winter2000.Data.Select(x => x.Title);
+		var titles = winter2000.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
 		using (new AssertionScope())
 		{
 			titles.Should().Contain("Boogiepop wa Warawanai");
@@ -86,7 +86,7 @@ public class GetSeasonAsyncTests
 			winter2017.Pagination.Items.Count.Should().Be(25);
 			winter2017.Pagination.Items.Total.Should().Be(57);
 				
-			var youjoSenki = winter2017.Data.FirstOrDefault(x => x.Title.Equals("Youjo Senki"));
+			var youjoSenki = winter2017.Data.FirstOrDefault(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Youjo Senki"));
 
 			youjoSenki.Type.Should().Be(AnimeType.TV);
 			youjoSenki.Status.Should().Be(AiringStatus.Completed);
@@ -130,7 +130,7 @@ public class GetSeasonAsyncTests
 		winter2017.Pagination.Items.Total.Should().Be(57);
 		winter2017.Pagination.CurrentPage.Should().Be(page);
 
-		var yowamushiPedal = winter2017.Data.FirstOrDefault(x => x.Title.Equals("Yowamushi Pedal: New Generation"));
+		var yowamushiPedal = winter2017.Data.FirstOrDefault(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Yowamushi Pedal: New Generation"));
 
 		yowamushiPedal.Type.Should().Be(AnimeType.TV);
 		yowamushiPedal.Status.Should().Be(AiringStatus.Completed);

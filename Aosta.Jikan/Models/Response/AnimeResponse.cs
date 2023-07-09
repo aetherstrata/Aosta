@@ -34,34 +34,6 @@ public class AnimeResponse
 	public AnimeTrailerResponse? Trailer { get; init; }
 
 	/// <summary>
-	/// Title of the anime.
-	/// </summary>
-	[Obsolete("This will be removed in the future. Use titles property instead.")]
-	[JsonPropertyName("title")]
-	public string? Title { get; init; }
-
-	/// <summary>
-	/// Title of the anime in English.
-	/// </summary>
-	[Obsolete("This will be removed in the future. Use titles property instead.")]
-	[JsonPropertyName("title_english")]
-	public string? TitleEnglish { get; init; }
-
-	/// <summary>
-	/// Title of the anime in Japanese.
-	/// </summary>
-	[Obsolete("This will be removed in the future. Use titles property instead.")]
-	[JsonPropertyName("title_japanese")]
-	public string? TitleJapanese { get; init; }
-
-	/// <summary>
-	/// Anime's multiple titles (if any). Return null if there is none.
-	/// </summary>
-	[Obsolete("This will be removed in the future. Use titles property instead.")]
-	[JsonPropertyName("title_synonyms")]
-	public ICollection<string>? TitleSynonyms { get; init; }
-
-	/// <summary>
 	/// Anime's multiple titles (if any).
 	/// </summary>
 	[JsonPropertyName("titles")]

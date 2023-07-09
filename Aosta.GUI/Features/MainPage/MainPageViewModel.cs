@@ -17,7 +17,7 @@ public partial class MainPageViewModel : RealmViewModel
     public MainPageViewModel(AostaDotNet aosta) : base(aosta)
     {
         _aosta = aosta;
-        RealmAnimeList = Realm.All<Anime>().OrderBy(ordering: AnimeOrdering.ByTitle);
+        RealmAnimeList = Realm.All<Anime>().OrderBy(AnimeOrdering.ByTitle);
     }
 
     [RelayCommand]

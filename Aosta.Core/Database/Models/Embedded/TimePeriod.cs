@@ -5,6 +5,7 @@ namespace Aosta.Core.Database.Models.Embedded;
 /// <summary>
 /// Model class for time periods, e. g. dates of start and end manga publishing.
 /// </summary>
+[Preserve(AllMembers = true)]
 public partial class TimePeriod : IEmbeddedObject
 {
 	/// <summary>

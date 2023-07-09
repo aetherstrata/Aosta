@@ -5,6 +5,7 @@ namespace Aosta.Core.Database.Models.Embedded;
 /// <summary>
 /// Set of images in various formats.
 /// </summary>
+[Preserve(AllMembers = true)]
 public partial class ImagesSet : IEmbeddedObject
 {
 	/// <summary>

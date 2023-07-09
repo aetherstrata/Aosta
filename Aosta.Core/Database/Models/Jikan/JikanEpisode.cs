@@ -6,6 +6,7 @@ namespace Aosta.Core.Database.Models.Jikan;
 /// <summary>
 /// Anime episode model class.
 /// </summary>
+[Preserve(AllMembers = true)]
 public partial class JikanEpisode : IRealmObject
 {
 	/// <summary>

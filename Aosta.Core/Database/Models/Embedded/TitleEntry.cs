@@ -5,6 +5,7 @@ namespace Aosta.Core.Database.Models.Embedded;
 /// <summary>
 /// Title model class
 /// </summary>
+[Preserve(AllMembers = true)]
 public partial class TitleEntry : IEmbeddedObject
 {
     /// <summary>

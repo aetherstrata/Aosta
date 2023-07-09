@@ -7,6 +7,7 @@ namespace Aosta.Core.Database.Models;
 /// <summary>
 /// Anime model class
 /// </summary>
+[Preserve(AllMembers = true)]
 public partial class Anime : IRealmObject, IHasGuidPrimaryKey
 {
     #region Backing fields

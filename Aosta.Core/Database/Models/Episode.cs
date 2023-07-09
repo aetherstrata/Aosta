@@ -7,6 +7,7 @@ namespace Aosta.Core.Database.Models;
 /// <summary>
 /// Episode model class
 /// </summary>
+[Preserve(AllMembers = true)]
 public partial class Episode : IRealmObject, IHasGuidPrimaryKey
 {
     /// <summary>The unique ID of this content</summary>

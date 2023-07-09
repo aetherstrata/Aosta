@@ -18,7 +18,7 @@ public class GetUpcomingSeasonAsyncTests
 		upcomingSeason.Pagination.CurrentPage.Should().Be(1);
 		upcomingSeason.Pagination.Items.Count.Should().Be(25);
 		upcomingSeason.Pagination.Items.Total.Should().BeGreaterThan(300);
-		upcomingSeason.Data.Select(x => x.Title).Should().Contain("Goblin Slayer 2nd Season");
+		upcomingSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title).Should().Contain("Goblin Slayer 2nd Season");
 	}
 		
 	[Test]

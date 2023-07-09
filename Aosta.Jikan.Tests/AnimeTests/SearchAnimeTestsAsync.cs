@@ -42,7 +42,7 @@ public class SearchAnimeTestsAsync
 
 		using var _ = new AssertionScope();
 		anime.Data.Should().HaveCount(ParameterConsts.MaximumPageSize);
-		anime.Data.First().Title.Should().Be("Rurouni Kenshin: Meiji Kenkaku Romantan - Tsuioku-hen");
+		anime.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("Rurouni Kenshin: Meiji Kenkaku Romantan - Tsuioku-hen");
 		anime.Pagination.LastVisiblePage.Should().BeGreaterThan(780);
 		anime.Pagination.CurrentPage.Should().Be(2);
 		anime.Pagination.Items.Count.Should().Be(25);
@@ -58,7 +58,7 @@ public class SearchAnimeTestsAsync
 
 		using var _ = new AssertionScope();
 		anime.Data.Should().HaveCount(pageSize);
-		anime.Data.First().Title.Should().Be("Cowboy Bebop");
+		anime.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("Cowboy Bebop");
 		anime.Pagination.CurrentPage.Should().Be(1);
 		anime.Pagination.Items.Count.Should().Be(pageSize);
 		anime.Pagination.Items.PerPage.Should().Be(pageSize);
@@ -74,7 +74,7 @@ public class SearchAnimeTestsAsync
 
 		using var _ = new AssertionScope();
 		anime.Data.Should().HaveCount(pageSize);
-		anime.Data.First().Title.Should().Be("Eyeshield 21");
+		anime.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("Eyeshield 21");
 		anime.Pagination.CurrentPage.Should().Be(2);
 		anime.Pagination.Items.Count.Should().Be(pageSize);
 		anime.Pagination.Items.PerPage.Should().Be(pageSize);
@@ -105,7 +105,7 @@ public class SearchAnimeTestsAsync
 
 		var onePieceAnime = await JikanTests.Instance.SearchAnimeAsync(config);
 
-		onePieceAnime.Data.First().Title.Should().Be("One Piece");
+		onePieceAnime.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("One Piece");
 	}
 
 	[Test]
@@ -115,7 +115,7 @@ public class SearchAnimeTestsAsync
 
 		var firstResult = result.Data.First();
 		using var _ = new AssertionScope();
-		firstResult.Title.Should().Be("Haibane Renmei");
+		firstResult.Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("Haibane Renmei");
 		firstResult.Type.Should().Be(AnimeType.TV);
 		firstResult.Episodes.Should().Be(13);
 		firstResult.MalId.Should().Be(387);
@@ -165,9 +165,9 @@ public class SearchAnimeTestsAsync
 		var anime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
 		using var _ = new AssertionScope();
-		anime.Data.Should().Contain(x => x.Title.Equals("Fairy Tail (2014)"));
-		anime.Data.Should().Contain(x => x.Title.Equals("Fairy Tail: Final Series"));
-		anime.Data.Should().Contain(x => x.Title.Equals("Fairy Tail"));
+		anime.Data.Should().Contain(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Fairy Tail (2014)"));
+		anime.Data.Should().Contain(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Fairy Tail: Final Series"));
+		anime.Data.Should().Contain(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Fairy Tail"));
 	}
 
 	[Test]
@@ -178,7 +178,7 @@ public class SearchAnimeTestsAsync
 
 		var anime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
-		anime.Data.Select(x => x.Title).Should().Contain("Blame! Movie");
+		anime.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title).Should().Contain("Blame! Movie");
 	}
 
 	[Test]
@@ -193,7 +193,7 @@ public class SearchAnimeTestsAsync
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
-		returnedAnime.Data.First().Title.Should().Be("Blame! Movie");
+		returnedAnime.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("Blame! Movie");
 	}
 
 	[Test]
@@ -208,7 +208,7 @@ public class SearchAnimeTestsAsync
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
-		var titles = returnedAnime.Data.Select(x => x.Title);
+		var titles = returnedAnime.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
 		using var _ = new AssertionScope();
 		titles.Should().Contain("One Piece");
 		titles.Should().Contain("One Punch Man");
@@ -227,7 +227,7 @@ public class SearchAnimeTestsAsync
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
-		returnedAnime.Data.First().Title.Should().Be("One Piece");
+		returnedAnime.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("One Piece");
 	}
 
 	[Test]
@@ -240,8 +240,8 @@ public class SearchAnimeTestsAsync
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
-		returnedAnime.Data.Should().Contain(x => x.Title.Contains("Full Metal Panic? Fumoffu"));
-		returnedAnime.Data.Should().Contain(x => x.Title.Contains("Lucky☆Star"));
+		returnedAnime.Data.Should().Contain(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Contains("Full Metal Panic? Fumoffu"));
+		returnedAnime.Data.Should().Contain(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Contains("Lucky☆Star"));
 	}
 
 	[Test]
@@ -313,7 +313,7 @@ public class SearchAnimeTestsAsync
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
-		var titles = returnedAnime.Data.Select(x => x.Title);
+		var titles = returnedAnime.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
 		using var _ = new AssertionScope();
 		titles.Should().Contain("Cowboy Bebop");
 		titles.Should().Contain("One Piece");
@@ -349,7 +349,7 @@ public class SearchAnimeTestsAsync
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
-		var titles = returnedAnime.Data.Select(x => x.Title);
+		var titles = returnedAnime.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
 		using var _ = new AssertionScope();
 		titles.Should().Contain("Cowboy Bebop");
 		titles.Should().Contain("One Piece");
@@ -367,7 +367,7 @@ public class SearchAnimeTestsAsync
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
-		var titles = returnedAnime.Data.Select(x => x.Title);
+		var titles = returnedAnime.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
 		using var _ = new AssertionScope();
 		titles.Should().Contain("Initial D First Stage");
 		titles.Should().Contain("Wolf's Rain");

@@ -13,6 +13,7 @@ public static partial class JikanMapper
     private static readonly IFormatProvider _formatProvider = new CultureInfo("en-US");
 
     public static partial JikanAnime ToJikanAnime(this AnimeResponse source);
+    public static partial JikanAnime ToJikanAnime(this AnimeResponseFull source);
 
     internal static AnimeBroadcast ToRealmModel(this AnimeBroadcastResponse source)
     {

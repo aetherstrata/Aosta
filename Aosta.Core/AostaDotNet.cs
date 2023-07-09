@@ -1,3 +1,4 @@
+using Aosta.Core.Database.Mapper;
 using Aosta.Jikan;
 using Aosta.Jikan.Models.Response;
 using Realms;
@@ -140,12 +141,12 @@ public class AostaDotNet
 */
     }
 
-    public Task<Guid> CreateJikanContentAsync(long malId, CancellationToken ct = default)
+    public Task CreateJikanContentAsync(long malId, CancellationToken ct = default)
     {
         return CreateJikanContentAsync(malId, true, ct);
     }
 
-    public async Task<Guid> CreateJikanContentAsync(long malId, bool update, CancellationToken ct = default)
+    public async Task CreateJikanContentAsync(long malId, bool update, CancellationToken ct = default)
     {
         //Throw if task was cancelled already
         ct.ThrowIfCancellationRequested();
@@ -157,23 +158,20 @@ public class AostaDotNet
         Log.Information("Got anime: {Title} ({Id})", response.Data.Titles?.First().Title, response.Data.MalId);
 
         //Write the data to local realm and return the primary key
-        return await CreateJikanContentAsync(response.Data, update, ct);
+        await CreateJikanContentAsync(response.Data, update, ct);
     }
 
-    public Task<Guid> CreateJikanContentAsync(AnimeResponse animeResponse, CancellationToken ct = default)
+    public Task CreateJikanContentAsync(AnimeResponse animeResponse, CancellationToken ct = default)
     {
         return CreateJikanContentAsync(animeResponse, true, ct);
     }
 
-    public async Task<Guid> CreateJikanContentAsync(AnimeResponse animeResponse, bool update, CancellationToken ct = default)
+    public async Task CreateJikanContentAsync(AnimeResponse animeResponse, bool update, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
-/*
         //Throw if task was cancelled already
         ct.ThrowIfCancellationRequested();
 
-        Guid id = Guid.Empty;
-        var jikanObject = animeResponse.ToRealmObject();
+        var jikanAnime = animeResponse.ToJikanAnime();
 
         //Get a disposable realm instance
         using var realm = GetInstance();
@@ -183,13 +181,8 @@ public class AostaDotNet
         {
             // Realm requires explicit consent for row upsertion.
             // Every time the anime data is retrieved from Jikan, its row must be updated.
-            realm.Add(jikanObject, update);
-            id = realm.Add(new Anime(jikanObject)).Id;
+            realm.Add(jikanAnime, update);
         }, ct);
-
-        //Return the primary key
-        return id;
-*/
     }
 
     public Task<Guid> CreateLocalContentAsync(CancellationToken ct = default)

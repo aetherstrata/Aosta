@@ -1,5 +1,6 @@
 ﻿using Aosta.Core.Utils.Exceptions;
 using FluentAssertions.Execution;
+using System.Linq;
 
 namespace Aosta.Jikan.Tests.SeasonTests;
 
@@ -18,7 +19,7 @@ public class GetCurrentSeasonAsyncTests
 		currentSeason.Pagination.CurrentPage.Should().Be(1);
 		currentSeason.Pagination.Items.Count.Should().Be(25);
 		currentSeason.Pagination.Items.Total.Should().BeGreaterThan(30);
-		currentSeason.Data.Select(x => x.Title).Should().Contain("Bleach: Sennen Kessen-hen");
+		currentSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title).Should().Contain("Bleach: Sennen Kessen-hen");
 	}
 		
 	[Test]
@@ -57,6 +58,6 @@ public class GetCurrentSeasonAsyncTests
 		currentSeason.Pagination.CurrentPage.Should().Be(1);
 		currentSeason.Pagination.Items.Count.Should().Be(25);
 		currentSeason.Pagination.Items.Total.Should().BeGreaterThan(3);
-		currentSeason.Data.Select(x => x.Title).Should().Contain("Bleach: Sennen Kessen-hen");
+		currentSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title).Should().Contain("Bleach: Sennen Kessen-hen");
 	}
 }

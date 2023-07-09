@@ -5,6 +5,7 @@ namespace Aosta.Core.Database.Models.Embedded;
 /// <summary>
 /// Model representing anime openings and endings
 /// </summary>
+[Preserve(AllMembers = true)]
 public partial class AnimeThemes : IEmbeddedObject
 {
 	/// <summary>

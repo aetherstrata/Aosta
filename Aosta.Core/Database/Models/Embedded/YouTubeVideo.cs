@@ -5,6 +5,7 @@ namespace Aosta.Core.Database.Models.Embedded;
 /// <summary>
 /// Anime trailer model class.
 /// </summary>
+[Preserve(AllMembers = true)]
 public partial class YouTubeVideo : IEmbeddedObject
 {
 	/// <summary>

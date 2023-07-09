@@ -5,6 +5,7 @@ namespace Aosta.Core.Database.Models.Embedded;
 /// <summary>
 /// Image model class.
 /// </summary>
+[Preserve(AllMembers = true)]
 public partial class Image : IEmbeddedObject
 {
 	/// <summary>

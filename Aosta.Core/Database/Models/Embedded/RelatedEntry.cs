@@ -5,6 +5,7 @@ namespace Aosta.Core.Database.Models.Embedded;
 /// <summary>
 /// Model class representing collection of related anime entries.
 /// </summary>
+[Preserve(AllMembers = true)]
 public partial class RelatedEntry : IEmbeddedObject
 {
 	/// <summary>

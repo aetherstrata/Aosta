@@ -22,7 +22,7 @@ public class GetTopAnimeAsyncTests
 		var top = await JikanTests.Instance.GetTopAnimeAsync();
 
 		// Then
-		top.Data.First().Title.Should().Be("Fullmetal Alchemist: Brotherhood");
+		top.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("Fullmetal Alchemist: Brotherhood");
 		top.Data.First().Episodes.Should().Be(64);
 		top.Data.First().Source.Should().Be("Manga");
 		top.Data.First().Duration.Should().Be("24 min per ep");
@@ -38,7 +38,7 @@ public class GetTopAnimeAsyncTests
 		var top = await JikanTests.Instance.GetTopAnimeAsync();
 
 		// Then
-		var logh = top.Data.Single(x => x.Title == "Ginga Eiyuu Densetsu");
+		var logh = top.Data.Single(x => x.Titles.First(x => x.Type.Equals("Default")).Title == "Ginga Eiyuu Densetsu");
 		logh.Type.Should().Be(AnimeType.OVA);
 	}
 
@@ -62,7 +62,7 @@ public class GetTopAnimeAsyncTests
 		var top = await JikanTests.Instance.GetTopAnimeAsync(2);
 
 		// Then
-		var titles = top.Data.Select(x => x.Title);
+		var titles = top.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
 		using (new AssertionScope())
 		{
 			titles.Should().Contain("Monogatari Series: Second Season");
@@ -90,7 +90,7 @@ public class GetTopAnimeAsyncTests
 		var top = await JikanTests.Instance.GetTopAnimeAsync(TopAnimeFilter.Airing) ;
 
 		// Then
-		top.Data.First().Title.Should().Be("One Piece");
+		top.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("One Piece");
 	}
 		
 	[Test]
@@ -102,6 +102,6 @@ public class GetTopAnimeAsyncTests
 		// Then
 		using var _ = new AssertionScope();
 		top.Data.Should().HaveCount(25);
-		top.Data.First().Title.Should().NotBe("One Piece");
+		top.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().NotBe("One Piece");
 	}
 }
