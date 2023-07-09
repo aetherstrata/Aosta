@@ -4,8 +4,10 @@ namespace Aosta.Core.Database.Enums;
 
 public enum AiringStatus
 {
-    NotAvailable = -1,
+    [Label("Not available")]
+    NotAvailable,
 
+    [Label("Cancelled")]
     Cancelled,
 
     [Label("Finished Airing")]
