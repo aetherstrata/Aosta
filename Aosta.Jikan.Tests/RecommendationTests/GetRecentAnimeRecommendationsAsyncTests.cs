@@ -1,4 +1,3 @@
-using Aosta.Core.Utils.Exceptions;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.RecommendationTests;
@@ -15,7 +14,7 @@ public class GetRecentAnimeRecommendationsAsyncTests
         var func = JikanTests.Instance.Awaiting(x => x.GetRecentAnimeRecommendationsAsync(page));
 
         // Then
-        await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
 
     [Test]

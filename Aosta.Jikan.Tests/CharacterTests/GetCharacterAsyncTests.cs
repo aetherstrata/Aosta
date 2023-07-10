@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using FluentAssertions.Execution;
+﻿using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.CharacterTests;
 
@@ -15,7 +14,7 @@ public class GetCharacterAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetCharacterAsync(malId));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

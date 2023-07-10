@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using Aosta.Jikan.Enums;
+﻿using Aosta.Jikan.Enums;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.UserTests;
@@ -16,7 +15,7 @@ public class GetUserHistoryAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetUserHistoryAsync(username));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -43,7 +42,7 @@ public class GetUserHistoryAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetUserHistoryAsync(username, UserHistoryExtension.Manga));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -55,7 +54,7 @@ public class GetUserHistoryAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetUserHistoryAsync("Ervelan", userHistoryExtension));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

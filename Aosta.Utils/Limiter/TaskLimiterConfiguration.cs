@@ -1,8 +1,8 @@
-namespace Aosta.Core.Utils.Limiter;
+namespace Aosta.Utils.Limiter;
 
 /// <summary> <see cref="TaskLimiter"/> configuration class </summary>
 /// <seealso cref="CompositeTaskLimiter"/>
-public class TaskLimiterConfiguration : IEquatable<TaskLimiterConfiguration>, IComparable<TaskLimiterConfiguration>, IComparable
+public sealed class TaskLimiterConfiguration : IEquatable<TaskLimiterConfiguration>, IComparable<TaskLimiterConfiguration>, IComparable
 {
     /// <summary> Maximum number of task executions per unit of time </summary>
     public int Count { get; }

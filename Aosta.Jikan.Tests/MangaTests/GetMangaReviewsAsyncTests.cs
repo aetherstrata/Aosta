@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using FluentAssertions.Execution;
+﻿using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.MangaTests;
 
@@ -15,7 +14,7 @@ public class GetMangaReviewsAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetMangaReviewsAsync(id));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

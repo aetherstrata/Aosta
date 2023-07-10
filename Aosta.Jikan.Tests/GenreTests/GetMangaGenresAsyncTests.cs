@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using Aosta.Jikan.Enums;
+﻿using Aosta.Jikan.Enums;
 
 namespace Aosta.Jikan.Tests.GenreTests;
 
@@ -41,6 +40,6 @@ public class GetMangaGenresAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetMangaGenresAsync(filter));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 }

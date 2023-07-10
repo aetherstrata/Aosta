@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using FluentAssertions.Execution;
+﻿using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.AnimeTests;
 
@@ -13,7 +12,7 @@ public class GetAnimeUserUpdatesAsyncTests
 	{
 		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeUserUpdatesAsync(malId));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -38,7 +37,7 @@ public class GetAnimeUserUpdatesAsyncTests
 	{
 		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeUserUpdatesAsync(malId, 2));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -49,7 +48,7 @@ public class GetAnimeUserUpdatesAsyncTests
 	{
 		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeUserUpdatesAsync(1, page));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

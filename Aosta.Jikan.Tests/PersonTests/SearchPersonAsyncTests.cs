@@ -1,4 +1,3 @@
-using Aosta.Core.Utils.Exceptions;
 using Aosta.Jikan.Consts;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Search;
@@ -40,7 +39,7 @@ public class SearchPersonAsyncTests
         var func = JikanTests.Instance.Awaiting(x => x.SearchPersonAsync(config));
 
         // Then
-        await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
         
     [Test]
@@ -58,7 +57,7 @@ public class SearchPersonAsyncTests
         var func = JikanTests.Instance.Awaiting(x => x.SearchPersonAsync(config));
 
         // Then
-        await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
         
     [Test]
@@ -133,7 +132,7 @@ public class SearchPersonAsyncTests
         var func = JikanTests.Instance.Awaiting(x => x.SearchPersonAsync(config));
 
         // Then
-        await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
         
     [Test]
@@ -217,7 +216,7 @@ public class SearchPersonAsyncTests
 
         // Then
         using var _ = new AssertionScope();
-        people.Data.Should().HaveCount(config.PageSize.Value);
+        people.Data.Should().HaveCount(config.PageSize);
         people.Data.Should().Contain(x => x.Name.Equals("Mika Kanai"));
         people.Data.Should().Contain(x => x.Name.Equals("Kanako Sakai"));
     }

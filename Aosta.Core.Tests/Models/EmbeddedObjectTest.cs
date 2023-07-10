@@ -3,6 +3,7 @@ using Realms;
 
 namespace Aosta.Core.Tests.Models;
 
+[Parallelizable(ParallelScope.None)]
 public class EmbeddedObjectTest
 {
     private readonly ComplexEmbeddedData _complexEmbed = new()

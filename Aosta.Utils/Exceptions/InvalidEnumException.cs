@@ -1,6 +1,6 @@
-using Aosta.Core.Utils.Consts;
+using Aosta.Utils.Consts;
 
-namespace Aosta.Core.Utils.Exceptions;
+namespace Aosta.Utils.Exceptions;
 
 /// <summary>
 /// Exception class thrown when trying to do operations on an invalid enums

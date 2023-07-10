@@ -1,4 +1,3 @@
-using Aosta.Core.Utils.Exceptions;
 using Aosta.Jikan.Enums;
 using FluentAssertions.Execution;
 
@@ -15,7 +14,7 @@ public class GetAnimeAsyncTests
 	{
 		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeAsync(malId));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

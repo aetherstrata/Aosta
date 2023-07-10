@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using Aosta.Jikan.Enums;
+﻿using Aosta.Jikan.Enums;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.ScheduleTests;
@@ -46,7 +45,7 @@ public class GetScheduleAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetScheduleAsync(page));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -99,6 +98,6 @@ public class GetScheduleAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetScheduleAsync(schedule));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 }

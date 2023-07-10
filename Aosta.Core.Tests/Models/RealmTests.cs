@@ -7,11 +7,9 @@ namespace Aosta.Core.Tests.Models;
 internal static class RealmSetup
 {
     private static readonly string InstancePath = Path.Combine(AppContext.BaseDirectory, "instances");
-
     private static string NewInstancePath => Path.Combine(InstancePath, $"{Guid.NewGuid()}");
 
     private static readonly string RealmPath = Path.Combine(AppContext.BaseDirectory, "realms");
-
     private static string NewRealmPath => Path.Combine(RealmPath, $"{Guid.NewGuid()}.realm");
 
     internal static AostaDotNet NewInstance()
@@ -60,7 +58,10 @@ internal static class RealmSetup
         [OneTimeSetUp]
         public void Initialize()
         {
-            if (Directory.Exists(RealmSetup.RealmPath)) Directory.Delete(RealmPath, true);
+            if (Directory.Exists(InstancePath)) Directory.Delete(InstancePath, true);
+            Directory.CreateDirectory(InstancePath);
+
+            if (Directory.Exists(RealmPath)) Directory.Delete(RealmPath, true);
             Directory.CreateDirectory(RealmPath);
         }
     }

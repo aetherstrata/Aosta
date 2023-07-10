@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using FluentAssertions.Execution;
+﻿using FluentAssertions.Execution;
 using System.Linq;
 
 namespace Aosta.Jikan.Tests.SeasonTests;
@@ -32,7 +31,7 @@ public class GetCurrentSeasonAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetCurrentSeasonAsync(page));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 		
 	[Test]

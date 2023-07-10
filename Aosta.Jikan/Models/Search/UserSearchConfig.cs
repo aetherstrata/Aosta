@@ -1,6 +1,6 @@
 using System.Text;
-using Aosta.Core.Utils;
-using Aosta.Core.Utils.Extensions;
+using Aosta.Utils;
+using Aosta.Utils.Extensions;
 using Aosta.Jikan.Enums;
 using FastEnumUtility;
 
@@ -81,6 +81,6 @@ public class UserSearchConfig: ISearchConfig
 	        builder.Append($"maxAge={MaxAge.Value}&");
         }
 
-    	return builder.Length == 0 ? string.Empty : builder.Prepend("?").ToString().Trim('&');;
+    	return builder.Length == 0 ? string.Empty : builder.Prepend("?").ToString().Trim('&');
     }
 }

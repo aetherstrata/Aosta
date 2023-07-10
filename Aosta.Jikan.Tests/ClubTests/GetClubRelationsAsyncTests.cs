@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using FluentAssertions.Execution;
+﻿using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.ClubTests;
 
@@ -15,7 +14,7 @@ public class GetClubRelationsAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetClubRelationsAsync(malId));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

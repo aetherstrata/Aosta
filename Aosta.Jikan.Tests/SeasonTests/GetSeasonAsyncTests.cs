@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using Aosta.Jikan.Enums;
+﻿using Aosta.Jikan.Enums;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.SeasonTests;
@@ -20,7 +19,7 @@ public class GetSeasonAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetSeasonAsync(year, Season.Fall));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -32,7 +31,7 @@ public class GetSeasonAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetSeasonAsync(2021, Season));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -113,7 +112,7 @@ public class GetSeasonAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetSeasonAsync(1970, Season.Winter, page));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 		
 	[Test]

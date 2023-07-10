@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using FluentAssertions.Execution;
+﻿using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.UserTests;
 
@@ -15,7 +14,7 @@ public class GetUserRecommendationsAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetUserRecommendationsAsync(username));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -56,7 +55,7 @@ public class GetUserRecommendationsAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetUserRecommendationsAsync(username, 2));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -69,7 +68,7 @@ public class GetUserRecommendationsAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetUserRecommendationsAsync("Ervelan", page));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

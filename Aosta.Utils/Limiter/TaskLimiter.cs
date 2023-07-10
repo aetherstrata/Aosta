@@ -1,9 +1,9 @@
-namespace Aosta.Core.Utils.Limiter;
+namespace Aosta.Utils.Limiter;
 
 /// <summary>
 /// A task limiter that throttles task executions using <see cref="SemaphoreSlim"/>
 /// </summary>
-internal class TaskLimiter : ITaskLimiter, IDisposable
+internal class TaskLimiter : ITaskLimiter
 {
     private readonly SemaphoreSlim _semaphore;
 
@@ -61,24 +61,5 @@ internal class TaskLimiter : ITaskLimiter, IDisposable
         });
 
         return await task;
-    }
-
-    private void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            _semaphore.Dispose();
-        }
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    ~TaskLimiter()
-    {
-        Dispose(false);
     }
 }

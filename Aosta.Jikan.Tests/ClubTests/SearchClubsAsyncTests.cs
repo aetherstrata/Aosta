@@ -1,4 +1,3 @@
-using Aosta.Core.Utils.Exceptions;
 using Aosta.Jikan.Consts;
 using Aosta.Jikan.Models.Search;
 using FluentAssertions.Execution;
@@ -35,7 +34,7 @@ public class SearchClubAsyncTests
         var func = JikanTests.Instance.Awaiting(x => x.SearchClubAsync(config));
 
         // Then
-        await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
         
     [Test]
@@ -53,7 +52,7 @@ public class SearchClubAsyncTests
         var func = JikanTests.Instance.Awaiting(x => x.SearchClubAsync(config));
 
         // Then
-        await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
         
     [Test]
@@ -116,7 +115,7 @@ public class SearchClubAsyncTests
         var func = JikanTests.Instance.Awaiting(x => x.SearchClubAsync(config));
 
         // Then
-        await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
         
     [Test]

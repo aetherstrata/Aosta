@@ -1,4 +1,3 @@
-using Aosta.Core.Utils.Exceptions;
 using Aosta.Jikan.Consts;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Search;
@@ -38,7 +37,7 @@ public class SearchCharacterAsyncTests
         var func = JikanTests.Instance.Awaiting(x => x.SearchCharacterAsync(config));
 
         // Then
-        await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
         
     [Test]
@@ -56,7 +55,7 @@ public class SearchCharacterAsyncTests
         var func = JikanTests.Instance.Awaiting(x => x.SearchCharacterAsync(config));
 
         // Then
-        await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
         
     [Test]
@@ -133,7 +132,7 @@ public class SearchCharacterAsyncTests
         var func = JikanTests.Instance.Awaiting(x => x.SearchCharacterAsync(config));
 
         // Then
-        await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
         
     [Test]

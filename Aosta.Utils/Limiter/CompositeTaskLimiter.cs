@@ -1,4 +1,4 @@
-namespace Aosta.Core.Utils.Limiter;
+namespace Aosta.Utils.Limiter;
 
 /// <summary>
 /// A composite task limiter that throttles task executions by chaining task execution to its <see cref="Limiters">TaskLimiters</see>.

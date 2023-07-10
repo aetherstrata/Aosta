@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using FluentAssertions.Execution;
+﻿using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.TopTests;
 
@@ -15,7 +14,7 @@ public class GetTopReviewsAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetTopReviewsAsync(page));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

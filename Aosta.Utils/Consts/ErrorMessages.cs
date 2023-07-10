@@ -1,4 +1,4 @@
-namespace Aosta.Core.Utils.Consts;
+namespace Aosta.Utils.Consts;
 
 public static class ErrorMessages
 {
@@ -8,7 +8,7 @@ public static class ErrorMessages
 
     public static string FailedEnumToStringConversion<T>(T parsedEnum) where T : Enum
     {
-        return $"Tried to convert {typeof(T)} enum [{Convert.ToInt32(parsedEnum)}] but had an unexpected value.";
+        return $"Tried to convert enum {typeof(T)} [{Convert.ToInt32(parsedEnum)}] but had an unexpected value.";
     }
 
     public static string FailedEnumMemberLookup<T>(T parsedEnum) where T : Enum

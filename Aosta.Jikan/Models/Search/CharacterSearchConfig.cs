@@ -1,5 +1,5 @@
 using System.Text;
-using Aosta.Core.Utils;
+using Aosta.Utils;
 using Aosta.Jikan.Consts;
 using Aosta.Jikan.Enums;
 using FastEnumUtility;

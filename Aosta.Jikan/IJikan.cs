@@ -2,6 +2,7 @@
 using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Models.Search;
+using Aosta.Jikan.Query.Schedule;
 
 namespace Aosta.Jikan;
 
@@ -525,6 +526,14 @@ public interface IJikan
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Current season schedule.</returns>
 	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetScheduleAsync(ScheduledDay scheduledDay, CancellationToken ct = default);
+
+	/// <summary>
+	/// Returns current season schedule.
+	/// </summary>
+	/// <param name="parameters">Parameter configuration of this query.</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>Current season schedule.</returns>
+	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetScheduleAsync(ScheduleQueryParameters parameters, CancellationToken ct = default);
 
 	#endregion Schedule requests
 

@@ -1,4 +1,3 @@
-using Aosta.Core.Utils.Exceptions;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.ProducerTests;
@@ -15,7 +14,7 @@ public class GetProducerExternalLinksAsyncTests
         var func = JikanTests.Instance.Awaiting(x => x.GetProducerExternalLinksAsync(id));
 
         // Then
-        await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
     
     [Test]

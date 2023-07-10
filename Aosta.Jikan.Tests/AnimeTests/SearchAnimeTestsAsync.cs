@@ -1,4 +1,3 @@
-using Aosta.Core.Utils.Exceptions;
 using Aosta.Jikan.Consts;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Search;
@@ -17,7 +16,7 @@ public class SearchAnimeTestsAsync
 		var config = new AnimeSearchConfig { Page = page };
 		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(config));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -31,7 +30,7 @@ public class SearchAnimeTestsAsync
 		var config = new AnimeSearchConfig { PageSize = pageSize };
 		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(config));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -262,7 +261,7 @@ public class SearchAnimeTestsAsync
 	{
 		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync((AnimeSearchConfig)null));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -299,7 +298,7 @@ public class SearchAnimeTestsAsync
 
 		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(searchConfig));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -334,7 +333,7 @@ public class SearchAnimeTestsAsync
 
 		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(searchConfig));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -389,7 +388,7 @@ public class SearchAnimeTestsAsync
 
 		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(searchConfig));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

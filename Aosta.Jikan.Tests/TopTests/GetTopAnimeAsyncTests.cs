@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using Aosta.Jikan.Enums;
+﻿using Aosta.Jikan.Enums;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.TopTests;
@@ -52,7 +51,7 @@ public class GetTopAnimeAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetTopAnimeAsync(page));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -80,7 +79,7 @@ public class GetTopAnimeAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetTopAnimeAsync(TopAnimeFilter.Airing, page));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 		
 	[Test]

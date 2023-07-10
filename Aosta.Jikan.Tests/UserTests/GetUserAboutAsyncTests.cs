@@ -1,6 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-
-namespace Aosta.Jikan.Tests.UserTests;
+﻿namespace Aosta.Jikan.Tests.UserTests;
 
 public class GetUserAboutAsyncTests
 {
@@ -14,7 +12,7 @@ public class GetUserAboutAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetUserAboutAsync(username));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

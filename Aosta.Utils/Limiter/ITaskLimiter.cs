@@ -1,4 +1,4 @@
-namespace Aosta.Core.Utils.Limiter;
+namespace Aosta.Utils.Limiter;
 
 /// <summary>
 /// Base task limiter implementation

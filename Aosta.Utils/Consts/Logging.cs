@@ -1,4 +1,4 @@
-namespace Aosta.Core.Utils.Consts;
+namespace Aosta.Utils.Consts;
 
 public class Logging
 {

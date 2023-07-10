@@ -1,5 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-using Aosta.Jikan.Enums;
+﻿using Aosta.Jikan.Enums;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.AnimeTests;
@@ -14,7 +13,7 @@ public class GetAnimeForumTopicsAsyncTests
 	{
 		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeForumTopicsAsync(malId));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -24,7 +23,7 @@ public class GetAnimeForumTopicsAsyncTests
 	{
 		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeForumTopicsAsync(1, type));
 
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

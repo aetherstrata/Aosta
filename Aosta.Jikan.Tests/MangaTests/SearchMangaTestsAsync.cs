@@ -1,4 +1,3 @@
-using Aosta.Core.Utils.Exceptions;
 using Aosta.Jikan.Consts;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Search;
@@ -21,7 +20,7 @@ public class SearchMangaAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(config));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
         
 	[Test]
@@ -39,7 +38,7 @@ public class SearchMangaAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(config));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
         
 	[Test]
@@ -143,7 +142,7 @@ public class SearchMangaAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync((MangaSearchConfig) null));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
         
 	[Test]
@@ -185,7 +184,7 @@ public class SearchMangaAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(searchConfig));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -376,7 +375,7 @@ public class SearchMangaAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(searchConfig));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -456,7 +455,7 @@ public class SearchMangaAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(searchConfig));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]

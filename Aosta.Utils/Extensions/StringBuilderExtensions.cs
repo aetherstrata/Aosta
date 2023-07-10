@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Aosta.Core.Utils.Extensions;
+namespace Aosta.Utils.Extensions;
 
 public static class StringBuilderExtensions
 {

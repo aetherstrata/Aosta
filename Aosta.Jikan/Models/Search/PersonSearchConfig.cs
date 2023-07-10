@@ -1,5 +1,5 @@
 using System.Text;
-using Aosta.Core.Utils;
+using Aosta.Utils;
 using Aosta.Jikan.Consts;
 using Aosta.Jikan.Enums;
 using FastEnumUtility;
@@ -14,12 +14,12 @@ public class PersonSearchConfig: ISearchConfig
 	/// <summary>
 	/// Index of page folding 50 records of top ranging (e.g. 1 will return first 50 records, 2 will return record from 51 to 100 etc.)
 	/// </summary>
-	public int? Page { get; init; }
+	public int Page { get; init; }
 	
 	/// <summary>
 	/// Size of the page (25 is the max).
 	/// </summary>
-	public int? PageSize { get; init; }
+	public int PageSize { get; init; }
 	
 	/// <summary>
 	/// Search query.
@@ -49,18 +49,12 @@ public class PersonSearchConfig: ISearchConfig
     {
     	var builder = new StringBuilder().Append('?');
 
-        if (Page.HasValue)
-        {
-	        Guard.IsGreaterThanZero(Page.Value, nameof(Page.Value));
-	        builder.Append($"page={Page.Value}&");
-        }
-        
-        if (PageSize.HasValue)
-        {
-	        Guard.IsGreaterThanZero(PageSize.Value, nameof(PageSize.Value));
-	        Guard.IsLessOrEqualThan(PageSize.Value,ParameterConsts.MaximumPageSize, nameof(PageSize.Value));
-	        builder.Append($"limit={PageSize.Value}&");
-        }
+        Guard.IsGreaterThanZero(Page, nameof(Page));
+        builder.Append($"page={Page}&");
+
+		Guard.IsGreaterThanZero(PageSize, nameof(PageSize));
+        Guard.IsLessOrEqualThan(PageSize,ParameterConsts.MaximumPageSize, nameof(PageSize));
+        builder.Append($"limit={PageSize}&");
         
         if (!string.IsNullOrWhiteSpace(Query))
         {

@@ -1,6 +1,4 @@
-﻿using Aosta.Core.Utils.Exceptions;
-
-namespace Aosta.Jikan.Tests.MangaTests;
+﻿namespace Aosta.Jikan.Tests.MangaTests;
 
 public class GetMangaPicturesAsyncTests
 {
@@ -14,7 +12,7 @@ public class GetMangaPicturesAsyncTests
 		var func = JikanTests.Instance.Awaiting(x => x.GetMangaPicturesAsync(id));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<ParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
