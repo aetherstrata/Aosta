@@ -1502,23 +1502,15 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc/>
     public async Task<BaseJikanResponse<PersonResponse>> GetRandomPersonAsync(CancellationToken ct = default)
     {
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Random,
-            JikanEndpointConsts.People
-        };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<PersonResponse>>(endpointParts, ct);
+        var query = RandomPersonQuery.Create();
+        return await ExecuteGetRequestAsync<BaseJikanResponse<PersonResponse>>(query, ct);
     }
 
     /// <inheritdoc/>
     public async Task<BaseJikanResponse<UserProfileResponse>> GetRandomUserAsync(CancellationToken ct = default)
     {
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Random,
-            JikanEndpointConsts.Users
-        };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<UserProfileResponse>>(endpointParts, ct);
+        var query = RandomUserQuery.Create();
+        return await ExecuteGetRequestAsync<BaseJikanResponse<UserProfileResponse>>(query, ct);
     }
 
     #endregion GetRandom methods

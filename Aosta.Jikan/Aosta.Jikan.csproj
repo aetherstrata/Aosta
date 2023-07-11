@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">q
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
@@ -24,8 +24,5 @@
     </ItemGroup>
 
 
-    <ItemGroup>
-      <Folder Include="Queries\Random\" />
-    </ItemGroup>
 
 </Project>
