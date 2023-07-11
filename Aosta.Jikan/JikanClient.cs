@@ -8,11 +8,7 @@ using Aosta.Jikan.Models;
 using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Models.Search;
-using Aosta.Jikan.Query;
-using Aosta.Jikan.Query.Character;
-using Aosta.Jikan.Query.Person;
-using Aosta.Jikan.Query.Recommendations;
-using Aosta.Jikan.Query.Schedule;
+using Aosta.Jikan.Queries;
 using FastEnumUtility;
 using Serilog;
 
@@ -692,7 +688,7 @@ public sealed class JikanClient : IJikan, IDisposable
         {
             JikanEndpointConsts.Seasons,
             year.ToString(),
-            season.GetEnumMemberValue() ?? throw InvalidEnumException<Season>.EnumMember(season)
+            season.GetEnumMemberValue() ?? throw InvalidEnumException<Season>.EnumMember(season, nameof(season))
         };
         return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(endpointParts, ct);
     }
@@ -709,7 +705,7 @@ public sealed class JikanClient : IJikan, IDisposable
         {
             JikanEndpointConsts.Seasons,
             year.ToString(),
-            (season.GetEnumMemberValue() ?? throw InvalidEnumException<Season>.EnumMember(season)) + queryParams
+            (season.GetEnumMemberValue() ?? throw InvalidEnumException<Season>.EnumMember(season, nameof(season))) + queryParams
         };
         return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(endpointParts, ct);
     }
@@ -788,16 +784,14 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public async Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetScheduleAsync(int page, CancellationToken ct = default)
     {
-        var parameters = new ScheduleQueryParameters { Page = page };
-        var query = ScheduleQuery.Create(parameters);
+        var query = ScheduleQuery.Create(page);
         return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
     }
 
     /// <inheritdoc />
     public async Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetScheduleAsync(ScheduledDay scheduledDay, CancellationToken ct = default)
     {
-        var parameters = new ScheduleQueryParameters { Filter = scheduledDay };
-        var query = ScheduleQuery.Create(parameters);
+        var query = ScheduleQuery.Create(scheduledDay);
         return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
     }
 
@@ -842,7 +836,7 @@ public sealed class JikanClient : IJikan, IDisposable
     {
         Guard.IsValidEnum(filter, nameof(filter));
 
-        var queryParams = $"?filter={filter.GetEnumMemberValue() ?? throw InvalidEnumException<TopAnimeFilter>.EnumMember(filter)}";
+        var queryParams = $"?filter={filter.GetEnumMemberValue() ?? throw InvalidEnumException<TopAnimeFilter>.EnumMember(filter, nameof(filter))}";
         string[] endpointParts =
         {
             JikanEndpointConsts.TopList,
@@ -857,7 +851,7 @@ public sealed class JikanClient : IJikan, IDisposable
         Guard.IsValidEnum(filter, nameof(filter));
         Guard.IsGreaterThanZero(page, nameof(page));
 
-        var queryParams = $"?page={page}&filter={filter.GetEnumMemberValue() ?? throw InvalidEnumException<TopAnimeFilter>.EnumMember(filter)}";
+        var queryParams = $"?page={page}&filter={filter.GetEnumMemberValue() ?? throw InvalidEnumException<TopAnimeFilter>.EnumMember(filter, nameof(filter))}";
         string[] endpointParts =
         {
             JikanEndpointConsts.TopList,
@@ -986,7 +980,7 @@ public sealed class JikanClient : IJikan, IDisposable
     {
         Guard.IsValidEnum(filter, nameof(filter));
 
-        var queryParams = $"?filter={filter.GetEnumMemberValue() ?? throw InvalidEnumException<GenresFilter>.EnumMember(filter)}";
+        var queryParams = $"?filter={filter.GetEnumMemberValue() ?? throw InvalidEnumException<GenresFilter>.EnumMember(filter, nameof(filter))}";
         string[] endpointParts =
         {
             JikanEndpointConsts.Genres,
@@ -1011,7 +1005,7 @@ public sealed class JikanClient : IJikan, IDisposable
     {
         Guard.IsValidEnum(filter, nameof(filter));
 
-        var queryParams = $"?filter={filter.GetEnumMemberValue() ?? throw InvalidEnumException<GenresFilter>.EnumMember(filter)}";
+        var queryParams = $"?filter={filter.GetEnumMemberValue() ?? throw InvalidEnumException<GenresFilter>.EnumMember(filter, nameof(filter))}";
         string[] endpointParts =
         {
             JikanEndpointConsts.Genres,
@@ -1258,7 +1252,7 @@ public sealed class JikanClient : IJikan, IDisposable
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsValidEnum(userHistory, nameof(userHistory));
 
-        var queryParams = $"?filter={userHistory.GetEnumMemberValue() ?? throw InvalidEnumException<UserHistoryExtension>.EnumMember(userHistory)}";
+        var queryParams = $"?filter={userHistory.GetEnumMemberValue() ?? throw InvalidEnumException<UserHistoryExtension>.EnumMember(userHistory, nameof(userHistory))}";
         string[] endpointParts =
         {
             JikanEndpointConsts.Users,
@@ -1271,7 +1265,7 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public async Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserAnimeListAsync));
+        Guard.IsDefaultEndpoint(_httpClient.BaseAddress.ToString(), nameof(GetUserAnimeListAsync));
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
 
         string[] endpointParts =
@@ -1286,7 +1280,7 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public async Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, int page, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserAnimeListAsync));
+        Guard.IsDefaultEndpoint(_httpClient.BaseAddress.ToString(), nameof(GetUserAnimeListAsync));
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsGreaterThanZero(page, nameof(page));
 
@@ -1303,7 +1297,7 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public async Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserMangaListAsync));
+        Guard.IsDefaultEndpoint(_httpClient.BaseAddress.ToString(), nameof(GetUserMangaListAsync));
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
 
         string[] endpointParts =
@@ -1318,7 +1312,7 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public async Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, int page, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserMangaListAsync));
+        Guard.IsDefaultEndpoint(_httpClient.BaseAddress.ToString(), nameof(GetUserMangaListAsync));
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsGreaterThanZero(page, nameof(page));
 
@@ -1487,34 +1481,22 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc/>
     public async Task<BaseJikanResponse<AnimeResponse>> GetRandomAnimeAsync(CancellationToken ct = default)
     {
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Random,
-            JikanEndpointConsts.Anime
-        };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<AnimeResponse>>(endpointParts, ct);
+        var query = RandomAnimeQuery.Create();
+        return await ExecuteGetRequestAsync<BaseJikanResponse<AnimeResponse>>(query, ct);
     }
 
     /// <inheritdoc/>
     public async Task<BaseJikanResponse<MangaResponse>> GetRandomMangaAsync(CancellationToken ct = default)
     {
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Random,
-            JikanEndpointConsts.Manga
-        };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<MangaResponse>>(endpointParts, ct);
+        var query = RandomMangaQuery.Create();
+        return await ExecuteGetRequestAsync<BaseJikanResponse<MangaResponse>>(query, ct);
     }
 
     /// <inheritdoc/>
     public async Task<BaseJikanResponse<CharacterResponse>> GetRandomCharacterAsync(CancellationToken ct = default)
     {
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Random,
-            JikanEndpointConsts.Characters
-        };
-        return await ExecuteGetRequestAsync<BaseJikanResponse<CharacterResponse>>(endpointParts, ct);
+        var query = RandomCharacterQuery.Create();
+        return await ExecuteGetRequestAsync<BaseJikanResponse<CharacterResponse>>(query, ct);
     }
 
     /// <inheritdoc/>
@@ -1546,47 +1528,29 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public async Task<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>> GetWatchRecentEpisodesAsync(CancellationToken ct = default)
     {
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Watch,
-            JikanEndpointConsts.Episodes
-        };
-        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>>(endpointParts, ct);
+        var query = WatchRecentEpisodesQuery.Create();
+        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>>(query, ct);
     }
 
     /// <inheritdoc />
     public async Task<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>> GetWatchPopularEpisodesAsync(CancellationToken ct = default)
     {
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Watch,
-            JikanEndpointConsts.Episodes,
-            JikanEndpointConsts.Popular
-        };
-        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>>(endpointParts, ct);
+        var query = WatchPopularEpisodesQuery.Create();
+        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>>(query, ct);
     }
 
     /// <inheritdoc />
     public async Task<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>> GetWatchRecentPromosAsync(CancellationToken ct = default)
     {
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Watch,
-            JikanEndpointConsts.Promos
-        };
-        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>>(endpointParts, ct);
+        var query = WatchRecentPromosQuery.Create();
+        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>>(query, ct);
     }
 
     /// <inheritdoc />
     public async Task<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>> GetWatchPopularPromosAsync(CancellationToken ct = default)
     {
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Watch,
-            JikanEndpointConsts.Promos,
-            JikanEndpointConsts.Popular
-        };
-        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>>(endpointParts, ct);
+        var query = WatchPopularPromosQuery.Create();
+        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>>(query, ct);
     }
 
     #endregion

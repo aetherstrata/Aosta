@@ -7,13 +7,14 @@ namespace Aosta.Core.Tests.Models;
 [TestFixture]
 public class AnimeTests
 {
+
+    private AostaDotNet _core = null!;
+
     [SetUp]
     public void SetUp()
     {
         _core = RealmSetup.NewInstance();
     }
-
-    private AostaDotNet _core;
 
     [Test]
     public async Task CreateNewAnimeTest()

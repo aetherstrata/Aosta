@@ -4,9 +4,9 @@ namespace Aosta.Jikan;
 
 public static class Guard
 {
-	public static void IsDefaultEndpoint(string? endpoint, string methodName)
+	public static void IsDefaultEndpoint(string endpoint, string methodName)
 	{
-		if (endpoint?.Equals(JikanConfiguration.DefaultEndpoint) ?? true)
+		if (endpoint.Equals(JikanConfiguration.DefaultEndpoint))
 		{
 			throw new NotSupportedException($"Operation {methodName} is not supported on the default endpoint.");
 		}
@@ -52,19 +52,12 @@ public static class Guard
 		}
 	}
 
-	public static void IsValid<T>(Func<T, bool> isValidFunc, T arg, string argumentName, string? message = null)
+	public static void IsValid<T>(Func<T, bool> isValidFunc, T arg, string argumentName, string message = "Argument is not valid.")
 	{
-		if (isValidFunc(arg))
+		if (!isValidFunc(arg))
 		{
-			return;
+			throw new JikanParameterValidationException(message, argumentName);
 		}
-
-		if (string.IsNullOrWhiteSpace(message))
-		{
-			message = "Argument is not valid.";
-		}
-
-		throw new JikanParameterValidationException(message, argumentName);
 	}
 
 	public static void IsValidEnum<TEnum>(TEnum arg, string argumentName) where TEnum : struct, Enum

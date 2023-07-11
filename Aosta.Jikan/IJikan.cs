@@ -2,7 +2,7 @@
 using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Models.Search;
-using Aosta.Jikan.Query.Schedule;
+using Aosta.Jikan.Queries;
 
 namespace Aosta.Jikan;
 

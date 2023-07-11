@@ -1,23 +1,15 @@
-﻿namespace Aosta.Jikan;
+using System.Runtime.Serialization;
 
-/// <summary>
-/// Exception class thrown when input parameters are invalid.
-/// </summary>
+namespace Aosta.Jikan;
+
+[Serializable]
 public class JikanParameterValidationException : ArgumentException
 {
-	public JikanParameterValidationException(string message) : base(message)
-	{
-	}
+    internal JikanParameterValidationException(string message, string argumentName) : base(message, argumentName)
+    {
+    }
 
-	public JikanParameterValidationException(string message, Exception innerException) : base(message, innerException)
-	{
-	}
-
-	public JikanParameterValidationException(string message, string argumentName) : base(message, argumentName)
-	{
-	}
-
-	public JikanParameterValidationException(string message, string argumentName, Exception innerException) : base(message, argumentName, innerException)
-	{
-	}
+    protected JikanParameterValidationException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+    }
 }
