@@ -1086,24 +1086,15 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public async Task<PaginatedJikanResponse<ICollection<MagazineResponse>>> GetMagazinesAsync(CancellationToken ct = default)
     {
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Magazines
-        };
-        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MagazineResponse>>>(endpointParts, ct);
+        var query = MagazinesQuery.Create();
+        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MagazineResponse>>>(query, ct);
     }
 
     /// <inheritdoc />
     public async Task<PaginatedJikanResponse<ICollection<MagazineResponse>>> GetMagazinesAsync(int page, CancellationToken ct = default)
     {
-        Guard.IsGreaterThanZero(page, nameof(page));
-
-        var queryParams = $"?page={page}";
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Magazines + queryParams
-        };
-        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MagazineResponse>>>(endpointParts, ct);
+        var query = MagazinesQuery.Create(page);
+        return await ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MagazineResponse>>>(query, ct);
     }
 
     #endregion Magazine methods
@@ -1476,7 +1467,7 @@ public sealed class JikanClient : IJikan, IDisposable
 
     #endregion User methods
 
-    #region GetRandom methods
+    #region Random methods
 
     /// <inheritdoc/>
     public async Task<BaseJikanResponse<AnimeResponse>> GetRandomAnimeAsync(CancellationToken ct = default)
@@ -1513,7 +1504,7 @@ public sealed class JikanClient : IJikan, IDisposable
         return await ExecuteGetRequestAsync<BaseJikanResponse<UserProfileResponse>>(query, ct);
     }
 
-    #endregion GetRandom methods
+    #endregion Random methods
 
     #region Watch methods
 

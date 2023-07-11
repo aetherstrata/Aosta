@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">q
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
@@ -22,7 +22,5 @@
             <_Parameter1>Aosta.Jikan.Tests</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
-
-
-
+    
 </Project>
