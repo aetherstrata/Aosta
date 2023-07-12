@@ -1,4 +1,5 @@
 ﻿using Aosta.Jikan.Enums;
+using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Tests.GenreTests;
 

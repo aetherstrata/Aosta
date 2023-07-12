@@ -1,7 +1,8 @@
 ﻿using System.Text;
-using Aosta.Utils;
-using Aosta.Jikan.Consts;
+using Aosta.Common;
 using Aosta.Jikan.Enums;
+using Aosta.Jikan.Query;
+using Aosta.Jikan.Query.Enums;
 using FastEnumUtility;
 
 namespace Aosta.Jikan.Models.Search;
@@ -34,7 +35,7 @@ public class MangaSearchConfig : ISearchConfig
 	/// <summary>
 	/// Manga type of searched result.
 	/// </summary>
-	public MangaType Type { get; init; } = MangaType.EveryType;
+	public MangaTypeFilter Type { get; init; }
 
 	/// <summary>
 	/// Minimum score results (1-10).
@@ -113,11 +114,8 @@ public class MangaSearchConfig : ISearchConfig
 			builder.Append($"letter={Letter.Value}&");
 		}
 			
-		if (Type != MangaType.EveryType)
-		{
-			Guard.IsValidEnum(Type, nameof(Type));
-			builder.Append($"type={Type.GetEnumMemberValue()}&");
-		}
+		Guard.IsValidEnum(Type, nameof(Type));
+        builder.Append($"type={Type.GetEnumMemberValue()}&");
 
 		if (MinimumScore.HasValue)
 		{

@@ -1,6 +1,6 @@
 using System.Net.Http.Headers;
-using Aosta.Utils;
-using Aosta.Utils.Limiter;
+using Aosta.Common;
+using Aosta.Common.Limiter;
 using Serilog;
 
 namespace Aosta.Jikan;

@@ -1,6 +1,7 @@
-using Aosta.Jikan.Consts;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Search;
+using Aosta.Jikan.Query;
+using Aosta.Jikan.Query.Enums;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.MangaTests;
@@ -216,7 +217,7 @@ public class SearchMangaAsyncTests
 		var searchConfig = new MangaSearchConfig
 		{
 			Query = query,
-			Type = MangaType.Manga
+			Type = MangaTypeFilter.Manga
 		};
 
 		// When
@@ -233,7 +234,7 @@ public class SearchMangaAsyncTests
 		var searchConfig = new MangaSearchConfig
 		{
 			Query = "danganronpa",
-			Type = MangaType.Manga
+			Type = MangaTypeFilter.Manga
 		};
 
 		// When
@@ -251,7 +252,7 @@ public class SearchMangaAsyncTests
 		var searchConfig = new MangaSearchConfig
 		{
 			Query = "danganronpa",
-			Type = MangaType.Manga,
+			Type = MangaTypeFilter.Manga,
 			MinimumScore = 7
 		};
 
@@ -268,7 +269,7 @@ public class SearchMangaAsyncTests
 		var searchConfig = new MangaSearchConfig
 		{
 			Query = "metal",
-			Type = MangaType.Manga,
+			Type = MangaTypeFilter.Manga,
 		};
 		searchConfig.Genres.Add(MangaGenreSearch.Game);
 
@@ -345,8 +346,8 @@ public class SearchMangaAsyncTests
 	[Test]
 	[TestCase((PublishingStatus)int.MaxValue, null, null, null, null)]
 	[TestCase((PublishingStatus)int.MinValue, null, null, null, null)]
-	[TestCase(null, (MangaType)int.MaxValue, null, null, null)]
-	[TestCase(null, (MangaType)int.MinValue, null, null, null)]
+	[TestCase(null, (MangaTypeFilter)int.MaxValue, null, null, null)]
+	[TestCase(null, (MangaTypeFilter)int.MinValue, null, null, null)]
 	[TestCase(null, null, (MangaSearchOrderBy)int.MaxValue, null, null)]
 	[TestCase(null, null, (MangaSearchOrderBy)int.MinValue, null, null)]
 	[TestCase(null, null, MangaSearchOrderBy.Chapters, (SortDirection)int.MaxValue, null)]
@@ -355,7 +356,7 @@ public class SearchMangaAsyncTests
 	[TestCase(null, null, null, null, (MangaGenreSearch)int.MinValue)]
 	public async Task EmptyQueryWithConfigWithInvalidEnums_ShouldThrowValidationException(
 		PublishingStatus? airingStatus,
-		MangaType? mangaType,
+		MangaTypeFilter? mangaType,
 		MangaSearchOrderBy? orderBy,
 		SortDirection? sortDirection,
 		MangaGenreSearch? genreSearch
@@ -467,7 +468,7 @@ public class SearchMangaAsyncTests
 			Query = "ore",
 			Page = 2,
 			Genres = new List<MangaGenreSearch> { MangaGenreSearch.Comedy },
-			Type = MangaType.Manga
+			Type = MangaTypeFilter.Manga
 		};
 
 		// When
@@ -484,7 +485,7 @@ public class SearchMangaAsyncTests
 		var searchConfig = new MangaSearchConfig
 		{
 			Genres = new List<MangaGenreSearch> { MangaGenreSearch.Comedy },
-			Type = MangaType.Manga
+			Type = MangaTypeFilter.Manga
 		};
 
 		// When
@@ -501,7 +502,7 @@ public class SearchMangaAsyncTests
 		var searchConfig = new MangaSearchConfig
 		{
 			ExcludedGenres = new List<MangaGenreSearch> { MangaGenreSearch.Comedy },
-			Type = MangaType.Manga
+			Type = MangaTypeFilter.Manga
 		};
 
 		// When

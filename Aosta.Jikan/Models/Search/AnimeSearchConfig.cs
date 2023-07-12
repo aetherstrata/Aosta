@@ -1,7 +1,8 @@
 ﻿using System.Text;
-using Aosta.Utils;
-using Aosta.Jikan.Consts;
+using Aosta.Common;
 using Aosta.Jikan.Enums;
+using Aosta.Jikan.Query;
+using Aosta.Jikan.Query.Enums;
 using FastEnumUtility;
 
 namespace Aosta.Jikan.Models.Search;
@@ -34,7 +35,7 @@ public class AnimeSearchConfig : ISearchConfig
 	/// <summary>
 	/// Anime type of searched result.
 	/// </summary>
-	public AnimeTypeFilter Type { get; init; } = AnimeTypeFilter.EveryType;
+	public AnimeTypeFilter Type { get; init; }
 
 	/// <summary>
 	/// Minimum score results (1-10).
@@ -49,7 +50,7 @@ public class AnimeSearchConfig : ISearchConfig
 	/// <summary>
 	/// Age rating.
 	/// </summary>
-	public AnimeAgeRating Rating { get; init; } = AnimeAgeRating.EveryRating;
+	public AnimeAgeRatingFilter Rating { get; init; }
 
 	/// <summary>
 	/// Current status.
@@ -117,12 +118,9 @@ public class AnimeSearchConfig : ISearchConfig
 			Guard.IsLetter(Letter.Value, nameof(Letter.Value));
 			builder.Append($"letter={Letter.Value}&");
 		}
-			
-		if (Type != AnimeTypeFilter.EveryType)
-		{
-			Guard.IsValidEnum(Type, nameof(Type));
-			builder.Append($"type={Type.GetEnumMemberValue()}&");
-		}
+
+        Guard.IsValidEnum(Type, nameof(Type));
+        builder.Append($"type={Type.GetEnumMemberValue()}&");
 
 		if (MinimumScore.HasValue)
 		{
@@ -134,11 +132,10 @@ public class AnimeSearchConfig : ISearchConfig
 			builder.Append($"max_score={MaximumScore}&");
 		}
 
-		if (Rating != AnimeAgeRating.EveryRating)
-		{
-			Guard.IsValidEnum(Rating, nameof(Rating));
-			builder.Append($"rated={Rating.GetEnumMemberValue()}&");
-		}
+
+        Guard.IsValidEnum(Rating, nameof(Rating));
+        builder.Append($"rated={Rating.GetEnumMemberValue()}&");
+
 
 		if (Status != AiringStatusFilter.EveryStatus)
 		{

@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Aosta.Utils\Aosta.Utils.csproj" />
+      <ProjectReference Include="..\Aosta.Common\Aosta.Common.csproj" />
     </ItemGroup>
     
     <ItemGroup>

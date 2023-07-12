@@ -10,9 +10,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aosta.Core.Tests", "Aosta.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aosta.Jikan", "Aosta.Jikan\Aosta.Jikan.csproj", "{E400FE90-D071-436F-9D09-15020E97C41E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aosta.Utils", "Aosta.Utils\Aosta.Utils.csproj", "{6600D8F6-A657-42ED-A903-9E14228966DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aosta.Common", "Aosta.Common\Aosta.Common.csproj", "{6600D8F6-A657-42ED-A903-9E14228966DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aosta.Jikan.Tests", "Aosta.Jikan.Tests\Aosta.Jikan.Tests.csproj", "{F75D6C94-B7B0-4BD7-9253-41EEBF04B977}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aosta.CLI", "Aosta.CLI\Aosta.CLI.csproj", "{DF642F9D-1520-4E08-B6D7-8C29D53EB533}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +48,10 @@ Global
 		{F75D6C94-B7B0-4BD7-9253-41EEBF04B977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F75D6C94-B7B0-4BD7-9253-41EEBF04B977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F75D6C94-B7B0-4BD7-9253-41EEBF04B977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF642F9D-1520-4E08-B6D7-8C29D53EB533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF642F9D-1520-4E08-B6D7-8C29D53EB533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF642F9D-1520-4E08-B6D7-8C29D53EB533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF642F9D-1520-4E08-B6D7-8C29D53EB533}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

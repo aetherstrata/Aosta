@@ -1,6 +1,6 @@
 using System.Text;
-using Aosta.Utils;
-using Aosta.Utils.Extensions;
+using Aosta.Common;
+using Aosta.Common.Extensions;
 using Aosta.Jikan.Enums;
 using FastEnumUtility;
 

@@ -1,4 +1,4 @@
-using Aosta.Utils.Consts;
+using Aosta.Common.Consts;
 using Serilog;
 using Serilog.Events;
 

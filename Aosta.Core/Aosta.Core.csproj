@@ -26,7 +26,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Aosta.Jikan\Aosta.Jikan.csproj" />
-        <ProjectReference Include="..\Aosta.Utils\Aosta.Utils.csproj" />
+        <ProjectReference Include="..\Aosta.Common\Aosta.Common.csproj" />
     </ItemGroup>
     
 </Project>

@@ -1,6 +1,6 @@
-using Aosta.Jikan.Consts;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Search;
+using Aosta.Jikan.Query;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.CharacterTests;

@@ -1,7 +1,7 @@
 using System.Text;
-using Aosta.Utils;
-using Aosta.Jikan.Consts;
+using Aosta.Common;
 using Aosta.Jikan.Enums;
+using Aosta.Jikan.Query;
 using FastEnumUtility;
 
 namespace Aosta.Jikan.Models.Search;

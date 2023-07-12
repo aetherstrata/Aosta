@@ -1,9 +1,18 @@
-﻿using FastEnumUtility;
+﻿using Aosta.Common.Extensions;
+using FastEnumUtility;
 
 namespace Aosta.Jikan;
 
 public static class Guard
 {
+	public static void IsSingleFlag<T>(T e, string paramName) where T : struct, Enum
+	{
+		if (!e.HasSingleFlag())
+		{
+			throw new JikanParameterValidationException("Flag enum is not supported for this operation.", paramName);
+		}
+	}
+
 	public static void IsDefaultEndpoint(string endpoint, string methodName)
 	{
 		if (endpoint.Equals(JikanConfiguration.DefaultEndpoint))

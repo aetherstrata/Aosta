@@ -2,7 +2,8 @@
 using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Models.Search;
-using Aosta.Jikan.Queries;
+using Aosta.Jikan.Query;
+using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan;
 
@@ -301,7 +302,7 @@ public interface IJikan
 	/// </summary>
 	/// <param name="id">MAL id of manga.</param>
 	/// <param name="ct">Cancellation token.</param>
-	/// <returns>Collection of manga recomendation.</returns>
+	/// <returns>Collection of manga recommendation.</returns>
 	Task<BaseJikanResponse<ICollection<RecommendationResponse>>> GetMangaRecommendationsAsync(long id, CancellationToken ct = default);
 
 	/// <summary>
@@ -311,6 +312,16 @@ public interface IJikan
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Collection of manga reviews.</returns>
 	Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetMangaReviewsAsync(long id, CancellationToken ct = default);
+
+	/// <summary>
+	/// Returns collection of manga reviews.
+	/// </summary>
+	/// <param name="id">MAL id of manga.</param>
+	/// <param name="page">Index of page folding 20 reviews (e.g. 1 will return first 20 reviews, 2 will return reviews from 21 to 40 etc.)</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>Collection of manga reviews.</returns>
+	Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetMangaReviewsAsync(long id, int page, CancellationToken ct = default);
+
 
 	/// <summary>
 	/// Returns collection of manga related entries.
@@ -464,6 +475,16 @@ public interface IJikan
 	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetSeasonAsync(int year, Season season, int page, CancellationToken ct = default);
 
 	/// <summary>
+	/// Returns season preview.
+	/// </summary>
+	/// <param name="year">Year of selected season.</param>
+	/// <param name="season">Selected season.</param>
+	/// <param name="parameters">Parameter configuration of this query.</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>Season preview.</returns>
+	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetSeasonAsync(int year, Season season, SeasonQueryParameters parameters, CancellationToken ct = default);
+
+	/// <summary>
 	/// Returns list of available season to query with <see cref="GetSeasonAsync(int, Season, CancellationToken)"/>
 	/// </summary>
 	/// <param name="ct">Cancellation token.</param>
@@ -486,6 +507,14 @@ public interface IJikan
 	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetCurrentSeasonAsync(int page, CancellationToken ct = default);
 
 	/// <summary>
+	/// Return season preview for anime in current airing season.
+	/// </summary>
+	/// <param name="parameters">Parameter configuration of this query.</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>Season preview for anime in current airing season.</returns>
+	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetCurrentSeasonAsync(SeasonQueryParameters parameters, CancellationToken ct = default);
+
+	/// <summary>
 	/// Return season preview for anime with undefined airing season (marked as "Later" on MAL).
 	/// </summary>
 	/// <param name="ct">Cancellation token.</param>
@@ -499,6 +528,14 @@ public interface IJikan
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Season preview for anime with undefined airing date.</returns>
 	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetUpcomingSeasonAsync(int page, CancellationToken ct = default);
+
+	/// <summary>
+	/// Return season preview for anime in upcoming airing season.
+	/// </summary>
+	/// <param name="parameters">Parameter configuration of this query.</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>Season preview for anime in current airing season.</returns>
+	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetUpcomingSeasonAsync(SeasonQueryParameters parameters, CancellationToken ct = default);
 
 	#endregion Season requests
 
@@ -572,6 +609,14 @@ public interface IJikan
 	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetTopAnimeAsync(TopAnimeFilter filter, int page, CancellationToken ct = default);
 
 	/// <summary>
+	/// Returns list of top anime.
+	/// </summary>
+	/// <param name="parameters">Parameter configuration for this query.</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>List of top anime.</returns>
+	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetTopAnimeAsync(TopAnimeQueryParameters parameters, CancellationToken ct = default);
+
+	/// <summary>
 	/// Returns list of top manga.
 	/// </summary>
 	/// <param name="ct">Cancellation token.</param>
@@ -585,6 +630,31 @@ public interface IJikan
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of top manga.</returns>
 	Task<PaginatedJikanResponse<ICollection<MangaResponse>>> GetTopMangaAsync(int page, CancellationToken ct = default);
+
+	/// <summary>
+	/// Returns list of top Manga.
+	/// </summary>
+	/// <param name="filter">Filter determining result of request (e.g. TopMangaFilter.Airing will return top airing Manga.)</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>List of top Manga.</returns>
+	Task<PaginatedJikanResponse<ICollection<MangaResponse>>> GetTopMangaAsync(TopMangaFilter filter, CancellationToken ct = default);
+
+	/// <summary>
+	/// Returns list of top Manga.
+	/// </summary>
+	/// <param name="filter">Filter determining result of request (e.g. TopMangaFilter.Airing will return top airing Manga.)</param>
+	/// <param name="page">Index of page folding 25 records of top ranging (e.g. 1 will return first 25 records, 2 will return record from 26 to 50 etc.)</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>List of top Manga.</returns>
+	Task<PaginatedJikanResponse<ICollection<MangaResponse>>> GetTopMangaAsync(TopMangaFilter filter, int page, CancellationToken ct = default);
+
+	/// <summary>
+	/// Returns list of top Manga.
+	/// </summary>
+	/// <param name="parameters">Parameter configuration for this query.</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>List of top Manga.</returns>
+	Task<PaginatedJikanResponse<ICollection<MangaResponse>>> GetTopMangaAsync(TopMangaQueryParameters parameters, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns list of most popular people.
@@ -602,6 +672,15 @@ public interface IJikan
 	Task<PaginatedJikanResponse<ICollection<PersonResponse>>> GetTopPeopleAsync(int page, CancellationToken ct = default);
 
 	/// <summary>
+	/// Returns list of most popular people.
+	/// </summary>
+	/// <param name="page">Index of page folding 25 records of top ranging (e.g. 1 will return first 25 records, 2 will return record from 26 to 50 etc.)</param>
+	/// <param name="limit">Maximum number of results per page (Maximum is <see cref="ParameterConsts.MaximumPageSize"/>)</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>List of most popular people.</returns>
+	Task<PaginatedJikanResponse<ICollection<PersonResponse>>> GetTopPeopleAsync(int page, int limit, CancellationToken ct = default);
+
+	/// <summary>
 	/// Returns list of most popular characters.
 	/// </summary>
 	/// <returns>List of most popular characters.</returns>
@@ -616,6 +695,15 @@ public interface IJikan
 	Task<PaginatedJikanResponse<ICollection<CharacterResponse>>> GetTopCharactersAsync(int page, CancellationToken ct = default);
 
 	/// <summary>
+	/// Returns list of most popular characters.
+	/// </summary>
+	/// <param name="page">Index of page folding 25 records of top ranging (e.g. 1 will return first 25 records, 2 will return record from 26 to 50 etc.)</param>
+	/// <param name="limit">Maximum number of results per page (Maximum is <see cref="ParameterConsts.MaximumPageSize"/>)</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>List of most popular characters.</returns>
+	Task<PaginatedJikanResponse<ICollection<CharacterResponse>>> GetTopCharactersAsync(int page, int limit, CancellationToken ct = default);
+
+	/// <summary>
 	/// Returns list of most popular reviews.
 	/// </summary>
 	/// <returns>List of most popular reviews.</returns>
@@ -628,6 +716,31 @@ public interface IJikan
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of most popular reviews.</returns>
 	Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(int page, CancellationToken ct = default);
+
+	/// <summary>
+	/// Returns list of most popular reviews.
+	/// </summary>
+	/// <param name="type">Filter determining result of request (e.g. <see cref="TopReviewsType.Anime"/> will return top anime reviews.)</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>List of most popular reviews.</returns>
+	Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(TopReviewsType type, CancellationToken ct = default);
+
+	/// <summary>
+	/// Returns list of most popular reviews.
+	/// </summary>
+	/// <param name="page">Index of page folding 25 records of top ranging (e.g. 1 will return first 25 records, 2 will return record from 26 to 50 etc.)</param>
+	/// <param name="type">Filter determining result of request (e.g. <see cref="TopReviewsType.Anime"/> will return top anime reviews.)</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>List of most popular reviews.</returns>
+	Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(int page, TopReviewsType type, CancellationToken ct = default);
+
+	/// <summary>
+	/// Returns list of most popular reviews.
+	/// </summary>
+	/// <param name="parameters">Parameter configuration of this query.</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>List of most popular reviews.</returns>
+	Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(TopReviewsQueryParameters parameters, CancellationToken ct = default);
 
 	#endregion Top requests
 

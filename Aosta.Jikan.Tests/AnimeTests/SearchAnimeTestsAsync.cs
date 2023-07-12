@@ -1,6 +1,7 @@
-using Aosta.Jikan.Consts;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Search;
+using Aosta.Jikan.Query;
+using Aosta.Jikan.Query.Enums;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.AnimeTests;
@@ -267,8 +268,8 @@ public class SearchAnimeTestsAsync
 	[Test]
 	[TestCase((AiringStatusFilter)int.MaxValue, null, null, null, null, null)]
 	[TestCase((AiringStatusFilter)int.MinValue, null, null, null, null, null)]
-	[TestCase(null, (AnimeAgeRating)int.MaxValue, null, null, null, null)]
-	[TestCase(null, (AnimeAgeRating)int.MinValue, null, null, null, null)]
+	[TestCase(null, (AnimeAgeRatingFilter)int.MaxValue, null, null, null, null)]
+	[TestCase(null, (AnimeAgeRatingFilter)int.MinValue, null, null, null, null)]
 	[TestCase(null, null, (AnimeTypeFilter)int.MaxValue, null, null, null)]
 	[TestCase(null, null, (AnimeTypeFilter)int.MinValue, null, null, null)]
 	[TestCase(null, null, null, (AnimeSearchOrderBy)int.MaxValue, null, null)]
@@ -279,7 +280,7 @@ public class SearchAnimeTestsAsync
 	[TestCase(null, null, null, null, null, (AnimeGenreSearch)int.MinValue)]
 	public async Task EmptyQueryWithConfigWithInvalidEnums_ShouldThrowValidationException(
 		AiringStatusFilter? airingStatus,
-		AnimeAgeRating? rating,
+		AnimeAgeRatingFilter? rating,
 		AnimeTypeFilter? mangaType,
 		AnimeSearchOrderBy? orderBy,
 		SortDirection? sortDirection,
