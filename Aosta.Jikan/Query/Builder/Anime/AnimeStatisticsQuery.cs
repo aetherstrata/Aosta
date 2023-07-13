@@ -1,3 +1,6 @@
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
+
 namespace Aosta.Jikan.Query;
 
 internal static class AnimeStatisticsQuery
@@ -9,9 +12,9 @@ internal static class AnimeStatisticsQuery
         JikanEndpointConsts.Statistics
     };
 
-    internal static IQuery Create(long id)
+    internal static IQuery<BaseJikanResponse<AnimeStatisticsResponse>> Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery(GetEndpoint(id));
+        return new JikanQuery<BaseJikanResponse<AnimeStatisticsResponse>>(GetEndpoint(id));
     }
 }

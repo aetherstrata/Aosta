@@ -1,4 +1,5 @@
 ﻿using Aosta.Jikan.Enums;
+using Aosta.Jikan.Query.Enums;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.UserTests;
@@ -39,31 +40,31 @@ public class GetUserHistoryAsyncTests
 	public async Task InvalidUsernameWithExtension_ShouldThrowValidationException(string username)
 	{
 		// When
-		var func = JikanTests.Instance.Awaiting(x => x.GetUserHistoryAsync(username, UserHistoryExtension.Manga));
+		var func = JikanTests.Instance.Awaiting(x => x.GetUserHistoryAsync(username, UserHistoryTypeFilter.Manga));
 
 		// Then
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
-	[TestCase((UserHistoryExtension)int.MaxValue)]
-	[TestCase((UserHistoryExtension)int.MinValue)]
-	public async Task ErvelanWithInvalidExtension_ShouldThrowValidationException(UserHistoryExtension userHistoryExtension)
+	[TestCase((UserHistoryTypeFilter)int.MaxValue)]
+	[TestCase((UserHistoryTypeFilter)int.MinValue)]
+	public async Task ErvelanWithInvalidExtension_ShouldThrowValidationException(UserHistoryTypeFilter type)
 	{
 		// When
-		var func = JikanTests.Instance.Awaiting(x => x.GetUserHistoryAsync("Ervelan", userHistoryExtension));
+		var func = JikanTests.Instance.Awaiting(x => x.GetUserHistoryAsync("Ervelan", type));
 
 		// Then
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
 
 	[Test]
-	[TestCase(UserHistoryExtension.Anime)]
-	[TestCase(UserHistoryExtension.Manga)]
-	public async Task ErvelanHistoryWithFilter_ShouldParseErvelanMangaHistory(UserHistoryExtension userHistoryExtension)
+	[TestCase(UserHistoryTypeFilter.Anime)]
+	[TestCase(UserHistoryTypeFilter.Manga)]
+	public async Task ErvelanHistoryWithFilter_ShouldParseErvelanMangaHistory(UserHistoryTypeFilter type)
 	{
 		// When
-		var userHistory = await JikanTests.Instance.GetUserHistoryAsync("Ervelan", userHistoryExtension);
+		var userHistory = await JikanTests.Instance.GetUserHistoryAsync("Ervelan", type);
 
 		// Then
 		using (new AssertionScope())

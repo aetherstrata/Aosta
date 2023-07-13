@@ -1,3 +1,6 @@
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
+
 namespace Aosta.Jikan.Query;
 
 internal static class CharacterFullDataQuery
@@ -9,9 +12,9 @@ internal static class CharacterFullDataQuery
         JikanEndpointConsts.Full
     };
 
-    internal static IQuery Create(long id)
+    internal static IQuery<BaseJikanResponse<CharacterResponseFull>> Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery(GetEndpoint(id));
+        return new JikanQuery<BaseJikanResponse<CharacterResponseFull>>(GetEndpoint(id));
     }
 }

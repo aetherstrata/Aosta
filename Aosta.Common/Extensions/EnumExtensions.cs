@@ -30,6 +30,6 @@ public static class EnumExtensions
 
     public static int AsInt<T>(this T e) where T : struct, Enum
     {
-        return Unsafe.As<T, int>(ref e);
+        return Unsafe.As<T,int>(ref e);
     }
 }

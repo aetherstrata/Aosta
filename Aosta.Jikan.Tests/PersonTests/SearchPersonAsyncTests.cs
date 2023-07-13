@@ -18,7 +18,7 @@ public class SearchPersonAsyncTests
 
         // Then
         using var _ = new AssertionScope();
-        people.Data.Should().HaveCount(ParameterConsts.MaximumPageSize);
+        people.Data.Should().HaveCount(JikanParameterConsts.MaximumPageSize);
         people.Data.First().Name.Should().Be("Tomokazu Seki");
         people.Pagination.LastVisiblePage.Should().BeGreaterThan(370);
         people.Pagination.CurrentPage.Should().Be(1);
@@ -71,7 +71,7 @@ public class SearchPersonAsyncTests
 
         // Then
         using var _ = new AssertionScope();
-        people.Data.Should().HaveCount(ParameterConsts.MaximumPageSize);
+        people.Data.Should().HaveCount(JikanParameterConsts.MaximumPageSize);
         people.Data.First().Name.Should().Be("Travis Willingham");
         people.Pagination.LastVisiblePage.Should().BeGreaterThan(370);
         people.Pagination.CurrentPage.Should().Be(2);
@@ -149,7 +149,7 @@ public class SearchPersonAsyncTests
 
         // Then
         using var _ = new AssertionScope();
-        people.Data.Should().HaveCount(ParameterConsts.MaximumPageSize);
+        people.Data.Should().HaveCount(JikanParameterConsts.MaximumPageSize);
         people.Data.Should().OnlyContain(x => x.Name.StartsWith(letter));
     }
         

@@ -1,3 +1,6 @@
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
+
 namespace Aosta.Jikan.Query;
 
 internal static class AnimeEpisodeQuery
@@ -10,10 +13,10 @@ internal static class AnimeEpisodeQuery
         episodeId.ToString()
     };
 
-    internal static IQuery Create(long animeId, int episodeId)
+    internal static IQuery<BaseJikanResponse<AnimeEpisodeResponse>> Create(long animeId, int episodeId)
     {
         Guard.IsGreaterThanZero(animeId, nameof(animeId));
         Guard.IsGreaterThanZero(episodeId, nameof(episodeId));
-        return new JikanQuery(GetEndpoint(animeId, episodeId));
+        return new JikanQuery<BaseJikanResponse<AnimeEpisodeResponse>>(GetEndpoint(animeId, episodeId));
     }
 }

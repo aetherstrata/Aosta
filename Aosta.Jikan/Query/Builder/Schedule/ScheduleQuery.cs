@@ -1,5 +1,7 @@
 using Aosta.Jikan.Enums;
 using Aosta.Common.Extensions;
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
 
 namespace Aosta.Jikan.Query;
 
@@ -10,28 +12,28 @@ internal static class ScheduleQuery
         JikanEndpointConsts.Schedules
     };
 
-    internal static IQuery Create()
+    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create()
     {
-        return new JikanQuery(QueryEndpoint);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(QueryEndpoint);
     }
 
-    internal static IQuery Create(int page)
+    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(QueryEndpoint)
             .WithParameter(QueryParameter.Page, page);
     }
 
-    internal static IQuery Create(ScheduledDay day)
+    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(ScheduledDay day)
     {
         Guard.IsValidEnum(day, nameof(day));
-        return new JikanQuery(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(QueryEndpoint)
             .WithParameter(QueryParameter.Filter, day.StringValue());
     }
 
-    internal static IQuery Create(ScheduleQueryParameters parameters)
+    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(ScheduleQueryParameters parameters)
     {
-        return new JikanQuery(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(QueryEndpoint)
             .WithParameterRange(parameters);
     }
 }

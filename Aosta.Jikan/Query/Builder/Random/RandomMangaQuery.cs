@@ -1,3 +1,6 @@
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
+
 namespace Aosta.Jikan.Query;
 
 internal static class RandomMangaQuery
@@ -8,8 +11,8 @@ internal static class RandomMangaQuery
         JikanEndpointConsts.Manga
     };
 
-    internal static IQuery Create()
+    internal static IQuery<BaseJikanResponse<MangaResponse>> Create()
     {
-        return new JikanQuery(QueryEndpoint);
+        return new JikanQuery<BaseJikanResponse<MangaResponse>>(QueryEndpoint);
     }
 }

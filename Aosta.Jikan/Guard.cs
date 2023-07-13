@@ -13,9 +13,9 @@ public static class Guard
 		}
 	}
 
-	public static void IsDefaultEndpoint(string endpoint, string methodName)
+	public static void IsDefaultEndpoint(string? endpoint, string methodName)
 	{
-		if (endpoint.Equals(JikanConfiguration.DefaultEndpoint))
+		if (JikanConfiguration.DefaultEndpoint.Equals(endpoint))
 		{
 			throw new NotSupportedException($"Operation {methodName} is not supported on the default endpoint.");
 		}

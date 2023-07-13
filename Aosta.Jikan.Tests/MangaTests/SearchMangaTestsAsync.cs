@@ -53,7 +53,7 @@ public class SearchMangaAsyncTests
 
 		// Then
 		using var _ = new AssertionScope();
-		manga.Data.Should().HaveCount(ParameterConsts.MaximumPageSize);
+		manga.Data.Should().HaveCount(JikanParameterConsts.MaximumPageSize);
 		manga.Data.First().Title.Should().Be("Nana");
 		manga.Pagination.LastVisiblePage.Should().BeGreaterThan(780);
 		manga.Pagination.CurrentPage.Should().Be(2);

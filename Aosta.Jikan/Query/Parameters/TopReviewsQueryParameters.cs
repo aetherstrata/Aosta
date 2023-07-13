@@ -12,10 +12,10 @@ public class TopReviewsQueryParameters : JikanQueryParameterSet
         return this;
     }
 
-    public TopReviewsQueryParameters SetType(TopReviewsType type)
+    public TopReviewsQueryParameters SetType(TopReviewsTypeFilter type)
     {
         Guard.IsValidEnum(type, nameof(type));
-        base.Add(QueryParameter.Type, type);
+        base.Add(QueryParameter.Type, type.StringValue());
         return this;
     }
 

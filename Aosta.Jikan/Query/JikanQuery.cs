@@ -2,7 +2,7 @@ using Aosta.Common.Extensions;
 
 namespace Aosta.Jikan.Query;
 
-internal sealed class JikanQuery : IQuery
+internal sealed class JikanQuery<T> : IQuery<T>
 {
     /// <summary>
     /// Query endpoint
@@ -28,9 +28,9 @@ internal sealed class JikanQuery : IQuery
     /// </summary>
     /// <param name="name">Parameter name</param>
     /// <param name="value">Parameter value</param>
-    /// <typeparam name="T">Parameter type</typeparam>
+    /// <typeparam name="TParam">Parameter type</typeparam>
     /// <returns>The updated query</returns>
-    internal JikanQuery WithParameter<T>(string name, T value)
+    internal JikanQuery<T> WithParameter<TParam>(string name, TParam value)
     {
         _parameters.Add(name, value);
         return this;
@@ -41,7 +41,7 @@ internal sealed class JikanQuery : IQuery
     /// </summary>
     /// <param name="parameters">Range of query parameters</param>
     /// <returns>The updated query</returns>
-    internal JikanQuery WithParameterRange(JikanQueryParameterSet parameters)
+    internal JikanQuery<T> WithParameterRange(JikanQueryParameterSet parameters)
     {
         parameters.ForEach(_parameters.Add);
         return this;
@@ -51,7 +51,7 @@ internal sealed class JikanQuery : IQuery
     /// Formulates and returns the complete query string.
     /// </summary>
     /// <returns>The complete query string.</returns>
-    string IQuery.GetQuery()
+    public string GetQuery()
     {
         return _endpoint + _parameters;
     }

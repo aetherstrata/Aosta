@@ -1,3 +1,6 @@
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
+
 namespace Aosta.Jikan.Query;
 
 internal static class SeasonArchiveQuery
@@ -7,8 +10,8 @@ internal static class SeasonArchiveQuery
         JikanEndpointConsts.Seasons
     };
 
-    internal static IQuery Create()
+    internal static IQuery<PaginatedJikanResponse<ICollection<SeasonArchiveResponse>>> Create()
     {
-        return new JikanQuery(QueryEndpoint);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<SeasonArchiveResponse>>>(QueryEndpoint);
     }
 }

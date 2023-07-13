@@ -3,7 +3,7 @@ namespace Aosta.Jikan.Query;
 /// <summary>
 /// Constants values related to limit of api.
 /// </summary>
-public static class ParameterConsts
+public static class JikanParameterConsts
 {
     /// <summary>
     /// Maximum page size for general requests

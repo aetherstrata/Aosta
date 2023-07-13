@@ -1,3 +1,6 @@
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
+
 namespace Aosta.Jikan.Query;
 
 internal static class WatchRecentPromosQuery
@@ -8,8 +11,8 @@ internal static class WatchRecentPromosQuery
         JikanEndpointConsts.Promos
     };
 
-    internal static IQuery Create()
+    internal static IQuery<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>> Create()
     {
-        return new JikanQuery(QueryEndpoint);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>>(QueryEndpoint);
     }
 }

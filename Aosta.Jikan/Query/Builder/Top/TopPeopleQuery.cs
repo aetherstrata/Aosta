@@ -1,3 +1,6 @@
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
+
 namespace Aosta.Jikan.Query;
 
 internal static class TopPeopleQuery
@@ -8,24 +11,24 @@ internal static class TopPeopleQuery
         JikanEndpointConsts.People
     };
 
-    internal static IQuery Create()
+    internal static IQuery<PaginatedJikanResponse<ICollection<PersonResponse>>> Create()
     {
-        return new JikanQuery(QueryEndpoint);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<PersonResponse>>>(QueryEndpoint);
     }
 
-    internal static IQuery Create(int page)
+    internal static IQuery<PaginatedJikanResponse<ICollection<PersonResponse>>> Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<PersonResponse>>>(QueryEndpoint)
             .WithParameter(QueryParameter.Page, page);
     }
 
-    internal static IQuery Create(int page, int limit)
+    internal static IQuery<PaginatedJikanResponse<ICollection<PersonResponse>>> Create(int page, int limit)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
         Guard.IsGreaterThanZero(limit, nameof(limit));
-        Guard.IsLessOrEqualThan(limit, ParameterConsts.MaximumPageSize, nameof(limit));
-        return new JikanQuery(QueryEndpoint)
+        Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MaximumPageSize, nameof(limit));
+        return new JikanQuery<PaginatedJikanResponse<ICollection<PersonResponse>>>(QueryEndpoint)
             .WithParameter(QueryParameter.Page, page)
             .WithParameter(QueryParameter.Limit, limit);
     }

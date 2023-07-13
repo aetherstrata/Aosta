@@ -1,4 +1,6 @@
-using Aosta.Jikan.Enums;
+using Aosta.Common.Extensions;
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Query;
@@ -11,15 +13,15 @@ internal static class AnimeGenresQuery
         JikanEndpointConsts.Anime
     };
 
-    internal static IQuery Create()
+    internal static IQuery<BaseJikanResponse<ICollection<GenreResponse>>> Create()
     {
-        return new JikanQuery(QueryEndpoint);
+        return new JikanQuery<BaseJikanResponse<ICollection<GenreResponse>>>(QueryEndpoint);
     }
     
-    internal static IQuery Create(GenresFilter filter)
+    internal static IQuery<BaseJikanResponse<ICollection<GenreResponse>>> Create(GenresFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        return new JikanQuery(QueryEndpoint)
-            .WithParameter(QueryParameter.Filter, filter);
+        return new JikanQuery<BaseJikanResponse<ICollection<GenreResponse>>>(QueryEndpoint)
+            .WithParameter(QueryParameter.Filter, filter.StringValue());
     }
 }

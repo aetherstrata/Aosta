@@ -9,7 +9,7 @@ public class JikanConfiguration
 {
     internal const string DefaultEndpoint = "https://api.jikan.moe/v4/";
 
-    private ITaskLimiter? _limiter;
+    private IEnumerable<TaskLimiterConfiguration>? _limiterConfigs;
     private HttpClient? _httpClient;
     private ILogger? _logger;
 
@@ -20,9 +20,9 @@ public class JikanConfiguration
     public IJikan Build()
     {
         _httpClient ??= GetDefaultHttpClient(DefaultEndpoint);
-        _limiter ??= new CompositeTaskLimiter(TaskLimiterConfiguration.Default);
+        ITaskLimiter limiter = new CompositeTaskLimiter(_limiterConfigs?.Distinct() ?? TaskLimiterConfiguration.Default);
 
-        return new JikanClient(_httpClient, _limiter, _logger);
+        return new JikanClient(_httpClient, limiter, _logger);
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public class JikanConfiguration
     {
         Guard.IsNotNullOrWhiteSpace(endpoint, nameof(endpoint));
 
-        var client = new HttpClient() { BaseAddress = new Uri(endpoint) };
+        var client = new HttpClient { BaseAddress = new Uri(endpoint) };
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/html"));
 
@@ -62,15 +62,9 @@ public class JikanConfiguration
             return _jikan;
         }
 
-        public JikanConfiguration Limiter(ITaskLimiter taskLimiter)
-        {
-            _jikan._limiter = taskLimiter;
-            return _jikan;
-        }
-
         public JikanConfiguration Limiter(IEnumerable<TaskLimiterConfiguration> limiterConfigs)
         {
-            _jikan._limiter = new CompositeTaskLimiter(limiterConfigs);
+            _jikan._limiterConfigs = limiterConfigs;
             return _jikan;
         }
     }

@@ -41,7 +41,7 @@ public class SearchAnimeTestsAsync
 		var anime = await JikanTests.Instance.SearchAnimeAsync(config);
 
 		using var _ = new AssertionScope();
-		anime.Data.Should().HaveCount(ParameterConsts.MaximumPageSize);
+		anime.Data.Should().HaveCount(JikanParameterConsts.MaximumPageSize);
 		anime.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("Rurouni Kenshin: Meiji Kenkaku Romantan - Tsuioku-hen");
 		anime.Pagination.LastVisiblePage.Should().BeGreaterThan(780);
 		anime.Pagination.CurrentPage.Should().Be(2);

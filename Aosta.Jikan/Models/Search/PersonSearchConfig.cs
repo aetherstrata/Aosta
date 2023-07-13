@@ -53,7 +53,7 @@ public class PersonSearchConfig: ISearchConfig
         builder.Append($"page={Page}&");
 
 		Guard.IsGreaterThanZero(PageSize, nameof(PageSize));
-        Guard.IsLessOrEqualThan(PageSize,ParameterConsts.MaximumPageSize, nameof(PageSize));
+        Guard.IsLessOrEqualThan(PageSize,JikanParameterConsts.MaximumPageSize, nameof(PageSize));
         builder.Append($"limit={PageSize}&");
         
         if (!string.IsNullOrWhiteSpace(Query))

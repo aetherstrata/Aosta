@@ -1,9 +1,9 @@
 namespace Aosta.Jikan.Query;
 
 /// <summary>
-/// An <see cref="IQuery"/> encapsulates an HTTP request as an object
+/// An encapsulation of an HTTP request and its return type
 /// </summary>
-internal interface IQuery
+internal interface IQuery<T>
 {
     /// <summary>
     /// Get the query string

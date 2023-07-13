@@ -17,7 +17,7 @@ public class SearchClubAsyncTests
 
         // Then
         using var _ = new AssertionScope();
-        clubs.Data.Should().HaveCount(ParameterConsts.MaximumPageSize);
+        clubs.Data.Should().HaveCount(JikanParameterConsts.MaximumPageSize);
         clubs.Data.First().Name.Should().Be("Cowboy Bebop");
     }
         
@@ -65,7 +65,7 @@ public class SearchClubAsyncTests
         var characters = await JikanTests.Instance.SearchClubAsync(config);
 
         // Then
-        characters.Data.Should().HaveCount(ParameterConsts.MaximumPageSize);
+        characters.Data.Should().HaveCount(JikanParameterConsts.MaximumPageSize);
     }
         
     [Test]

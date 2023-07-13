@@ -1,3 +1,6 @@
+using Aosta.Common.Extensions;
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Query;
@@ -10,37 +13,37 @@ internal static class TopReviewsQuery
         JikanEndpointConsts.Reviews
     };
 
-    internal static IQuery Create()
+    internal static IQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>> Create()
     {
-        return new JikanQuery(QueryEndpoint);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(QueryEndpoint);
     }
 
-    internal static IQuery Create(int page)
+    internal static IQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>> Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(QueryEndpoint)
             .WithParameter(QueryParameter.Page, page);
     }
 
-    internal static IQuery Create(TopReviewsType type)
+    internal static IQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>> Create(TopReviewsTypeFilter type)
     {
         Guard.IsValidEnum(type, nameof(type));
-        return new JikanQuery(QueryEndpoint)
-            .WithParameter(QueryParameter.Type, type);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(QueryEndpoint)
+            .WithParameter(QueryParameter.Type, type.StringValue());
     }
 
-    internal static IQuery Create(int page, TopReviewsType type)
+    internal static IQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>> Create(int page, TopReviewsTypeFilter type)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
         Guard.IsValidEnum(type, nameof(type));
-        return new JikanQuery(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(QueryEndpoint)
             .WithParameter(QueryParameter.Page, page)
-            .WithParameter(QueryParameter.Type, type);
+            .WithParameter(QueryParameter.Type, type.StringValue());
     }
 
-    internal static IQuery Create(TopReviewsQueryParameters parameters)
+    internal static IQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>> Create(TopReviewsQueryParameters parameters)
     {
-        return new JikanQuery(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(QueryEndpoint)
             .WithParameterRange(parameters);
     }
 }

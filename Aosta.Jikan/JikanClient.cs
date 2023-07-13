@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using Aosta.Common.Consts;
-using Aosta.Common.Exceptions;
 using Aosta.Common.Limiter;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models;
@@ -9,7 +8,6 @@ using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Models.Search;
 using Aosta.Jikan.Query;
 using Aosta.Jikan.Query.Enums;
-using FastEnumUtility;
 using Serilog;
 
 namespace Aosta.Jikan;
@@ -19,6 +17,8 @@ namespace Aosta.Jikan;
 /// </summary>
 public sealed class JikanClient : IJikan, IDisposable
 {
+    private QueryExecutor Executor { get; }
+
     /// <summary>
     /// Http client class to call REST request and receive REST response.
     /// </summary>
@@ -37,12 +37,13 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <summary>
     /// Constructor.
     /// </summary>
-    /// <param name="client"> Static http client instance.</param>
+    /// <param name="http"> Static http client instance.</param>
     /// <param name="taskLimiter"> API limiter </param>
     /// <param name="logger"> Serilog logger </param>
-    internal JikanClient(HttpClient client, ITaskLimiter taskLimiter, ILogger? logger)
+    internal JikanClient(HttpClient http, ITaskLimiter taskLimiter, ILogger? logger)
     {
-        _httpClient = client;
+        Executor = new QueryExecutor(http, taskLimiter, logger);
+        _httpClient = http;
         _limiter = taskLimiter;
         _logger = logger;
     }
@@ -97,9 +98,9 @@ public sealed class JikanClient : IJikan, IDisposable
         return ExecuteGetRequestAsync<T>(string.Join("/", routeSections), ct);
     }
 
-    private Task<T> ExecuteGetRequestAsync<T>(IQuery query, CancellationToken ct = default) where T : class
+    private Task<T> ExecuteGetRequestAsync<T>(IQuery<T> query, CancellationToken ct = default) where T : class
     {
-        return ExecuteGetRequestAsync<T>(query.GetQuery(), ct);
+        return Executor.GetRequest(query, ct);
     }
 
     #endregion Private Methods
@@ -111,169 +112,145 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<BaseJikanResponse<AnimeResponse>> GetAnimeAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<AnimeResponse>>(query, ct);
+        return Executor.GetRequest(AnimeQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<AnimeCharacterResponse>>> GetAnimeCharactersAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeCharactersQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<AnimeCharacterResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeCharactersQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<AnimeStaffPositionResponse>>> GetAnimeStaffAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeStaffQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<AnimeStaffPositionResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeStaffQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeEpisodeResponse>>> GetAnimeEpisodesAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeEpisodesQuery.Create(id);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeEpisodeResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeEpisodesQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeEpisodeResponse>>> GetAnimeEpisodesAsync(long id, int page, CancellationToken ct = default)
     {
-        var query = AnimeEpisodesQuery.Create(id, page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeEpisodeResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeEpisodesQuery.Create(id, page), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<AnimeEpisodeResponse>> GetAnimeEpisodeAsync(long animeId, int episodeId, CancellationToken ct = default)
     {
-        var query = AnimeEpisodeQuery.Create(animeId, episodeId);
-        return ExecuteGetRequestAsync<BaseJikanResponse<AnimeEpisodeResponse>>(query, ct);
+        return Executor.GetRequest(AnimeEpisodeQuery.Create(animeId, episodeId), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<NewsResponse>>> GetAnimeNewsAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeNewsQuery.Create(id);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<NewsResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeNewsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<NewsResponse>>> GetAnimeNewsAsync(long id, int page, CancellationToken ct = default)
     {
-        var query = AnimeNewsQuery.Create(id, page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<NewsResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeNewsQuery.Create(id, page), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ForumTopicResponse>>> GetAnimeForumTopicsAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeForumTopicsQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ForumTopicResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeForumTopicsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ForumTopicResponse>>> GetAnimeForumTopicsAsync(long id, ForumTopicType type, CancellationToken ct = default)
     {
-        var query = AnimeForumTopicsQuery.Create(id, type);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ForumTopicResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeForumTopicsQuery.Create(id, type), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<AnimeVideosResponse>> GetAnimeVideosAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeVideosQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<AnimeVideosResponse>>(query, ct);
+        return Executor.GetRequest(AnimeVideosQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ImagesSetResponse>>> GetAnimePicturesAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimePicturesQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ImagesSetResponse>>>(query, ct);
+        return Executor.GetRequest(AnimePicturesQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<AnimeStatisticsResponse>> GetAnimeStatisticsAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeStatisticsQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<AnimeStatisticsResponse>>(query, ct);
+        return Executor.GetRequest(AnimeStatisticsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<MoreInfoResponse>> GetAnimeMoreInfoAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeMoreInfoQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<MoreInfoResponse>>(query, ct);
+        return Executor.GetRequest(AnimeMoreInfoQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<RecommendationResponse>>> GetAnimeRecommendationsAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeRecommendationsQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<RecommendationResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeRecommendationsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeUserUpdateResponse>>> GetAnimeUserUpdatesAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeUserUpdatesQuery.Create(id);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeUserUpdateResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeUserUpdatesQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeUserUpdateResponse>>> GetAnimeUserUpdatesAsync(long id, int page, CancellationToken ct = default)
     {
-        var query = AnimeUserUpdatesQuery.Create(id, page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeUserUpdateResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeUserUpdatesQuery.Create(id, page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetAnimeReviewsAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeReviewsQuery.Create(id);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeReviewsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetAnimeReviewsAsync(long id, int page, CancellationToken ct = default)
     {
-        var query = AnimeReviewsQuery.Create(id, page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeReviewsQuery.Create(id, page), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<RelatedEntryResponse>>> GetAnimeRelationsAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeRelationsQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<RelatedEntryResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeRelationsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<AnimeThemesResponse>> GetAnimeThemesAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeThemesQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<AnimeThemesResponse>>(query, ct);
+        return Executor.GetRequest(AnimeThemesQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ExternalLinkResponse>>> GetAnimeExternalLinksAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeExternalLinksQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ExternalLinkResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeExternalLinksQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ExternalLinkResponse>>> GetAnimeStreamingLinksAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeStreamingLinksQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ExternalLinkResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeStreamingLinksQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<AnimeResponseFull>> GetAnimeFullDataAsync(long id, CancellationToken ct = default)
     {
-        var query = AnimeFullDataQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<AnimeResponseFull>>(query, ct);
+        return Executor.GetRequest(AnimeFullDataQuery.Create(id), ct);
     }
 
     #endregion Anime methods
@@ -283,43 +260,37 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<BaseJikanResponse<CharacterResponse>> GetCharacterAsync(long id, CancellationToken ct = default)
     {
-        var query = CharacterQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<CharacterResponse>>(query, ct);
+        return Executor.GetRequest(CharacterQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<CharacterAnimeographyEntryResponse>>> GetCharacterAnimeAsync(long id, CancellationToken ct = default)
     {
-        var query = CharacterAnimeQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<CharacterAnimeographyEntryResponse>>>(query, ct);
+        return Executor.GetRequest(CharacterAnimeQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<CharacterMangaographyEntryResponse>>> GetCharacterMangaAsync(long id, CancellationToken ct = default)
     {
-        var query = CharacterMangaQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<CharacterMangaographyEntryResponse>>>(query, ct);
+        return Executor.GetRequest(CharacterMangaQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<VoiceActorEntryResponse>>> GetCharacterVoiceActorsAsync(long id, CancellationToken ct = default)
     {
-        var query = CharacterVoiceActorsQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<VoiceActorEntryResponse>>>(query, ct);
+        return Executor.GetRequest(CharacterVoiceActorsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ImagesSetResponse>>> GetCharacterPicturesAsync(long id, CancellationToken ct = default)
     {
-        var query = CharacterPicturesQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ImagesSetResponse>>>(query, ct);
+        return Executor.GetRequest(CharacterPicturesQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<CharacterResponseFull>> GetCharacterFullDataAsync(long id, CancellationToken ct = default)
     {
-        var query = CharacterFullDataQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<CharacterResponseFull>>(query, ct);
+        return Executor.GetRequest(CharacterFullDataQuery.Create(id), ct);
     }
 
     #endregion Character methods
@@ -329,113 +300,97 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<BaseJikanResponse<MangaResponse>> GetMangaAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<MangaResponse>>(query, ct);
+        return Executor.GetRequest(MangaQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<MangaCharacterResponse>>> GetMangaCharactersAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaCharactersQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<MangaCharacterResponse>>>(query, ct);
+        return Executor.GetRequest(MangaCharactersQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<NewsResponse>>> GetMangaNewsAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaNewsQuery.Create(id);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<NewsResponse>>>(query, ct);
+        return Executor.GetRequest(MangaNewsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<NewsResponse>>> GetMangaNewsAsync(long id, int page, CancellationToken ct = default)
     {
-        var query = MangaNewsQuery.Create(id, page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<NewsResponse>>>(query, ct);
+        return Executor.GetRequest(MangaNewsQuery.Create(id, page), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ForumTopicResponse>>> GetMangaForumTopicsAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaForumTopicsQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ForumTopicResponse>>>(query, ct);
+        return Executor.GetRequest(MangaForumTopicsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ImagesSetResponse>>> GetMangaPicturesAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaPicturesQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ImagesSetResponse>>>(query, ct);
+        return Executor.GetRequest(MangaPicturesQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<MangaStatisticsResponse>> GetMangaStatisticsAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaStatisticsQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<MangaStatisticsResponse>>(query, ct);
+        return Executor.GetRequest(MangaStatisticsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<MoreInfoResponse>> GetMangaMoreInfoAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaMoreInfoQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<MoreInfoResponse>>(query, ct);
+        return Executor.GetRequest(MangaMoreInfoQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<MangaUserUpdateResponse>>> GetMangaUserUpdatesAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaUserUpdatesQuery.Create(id);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MangaUserUpdateResponse>>>(query, ct);
+        return Executor.GetRequest(MangaUserUpdatesQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<MangaUserUpdateResponse>>> GetMangaUserUpdatesAsync(long id, int page, CancellationToken ct = default)
     {
-        var query = MangaUserUpdatesQuery.Create(id, page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MangaUserUpdateResponse>>>(query, ct);
+        return Executor.GetRequest(MangaUserUpdatesQuery.Create(id, page), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<RecommendationResponse>>> GetMangaRecommendationsAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaRecommendationsQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<RecommendationResponse>>>(query, ct);
+        return Executor.GetRequest(MangaRecommendationsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetMangaReviewsAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaReviewsQuery.Create(id);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(MangaReviewsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetMangaReviewsAsync(long id, int page, CancellationToken ct = default)
     {
-        var query = MangaReviewsQuery.Create(id, page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(MangaReviewsQuery.Create(id, page), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<RelatedEntryResponse>>> GetMangaRelationsAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaRelationsQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<RelatedEntryResponse>>>(query, ct);
+        return Executor.GetRequest(MangaRelationsQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ExternalLinkResponse>>> GetMangaExternalLinksAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaExternalLinksQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ExternalLinkResponse>>>(query, ct);
+        return Executor.GetRequest(MangaExternalLinksQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<MangaResponseFull>> GetMangaFullDataAsync(long id, CancellationToken ct = default)
     {
-        var query = MangaFullDataQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<MangaResponseFull>>(query, ct);
+        return Executor.GetRequest(MangaFullDataQuery.Create(id), ct);
     }
 
     #endregion Manga methods
@@ -445,43 +400,37 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<BaseJikanResponse<PersonResponse>> GetPersonAsync(long id, CancellationToken ct = default)
     {
-        var query = PersonQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<PersonResponse>>(query, ct);
+        return Executor.GetRequest(PersonQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<PersonAnimeographyEntryResponse>>> GetPersonAnimeAsync(long id, CancellationToken ct = default)
     {
-        var query = PersonAnimeQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<PersonAnimeographyEntryResponse>>>(query, ct);
+        return Executor.GetRequest(PersonAnimeQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<PersonMangaographyEntryResponse>>> GetPersonMangaAsync(long id, CancellationToken ct = default)
     {
-        var query = PersonMangaQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<PersonMangaographyEntryResponse>>>(query, ct);
+        return Executor.GetRequest(PersonMangaQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<VoiceActingRoleResponse>>> GetPersonVoiceActingRolesAsync(long id, CancellationToken ct = default)
     {
-        var query = PersonVoiceActingRolesQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<VoiceActingRoleResponse>>>(query, ct);
+        return Executor.GetRequest(PersonVoiceActingRolesQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ImagesSetResponse>>> GetPersonPicturesAsync(long id, CancellationToken ct = default)
     {
-        var query = PersonPicturesQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ImagesSetResponse>>>(query, ct);
+        return Executor.GetRequest(PersonPicturesQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<PersonResponseFull>> GetPersonFullDataAsync(long id, CancellationToken ct = default)
     {
-        var query = PersonFullDataQuery.Create(id);
-        return ExecuteGetRequestAsync<BaseJikanResponse<PersonResponseFull>>(query, ct);
+        return Executor.GetRequest(PersonFullDataQuery.Create(id), ct);
     }
 
     #endregion Person methods
@@ -491,71 +440,61 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetSeasonAsync(int year, Season season, CancellationToken ct = default)
     {
-        var query = SeasonQuery.Create(year, season);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(SeasonQuery.Create(year, season), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetSeasonAsync(int year, Season season, int page, CancellationToken ct = default)
     {
-        var query = SeasonQuery.Create(year, season, page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(SeasonQuery.Create(year, season, page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetSeasonAsync(int year, Season season, SeasonQueryParameters parameters, CancellationToken ct = default)
     {
-        var query = SeasonQuery.Create(year, season, parameters);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(SeasonQuery.Create(year, season, parameters), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<SeasonArchiveResponse>>> GetSeasonArchiveAsync(CancellationToken ct = default)
     {
-        var query = SeasonArchiveQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<SeasonArchiveResponse>>>(query, ct);
+        return Executor.GetRequest(SeasonArchiveQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetCurrentSeasonAsync(CancellationToken ct = default)
     {
-        var query = CurrentSeasonQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(CurrentSeasonQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetCurrentSeasonAsync(int page, CancellationToken ct = default)
     {
-        var query = CurrentSeasonQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(CurrentSeasonQuery.Create(page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetCurrentSeasonAsync(SeasonQueryParameters parameters, CancellationToken ct = default)
     {
-        var query = CurrentSeasonQuery.Create(parameters);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(CurrentSeasonQuery.Create(parameters), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetUpcomingSeasonAsync(CancellationToken ct = default)
     {
-        var query = UpcomingSeasonQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(UpcomingSeasonQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetUpcomingSeasonAsync(int page, CancellationToken ct = default)
     {
-        var query = UpcomingSeasonQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(UpcomingSeasonQuery.Create(page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetUpcomingSeasonAsync(SeasonQueryParameters parameters, CancellationToken ct = default)
     {
-        var query = UpcomingSeasonQuery.Create(parameters);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(UpcomingSeasonQuery.Create(parameters), ct);
     }
 
     #endregion Season methods
@@ -565,29 +504,25 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetScheduleAsync(CancellationToken ct = default)
     {
-        var query = ScheduleQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(ScheduleQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetScheduleAsync(int page, CancellationToken ct = default)
     {
-        var query = ScheduleQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(ScheduleQuery.Create(page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetScheduleAsync(ScheduledDay scheduledDay, CancellationToken ct = default)
     {
-        var query = ScheduleQuery.Create(scheduledDay);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(ScheduleQuery.Create(scheduledDay), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetScheduleAsync(ScheduleQueryParameters parameters, CancellationToken ct = default)
     {
-        var query = ScheduleQuery.Create(parameters);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(ScheduleQuery.Create(parameters), ct);
     }
 
     #endregion Schedule methods
@@ -597,148 +532,127 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetTopAnimeAsync(CancellationToken ct = default)
     {
-        var query = TopAnimeQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(TopAnimeQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetTopAnimeAsync(int page, CancellationToken ct = default)
     {
-        var query = TopAnimeQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(TopAnimeQuery.Create(page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetTopAnimeAsync(TopAnimeFilter filter, CancellationToken ct = default)
     {
-        var query = TopAnimeQuery.Create(filter);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(TopAnimeQuery.Create(filter), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetTopAnimeAsync(TopAnimeFilter filter, int page, CancellationToken ct = default)
     {
-        var query = TopAnimeQuery.Create(page, filter);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(TopAnimeQuery.Create(page, filter), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetTopAnimeAsync(TopAnimeQueryParameters parameters, CancellationToken ct = default)
     {
-        var query = TopAnimeQuery.Create(parameters);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(query, ct);
+        return Executor.GetRequest(TopAnimeQuery.Create(parameters), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<MangaResponse>>> GetTopMangaAsync(CancellationToken ct = default)
     {
-        var query = TopMangaQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MangaResponse>>>(query, ct);
+        return Executor.GetRequest(TopMangaQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<MangaResponse>>> GetTopMangaAsync(int page, CancellationToken ct = default)
     {
-        var query = TopMangaQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MangaResponse>>>(query, ct);
+        return Executor.GetRequest(TopMangaQuery.Create(page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<MangaResponse>>> GetTopMangaAsync(TopMangaFilter filter, CancellationToken ct = default)
     {
-        var query = TopMangaQuery.Create(filter);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MangaResponse>>>(query, ct);
+        return Executor.GetRequest(TopMangaQuery.Create(filter), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<MangaResponse>>> GetTopMangaAsync(TopMangaFilter filter, int page, CancellationToken ct = default)
     {
-        var query = TopMangaQuery.Create(page, filter);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MangaResponse>>>(query, ct);
+        return Executor.GetRequest(TopMangaQuery.Create(page, filter), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<MangaResponse>>> GetTopMangaAsync(TopMangaQueryParameters parameters, CancellationToken ct = default)
     {
-        var query = TopMangaQuery.Create(parameters);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MangaResponse>>>(query, ct);
+        return Executor.GetRequest(TopMangaQuery.Create(parameters), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<PersonResponse>>> GetTopPeopleAsync(CancellationToken ct = default)
     {
-        var query = TopPeopleQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<PersonResponse>>>(query, ct);
+        return Executor.GetRequest(TopPeopleQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<PersonResponse>>> GetTopPeopleAsync(int page, CancellationToken ct = default)
     {
-        var query = TopPeopleQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<PersonResponse>>>(query, ct);
+        return Executor.GetRequest(TopPeopleQuery.Create(page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<PersonResponse>>> GetTopPeopleAsync(int page, int limit, CancellationToken ct = default)
     {
-        var query = TopPeopleQuery.Create(page, limit);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<PersonResponse>>>(query, ct);
+        return Executor.GetRequest(TopPeopleQuery.Create(page, limit), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<CharacterResponse>>> GetTopCharactersAsync(CancellationToken ct = default)
     {
-        var query = TopCharacterQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<CharacterResponse>>>(query, ct);
+        return Executor.GetRequest(TopCharacterQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<CharacterResponse>>> GetTopCharactersAsync(int page, CancellationToken ct = default)
     {
-        var query = TopCharacterQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<CharacterResponse>>>(query, ct);
+        return Executor.GetRequest(TopCharacterQuery.Create(page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<CharacterResponse>>> GetTopCharactersAsync(int page, int limit, CancellationToken ct = default)
     {
-        var query = TopCharacterQuery.Create(page, limit);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<CharacterResponse>>>(query, ct);
+        return Executor.GetRequest(TopCharacterQuery.Create(page, limit), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(CancellationToken ct = default)
     {
-        var query = TopReviewsQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(TopReviewsQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(int page, CancellationToken ct = default)
     {
-        var query = TopReviewsQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(TopReviewsQuery.Create(page), ct);
     }
 
     /// <inheritdoc />
-    public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(TopReviewsType type, CancellationToken ct = default)
+    public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(TopReviewsTypeFilter type, CancellationToken ct = default)
     {
-        var query = TopReviewsQuery.Create(type);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(TopReviewsQuery.Create(type), ct);
     }
 
     /// <inheritdoc />
-    public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(int page, TopReviewsType type, CancellationToken ct = default)
+    public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(int page, TopReviewsTypeFilter type, CancellationToken ct = default)
     {
-        var query = TopReviewsQuery.Create(page, type);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(TopReviewsQuery.Create(page, type), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(TopReviewsQueryParameters parameters, CancellationToken ct = default)
     {
-        var query = TopReviewsQuery.Create(parameters);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(TopReviewsQuery.Create(parameters), ct);
     }
 
     #endregion Top methods
@@ -748,29 +662,25 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<GenreResponse>>> GetAnimeGenresAsync(CancellationToken ct = default)
     {
-        var query = AnimeGenresQuery.Create();
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<GenreResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeGenresQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<GenreResponse>>> GetAnimeGenresAsync(GenresFilter filter, CancellationToken ct = default)
     {
-        var query = AnimeGenresQuery.Create(filter);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<GenreResponse>>>(query, ct);
+        return Executor.GetRequest(AnimeGenresQuery.Create(filter), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<GenreResponse>>> GetMangaGenresAsync(CancellationToken ct = default)
     {
-        var query = MangaGenresQuery.Create();
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<GenreResponse>>>(query, ct);
+        return Executor.GetRequest(MangaGenresQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<GenreResponse>>> GetMangaGenresAsync(GenresFilter filter, CancellationToken ct = default)
     {
-        var query = MangaGenresQuery.Create(filter);
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<GenreResponse>>>(query, ct);
+        return Executor.GetRequest(MangaGenresQuery.Create(filter), ct);
     }
 
     #endregion Genre methods
@@ -780,62 +690,37 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ProducerResponse>>> GetProducersAsync(CancellationToken ct = default)
     {
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Producers
-        };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ProducerResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(ProducersQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ProducerResponse>>> GetProducersAsync(int page, CancellationToken ct = default)
     {
-        Guard.IsGreaterThanZero(page, nameof(page));
+        return Executor.GetRequest(ProducersQuery.Create(page), ct);
+    }
 
-        var queryParams = $"?page={page}";
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Producers + queryParams
-        };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ProducerResponse>>>(endpointParts, ct);
+    /// <inheritdoc />
+    public Task<PaginatedJikanResponse<ICollection<ProducerResponse>>> GetProducersAsync(ProducersQueryParameters parameters, CancellationToken ct = default)
+    {
+        return Executor.GetRequest(ProducersQuery.Create(parameters), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ProducerResponse>> GetProducerAsync(long id, CancellationToken ct = default)
     {
-        Guard.IsGreaterThanZero(id, nameof(id));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Producers, id.ToString()
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ProducerResponse>>(endpointParts, ct);
+        return Executor.GetRequest(ProducerQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ExternalLinkResponse>>> GetProducerExternalLinksAsync(long id, CancellationToken ct = default)
     {
-        Guard.IsGreaterThanZero(id, nameof(id));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Producers, id.ToString(), JikanEndpointConsts.External
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ExternalLinkResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(ProducerExternalLinksQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ProducerResponseFull>> GetProducerFullDataAsync(long id, CancellationToken ct = default)
     {
-        Guard.IsGreaterThanZero(id, nameof(id));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Producers,
-            id.ToString(),
-            JikanEndpointConsts.Full
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ProducerResponseFull>>(endpointParts, ct);
+        return Executor.GetRequest(ProducerFullDataQuery.Create(id), ct);
     }
 
     #endregion Producer methods
@@ -845,15 +730,31 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<MagazineResponse>>> GetMagazinesAsync(CancellationToken ct = default)
     {
-        var query = MagazinesQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MagazineResponse>>>(query, ct);
+        return Executor.GetRequest(MagazinesQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<MagazineResponse>>> GetMagazinesAsync(int page, CancellationToken ct = default)
     {
-        var query = MagazinesQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MagazineResponse>>>(query, ct);
+        return Executor.GetRequest(MagazinesQuery.Create(page), ct);
+    }
+
+    /// <inheritdoc />
+    public Task<PaginatedJikanResponse<ICollection<MagazineResponse>>> GetMagazinesAsync(string query, CancellationToken ct = default)
+    {
+        return Executor.GetRequest(MagazinesQuery.Create(query), ct);
+    }
+
+    /// <inheritdoc />
+    public Task<PaginatedJikanResponse<ICollection<MagazineResponse>>> GetMagazinesAsync(string query, int page, CancellationToken ct = default)
+    {
+        return Executor.GetRequest(MagazinesQuery.Create(query, page), ct);
+    }
+
+    /// <inheritdoc />
+    public Task<PaginatedJikanResponse<ICollection<MagazineResponse>>> GetMagazinesAsync(MagazinesQueryParameters parameters, CancellationToken ct = default)
+    {
+        return Executor.GetRequest(MagazinesQuery.Create(parameters), ct);
     }
 
     #endregion Magazine methods
@@ -863,50 +764,31 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<BaseJikanResponse<ClubResponse>> GetClubAsync(long id, CancellationToken ct = default)
     {
-        Guard.IsGreaterThanZero(id, nameof(id));
-        string[] endpointParts = { JikanEndpointConsts.Clubs, id.ToString() };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ClubResponse>>(endpointParts, ct);
+        return Executor.GetRequest(ClubQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
-    public Task<PaginatedJikanResponse<ICollection<ClubMemberResponse>>> GetClubMembersAsync(long id,
-        CancellationToken ct = default)
+    public Task<PaginatedJikanResponse<ICollection<ClubMemberResponse>>> GetClubMembersAsync(long id, CancellationToken ct = default)
     {
-        Guard.IsGreaterThanZero(id, nameof(id));
-        string[] endpointParts = { JikanEndpointConsts.Clubs, id.ToString(), JikanEndpointConsts.Members };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ClubMemberResponse>>>(endpointParts,
-            ct);
+        return Executor.GetRequest(ClubMembersQuery.Create(id), ct);
     }
 
     /// <inheritdoc />
-    public Task<PaginatedJikanResponse<ICollection<ClubMemberResponse>>> GetClubMembersAsync(long id,
-        int page, CancellationToken ct = default)
+    public Task<PaginatedJikanResponse<ICollection<ClubMemberResponse>>> GetClubMembersAsync(long id, int page, CancellationToken ct = default)
     {
-        Guard.IsGreaterThanZero(id, nameof(id));
-        Guard.IsGreaterThanZero(page, nameof(page));
-        var queryParams = $"?page={page}";
-        string[] endpointParts =
-            { JikanEndpointConsts.Clubs, id.ToString(), JikanEndpointConsts.Members + queryParams };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ClubMemberResponse>>>(endpointParts,
-            ct);
+        return Executor.GetRequest(ClubMembersQuery.Create(id, page), ct);
     }
 
     /// <inheritdoc />
-    public Task<BaseJikanResponse<ICollection<ClubStaffResponse>>> GetClubStaffAsync(long id,
-        CancellationToken ct = default)
+    public Task<BaseJikanResponse<ICollection<ClubStaffResponse>>> GetClubStaffAsync(long id, CancellationToken ct = default)
     {
-        Guard.IsGreaterThanZero(id, nameof(id));
-        string[] endpointParts = { JikanEndpointConsts.Clubs, id.ToString(), JikanEndpointConsts.Staff };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ClubStaffResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(ClubStaffQuery.Crete(id), ct);
     }
 
     /// <inheritdoc />
-    public Task<BaseJikanResponse<ClubRelationsResponse>> GetClubRelationsAsync(long id,
-        CancellationToken ct = default)
+    public Task<BaseJikanResponse<ClubRelationsResponse>> GetClubRelationsAsync(long id, CancellationToken ct = default)
     {
-        Guard.IsGreaterThanZero(id, nameof(id));
-        string[] endpointParts = { JikanEndpointConsts.Clubs, id.ToString(), JikanEndpointConsts.Relations };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ClubRelationsResponse>>(endpointParts, ct);
+        return Executor.GetRequest(ClubRelationsQuery.Create(id), ct);
     }
 
     #endregion Club methods
@@ -916,312 +798,131 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<BaseJikanResponse<UserProfileResponse>> GetUserProfileAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<UserProfileResponse>>(endpointParts, ct);
+        return Executor.GetRequest(UserProfileQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<UserStatisticsResponse>> GetUserStatisticsAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.Statistics
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<UserStatisticsResponse>>(endpointParts, ct);
+        return Executor.GetRequest(UserStatisticsQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<UserFavoritesResponse>> GetUserFavoritesAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.Favorites
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<UserFavoritesResponse>>(endpointParts, ct);
+        return Executor.GetRequest(UserFavoritesQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<UserUpdatesResponse>> GetUserUpdatesAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.UserUpdates
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<UserUpdatesResponse>>(endpointParts, ct);
+        return Executor.GetRequest(UserUpdatesQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<UserAboutResponse>> GetUserAboutAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.About
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<UserAboutResponse>>(endpointParts, ct);
+        return Executor.GetRequest(UserAboutQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<HistoryEntryResponse>>> GetUserHistoryAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.History
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<HistoryEntryResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(UserHistoryQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
-    public Task<BaseJikanResponse<ICollection<HistoryEntryResponse>>> GetUserHistoryAsync(string username, UserHistoryExtension userHistory, CancellationToken ct = default)
+    public Task<BaseJikanResponse<ICollection<HistoryEntryResponse>>> GetUserHistoryAsync(string username, UserHistoryTypeFilter type, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        Guard.IsValidEnum(userHistory, nameof(userHistory));
-
-        var queryParams = $"?filter={userHistory.GetEnumMemberValue() ?? throw InvalidEnumException<UserHistoryExtension>.EnumMember(userHistory, nameof(userHistory))}";
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.History + queryParams
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<HistoryEntryResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(UserHistoryQuery.Create(username, type), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress.ToString(), nameof(GetUserAnimeListAsync));
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.AnimeList
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<AnimeListEntryResponse>>>(endpointParts, ct);
+        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserAnimeListAsync));
+        return Executor.GetRequest(UserAnimeListQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
-    public Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, int page, CancellationToken ct = default)
+    public Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, UserAnimeStatusFilter filter, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress.ToString(), nameof(GetUserAnimeListAsync));
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        Guard.IsGreaterThanZero(page, nameof(page));
-
-        var queryParams = $"?page={page}";
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.AnimeList + queryParams
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<AnimeListEntryResponse>>>(endpointParts, ct);
+        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserAnimeListAsync));
+        return Executor.GetRequest(UserAnimeListQuery.Create(username, filter), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress.ToString(), nameof(GetUserMangaListAsync));
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.MangaList
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<MangaListEntryResponse>>>(endpointParts, ct);
+        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserMangaListAsync));
+        return Executor.GetRequest(UserMangaListQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
-    public Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, int page, CancellationToken ct = default)
+    public Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, UserMangaStatusFilter filter, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress.ToString(), nameof(GetUserMangaListAsync));
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        Guard.IsGreaterThanZero(page, nameof(page));
-
-        var queryParams = $"?page={page}";
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.MangaList + queryParams
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<MangaListEntryResponse>>>(endpointParts, ct);
+        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserMangaListAsync));
+        return Executor.GetRequest(UserMangaListQuery.Create(username, filter), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<FriendResponse>>> GetUserFriendsAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.Friends
-        };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<FriendResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(UserFriendsQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<FriendResponse>>> GetUserFriendsAsync(string username, int page, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        Guard.IsGreaterThanZero(page, nameof(page));
-
-        var queryParams = $"?page={page}";
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.Friends + queryParams
-        };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<FriendResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(UserFriendsQuery.Create(username, page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetUserReviewsAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.Reviews
-        };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(UserReviewsQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetUserReviewsAsync(string username, int page, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        Guard.IsGreaterThanZero(page, nameof(page));
-
-        var queryParams = $"?page={page}";
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.Reviews + queryParams
-        };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(UserReviewsQuery.Create(username, page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>> GetUserRecommendationsAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.Recommendations
-        };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(UserRecommendationsQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>> GetUserRecommendationsAsync(string username, int page, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        Guard.IsGreaterThanZero(page, nameof(page));
-
-        var queryParams = $"?page={page}";
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.Recommendations + queryParams
-        };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(UserRecommendationsQuery.Create(username, page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<MalUrlResponse>>> GetUserClubsAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.Clubs
-        };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MalUrlResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(UserClubsQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<MalUrlResponse>>> GetUserClubsAsync(string username, int page, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        Guard.IsGreaterThanZero(page, nameof(page));
-
-        var queryParams = $"?page={page}";
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.Clubs + queryParams
-        };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MalUrlResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(UserClubsQuery.Create(username, page), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<ExternalLinkResponse>>> GetUserExternalLinksAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.External
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<ICollection<ExternalLinkResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(UserExternalLinksQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<UserResponseFull>> GetUserFullDataAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-
-        string[] endpointParts =
-        {
-            JikanEndpointConsts.Users,
-            username,
-            JikanEndpointConsts.Full
-        };
-        return ExecuteGetRequestAsync<BaseJikanResponse<UserResponseFull>>(endpointParts, ct);
+        return Executor.GetRequest(UserFullDataQuery.Create(username), ct);
     }
 
     #endregion User methods
@@ -1231,36 +932,31 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc/>
     public Task<BaseJikanResponse<AnimeResponse>> GetRandomAnimeAsync(CancellationToken ct = default)
     {
-        var query = RandomAnimeQuery.Create();
-        return ExecuteGetRequestAsync<BaseJikanResponse<AnimeResponse>>(query, ct);
+        return Executor.GetRequest(RandomAnimeQuery.Create(), ct);
     }
 
     /// <inheritdoc/>
     public Task<BaseJikanResponse<MangaResponse>> GetRandomMangaAsync(CancellationToken ct = default)
     {
-        var query = RandomMangaQuery.Create();
-        return ExecuteGetRequestAsync<BaseJikanResponse<MangaResponse>>(query, ct);
+        return Executor.GetRequest(RandomMangaQuery.Create(), ct);
     }
 
     /// <inheritdoc/>
     public Task<BaseJikanResponse<CharacterResponse>> GetRandomCharacterAsync(CancellationToken ct = default)
     {
-        var query = RandomCharacterQuery.Create();
-        return ExecuteGetRequestAsync<BaseJikanResponse<CharacterResponse>>(query, ct);
+        return Executor.GetRequest(RandomCharacterQuery.Create(), ct);
     }
 
     /// <inheritdoc/>
     public Task<BaseJikanResponse<PersonResponse>> GetRandomPersonAsync(CancellationToken ct = default)
     {
-        var query = RandomPersonQuery.Create();
-        return ExecuteGetRequestAsync<BaseJikanResponse<PersonResponse>>(query, ct);
+        return Executor.GetRequest(RandomPersonQuery.Create(), ct);
     }
 
     /// <inheritdoc/>
     public Task<BaseJikanResponse<UserProfileResponse>> GetRandomUserAsync(CancellationToken ct = default)
     {
-        var query = RandomUserQuery.Create();
-        return ExecuteGetRequestAsync<BaseJikanResponse<UserProfileResponse>>(query, ct);
+        return Executor.GetRequest(RandomUserQuery.Create(), ct);
     }
 
     #endregion Random methods
@@ -1270,29 +966,25 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>> GetWatchRecentEpisodesAsync(CancellationToken ct = default)
     {
-        var query = WatchRecentEpisodesQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>>(query, ct);
+        return Executor.GetRequest(WatchRecentEpisodesQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>> GetWatchPopularEpisodesAsync(CancellationToken ct = default)
     {
-        var query = WatchPopularEpisodesQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>>(query, ct);
+        return Executor.GetRequest(WatchPopularEpisodesQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>> GetWatchRecentPromosAsync(CancellationToken ct = default)
     {
-        var query = WatchRecentPromosQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>>(query, ct);
+        return Executor.GetRequest(WatchRecentPromosQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>> GetWatchPopularPromosAsync(CancellationToken ct = default)
     {
-        var query = WatchPopularPromosQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<WatchPromoVideoResponse>>>(query, ct);
+        return Executor.GetRequest(WatchPopularPromosQuery.Create(), ct);
     }
 
     #endregion
@@ -1302,29 +994,25 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetRecentAnimeReviewsAsync(CancellationToken ct = default)
     {
-        var query = RecentAnimeReviewsQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(RecentAnimeReviewsQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetRecentAnimeReviewsAsync(int page, CancellationToken ct = default)
     {
-        var query = RecentAnimeReviewsQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(RecentAnimeReviewsQuery.Create(page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetRecentMangaReviewsAsync(CancellationToken ct = default)
     {
-        var query = RecentMangaReviewsQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(RecentMangaReviewsQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetRecentMangaReviewsAsync(int page, CancellationToken ct = default)
     {
-        var query = RecentMangaReviewsQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ReviewResponse>>>(query, ct);
+        return Executor.GetRequest(RecentMangaReviewsQuery.Create(page), ct);
     }
 
     #endregion
@@ -1334,34 +1022,32 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>> GetRecentAnimeRecommendationsAsync(CancellationToken ct = default)
     {
-        var query = RecentAnimeRecommendationsQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>>(query, ct);
+        return Executor.GetRequest(RecentAnimeRecommendationsQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>> GetRecentAnimeRecommendationsAsync(int page, CancellationToken ct = default)
     {
-        var query = RecentAnimeRecommendationsQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>>(query, ct);
+        return Executor.GetRequest(RecentAnimeRecommendationsQuery.Create(page), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>> GetRecentMangaRecommendationsAsync(CancellationToken ct = default)
     {
-        var query = RecentMangaRecommendationsQuery.Create();
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>>(query, ct);
+        return Executor.GetRequest(RecentMangaRecommendationsQuery.Create(), ct);
     }
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>> GetRecentMangaRecommendationsAsync(int page, CancellationToken ct = default)
     {
-        var query = RecentMangaRecommendationsQuery.Create(page);
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>>(query, ct);
+        return Executor.GetRequest(RecentMangaRecommendationsQuery.Create(page), ct);
     }
 
     #endregion
 
     #region Search methods
+
+    //TODO: Refactor
 
     /// <inheritdoc />
     public Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> SearchAnimeAsync(string query, CancellationToken ct = default)
@@ -1378,7 +1064,7 @@ public sealed class JikanClient : IJikan, IDisposable
         {
             JikanEndpointConsts.Anime + searchConfig.ConfigToString()
         };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<AnimeResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(endpointParts, ct);
     }
 
     /// <inheritdoc />
@@ -1396,7 +1082,7 @@ public sealed class JikanClient : IJikan, IDisposable
         {
             JikanEndpointConsts.Manga + searchConfig.ConfigToString()
         };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<MangaResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(endpointParts, ct);
     }
 
     /// <inheritdoc />
@@ -1414,7 +1100,7 @@ public sealed class JikanClient : IJikan, IDisposable
         {
             JikanEndpointConsts.People + searchConfig.ConfigToString()
         };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<PersonResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(endpointParts, ct);
     }
 
     /// <inheritdoc />
@@ -1432,7 +1118,7 @@ public sealed class JikanClient : IJikan, IDisposable
         {
             JikanEndpointConsts.Characters + searchConfig.ConfigToString()
         };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<CharacterResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(endpointParts, ct);
     }
 
     /// <inheritdoc />
@@ -1450,7 +1136,7 @@ public sealed class JikanClient : IJikan, IDisposable
         {
             JikanEndpointConsts.Users + searchConfig.ConfigToString()
         };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<UserMetadataResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(endpointParts, ct);
     }
 
     /// <inheritdoc />
@@ -1468,7 +1154,7 @@ public sealed class JikanClient : IJikan, IDisposable
         {
             JikanEndpointConsts.Users + searchConfig.ConfigToString()
         };
-        return ExecuteGetRequestAsync<PaginatedJikanResponse<ICollection<ClubResponse>>>(endpointParts, ct);
+        return Executor.GetRequest(endpointParts, ct);
     }
 
     #endregion Search methods

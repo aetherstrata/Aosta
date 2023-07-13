@@ -5,7 +5,7 @@ namespace Aosta.Jikan.Query.Enums;
 /// <summary>
 /// Filter used to retrieve top reviews
 /// </summary>
-public enum TopReviewsType
+public enum TopReviewsTypeFilter
 {
     /// <summary>
     /// Get top reviews for animes only

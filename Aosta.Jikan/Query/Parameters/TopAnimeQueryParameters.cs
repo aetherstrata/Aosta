@@ -16,7 +16,7 @@ public class TopAnimeQueryParameters : JikanQueryParameterSet
     public TopAnimeQueryParameters SetLimit(int limit)
     {
         Guard.IsGreaterThanZero(limit, nameof(limit));
-        Guard.IsLessOrEqualThan(limit, ParameterConsts.MaximumPageSize, nameof(limit));
+        Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MaximumPageSize, nameof(limit));
         base.Add(QueryParameter.Limit, limit);
         return this;
     }

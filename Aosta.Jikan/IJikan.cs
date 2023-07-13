@@ -675,7 +675,7 @@ public interface IJikan
 	/// Returns list of most popular people.
 	/// </summary>
 	/// <param name="page">Index of page folding 25 records of top ranging (e.g. 1 will return first 25 records, 2 will return record from 26 to 50 etc.)</param>
-	/// <param name="limit">Maximum number of results per page (Maximum is <see cref="ParameterConsts.MaximumPageSize"/>)</param>
+	/// <param name="limit">Maximum number of results per page (Maximum is <see cref="JikanParameterConsts.MaximumPageSize"/>)</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of most popular people.</returns>
 	Task<PaginatedJikanResponse<ICollection<PersonResponse>>> GetTopPeopleAsync(int page, int limit, CancellationToken ct = default);
@@ -698,7 +698,7 @@ public interface IJikan
 	/// Returns list of most popular characters.
 	/// </summary>
 	/// <param name="page">Index of page folding 25 records of top ranging (e.g. 1 will return first 25 records, 2 will return record from 26 to 50 etc.)</param>
-	/// <param name="limit">Maximum number of results per page (Maximum is <see cref="ParameterConsts.MaximumPageSize"/>)</param>
+	/// <param name="limit">Maximum number of results per page (Maximum is <see cref="JikanParameterConsts.MaximumPageSize"/>)</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of most popular characters.</returns>
 	Task<PaginatedJikanResponse<ICollection<CharacterResponse>>> GetTopCharactersAsync(int page, int limit, CancellationToken ct = default);
@@ -720,19 +720,19 @@ public interface IJikan
 	/// <summary>
 	/// Returns list of most popular reviews.
 	/// </summary>
-	/// <param name="type">Filter determining result of request (e.g. <see cref="TopReviewsType.Anime"/> will return top anime reviews.)</param>
+	/// <param name="type">Filter determining result of request (e.g. <see cref="TopReviewsTypeFilter.Anime"/> will return top anime reviews.)</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of most popular reviews.</returns>
-	Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(TopReviewsType type, CancellationToken ct = default);
+	Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(TopReviewsTypeFilter type, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns list of most popular reviews.
 	/// </summary>
 	/// <param name="page">Index of page folding 25 records of top ranging (e.g. 1 will return first 25 records, 2 will return record from 26 to 50 etc.)</param>
-	/// <param name="type">Filter determining result of request (e.g. <see cref="TopReviewsType.Anime"/> will return top anime reviews.)</param>
+	/// <param name="type">Filter determining result of request (e.g. <see cref="TopReviewsTypeFilter.Anime"/> will return top anime reviews.)</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of most popular reviews.</returns>
-	Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(int page, TopReviewsType type, CancellationToken ct = default);
+	Task<PaginatedJikanResponse<ICollection<ReviewResponse>>> GetTopReviewsAsync(int page, TopReviewsTypeFilter type, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns list of most popular reviews.
@@ -796,6 +796,14 @@ public interface IJikan
 	Task<PaginatedJikanResponse<ICollection<ProducerResponse>>> GetProducersAsync(int page, CancellationToken ct = default);
 
 	/// <summary>
+	/// Returns information about producers.
+	/// </summary>
+	/// <param name="parameters">Parameter configuration for this query.</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>Basic Information about producers.</returns>
+	Task<PaginatedJikanResponse<ICollection<ProducerResponse>>> GetProducersAsync(ProducersQueryParameters parameters, CancellationToken ct = default);
+
+	/// <summary>
 	/// Returns information about producer.
 	/// </summary>
 	/// <param name="id">MAL id of the producer.</param>
@@ -837,6 +845,32 @@ public interface IJikan
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Basic Information about magazines.</returns>
 	Task<PaginatedJikanResponse<ICollection<MagazineResponse>>> GetMagazinesAsync(int page, CancellationToken ct = default);
+
+	/// <summary>
+	/// Returns information about magazines.
+	/// </summary>
+	/// <param name="query">Search for magazines with this name</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>Basic Information about magazines.</returns>
+	Task<PaginatedJikanResponse<ICollection<MagazineResponse>>> GetMagazinesAsync(string query, CancellationToken ct = default);
+
+	/// <summary>
+	/// Returns information about magazines.
+	/// </summary>
+	/// <param name="query">Search for magazines with this name</param>
+	/// <param name="page">Index of page folding 100 records of top ranging (e.g. 1 will return first 100 records, 2 will return record from 101 to 200 etc.)</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>Basic Information about magazines.</returns>
+	Task<PaginatedJikanResponse<ICollection<MagazineResponse>>> GetMagazinesAsync(string query, int page, CancellationToken ct = default);
+
+
+	/// <summary>
+	/// Returns information about magazines.
+	/// </summary>
+	/// <param name="parameters">Parameter configuration for this query.</param>
+	/// <param name="ct">Cancellation token.</param>
+	/// <returns>Basic Information about magazines.</returns>
+	Task<PaginatedJikanResponse<ICollection<MagazineResponse>>> GetMagazinesAsync(MagazinesQueryParameters parameters, CancellationToken ct = default);
 
 	#endregion Magazine requests
 
@@ -942,7 +976,7 @@ public interface IJikan
 	/// <param name="userHistory">Option to filter history.</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Information about user's profile with given username.</returns>
-	Task<BaseJikanResponse<ICollection<HistoryEntryResponse>>> GetUserHistoryAsync(string username, UserHistoryExtension userHistory, CancellationToken ct = default);
+	Task<BaseJikanResponse<ICollection<HistoryEntryResponse>>> GetUserHistoryAsync(string username, UserHistoryTypeFilter userHistory, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns information about user's friends with given username.
@@ -973,10 +1007,10 @@ public interface IJikan
 	/// Returns entries on user's anime list.
 	/// </summary>
 	/// <param name="username">Username.</param>
-	/// <param name="page">Index of page folding 300 records of top ranging (e.g. 1 will return first 300 records, 2 will return record from 301 to 600 etc.)</param>
+	/// <param name="filter">Filter specific entries from the list (eg. <see cref="UserAnimeStatusFilter.Dropped"/> returns only dropped animes)</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Entries on user's anime list.</returns>
-	Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, int page, CancellationToken ct = default);
+	Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, UserAnimeStatusFilter filter, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns entries on user's manga list.
@@ -990,10 +1024,10 @@ public interface IJikan
 	/// Returns entries on user's manga list.
 	/// </summary>
 	/// <param name="username">Username.</param>
-	/// <param name="page">Index of page folding 300 records of top ranging (e.g. 1 will return first 300 records, 2 will return record from 301 to 600 etc.)</param>
+	/// <param name="filter">Filter specific entries from the list (eg. <see cref="UserMangaStatusFilter.Reading"/> returns only currently reading mangas)</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Entries on user's manga list.</returns>
-	Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, int page, CancellationToken ct = default);
+	Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, UserMangaStatusFilter filter, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns user's reviews.

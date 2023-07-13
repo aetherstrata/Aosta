@@ -58,7 +58,7 @@ public class CharacterSearchConfig: ISearchConfig
         if (PageSize.HasValue)
         {
 	        Guard.IsGreaterThanZero(PageSize.Value, nameof(PageSize.Value));
-	        Guard.IsLessOrEqualThan(PageSize.Value,ParameterConsts.MaximumPageSize, nameof(PageSize.Value));
+	        Guard.IsLessOrEqualThan(PageSize.Value,JikanParameterConsts.MaximumPageSize, nameof(PageSize.Value));
 	        builder.Append($"limit={PageSize.Value}&");
         }
         

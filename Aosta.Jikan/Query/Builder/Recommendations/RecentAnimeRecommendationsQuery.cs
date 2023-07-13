@@ -1,3 +1,6 @@
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
+
 namespace Aosta.Jikan.Query;
 
 internal static class RecentAnimeRecommendationsQuery
@@ -8,15 +11,15 @@ internal static class RecentAnimeRecommendationsQuery
         JikanEndpointConsts.Anime
     };
 
-    internal static IQuery Create()
+    internal static IQuery<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>> Create()
     {
-        return new JikanQuery(QueryEndpoint);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>>(QueryEndpoint);
     }
 
-    internal static IQuery Create(int page)
+    internal static IQuery<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>> Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<UserRecommendationResponse>>>(QueryEndpoint)
             .WithParameter(QueryParameter.Page, page);
     }
 }

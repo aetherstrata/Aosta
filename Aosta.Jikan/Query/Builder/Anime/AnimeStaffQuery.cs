@@ -1,3 +1,6 @@
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
+
 namespace Aosta.Jikan.Query;
 
 internal static class AnimeStaffQuery
@@ -9,9 +12,9 @@ internal static class AnimeStaffQuery
         JikanEndpointConsts.Staff
     };
 
-    internal static IQuery Create(long id)
+    internal static IQuery<BaseJikanResponse<ICollection<AnimeStaffPositionResponse>>> Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery(GetEndpoint(id));
+        return new JikanQuery<BaseJikanResponse<ICollection<AnimeStaffPositionResponse>>>(GetEndpoint(id));
     }
 }

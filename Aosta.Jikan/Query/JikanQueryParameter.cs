@@ -1,3 +1,5 @@
+using FastEnumUtility;
+
 namespace Aosta.Jikan.Query;
 
 /// <summary>
@@ -18,12 +20,7 @@ internal class JikanQueryParameter<T> : IQueryParameter, IEquatable<JikanQueryPa
 
     string IQueryParameter.GetName() => Name;
 
-    public override string ToString() => Value switch
-    {
-        true => Name,
-        false => string.Empty,
-        _ => $"{Name}={Value}"
-    };
+    public override string ToString() => $"{Name}={Value}";
 
     public bool Equals(JikanQueryParameter<T>? other)
     {
@@ -52,12 +49,17 @@ internal static class QueryParameter
 {
     public const string Filter = "filter";
     public const string Kids = "kids";
+    public const string Letter = "letter";
     public const string Limit = "limit";
+    public const string OrderBy = "order_by";
     public const string Page = "page";
     public const string Preliminary = "preliminary";
+    public const string Query = "q";
     public const string Rating = "rating";
     public const string SafeForWork = "sfw";
+    public const string Sort = "sort";
     public const string Spoilers = "spoilers";
+    public const string Status = "status";
     public const string Type = "type";
     public const string Unapproved = "unapproved";
 

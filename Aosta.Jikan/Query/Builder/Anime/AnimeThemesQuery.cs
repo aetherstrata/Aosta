@@ -1,3 +1,6 @@
+using Aosta.Jikan.Models.Base;
+using Aosta.Jikan.Models.Response;
+
 namespace Aosta.Jikan.Query;
 
 internal static class AnimeThemesQuery
@@ -9,9 +12,9 @@ internal static class AnimeThemesQuery
         JikanEndpointConsts.Themes
     };
 
-    internal static IQuery Create(long id)
+    internal static IQuery<BaseJikanResponse<AnimeThemesResponse>> Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery(GetEndpoint(id));
+        return new JikanQuery<BaseJikanResponse<AnimeThemesResponse>>(GetEndpoint(id));
     }
 }
