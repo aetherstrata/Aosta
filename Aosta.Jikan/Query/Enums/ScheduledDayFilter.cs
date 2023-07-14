@@ -1,11 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Aosta.Jikan.Enums;
+namespace Aosta.Jikan.Query.Enums;
 
 /// <summary>
 /// Available options for schedule
 /// </summary>
-public enum ScheduledDay
+public enum ScheduledDayFilter
 {
 	/// <summary>
 	/// Unknown schedule.

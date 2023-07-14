@@ -1,7 +1,7 @@
 using Aosta.Jikan.Enums;
-using Aosta.Jikan.Models.Search;
 using Aosta.Jikan.Query;
 using Aosta.Jikan.Query.Enums;
+using Aosta.Jikan.Query.Parameters;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.AnimeTests;
@@ -14,7 +14,9 @@ public class SearchAnimeTestsAsync
 	[TestCase(0)]
 	public async Task InvalidPage_ShouldThrowValidationException(int page)
 	{
-		var config = new AnimeSearchConfig { Page = page };
+		var config = new AnimeSearchQueryParameters()
+			.SetPage(page);
+
 		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(config));
 
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
@@ -28,7 +30,7 @@ public class SearchAnimeTestsAsync
 	[TestCase(int.MaxValue)]
 	public async Task InvalidPageSize_ShouldThrowValidationException(int pageSize)
 	{
-		var config = new AnimeSearchConfig { PageSize = pageSize };
+		var config = new AnimeSearchQueryParameters().SetLimit(pageSize);
 		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(config));
 
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
@@ -37,7 +39,7 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task GivenSecondPage_ShouldReturnSecondPage()
 	{
-		var config = new AnimeSearchConfig {Page = 2};
+		var config = new AnimeSearchQueryParameters().SetPage(2);
 		var anime = await JikanTests.Instance.SearchAnimeAsync(config);
 
 		using var _ = new AssertionScope();
@@ -53,7 +55,7 @@ public class SearchAnimeTestsAsync
 	public async Task GivenValidPageSize_ShouldReturnPageSizeNumberOfRecords()
 	{
 		const int pageSize = 5;
-		var config = new AnimeSearchConfig {PageSize = pageSize};
+		var config = new AnimeSearchQueryParameters().SetLimit(pageSize);
 		var anime = await JikanTests.Instance.SearchAnimeAsync(config);
 
 		using var _ = new AssertionScope();
@@ -68,7 +70,7 @@ public class SearchAnimeTestsAsync
 	public async Task GivenValidPageAndPageSize_ShouldReturnPageSizeNumberOfRecordsFromNextPage()
 	{
 		const int pageSize = 5;
-		var config = new AnimeSearchConfig {Page = 2, PageSize = pageSize};
+		var config = new AnimeSearchQueryParameters().SetPage(2).SetLimit(pageSize);
 
 		var anime = await JikanTests.Instance.SearchAnimeAsync(config);
 
@@ -86,7 +88,7 @@ public class SearchAnimeTestsAsync
 	[TestCase("death")]
 	public async Task NonEmptyQuery_ShouldReturnNotNullSearchAnime(string query)
 	{
-		var config = new AnimeSearchConfig {Query = query};
+		var config = new AnimeSearchQueryParameters().SetQuery(query);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(query);
 
@@ -96,12 +98,10 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task OnePieceAiringQuery_ShouldReturnAiringOnePieceAnime()
 	{
-		var config = new AnimeSearchConfig()
-		{
-			Query = "one p",
-			Status = AiringStatusFilter.Airing,
-			Type = AnimeTypeFilter.TV
-		};
+		var config = new AnimeSearchQueryParameters()
+			.SetQuery("one p")
+			.SetStatus(AiringStatusFilter.Airing)
+			.SetType(AnimeTypeFilter.TV);
 
 		var onePieceAnime = await JikanTests.Instance.SearchAnimeAsync(config);
 
@@ -127,11 +127,9 @@ public class SearchAnimeTestsAsync
 	[TestCase("death")]
 	public async Task TVConfig_ShouldReturnNotNullSearchAnime(string query)
 	{
-		var config = new AnimeSearchConfig
-		{
-			Query = query,
-			Type = AnimeTypeFilter.TV
-		};
+		var config = new AnimeSearchQueryParameters()
+			.SetQuery(query)
+			.SetType(AnimeTypeFilter.TV);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(config);
 
@@ -141,11 +139,7 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task DanganronpaTVConfig_ShouldReturnDanganronpaAnime()
 	{
-		var config = new AnimeSearchConfig
-		{
-			Query = "danganronpa",
-			Type = AnimeTypeFilter.TV
-		};
+		var config = new AnimeSearchQueryParameters().SetQuery("danganronpa").SetType(AnimeTypeFilter.TV);
 
 		var anime = await JikanTests.Instance.SearchAnimeAsync(config);
 
@@ -155,12 +149,10 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task FairyTailTVAbove7Config_ShouldFilterFairyTailAnimeScore()
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			Query = "Fairy Tail",
-			Type = AnimeTypeFilter.TV,
-			MinimumScore = 7
-		};
+		var searchConfig = new AnimeSearchQueryParameters()
+			.SetQuery("Fairy Tail")
+			.SetType(AnimeTypeFilter.TV)
+			.SetMinScore(7);
 
 		var anime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
@@ -173,8 +165,7 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task BlameSciFiConfig_ShouldFilterBleachSciFi()
 	{
-		var searchConfig = new AnimeSearchConfig { Query = "Blame" } ;
-		searchConfig.Genres.Add(AnimeGenreSearch.SciFi);
+		var searchConfig = new AnimeSearchQueryParameters().SetQuery("Blame").SetGenres(24);
 
 		var anime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
@@ -184,12 +175,10 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task BlameSciFiMovieConfig_ShouldFilterBleachMechaMovie()
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			Query = "Blame",
-			Type = AnimeTypeFilter.Movie
-		};
-		searchConfig.Genres.Add(AnimeGenreSearch.SciFi);
+		var searchConfig = new AnimeSearchQueryParameters()
+			.SetQuery("Blame")
+			.SetType(AnimeTypeFilter.Movie)
+			.SetGenres(24);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
@@ -199,12 +188,10 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task OneSortByMembersConfig_ShouldSortByPopularityOPMFirst()
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			Query = "one",
-			OrderBy = AnimeSearchOrderBy.Members,
-			SortDirection = SortDirection.Descending
-		};
+		var searchConfig = new AnimeSearchQueryParameters()
+			.SetQuery("one")
+			.SetOrder(AnimeSearchOrderBy.Members)
+			.SetSortDirection(SortDirection.Descending);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
@@ -218,12 +205,10 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task OneSortByIdConfig_ShouldSortByIdOnePieceFirst()
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			Query = "one",
-			OrderBy = AnimeSearchOrderBy.Id,
-			SortDirection = SortDirection.Ascending
-		};
+		var searchConfig = new AnimeSearchQueryParameters()
+			.SetQuery("one")
+			.SetOrder(AnimeSearchOrderBy.Id)
+			.SetSortDirection(SortDirection.Ascending);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
@@ -233,10 +218,7 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task ProducerKyotoAnimationConfig_ShouldReturnFMPAndLuckyStar()
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			ProducerIds = { 2 }
-		};
+		var searchConfig = new AnimeSearchQueryParameters().SetProducers(2);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
@@ -247,10 +229,7 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task IncorrectProducerConfig_ShouldReturnEmpty()
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			ProducerIds = { -1 }
-		};
+		var searchConfig =  new AnimeSearchQueryParameters().SetProducers(-1);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
@@ -260,44 +239,7 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task EmptyQueryNullConfig_ShouldThrowValidationException()
 	{
-		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync((AnimeSearchConfig)null));
-
-		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
-	}
-
-	[Test]
-	[TestCase((AiringStatusFilter)int.MaxValue, null, null, null, null, null)]
-	[TestCase((AiringStatusFilter)int.MinValue, null, null, null, null, null)]
-	[TestCase(null, (AnimeAgeRatingFilter)int.MaxValue, null, null, null, null)]
-	[TestCase(null, (AnimeAgeRatingFilter)int.MinValue, null, null, null, null)]
-	[TestCase(null, null, (AnimeTypeFilter)int.MaxValue, null, null, null)]
-	[TestCase(null, null, (AnimeTypeFilter)int.MinValue, null, null, null)]
-	[TestCase(null, null, null, (AnimeSearchOrderBy)int.MaxValue, null, null)]
-	[TestCase(null, null, null, (AnimeSearchOrderBy)int.MinValue, null, null)]
-	[TestCase(null, null, null, AnimeSearchOrderBy.Episodes, (SortDirection)int.MaxValue, null)]
-	[TestCase(null, null, null, AnimeSearchOrderBy.Episodes, (SortDirection)int.MinValue, null)]
-	[TestCase(null, null, null, null, null, (AnimeGenreSearch)int.MaxValue)]
-	[TestCase(null, null, null, null, null, (AnimeGenreSearch)int.MinValue)]
-	public async Task EmptyQueryWithConfigWithInvalidEnums_ShouldThrowValidationException(
-		AiringStatusFilter? airingStatus,
-		AnimeAgeRatingFilter? rating,
-		AnimeTypeFilter? mangaType,
-		AnimeSearchOrderBy? orderBy,
-		SortDirection? sortDirection,
-		AnimeGenreSearch? genreSearch
-	)
-	{
-		var searchConfig = new AnimeSearchConfig()
-		{
-			Status = airingStatus.GetValueOrDefault(),
-			Rating = rating.GetValueOrDefault(),
-			Type = mangaType.GetValueOrDefault(),
-			OrderBy = orderBy.GetValueOrDefault(),
-			SortDirection = sortDirection.GetValueOrDefault(),
-			Genres = genreSearch.HasValue ? new[] { genreSearch.Value } : Array.Empty<AnimeGenreSearch>()
-		};
-
-		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(searchConfig));
+		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync((AnimeSearchQueryParameters)null));
 
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
@@ -305,11 +247,7 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task EmptyQueryActionTvAnime_ShouldFindCowboyBebopAndOnPiece()
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			Type = AnimeTypeFilter.TV,
-			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
-		};
+		var searchConfig = new AnimeSearchQueryParameters().SetType(AnimeTypeFilter.TV).SetGenres(1);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
@@ -325,12 +263,7 @@ public class SearchAnimeTestsAsync
 	[TestCase(0)]
 	public async Task EmptyQueryActionTvAnimeInvalidPage_ShouldThrowValidationException(int page)
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			Page = page,
-			Type = AnimeTypeFilter.TV,
-			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
-		};
+		var searchConfig = new AnimeSearchQueryParameters().SetPage(page).SetType(AnimeTypeFilter.TV).SetGenres(1);
 
 		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(searchConfig));
 
@@ -340,12 +273,7 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task EmptyQueryActionTvAnimeFirstPage_ShouldFindCowboyBebopAndOnPiece()
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			Page = 1,
-			Type = AnimeTypeFilter.TV,
-			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
-		};
+		var searchConfig = new AnimeSearchQueryParameters().SetPage(1).SetType(AnimeTypeFilter.TV).SetGenres(1);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
@@ -358,12 +286,10 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task EmptyQueryActionTvAnimeThirdPage_ShouldFindWolfRainAndInitialD()
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			Page = 3,
-			Type = AnimeTypeFilter.TV,
-			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
-		};
+		var searchConfig = new AnimeSearchQueryParameters()
+			.SetPage(3)
+			.SetType(AnimeTypeFilter.TV)
+			.SetGenres(1);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
@@ -379,13 +305,11 @@ public class SearchAnimeTestsAsync
 	[TestCase(0)]
 	public async Task GirlQueryActionCompletedAnimeInvalidPage_ShouldThrowValidationException(int page)
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			Page = page,
-			Query = "girl",
-			Status = AiringStatusFilter.Complete,
-			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
-		};
+		var searchConfig = new AnimeSearchQueryParameters()
+			.SetPage(page)
+			.SetQuery("girl")
+			.SetStatus(AiringStatusFilter.Complete)
+			.SetGenres(1);
 
 		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(searchConfig));
 
@@ -395,13 +319,11 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task OneQueryActionCompletedAnimeSecondPage_ShouldReturnNotEmptyCollection()
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			Query = "one",
-			Page = 2,
-			Status = AiringStatusFilter.Complete,
-			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action }
-		};
+		var searchConfig = new AnimeSearchQueryParameters()
+			.SetPage(2)
+			.SetQuery("one")
+			.SetStatus(AiringStatusFilter.Complete)
+			.SetGenres(1);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
@@ -415,12 +337,10 @@ public class SearchAnimeTestsAsync
 	[Test]
 	public async Task GenreInclusion_ShouldReturnNotEmptyCollection()
 	{
-		var searchConfig = new AnimeSearchConfig
-		{
-			Genres = new List<AnimeGenreSearch> { AnimeGenreSearch.Action, AnimeGenreSearch.Comedy },
-			OrderBy = AnimeSearchOrderBy.Score,
-			SortDirection = SortDirection.Descending
-		};
+		var searchConfig = new AnimeSearchQueryParameters()
+			.SetGenres(new long[] {1, 4})
+			.SetOrder(AnimeSearchOrderBy.Score)
+			.SetSortDirection(SortDirection.Descending);
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 

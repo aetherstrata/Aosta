@@ -1,5 +1,3 @@
-using Aosta.Jikan.Enums;
-using Aosta.Jikan.Models.Search;
 using Aosta.Jikan.Query;
 using Aosta.Jikan.Query.Enums;
 using FluentAssertions.Execution;
@@ -153,7 +151,7 @@ public class SearchMangaAsyncTests
 		var searchConfig = new MangaSearchConfig()
 		{
 			Query = "yotsuba",
-			Status = PublishingStatus.Publishing
+			Status = PublishingStatusFilter.Publishing
 		};
 
 		// When
@@ -344,8 +342,8 @@ public class SearchMangaAsyncTests
 	}
 
 	[Test]
-	[TestCase((PublishingStatus)int.MaxValue, null, null, null, null)]
-	[TestCase((PublishingStatus)int.MinValue, null, null, null, null)]
+	[TestCase((PublishingStatusFilter)int.MaxValue, null, null, null, null)]
+	[TestCase((PublishingStatusFilter)int.MinValue, null, null, null, null)]
 	[TestCase(null, (MangaTypeFilter)int.MaxValue, null, null, null)]
 	[TestCase(null, (MangaTypeFilter)int.MinValue, null, null, null)]
 	[TestCase(null, null, (MangaSearchOrderBy)int.MaxValue, null, null)]
@@ -355,7 +353,7 @@ public class SearchMangaAsyncTests
 	[TestCase(null, null, null, null, (MangaGenreSearch)int.MaxValue)]
 	[TestCase(null, null, null, null, (MangaGenreSearch)int.MinValue)]
 	public async Task EmptyQueryWithConfigWithInvalidEnums_ShouldThrowValidationException(
-		PublishingStatus? airingStatus,
+		PublishingStatusFilter? airingStatus,
 		MangaTypeFilter? mangaType,
 		MangaSearchOrderBy? orderBy,
 		SortDirection? sortDirection,
@@ -449,7 +447,7 @@ public class SearchMangaAsyncTests
 		{
 			Query = "ore",
 			Page = page,
-			Status = PublishingStatus.Publishing
+			Status = PublishingStatusFilter.Publishing
 		};
 
 		// When

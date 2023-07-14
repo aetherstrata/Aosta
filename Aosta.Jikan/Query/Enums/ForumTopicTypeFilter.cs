@@ -1,11 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Aosta.Jikan.Enums;
+namespace Aosta.Jikan.Query.Enums;
 
 /// <summary>
 /// Enumeration for anime types (search config).
 /// </summary>
-public enum ForumTopicType
+public enum ForumTopicTypeFilter
 {
 	/// <summary>
 	/// All types.

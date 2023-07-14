@@ -1,8 +1,7 @@
 using Aosta.Common.Extensions;
-using Aosta.Jikan.Enums;
 using Aosta.Jikan.Query.Enums;
 
-namespace Aosta.Jikan.Query;
+namespace Aosta.Jikan.Query.Parameters;
 
 public class TopAnimeQueryParameters : JikanQueryParameterSet
 {

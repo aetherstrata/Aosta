@@ -1,6 +1,6 @@
-using Aosta.Jikan.Enums;
-using Aosta.Jikan.Models.Search;
 using Aosta.Jikan.Query;
+using Aosta.Jikan.Query.Enums;
+using Aosta.Jikan.Query.Parameters;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.CharacterTests;
@@ -11,7 +11,7 @@ public class SearchCharacterAsyncTests
     public async Task EmptyConfig_ShouldReturnFirst25People()
     {
         // Given
-        var config = new CharacterSearchConfig();
+        var config = new CharacterSearchQueryParameters();
             
         // When
         var characters = await JikanTests.Instance.SearchCharacterAsync(config);
@@ -31,7 +31,7 @@ public class SearchCharacterAsyncTests
     public async Task InvalidPage_ShouldThrowValidationException(int page)
     {
         // Given
-        var config = new CharacterSearchConfig{Page = page};
+        var config = new CharacterSearchQueryParameters().SetPage(page);
             
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchCharacterAsync(config));
@@ -49,7 +49,7 @@ public class SearchCharacterAsyncTests
     public async Task InvalidPageSize_ShouldThrowValidationException(int pageSize)
     {
         // Given
-        var config = new CharacterSearchConfig{PageSize = pageSize};
+        var config = new CharacterSearchQueryParameters().SetLimit(pageSize);
             
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchCharacterAsync(config));
@@ -62,7 +62,7 @@ public class SearchCharacterAsyncTests
     public async Task GivenSecondPage_ShouldReturnSecondPage()
     {
         // Given
-        var config = new CharacterSearchConfig{Page = 2};
+        var config = new CharacterSearchQueryParameters().SetPage(2);
             
         // When
         var characters = await JikanTests.Instance.SearchCharacterAsync(config);
@@ -83,7 +83,7 @@ public class SearchCharacterAsyncTests
     {
         // Given
         const int pageSize = 5;
-        var config = new CharacterSearchConfig{PageSize = pageSize};
+        var config = new CharacterSearchQueryParameters().SetLimit(pageSize);
             
         // When
         var characters = await JikanTests.Instance.SearchCharacterAsync(config);
@@ -103,7 +103,7 @@ public class SearchCharacterAsyncTests
     {
         // Given
         const int pageSize = 5;
-        var config = new CharacterSearchConfig{PageSize = pageSize, Page = 2};
+        var config = new CharacterSearchQueryParameters().SetPage(2).SetLimit(pageSize);
             
         // When
         var characters = await JikanTests.Instance.SearchCharacterAsync(config);
@@ -126,7 +126,7 @@ public class SearchCharacterAsyncTests
     public async Task InvalidLetter_ShouldThrowValidationException(char notLetter)
     {
         // Given
-        var config = new CharacterSearchConfig{Letter = notLetter};
+        var config = new CharacterSearchQueryParameters().SetLetter(notLetter);
             
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchCharacterAsync(config));
@@ -142,7 +142,7 @@ public class SearchCharacterAsyncTests
     public async Task ValidLetter_ShouldReturnRecordsOnlyStartingOnLetter(char letter)
     {
         // Given
-        var config = new CharacterSearchConfig{Letter = letter};
+        var config = new CharacterSearchQueryParameters().SetLetter(letter);
             
         // When
         var people = await JikanTests.Instance.SearchCharacterAsync(config);
@@ -157,7 +157,7 @@ public class SearchCharacterAsyncTests
     public async Task LupinQuery_ShouldReturnLupins()
     {
         // Given
-        var config = new CharacterSearchConfig{Query = "Lupin"};
+        var config = new CharacterSearchQueryParameters().SetQuery("Lupin");
             
         // When
         var people = await JikanTests.Instance.SearchCharacterAsync(config);
@@ -174,8 +174,11 @@ public class SearchCharacterAsyncTests
     public async Task LupinQueryByPopularity_ShouldReturnLupinsWithKurobaFirst()
     {
         // Given
-        var config = new CharacterSearchConfig{Query = "Lupin", OrderBy = CharacterSearchOrderBy.Favorites, SortDirection = SortDirection.Descending};
-            
+        var config = new CharacterSearchQueryParameters()
+            .SetQuery("Lupin")
+            .SetOrder(CharacterSearchOrderBy.Favorites)
+            .SetSortDirection(SortDirection.Descending);
+
         // When
         var people = await JikanTests.Instance.SearchCharacterAsync(config);
 
@@ -191,7 +194,10 @@ public class SearchCharacterAsyncTests
     public async Task LupinQueryByReversePopularity_ShouldReturnLupinsWithKurobaLast()
     {
         // Given
-        var config = new CharacterSearchConfig{Query = "Lupin", OrderBy = CharacterSearchOrderBy.Favorites, SortDirection = SortDirection.Ascending};
+        var config =  new CharacterSearchQueryParameters()
+            .SetQuery("Lupin")
+            .SetOrder(CharacterSearchOrderBy.Favorites)
+            .SetSortDirection(SortDirection.Ascending);
             
         // When
         var people = await JikanTests.Instance.SearchCharacterAsync(config);
@@ -209,14 +215,17 @@ public class SearchCharacterAsyncTests
     public async Task LupinQueryByMalIdWithLimit2_ShouldReturnThirdAndKaitoKuroba()
     {
         // Given
-        var config = new CharacterSearchConfig{Query = "Lupin", OrderBy = CharacterSearchOrderBy.MalId, PageSize = 2};
+        var config = new CharacterSearchQueryParameters()
+            .SetQuery("Lupin")
+            .SetOrder(CharacterSearchOrderBy.Favorites)
+            .SetPage(2);
             
         // When
         var people = await JikanTests.Instance.SearchCharacterAsync(config);
 
         // Then
         using var _ = new AssertionScope();
-        people.Data.Should().HaveCount(config.PageSize.Value);
+        people.Data.Should().HaveCount(2);
         people.Data.Should().Contain(x => x.Name.Equals("Lupin"));
     }
         
@@ -224,7 +233,8 @@ public class SearchCharacterAsyncTests
     public async Task KirumiQuery_ShouldReturnSingleKirumi()
     {
         // Given
-        var config = new CharacterSearchConfig{Query = "kirumi to"};
+        var config = new CharacterSearchQueryParameters()
+            .SetQuery("kirumi to");
             
         // When
         var people = await JikanTests.Instance.SearchCharacterAsync(config);

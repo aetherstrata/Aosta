@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace Aosta.Jikan.Enums;
+namespace Aosta.Jikan.Query.Enums;
 
 /// <summary>
 /// Properties by which person search results can be ordered.

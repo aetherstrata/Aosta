@@ -1,18 +1,12 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Aosta.Jikan.Enums;
+namespace Aosta.Jikan.Query.Enums;
 
 /// <summary>
 /// Current status of manga (search config).
 /// </summary>
-public enum PublishingStatus
+public enum PublishingStatusFilter
 {
-	/// <summary>
-	/// Allow all statuses to be displayed in results.
-	/// </summary>
-	[EnumMember(Value = "")]
-	EveryStatus,
-		
 	/// <summary>
 	/// Publishing status.
 	/// </summary>

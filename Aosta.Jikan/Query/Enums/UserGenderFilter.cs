@@ -5,7 +5,7 @@ namespace Aosta.Jikan.Enums;
 /// <summary>
 /// Enum for user gender.
 /// </summary>
-public enum UserGender
+public enum UserGenderFilter
 {
     /// <summary>
     /// Allow all types to be displayed in results.

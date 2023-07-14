@@ -1,4 +1,5 @@
-﻿using Aosta.Common.Extensions;
+﻿using System.Numerics;
+using Aosta.Common.Extensions;
 using FastEnumUtility;
 
 namespace Aosta.Jikan;
@@ -45,19 +46,19 @@ public static class Guard
 		}
 	}
 
-	public static void IsGreaterThanZero(long arg, string argumentName)
+	public static void IsGreaterThanZero<T>(T arg, string argumentName) where T : INumber<T>
 	{
-		if (arg < 1)
+		if (arg <= T.Zero )
 		{
-			throw new JikanParameterValidationException("Argument must be a natural number greater than 0.", argumentName);
+			throw new JikanParameterValidationException("Argument must be greater than 0.", argumentName);
 		}
 	}
 		
-	public static void IsLessOrEqualThan(long arg, long max, string argumentName)
+	public static void IsLessOrEqualThan<T>(T arg, T max, string argumentName) where T : INumber<T>
 	{
 		if (arg > max)
 		{
-			throw new JikanParameterValidationException($"Argument must not be greater than {max}.", argumentName);
+			throw new JikanParameterValidationException($"Argument must be less or equal than {max}.", argumentName);
 		}
 	}
 

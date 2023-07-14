@@ -1,4 +1,5 @@
 ﻿using Aosta.Jikan.Enums;
+using Aosta.Jikan.Query.Enums;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.AnimeTests;
@@ -17,9 +18,9 @@ public class GetAnimeForumTopicsAsyncTests
 	}
 
 	[Test]
-	[TestCase((ForumTopicType)int.MaxValue)]
-	[TestCase((ForumTopicType)int.MinValue)]
-	public async Task InvalidEnum_ShouldThrowValidationException(ForumTopicType type)
+	[TestCase((ForumTopicTypeFilter)int.MaxValue)]
+	[TestCase((ForumTopicTypeFilter)int.MinValue)]
+	public async Task InvalidEnum_ShouldThrowValidationException(ForumTopicTypeFilter type)
 	{
 		var func = JikanTests.Instance.Awaiting(x => x.GetAnimeForumTopicsAsync(1, type));
 
@@ -37,7 +38,7 @@ public class GetAnimeForumTopicsAsyncTests
 	[Test]
 	public async Task BebopIdAndTypeEpisode_ShouldParseCowboyBebopTopicsWithEpisodeDiscussionOnly()
 	{
-		var bebop = await JikanTests.Instance.GetAnimeForumTopicsAsync(1, ForumTopicType.Episode);
+		var bebop = await JikanTests.Instance.GetAnimeForumTopicsAsync(1, ForumTopicTypeFilter.Episode);
 
 		using var _ = new AssertionScope();
 		bebop.Data.Should().HaveCount(15);
@@ -47,7 +48,7 @@ public class GetAnimeForumTopicsAsyncTests
 	[Test]
 	public async Task BebopIdAndTypeOther_ShouldParseCowboyBebopTopicsWithoutEpisodeDiscussion()
 	{
-		var bebop = await JikanTests.Instance.GetAnimeForumTopicsAsync(1, ForumTopicType.Other);
+		var bebop = await JikanTests.Instance.GetAnimeForumTopicsAsync(1, ForumTopicTypeFilter.Other);
 
 		using var _ = new AssertionScope();
 		bebop.Data.Should().HaveCount(15);

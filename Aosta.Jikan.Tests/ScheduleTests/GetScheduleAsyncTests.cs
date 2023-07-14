@@ -1,4 +1,5 @@
 ﻿using Aosta.Jikan.Enums;
+using Aosta.Jikan.Query.Enums;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.ScheduleTests;
@@ -62,7 +63,7 @@ public class GetScheduleAsyncTests
 	public async Task Monday_ShouldParseMondaySchedule()
 	{
 		// When
-		var currentSeason = await JikanTests.Instance.GetScheduleAsync(ScheduledDay.Monday);
+		var currentSeason = await JikanTests.Instance.GetScheduleAsync(ScheduledDayFilter.Monday);
 
 		// Then
 		var mondayScheduleTitles = currentSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
@@ -78,7 +79,7 @@ public class GetScheduleAsyncTests
 	public async Task Friday_ShouldParseFridaySchedule()
 	{
 		// When
-		var currentSeason = await JikanTests.Instance.GetScheduleAsync(ScheduledDay.Friday);
+		var currentSeason = await JikanTests.Instance.GetScheduleAsync(ScheduledDayFilter.Friday);
 
 		// Then
 		var fridayScheduleTitles = currentSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
@@ -90,9 +91,9 @@ public class GetScheduleAsyncTests
 	}
 
 	[Test]
-	[TestCase((ScheduledDay)int.MaxValue)]
-	[TestCase((ScheduledDay)int.MinValue)]
-	public async Task InvalidScheduledDay_ShouldThrowValidationException(ScheduledDay schedule)
+	[TestCase((ScheduledDayFilter)int.MaxValue)]
+	[TestCase((ScheduledDayFilter)int.MinValue)]
+	public async Task InvalidScheduledDay_ShouldThrowValidationException(ScheduledDayFilter schedule)
 	{
 		// When
 		var func = JikanTests.Instance.Awaiting(x => x.GetScheduleAsync(schedule));

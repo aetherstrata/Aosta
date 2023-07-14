@@ -19,7 +19,7 @@ internal class QueryExecutor
         _logger = logger;
     }
 
-    internal async Task<T> GetRequest<T>(IQuery<T> query, CancellationToken ct = default)
+    internal async Task<T> GetRequestAsync<T>(IQuery<T> query, CancellationToken ct = default)
     {
         string queryEndpoint = query.GetQuery();
         string fullUrl = _http.BaseAddress + queryEndpoint;

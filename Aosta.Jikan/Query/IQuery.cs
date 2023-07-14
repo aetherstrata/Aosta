@@ -1,8 +1,10 @@
 namespace Aosta.Jikan.Query;
 
+// ReSharper disable once UnusedTypeParameter
 /// <summary>
-/// An encapsulation of an HTTP request and its return type
+/// An encapsulation of an HTTP request
 /// </summary>
+/// <typeparam name="T">Return type of the query</typeparam>
 internal interface IQuery<T>
 {
     /// <summary>

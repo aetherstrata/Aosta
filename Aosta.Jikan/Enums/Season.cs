@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
+using FastEnumUtility;
 
 namespace Aosta.Jikan.Enums;
 
@@ -13,32 +14,24 @@ public enum Season
     /// <summary>
     /// Spring season.
     /// </summary>
-    [EnumMember(Value = "spring")] Spring,
+    [EnumMember(Value = "spring"), Label("Spring")]
+    Spring,
 
     /// <summary>
     /// Summer season.
     /// </summary>
-    [EnumMember(Value = "summer")] Summer,
+    [EnumMember(Value = "summer"), Label("Summer")]
+    Summer,
 
     /// <summary>
     /// Fall season.
     /// </summary>
-    [EnumMember(Value = "fall")] Fall,
+    [EnumMember(Value = "fall"), Label("Fall")]
+    Fall,
 
     /// <summary>
     /// Winter season.
     /// </summary>
-    [EnumMember(Value = "winter")] Winter
-}
-
-public static class SeasonExtensions
-{
-    public static string ToStringCached(this Season season) => season switch
-    {
-        Season.Spring => "spring",
-        Season.Summer => "summer",
-        Season.Fall => "fall",
-        Season.Winter => "winter",
-        _ => throw new UnreachableException()
-    };
+    [EnumMember(Value = "winter"), Label("Winter")]
+    Winter
 }

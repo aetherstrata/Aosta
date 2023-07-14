@@ -35,7 +35,7 @@ public class GetUserMangaListAsyncTests
 	public async Task ErvelanSecondPage_ShouldParseErvelanMangaList()
 	{
 		// When
-		var mangaList = await JikanTests.Instance.GetUserMangaListAsync("Ervelan", 2);
+		var mangaList = await JikanTests.Instance.GetUserMangaListAsync("Ervelan");
 
 		// Then
 		using (new AssertionScope())
@@ -74,7 +74,7 @@ public class GetUserMangaListAsyncTests
 	public async Task MithogawaSecondPage_ShouldParseMithogawaMangaList()
 	{
 		// When
-		var mangaList = await JikanTests.Instance.GetUserMangaListAsync("Mithogawa", 2);
+		var mangaList = await JikanTests.Instance.GetUserMangaListAsync("Mithogawa");
 
 		// Then
 		using (new AssertionScope())

@@ -8,12 +8,6 @@ namespace Aosta.Jikan.Enums;
 public enum AiringStatusFilter
 {
     /// <summary>
-    /// Allow all statuses to be displayed in results.
-    /// </summary>
-    [EnumMember(Value = "")]
-    EveryStatus,
-
-    /// <summary>
     /// Airing status.
     /// </summary>
     [EnumMember(Value = "airing")]

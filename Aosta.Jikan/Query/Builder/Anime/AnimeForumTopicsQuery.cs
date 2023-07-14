@@ -2,6 +2,7 @@ using Aosta.Jikan.Enums;
 using Aosta.Common.Extensions;
 using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
+using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Query;
 
@@ -20,7 +21,7 @@ internal static class AnimeForumTopicsQuery
         return new JikanQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>>(GetEndpoint(id));
     }
 
-    internal static IQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>> Create(long id, ForumTopicType type)
+    internal static IQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>> Create(long id, ForumTopicTypeFilter type)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
         Guard.IsValidEnum(type, nameof(type));

@@ -1,8 +1,8 @@
-using Aosta.Jikan.Enums;
 using Aosta.Common.Extensions;
-using Aosta.Jikan.Query;
+using Aosta.Jikan.Enums;
+using Aosta.Jikan.Query.Enums;
 
-namespace Aosta.Jikan.Query;
+namespace Aosta.Jikan.Query.Parameters;
 
 public class ScheduleQueryParameters : JikanQueryParameterSet
 {
@@ -21,7 +21,7 @@ public class ScheduleQueryParameters : JikanQueryParameterSet
         return this;
     }
 
-    public ScheduleQueryParameters SetFilter(ScheduledDay filter)
+    public ScheduleQueryParameters SetFilter(ScheduledDayFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
         base.Add(QueryParameter.Filter, filter.StringValue());

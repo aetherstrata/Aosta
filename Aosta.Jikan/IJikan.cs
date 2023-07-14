@@ -1,9 +1,9 @@
 ﻿using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
-using Aosta.Jikan.Models.Search;
 using Aosta.Jikan.Query;
 using Aosta.Jikan.Query.Enums;
+using Aosta.Jikan.Query.Parameters;
 
 namespace Aosta.Jikan;
 
@@ -96,7 +96,7 @@ public interface IJikan
 	/// <param name="type">ForumTopicType filter</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Collections of forum topics related to anime with given MAL id.</returns>
-	Task<BaseJikanResponse<ICollection<ForumTopicResponse>>> GetAnimeForumTopicsAsync(long id, ForumTopicType type, CancellationToken ct = default);
+	Task<BaseJikanResponse<ICollection<ForumTopicResponse>>> GetAnimeForumTopicsAsync(long id, ForumTopicTypeFilter type, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns collections of videos related to anime with given MAL id.
@@ -562,7 +562,7 @@ public interface IJikan
 	/// <param name="scheduledDay">Scheduled day to filter by.</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Current season schedule.</returns>
-	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetScheduleAsync(ScheduledDay scheduledDay, CancellationToken ct = default);
+	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> GetScheduleAsync(ScheduledDayFilter scheduledDay, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns current season schedule.
@@ -973,10 +973,10 @@ public interface IJikan
 	/// Returns information about user's history with given username.
 	/// </summary>
 	/// <param name="username">Username.</param>
-	/// <param name="userHistory">Option to filter history.</param>
+	/// <param name="type">Option to filter history.</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>Information about user's profile with given username.</returns>
-	Task<BaseJikanResponse<ICollection<HistoryEntryResponse>>> GetUserHistoryAsync(string username, UserHistoryTypeFilter userHistory, CancellationToken ct = default);
+	Task<BaseJikanResponse<ICollection<HistoryEntryResponse>>> GetUserHistoryAsync(string username, UserHistoryTypeFilter type, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns information about user's friends with given username.
@@ -1250,10 +1250,10 @@ public interface IJikan
 	/// <summary>
 	/// Returns list of results related to search.
 	/// </summary>
-	/// <param name="searchConfig">Additional configuration for advanced search.</param>
+	/// <param name="parameters">Additional configuration for advanced search.</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of result related to search query.</returns>
-	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> SearchAnimeAsync(AnimeSearchConfig searchConfig, CancellationToken ct = default);
+	Task<PaginatedJikanResponse<ICollection<AnimeResponse>>> SearchAnimeAsync(AnimeSearchQueryParameters parameters, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns list of results related to search.
@@ -1266,10 +1266,10 @@ public interface IJikan
 	/// <summary>
 	/// Returns list of results related to search.
 	/// </summary>
-	/// <param name="searchConfig">Additional configuration for advanced search.</param>
+	/// <param name="parameters">Additional configuration for advanced search.</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of result related to search query.</returns>
-	Task<PaginatedJikanResponse<ICollection<MangaResponse>>> SearchMangaAsync(MangaSearchConfig searchConfig, CancellationToken ct = default);
+	Task<PaginatedJikanResponse<ICollection<MangaResponse>>> SearchMangaAsync(MangaSearchQueryParameters parameters, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns list of results related to search.
@@ -1282,10 +1282,10 @@ public interface IJikan
 	/// <summary>
 	/// Returns list of results related to search.
 	/// </summary>
-	/// <param name="searchConfig">Additional configuration for advanced search.</param>
+	/// <param name="parameters">Additional configuration for advanced search.</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of result related to search query.</returns>
-	Task<PaginatedJikanResponse<ICollection<PersonResponse>>> SearchPersonAsync(PersonSearchConfig searchConfig, CancellationToken ct = default);
+	Task<PaginatedJikanResponse<ICollection<PersonResponse>>> SearchPersonAsync(PersonSearchQueryParameters parameters, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns list of results related to search.
@@ -1298,10 +1298,10 @@ public interface IJikan
 	/// <summary>
 	/// Returns list of results related to search.
 	/// </summary>
-	/// <param name="searchConfig">Additional configuration for advanced search.</param>
+	/// <param name="parameters">Additional configuration for advanced search.</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of result related to search query.</returns>
-	Task<PaginatedJikanResponse<ICollection<CharacterResponse>>> SearchCharacterAsync(CharacterSearchConfig searchConfig, CancellationToken ct = default);
+	Task<PaginatedJikanResponse<ICollection<CharacterResponse>>> SearchCharacterAsync(CharacterSearchQueryParameters parameters, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns list of results related to search.
@@ -1314,10 +1314,10 @@ public interface IJikan
 	/// <summary>
 	/// Returns list of results related to search.
 	/// </summary>
-	/// <param name="searchConfig">Additional configuration for advanced search.</param>
+	/// <param name="parameters">Additional configuration for advanced search.</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of result related to search query.</returns>
-	Task<PaginatedJikanResponse<ICollection<UserMetadataResponse>>> SearchUserAsync(UserSearchConfig searchConfig, CancellationToken ct = default);
+	Task<PaginatedJikanResponse<ICollection<UserMetadataResponse>>> SearchUserAsync(UserSearchQueryParameters parameters, CancellationToken ct = default);
 
 	/// <summary>
 	/// Returns list of results related to search.
@@ -1330,10 +1330,10 @@ public interface IJikan
 	/// <summary>
 	/// Returns list of results related to search.
 	/// </summary>
-	/// <param name="searchConfig">Additional configuration for advanced search.</param>
+	/// <param name="parameters">Additional configuration for advanced search.</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of result related to search query.</returns>
-	Task<PaginatedJikanResponse<ICollection<ClubResponse>>> SearchClubAsync(ClubSearchConfig searchConfig, CancellationToken ct = default);
+	Task<PaginatedJikanResponse<ICollection<ClubResponse>>> SearchClubAsync(ClubSearchQueryParameters parameters, CancellationToken ct = default);
 
 	#endregion Search requests
 }

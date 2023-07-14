@@ -1,6 +1,6 @@
-using Aosta.Jikan.Enums;
-using Aosta.Jikan.Models.Search;
 using Aosta.Jikan.Query;
+using Aosta.Jikan.Query.Enums;
+using Aosta.Jikan.Query.Parameters;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.PersonTests;
@@ -11,7 +11,7 @@ public class SearchPersonAsyncTests
     public async Task EmptyConnfig_ShouldReturnFirst25People()
     {
         // Given
-        var config = new PersonSearchConfig();
+        var config = new PersonSearchQueryParameters();
             
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -33,7 +33,7 @@ public class SearchPersonAsyncTests
     public async Task InvalidPage_ShouldThrowValidationException(int page)
     {
         // Given
-        var config = new PersonSearchConfig{Page = page};
+        var config = new PersonSearchQueryParameters().SetPage(page);
             
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchPersonAsync(config));
@@ -51,7 +51,7 @@ public class SearchPersonAsyncTests
     public async Task InvalidPageSize_ShouldThrowValidationException(int pageSize)
     {
         // Given
-        var config = new PersonSearchConfig{PageSize = pageSize};
+        var config = new PersonSearchQueryParameters().SetLimit(pageSize);
             
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchPersonAsync(config));
@@ -64,7 +64,7 @@ public class SearchPersonAsyncTests
     public async Task GivenSecondPage_ShouldReturnSecondPage()
     {
         // Given
-        var config = new PersonSearchConfig{Page = 2};
+        var config = new PersonSearchQueryParameters().SetPage(2);
             
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -84,7 +84,7 @@ public class SearchPersonAsyncTests
     {
         // Given
         const int pageSize = 5;
-        var config = new PersonSearchConfig{PageSize = pageSize};
+        var config = new PersonSearchQueryParameters().SetLimit(pageSize);
             
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -103,7 +103,7 @@ public class SearchPersonAsyncTests
     {
         // Given
         const int pageSize = 5;
-        var config = new PersonSearchConfig{PageSize = pageSize, Page = 2};
+        var config = new PersonSearchQueryParameters().SetPage(2).SetLimit(pageSize);
             
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -126,7 +126,7 @@ public class SearchPersonAsyncTests
     public async Task InvalidLetter_ShouldThrowValidationException(char notLetter)
     {
         // Given
-        var config = new PersonSearchConfig{Letter = notLetter};
+        var config = new PersonSearchQueryParameters().SetLetter(notLetter);
             
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchPersonAsync(config));
@@ -142,7 +142,7 @@ public class SearchPersonAsyncTests
     public async Task ValidLetter_ShouldReturnRecordsOnlyStartingOnLetter(char letter)
     {
         // Given
-        var config = new PersonSearchConfig{Letter = letter};
+        var config = new PersonSearchQueryParameters().SetLetter(letter);
             
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -157,7 +157,7 @@ public class SearchPersonAsyncTests
     public async Task KanaQuery_ShouldReturnKanas()
     {
         // Given
-        var config = new PersonSearchConfig{Query = "Kana"};
+        var config = new PersonSearchQueryParameters().SetQuery("Kana");
             
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -174,8 +174,11 @@ public class SearchPersonAsyncTests
     public async Task KanaQueryByPopularity_ShouldReturnKanaWithHanazawaFirst()
     {
         // Given
-        var config = new PersonSearchConfig{Query = "Kana", OrderBy = PersonSearchOrderBy.Favorites, SortDirection = SortDirection.Descending};
-            
+        var config = new PersonSearchQueryParameters()
+            .SetQuery("Kana")
+            .SetOrder(PersonSearchOrderBy.Favorites)
+            .SetSortDirection(SortDirection.Descending);
+
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
 
@@ -191,7 +194,10 @@ public class SearchPersonAsyncTests
     public async Task KanaQueryByReversePopularity_ShouldReturnKanaWithoutHanazawa()
     {
         // Given
-        var config = new PersonSearchConfig{Query = "Kana", OrderBy = PersonSearchOrderBy.Favorites, SortDirection = SortDirection.Ascending};
+        var config =  new PersonSearchQueryParameters()
+            .SetQuery("Kana")
+            .SetOrder(PersonSearchOrderBy.Favorites)
+            .SetSortDirection(SortDirection.Ascending);
             
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -209,14 +215,17 @@ public class SearchPersonAsyncTests
     public async Task KanaQueryByMalIdWithLimit2_ShouldReturnMikaKanaiAndKanakoSakai()
     {
         // Given
-        var config = new PersonSearchConfig{Query = "Kana", OrderBy = PersonSearchOrderBy.MalId, PageSize = 2};
-            
+        var config =  new PersonSearchQueryParameters()
+            .SetQuery("Kana")
+            .SetOrder(PersonSearchOrderBy.MalId)
+            .SetLimit(2);
+
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
 
         // Then
         using var _ = new AssertionScope();
-        people.Data.Should().HaveCount(config.PageSize);
+        people.Data.Should().HaveCount(2);
         people.Data.Should().Contain(x => x.Name.Equals("Mika Kanai"));
         people.Data.Should().Contain(x => x.Name.Equals("Kanako Sakai"));
     }
@@ -225,7 +234,7 @@ public class SearchPersonAsyncTests
     public async Task MiyukiSawaQuery_ShouldReturnSingleSawashiro()
     {
         // Given
-        var config = new PersonSearchConfig{Query = "miyuki sawa"};
+        var config = new PersonSearchQueryParameters().SetQuery("miyuki sawa");
             
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);

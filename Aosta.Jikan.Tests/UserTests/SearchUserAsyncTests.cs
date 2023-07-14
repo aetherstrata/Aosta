@@ -1,5 +1,5 @@
 using Aosta.Jikan.Enums;
-using Aosta.Jikan.Models.Search;
+using Aosta.Jikan.Query.Parameters;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.UserTests;
@@ -10,7 +10,7 @@ public class SearchUserAsyncTests
     public async Task EmptyConfig_ShouldReturnFirst25People()
     {
         // Given
-        var config = new UserSearchConfig();
+        var config = new UserSearchQueryParameters();
             
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -28,7 +28,7 @@ public class SearchUserAsyncTests
     public async Task InvalidPage_ShouldThrowValidationException(int page)
     {
         // Given
-        var config = new UserSearchConfig{Page = page};
+        var config = new UserSearchQueryParameters().SetPage(page);
             
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchUserAsync(config));
@@ -41,7 +41,7 @@ public class SearchUserAsyncTests
     public async Task GivenSecondPage_ShouldReturnSecondPage()
     {
         // Given
-        var config = new UserSearchConfig{Page = 2};
+        var config = new UserSearchQueryParameters().SetPage(2);
             
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -54,12 +54,12 @@ public class SearchUserAsyncTests
     }
         
     [Test]
-    [TestCase((UserGender)int.MinValue)]
-    [TestCase((UserGender)int.MaxValue)]
-    public async Task InvalidGenderEnumValue_ShouldThrowValidationException(UserGender gender)
+    [TestCase((UserGenderFilter)int.MinValue)]
+    [TestCase((UserGenderFilter)int.MaxValue)]
+    public async Task InvalidGenderEnumValue_ShouldThrowValidationException(UserGenderFilter gender)
     {
         // Given
-        var config = new UserSearchConfig{Gender = gender};
+        var config =new UserSearchQueryParameters().SetGender(gender);
             
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchUserAsync(config));
@@ -69,14 +69,14 @@ public class SearchUserAsyncTests
     }
         
     [Test]
-    [TestCase(UserGender.Any, "ErickGabriel555")]
-    [TestCase(UserGender.Male, "ErickGabriel555")]
-    [TestCase(UserGender.Female, "ErickGabriel555")]
-    [TestCase(UserGender.NonBinary, "ErickGabriel555")]
-    public async Task ValidGenderEnumValue_ShouldReturnUsers(UserGender gender, string expectedFirstUser)
+    [TestCase(UserGenderFilter.Any, "ErickGabriel555")]
+    [TestCase(UserGenderFilter.Male, "ErickGabriel555")]
+    [TestCase(UserGenderFilter.Female, "ErickGabriel555")]
+    [TestCase(UserGenderFilter.NonBinary, "ErickGabriel555")]
+    public async Task ValidGenderEnumValue_ShouldReturnUsers(UserGenderFilter gender, string expectedFirstUser)
     {
         // Given
-        var config = new UserSearchConfig{Gender = gender};
+        var config =new UserSearchQueryParameters().SetGender(gender);
             
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -91,7 +91,7 @@ public class SearchUserAsyncTests
     public async Task SonMatiQuery_ShouldReturnSonMati()
     {
         // Given
-        var config = new UserSearchConfig{Query = "SonMati"};
+        var config = new UserSearchQueryParameters().SetQuery("SonMati");
             
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -104,7 +104,7 @@ public class SearchUserAsyncTests
     public async Task WithLocation_ShouldReturnFilteredByLocation()
     {
         // Given
-        var config = new UserSearchConfig{Location = "mysłowice"};
+        var config = new UserSearchQueryParameters().SetLocation("mysłowice");
             
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -119,7 +119,7 @@ public class SearchUserAsyncTests
     public async Task WithMinAge_ShouldReturnFilteredByMinAge()
     {
         // Given
-        var config = new UserSearchConfig{MinAge = 20};
+        var config = new UserSearchQueryParameters().SetMinimumAge(20);
             
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -134,7 +134,7 @@ public class SearchUserAsyncTests
     public async Task WithMaxAge_ShouldReturnFilteredByMaxAge()
     {
         // Given
-        var config = new UserSearchConfig{MaxAge = 20};
+        var config =  new UserSearchQueryParameters().SetMaximumAge(20);
             
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);

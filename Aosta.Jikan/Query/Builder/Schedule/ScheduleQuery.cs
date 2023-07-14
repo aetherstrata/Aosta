@@ -2,6 +2,8 @@ using Aosta.Jikan.Enums;
 using Aosta.Common.Extensions;
 using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
+using Aosta.Jikan.Query.Enums;
+using Aosta.Jikan.Query.Parameters;
 
 namespace Aosta.Jikan.Query;
 
@@ -24,7 +26,7 @@ internal static class ScheduleQuery
             .WithParameter(QueryParameter.Page, page);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(ScheduledDay day)
+    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(ScheduledDayFilter day)
     {
         Guard.IsValidEnum(day, nameof(day));
         return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(QueryEndpoint)
