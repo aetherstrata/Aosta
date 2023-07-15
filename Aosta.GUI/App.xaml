@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/FloatingActionButtonStyle.xaml" />
+                <ResourceDictionary Source="Resources/Styles/FloatingActionButtonSmallStyle.xaml" />
                 <ResourceDictionary Source="Resources/Styles/FloatingActionMenuStyle.xaml" />
                 <ResourceDictionary Source="Resources/Styles/LightTheme.xaml" />
                 <ResourceDictionary Source="Resources/Styles/DarkTheme.xaml" />

@@ -1,13 +1,12 @@
 ﻿using System.Windows.Input;
 using Aosta.Core;
-using Aosta.Core.Database.Models.Jikan;
 using Aosta.Core.Database.Enums;
 using Aosta.Core.Database.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Aosta.GUI.Features.AnimeManualAddPage;
+namespace Aosta.GUI.Features.AddManualAnime;
 
-public partial class AnimeManualAddViewModel : ObservableObject
+public partial class AddManualAnimeViewModel : ObservableObject
 {
     [ObservableProperty]
     private string _animeScore = string.Empty;
@@ -22,7 +21,7 @@ public partial class AnimeManualAddViewModel : ObservableObject
 
     private readonly AostaDotNet _aosta;
 
-    public AnimeManualAddViewModel(AostaDotNet aosta)
+    public AddManualAnimeViewModel(AostaDotNet aosta)
     {
         _aosta = aosta;
     }
@@ -36,7 +35,7 @@ public partial class AnimeManualAddViewModel : ObservableObject
         var anime = new Anime()
         {
             Title = AnimeTitle,
-            Score = float.TryParse(AnimeScore, out float score) ? -1 : (int)Math.Floor(score*10),
+            Score = float.TryParse((string?)AnimeScore, out float score) ? -1 : (int)Math.Floor(score*10),
             Type = ContentType.TV
         };
 

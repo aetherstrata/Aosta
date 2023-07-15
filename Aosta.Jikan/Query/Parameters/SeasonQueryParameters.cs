@@ -23,7 +23,7 @@ public class SeasonQueryParameters : JikanQueryParameterSet
     public SeasonQueryParameters SetFilter(AnimeTypeFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        base.Add(QueryParameter.Filter, filter.FlagToString());
+        base.Add(QueryParameter.Filter, filter);
         return this;
     }
 

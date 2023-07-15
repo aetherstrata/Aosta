@@ -30,7 +30,7 @@ internal static class ScheduleQuery
     {
         Guard.IsValidEnum(day, nameof(day));
         return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(QueryEndpoint)
-            .WithParameter(QueryParameter.Filter, day.StringValue());
+            .WithParameter(QueryParameter.Filter, day);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(ScheduleQueryParameters parameters)

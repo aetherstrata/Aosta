@@ -3,15 +3,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-             xmlns:constants="clr-namespace:Aosta.GUI.Globals"
              xmlns:realm="clr-namespace:Aosta.Core.Database.Models;assembly=Aosta.Core"
-             xmlns:animeManualAdd="clr-namespace:Aosta.GUI.Features.AnimeManualAddPage"
-             xmlns:profileMainPage="using:Aosta.GUI.Features.ProfileMainPage"
-             xmlns:settingsPage="using:Aosta.GUI.Features.SettingsPage"
              xmlns:mainPage="using:Aosta.GUI.Features.MainPage"
+             xmlns:constants="clr-namespace:Aosta.GUI.Consts"
+             xmlns:addManualAnime="clr-namespace:Aosta.GUI.Features.AddManualAnime"
+             xmlns:addJikanAnime="clr-namespace:Aosta.GUI.Features.AddJikanAnime"
              x:Class="Aosta.GUI.Features.MainPage.MainPage"
              x:DataType="mainPage:MainPageViewModel"
-             Title="Main Page"
+             Title="Home"
              Shell.NavBarIsVisible="True"
              Shell.TabBarIsVisible="False">
 
@@ -72,24 +71,81 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-
             </VerticalStackLayout>
-
         </ScrollView>
 
         <Button Margin="0,0,20,20"
                 Style="{x:StaticResource Key=FloatingActionButton}"
                 Text="{x:Static constants:FontAwesomeIcons.Plus}"
-                Command="{Binding GoToPageCommand}"
-                CommandParameter="{x:Type animeManualAdd:AnimeManualAddPage}" >
-
+                Command="{Binding AddButtonCommand}" >
             <Button.Shadow>
                 <Shadow Radius="20"
                         Offset="10,10"
                         Opacity="0.2"
                         Brush="Black"/>
             </Button.Shadow>
-
         </Button>
+
+        <Button Margin="0,0,40,120"
+                Style="{x:StaticResource Key=FloatingActionButtonSmall}"
+                Text="{x:Static constants:FontAwesomeIcons.Plus}"
+                Command="{Binding GoToPageCommand}"
+                CommandParameter="{x:Type addManualAnime:AddManualAnimePage}"
+                IsVisible="{Binding ButtonsVisible}" >
+            <Button.Shadow>
+                <Shadow Radius="10"
+                        Offset="5,5"
+                        Opacity="0.2"
+                        Brush="Black"/>
+            </Button.Shadow>
+        </Button>
+
+        <Border Background="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource BaseColor}}"
+                Margin="0, 0, 90, 125"
+                Padding="10, 0"
+                HeightRequest="30"
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                StrokeThickness="0"
+                IsVisible="{Binding LabelsVisible}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            <Label TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}"
+                   Text="Add manually"
+                   FontSize="15"
+                   VerticalOptions="Fill"/>
+        </Border>
+
+        <Button Margin="0,0,40,170"
+                Style="{x:StaticResource Key=FloatingActionButtonSmall}"
+                Text="{x:Static constants:FontAwesomeIcons.Plus}"
+                Command="{Binding GoToPageCommand}"
+                CommandParameter="{x:Type addJikanAnime:AddJikanAnimePage}"
+                IsVisible="{Binding ButtonsVisible}" >
+            <Button.Shadow>
+                <Shadow Radius="10"
+                        Offset="5,5"
+                        Opacity="0.2"
+                        Brush="Black"/>
+            </Button.Shadow>
+        </Button>
+
+        <Border Background="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource BaseColor}}"
+                Margin="0, 0, 90, 175"
+                Padding="10, 0"
+                HeightRequest="30"
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                StrokeThickness="0"
+                IsVisible="{Binding LabelsVisible}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            <Label TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}"
+                   Text="Add from Jikan"
+                   FontSize="15"
+                   VerticalOptions="Fill"/>
+        </Border>
     </Grid>
 </ContentPage>

@@ -15,10 +15,11 @@ public class TopReviewsQueryParameters : JikanQueryParameterSet
     public TopReviewsQueryParameters SetType(TopReviewsTypeFilter type)
     {
         Guard.IsValidEnum(type, nameof(type));
-        base.Add(QueryParameter.Type, type.StringValue());
+        base.Add(QueryParameter.Type, type);
         return this;
     }
 
+    // These parameters act like bools but have to be set like strings (eg. ?name=true)
     public TopReviewsQueryParameters SetPreliminary(bool preliminary)
     {
         base.Add(QueryParameter.Preliminary, preliminary.ToStringLower());

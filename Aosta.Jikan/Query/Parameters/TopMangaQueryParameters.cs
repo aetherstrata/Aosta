@@ -23,14 +23,14 @@ public class TopMangaQueryParameters : JikanQueryParameterSet
     public TopMangaQueryParameters SetType(MangaTypeFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        base.Add(QueryParameter.Type, filter.StringValue());
+        base.Add(QueryParameter.Type, filter);
         return this;
     }
 
     public TopMangaQueryParameters SetFilter(TopMangaFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        base.Add(QueryParameter.Filter, filter.StringValue());
+        base.Add(QueryParameter.Filter, filter);
         return this;
     }
 }

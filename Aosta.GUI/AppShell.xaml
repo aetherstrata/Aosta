@@ -11,17 +11,17 @@
     FlyoutBehavior="Flyout">
 
     <ShellContent
-        Title="Main Page"
+        Title="Home"
         ContentTemplate="{DataTemplate mainPage:MainPage}"
         Route="MainPage" />
 
     <ShellContent
-        Title="Settings Page"
+        Title="Settings"
         ContentTemplate="{DataTemplate settingsPage:SettingsPage}"
         Route="SettingsPage" />
 
     <ShellContent
-        Title="Profile Page"
+        Title="Profile"
         ContentTemplate="{DataTemplate profilePage:ProfilePage}"
         Route="ProfilePage" />
     

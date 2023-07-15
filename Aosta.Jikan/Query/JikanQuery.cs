@@ -28,9 +28,35 @@ internal sealed class JikanQuery<T> : IQuery<T>
     /// </summary>
     /// <param name="name">Parameter name</param>
     /// <param name="value">Parameter value</param>
-    /// <typeparam name="TParam">Parameter type</typeparam>
+    /// <typeparam name="TParam">Enum type</typeparam>
     /// <returns>The updated query</returns>
-    internal JikanQuery<T> WithParameter<TParam>(string name, TParam value)
+    internal JikanQuery<T> WithParameter<TParam>(string name, TParam value) where TParam : struct, Enum
+    {
+        _parameters.Add(name, value);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a query parameter to the query
+    /// </summary>
+    /// <param name="name">Parameter name</param>
+    /// <param name="value">Parameter value</param>
+    /// <returns>The updated query</returns>
+    internal JikanQuery<T> WithParameter(string name, bool value)
+    {
+        _parameters.Add(name, value);
+        return this;
+    }
+
+    /// <inheritdoc cref="WithParameter(string,bool)"/>
+    internal JikanQuery<T> WithParameter(string name, string value)
+    {
+        _parameters.Add(name, value);
+        return this;
+    }
+
+    /// <inheritdoc cref="WithParameter(string,bool)"/>
+    internal JikanQuery<T> WithParameter(string name, int value)
     {
         _parameters.Add(name, value);
         return this;

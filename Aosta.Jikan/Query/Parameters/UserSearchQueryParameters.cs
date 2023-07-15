@@ -30,7 +30,7 @@ public class UserSearchQueryParameters : JikanQueryParameterSet
     public UserSearchQueryParameters SetGender(UserGenderFilter gender)
     {
         Guard.IsValidEnum(gender, nameof(gender));
-        base.Add(QueryParameter.Gender, gender.StringValue());
+        base.Add(QueryParameter.Gender, gender);
         return this;
     }
 

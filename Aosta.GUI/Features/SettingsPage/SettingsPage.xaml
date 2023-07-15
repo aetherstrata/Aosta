@@ -3,11 +3,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-             xmlns:constants="clr-namespace:Aosta.GUI.Globals"
              xmlns:settingsPage="using:Aosta.GUI.Features.SettingsPage"
+             xmlns:constants="clr-namespace:Aosta.GUI.Consts"
              x:Class="Aosta.GUI.Features.SettingsPage.SettingsPage"
              x:DataType="settingsPage:SettingsViewModel"
-             Title="Settings Page"
+             Title="Settings"
              Shell.NavBarIsVisible="True"
              Shell.TabBarIsVisible="False">
 

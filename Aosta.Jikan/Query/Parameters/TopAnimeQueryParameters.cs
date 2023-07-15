@@ -23,21 +23,21 @@ public class TopAnimeQueryParameters : JikanQueryParameterSet
     public TopAnimeQueryParameters SetType(AnimeTypeFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        base.Add(QueryParameter.Type, filter.StringValue());
+        base.Add(QueryParameter.Type, filter);
         return this;
     }
 
     public TopAnimeQueryParameters SetFilter(TopAnimeFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        base.Add(QueryParameter.Filter, filter.StringValue());
+        base.Add(QueryParameter.Filter, filter);
         return this;
     }
 
     public TopAnimeQueryParameters SetRating(AnimeAgeRatingFilter rating)
     {
         Guard.IsValidEnum(rating, nameof(rating));
-        base.Add(QueryParameter.Rating, rating.StringValue());
+        base.Add(QueryParameter.Rating, rating);
         return this;
     }
 

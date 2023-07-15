@@ -1,5 +1,5 @@
 using Aosta.Core;
-using Aosta.GUI.Features.AnimeManualAddPage;
+using Aosta.GUI.Features.AddManualAnime;
 using Aosta.GUI.Features.AnimeSummaryPage;
 using Aosta.GUI.Features.MainPage;
 using Aosta.GUI.Features.OnboardingPage;
@@ -28,14 +28,14 @@ internal static partial class MauiAppBuilderExtensions
 
         #region ViewModels
 
-        // Singleton VIewModels
+        // Singleton ViewModels
         builder.Services.AddSingleton<OnboardingScreenViewModel>();
         builder.Services.AddSingleton<SettingsViewModel>();
         builder.Services.AddSingleton<MainPageViewModel>();
 
         //Transient ViewModels
         builder.Services.AddTransient<AnimeSummaryViewModel>();
-        builder.Services.AddTransient<AnimeManualAddViewModel>();
+        builder.Services.AddTransient<AddManualAnimeViewModel>();
 
         #endregion
 
@@ -49,7 +49,7 @@ internal static partial class MauiAppBuilderExtensions
 
         //Transient Views
         builder.Services.AddTransient<AnimeSummaryPage>();
-        builder.Services.AddTransient<AnimeManualAddPage>();
+        builder.Services.AddTransient<AddManualAnimePage>();
 
         #endregion
 

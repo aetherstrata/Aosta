@@ -26,6 +26,6 @@ internal static class AnimeForumTopicsQuery
         Guard.IsGreaterThanZero(id, nameof(id));
         Guard.IsValidEnum(type, nameof(type));
         return new JikanQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>>(GetEndpoint(id))
-            .WithParameter(QueryParameter.Filter, type.StringValue());
+            .WithParameter(QueryParameter.Filter, type);
     }
 }

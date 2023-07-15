@@ -24,7 +24,7 @@ public class ScheduleQueryParameters : JikanQueryParameterSet
     public ScheduleQueryParameters SetFilter(ScheduledDayFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        base.Add(QueryParameter.Filter, filter.StringValue());
+        base.Add(QueryParameter.Filter, filter);
         return this;
     }
 

@@ -12,6 +12,9 @@ public partial class MainPageViewModel : RealmViewModel
 {
     public IEnumerable<Anime> RealmAnimeList { get; set; }
 
+    [ObservableProperty]
+    private bool _labelsVisible;
+
     private readonly AostaDotNet _aosta;
 
     public MainPageViewModel(AostaDotNet aosta) : base(aosta)
@@ -25,5 +28,11 @@ public partial class MainPageViewModel : RealmViewModel
     {
         _aosta.Log.Debug("Navigated to: {Name}", pageType.Name);
         await Shell.Current.GoToAsync($"{pageType.Name}");
+    }
+
+    [RelayCommand]
+    private void AddButton()
+    {
+        LabelsVisible = !LabelsVisible;
     }
 }

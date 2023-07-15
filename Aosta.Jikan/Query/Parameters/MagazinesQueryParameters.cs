@@ -31,14 +31,14 @@ public class MagazinesQueryParameters : JikanQueryParameterSet
     public MagazinesQueryParameters OrderBy(MagazinesOrderBy orderBy)
     {
         Guard.IsValidEnum(orderBy, nameof(orderBy));
-        base.Add(QueryParameter.OrderBy, orderBy.StringValue());
+        base.Add(QueryParameter.OrderBy, orderBy);
         return this;
     }
 
     public MagazinesQueryParameters Sort(SortDirection sort)
     {
         Guard.IsValidEnum(sort, nameof(sort));
-        base.Add(QueryParameter.Sort, sort.StringValue());
+        base.Add(QueryParameter.Sort, sort);
         return this;
     }
 

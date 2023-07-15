@@ -1,4 +1,4 @@
-namespace Aosta.GUI.Globals;
+namespace Aosta.GUI.Consts;
 
 /// <summary>
 ///     This class contains the unicode representation of all FontAwesome icons used throughout the app

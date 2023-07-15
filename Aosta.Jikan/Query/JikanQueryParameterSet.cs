@@ -19,14 +19,53 @@ public class JikanQueryParameterSet : IEnumerable<IQueryParameter>
         if(!result) throw new JikanDuplicateParameterException($"A query parameter named {parameter.GetName()} already exists.", nameof(parameter));
     }
 
-    internal void Add<T>(string name, T value)
+    internal void Add<T>(string name, T value) where T : struct, Enum
     {
-        Add(new JikanQueryParameter<T>()
+        Add(new EnumQueryParameter<T>()
         {
             Name = name,
             Value = value
         });
     }
+
+    internal void Add(string name, double value)
+    {
+        Add(new JikanQueryParameter<double>()
+        {
+            Name = name,
+            Value = value
+        });
+    }
+
+
+    internal void Add(string name, long value)
+    {
+        Add(new JikanQueryParameter<long>()
+        {
+            Name = name,
+            Value = value
+        });
+    }
+
+    internal void Add(string name, int value)
+    {
+        Add(new JikanQueryParameter<int>()
+        {
+            Name = name,
+            Value = value
+        });
+    }
+
+    internal void Add(string name, string value)
+    {
+        Add(new JikanQueryParameter<string>()
+        {
+            Name = name,
+            Value = value
+        });
+    }
+
+    internal void Add(string name, char value) => Add(name, value.ToString());
 
     internal void Add(string name, bool value)
     {

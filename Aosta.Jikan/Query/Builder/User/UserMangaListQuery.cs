@@ -25,6 +25,6 @@ internal static class UserMangaListQuery
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsValidEnum(status, nameof(status));
         return new JikanQuery<BaseJikanResponse<ICollection<MangaListEntryResponse>>>(GetEndpoint(username))
-            .WithParameter(QueryParameter.Status, status.StringValue());
+            .WithParameter(QueryParameter.Status, status);
     }
 }

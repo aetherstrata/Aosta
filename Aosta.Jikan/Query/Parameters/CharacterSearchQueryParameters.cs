@@ -31,14 +31,14 @@ public class CharacterSearchQueryParameters : JikanQueryParameterSet
     public CharacterSearchQueryParameters SetOrder(CharacterSearchOrderBy orderBy)
     {
         Guard.IsValidEnum(orderBy, nameof(orderBy));
-        base.Add(QueryParameter.OrderBy, orderBy.StringValue());
+        base.Add(QueryParameter.OrderBy, orderBy);
         return this;
     }
 
     public CharacterSearchQueryParameters SetSortDirection(SortDirection sort)
     {
         Guard.IsValidEnum(sort, nameof(sort));
-        base.Add(QueryParameter.Sort, sort.StringValue());
+        base.Add(QueryParameter.Sort, sort);
         return this;
     }
     

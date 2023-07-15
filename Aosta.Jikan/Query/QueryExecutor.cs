@@ -6,14 +6,18 @@ using Serilog;
 
 namespace Aosta.Jikan.Query;
 
-internal class QueryExecutor
+internal sealed class QueryExecutor : IDisposable
 {
+    internal string BaseAddress { get; }
+
     private readonly HttpClient _http;
     private readonly ITaskLimiter _limiter;
     private readonly ILogger? _logger;
 
     internal QueryExecutor(HttpClient http, ITaskLimiter limiter, ILogger? logger = null)
     {
+        BaseAddress = http.BaseAddress!.ToString();
+
         _http = http;
         _limiter = limiter;
         _logger = logger;
@@ -48,5 +52,10 @@ internal class QueryExecutor
             throw new JikanRequestException(
                 ErrorMessages.SerializationFailed + Environment.NewLine + "Inner exception message: " + ex.Message, ex);
         }
+    }
+
+    public void Dispose()
+    {
+        _http.Dispose();
     }
 }

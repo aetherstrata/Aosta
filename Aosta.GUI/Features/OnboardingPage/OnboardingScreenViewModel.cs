@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using Aosta.GUI.Globals;
+using Aosta.GUI.Consts;
 using Aosta.GUI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

@@ -22,7 +22,7 @@ public static class Guard
 		}
 	}
 
-	public static void IsNotNullOrWhiteSpace(string arg, string argumentName)
+	public static void IsNotNullOrWhiteSpace(string? arg, string argumentName)
 	{
 		if (string.IsNullOrWhiteSpace(arg))
 		{

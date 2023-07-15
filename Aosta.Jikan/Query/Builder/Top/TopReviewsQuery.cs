@@ -30,7 +30,7 @@ internal static class TopReviewsQuery
     {
         Guard.IsValidEnum(type, nameof(type));
         return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(QueryEndpoint)
-            .WithParameter(QueryParameter.Type, type.StringValue());
+            .WithParameter(QueryParameter.Type, type);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>> Create(int page, TopReviewsTypeFilter type)
@@ -39,7 +39,7 @@ internal static class TopReviewsQuery
         Guard.IsValidEnum(type, nameof(type));
         return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(QueryEndpoint)
             .WithParameter(QueryParameter.Page, page)
-            .WithParameter(QueryParameter.Type, type.StringValue());
+            .WithParameter(QueryParameter.Type, type);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>> Create(TopReviewsQueryParameters parameters)

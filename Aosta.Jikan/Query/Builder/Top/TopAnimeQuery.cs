@@ -30,7 +30,7 @@ internal static class TopAnimeQuery
     {
         Guard.IsValidEnum(filter, nameof(filter));
         return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(QueryEndpoint)
-            .WithParameter(QueryParameter.Filter, filter.StringValue());
+            .WithParameter(QueryParameter.Filter, filter);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(int page, TopAnimeFilter filter)
@@ -39,7 +39,7 @@ internal static class TopAnimeQuery
         Guard.IsValidEnum(filter, nameof(filter));
         return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(QueryEndpoint)
             .WithParameter(QueryParameter.Page, page)
-            .WithParameter(QueryParameter.Filter, filter.StringValue());
+            .WithParameter(QueryParameter.Filter, filter);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(TopAnimeQueryParameters parameters)

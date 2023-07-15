@@ -25,6 +25,6 @@ internal static class UserHistoryQuery
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsValidEnum(type, nameof(type));
         return new JikanQuery<BaseJikanResponse<ICollection<HistoryEntryResponse>>>(GetEndpoint(username))
-            .WithParameter(QueryParameter.Type, type.StringValue());
+            .WithParameter(QueryParameter.Type, type);
     }
 }

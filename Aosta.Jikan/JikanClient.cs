@@ -1,8 +1,5 @@
-﻿using System.Text.Json;
-using Aosta.Common.Consts;
-using Aosta.Common.Limiter;
+﻿using Aosta.Common.Limiter;
 using Aosta.Jikan.Enums;
-using Aosta.Jikan.Models;
 using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Query;
@@ -20,21 +17,6 @@ public sealed class JikanClient : IJikan, IDisposable
     private QueryExecutor Executor { get; }
 
     /// <summary>
-    /// Http client class to call REST request and receive REST response.
-    /// </summary>
-    private readonly HttpClient _httpClient;
-
-    /// <summary>
-    /// API call limiter
-    /// </summary>
-    private readonly ITaskLimiter _limiter;
-
-    /// <summary>
-    /// Serilog logger
-    /// </summary>
-    private readonly ILogger? _logger;
-
-    /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="http"> Static http client instance.</param>
@@ -43,59 +25,20 @@ public sealed class JikanClient : IJikan, IDisposable
     internal JikanClient(HttpClient http, ITaskLimiter taskLimiter, ILogger? logger)
     {
         Executor = new QueryExecutor(http, taskLimiter, logger);
-        _httpClient = http;
-        _limiter = taskLimiter;
-        _logger = logger;
     }
-
-    public void Dispose()
-    {
-        _httpClient.Dispose();
-    }
-
-    #region Private Methods
 
     /// <summary>
-    /// Basic method for handling requests and responses from endpoint.
+    /// Perform disposal of the current client instance.
     /// </summary>
-    /// <typeparam name="T">Class type deserialized from GET request.</typeparam>
-    /// <param name="requestEndpoint">The query endpoint.</param>
-    /// <param name="ct">Cancellation token.</param>
-    /// <returns>Requested object if successful.</returns>
-    /// <exception cref="JikanRequestException">The request endpoint must be a valid API endpoint</exception>
-    private async Task<T> ExecuteGetRequestAsync<T>(string requestEndpoint, CancellationToken ct = default) where T : class
+    /// <remarks>
+    /// This operation closes open HTTP connections and cancels any pending API request.
+    /// </remarks>
+    public void Dispose()
     {
-        string fullUrl = _httpClient.BaseAddress + requestEndpoint;
-        try
-        {
-            _logger?.Debug("Performing GET request: \"{Request}\"", fullUrl);
-            using var response = await _limiter.LimitAsync(() => _httpClient.GetAsync(requestEndpoint, ct));
-
-            string json = await response.Content.ReadAsStringAsync(ct);
-            _logger?.Verbose("Retrieved JSON string: {Json}", json);
-
-            if (response.IsSuccessStatusCode)
-            {
-                _logger?.Debug("Got HTTP response for \"{Request}\" successfully", fullUrl);
-                return JsonSerializer.Deserialize<T>(json) ?? throw new JikanRequestException(
-                    ErrorMessages.SerializationNullResult + Environment.NewLine
-                    + "Raw JSON string:" + Environment.NewLine + json);
-            }
-
-            _logger?.Error("Failed to get HTTP resource for \"{Resource}\", Status Code: {Status}", requestEndpoint, response.StatusCode);
-            var errorData = JsonSerializer.Deserialize<JikanApiError>(json);
-            throw new JikanRequestException(string.Format(ErrorMessages.FailedRequest, response.StatusCode, response.Content), errorData);
-        }
-        catch (JsonException ex)
-        {
-            throw new JikanRequestException(
-                ErrorMessages.SerializationFailed + Environment.NewLine + "Inner exception message: " + ex.Message, ex);
-        }
+        Executor.Dispose();
     }
 
-    #endregion Private Methods
-
-    #region Public Methods
+    #region API Methods
 
     #region Anime methods
 
@@ -830,28 +773,28 @@ public sealed class JikanClient : IJikan, IDisposable
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserAnimeListAsync));
+        Guard.IsDefaultEndpoint(Executor.BaseAddress, nameof(GetUserAnimeListAsync));
         return Executor.GetRequestAsync(UserAnimeListQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> GetUserAnimeListAsync(string username, UserAnimeStatusFilter filter, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserAnimeListAsync));
+        Guard.IsDefaultEndpoint(Executor.BaseAddress, nameof(GetUserAnimeListAsync));
         return Executor.GetRequestAsync(UserAnimeListQuery.Create(username, filter), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserMangaListAsync));
+        Guard.IsDefaultEndpoint(Executor.BaseAddress, nameof(GetUserMangaListAsync));
         return Executor.GetRequestAsync(UserMangaListQuery.Create(username), ct);
     }
 
     /// <inheritdoc />
     public Task<BaseJikanResponse<ICollection<MangaListEntryResponse>>> GetUserMangaListAsync(string username, UserMangaStatusFilter filter, CancellationToken ct = default)
     {
-        Guard.IsDefaultEndpoint(_httpClient.BaseAddress?.ToString(), nameof(GetUserMangaListAsync));
+        Guard.IsDefaultEndpoint(Executor.BaseAddress, nameof(GetUserMangaListAsync));
         return Executor.GetRequestAsync(UserMangaListQuery.Create(username, filter), ct);
     }
 

@@ -30,7 +30,7 @@ internal static class TopMangaQuery
     {
         Guard.IsValidEnum(filter, nameof(filter));
         return new JikanQuery<PaginatedJikanResponse<ICollection<MangaResponse>>>(QueryEndpoint)
-            .WithParameter(QueryParameter.Filter, filter.StringValue());
+            .WithParameter(QueryParameter.Filter, filter);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<MangaResponse>>> Create(int page, TopMangaFilter filter)
@@ -39,7 +39,7 @@ internal static class TopMangaQuery
         Guard.IsValidEnum(filter, nameof(filter));
         return new JikanQuery<PaginatedJikanResponse<ICollection<MangaResponse>>>(QueryEndpoint)
             .WithParameter(QueryParameter.Page, page)
-            .WithParameter(QueryParameter.Filter, filter.StringValue());
+            .WithParameter(QueryParameter.Filter, filter);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<MangaResponse>>> Create(TopMangaQueryParameters parameters)

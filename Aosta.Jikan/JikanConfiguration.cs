@@ -86,6 +86,7 @@ public class JikanConfiguration
 
         public IJikan HttpClient(HttpClient httpClient)
         {
+            Guard.IsNotNullOrWhiteSpace(httpClient.BaseAddress?.ToString(), nameof(httpClient));
             _jikan._httpClient = httpClient;
             return _jikan.Build();
         }

@@ -46,7 +46,7 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet
     public AnimeSearchQueryParameters SetType(AnimeTypeFilter type)
     {
         Guard.IsValidEnum(type, nameof(type));
-        base.Add(QueryParameter.Type, type.StringValue());
+        base.Add(QueryParameter.Type, type);
         return this;
     }
 
@@ -62,7 +62,7 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet
     {
         Guard.IsGreaterThanZero(score, nameof(score));
         Guard.IsLessOrEqualThan(score, 10, nameof(score));
-        base.Add(QueryParameter.Score, Math.Round(score, 2, MidpointRounding.AwayFromZero));
+        base.Add(QueryParameter.Score, score);
         return this;
     }
 
@@ -78,7 +78,7 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet
     {
         Guard.IsGreaterThanZero(score, nameof(score));
         Guard.IsLessOrEqualThan(score, 10, nameof(score));
-        base.Add(QueryParameter.MinScore, Math.Round(score, 2, MidpointRounding.AwayFromZero));
+        base.Add(QueryParameter.MinScore, score);
         return this;
     }
 
@@ -94,21 +94,21 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet
     {
         Guard.IsGreaterThanZero(score, nameof(score));
         Guard.IsLessOrEqualThan(score, 10, nameof(score));
-        base.Add(QueryParameter.MaxScore, Math.Round(score, 2, MidpointRounding.AwayFromZero));
+        base.Add(QueryParameter.MaxScore, score);
         return this;
     }
 
     public AnimeSearchQueryParameters SetStatus(AiringStatusFilter status)
     {
         Guard.IsValidEnum(status, nameof(status));
-        base.Add(QueryParameter.Status, status.StringValue());
+        base.Add(QueryParameter.Status, status);
         return this;
     }
 
     public AnimeSearchQueryParameters SetRating(AnimeAgeRatingFilter rating)
     {
         Guard.IsValidEnum(rating, nameof(rating));
-        base.Add(QueryParameter.Rating, rating.StringValue());
+        base.Add(QueryParameter.Rating, rating);
         return this;
     }
 
@@ -145,14 +145,14 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet
     public AnimeSearchQueryParameters SetOrder(AnimeSearchOrderBy orderBy)
     {
         Guard.IsValidEnum(orderBy, nameof(orderBy));
-        base.Add(QueryParameter.OrderBy, orderBy.StringValue());
+        base.Add(QueryParameter.OrderBy, orderBy);
         return this;
     }
 
     public AnimeSearchQueryParameters SetSortDirection(SortDirection sort)
     {
         Guard.IsValidEnum(sort, nameof(sort));
-        base.Add(QueryParameter.Sort, sort.StringValue());
+        base.Add(QueryParameter.Sort, sort);
         return this;
     }
 

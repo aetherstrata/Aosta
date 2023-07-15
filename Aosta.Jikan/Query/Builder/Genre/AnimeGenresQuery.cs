@@ -22,6 +22,6 @@ internal static class AnimeGenresQuery
     {
         Guard.IsValidEnum(filter, nameof(filter));
         return new JikanQuery<BaseJikanResponse<ICollection<GenreResponse>>>(QueryEndpoint)
-            .WithParameter(QueryParameter.Filter, filter.StringValue());
+            .WithParameter(QueryParameter.Filter, filter);
     }
 }

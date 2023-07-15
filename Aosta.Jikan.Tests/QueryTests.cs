@@ -64,7 +64,7 @@ internal class QueryTests
     public void GetQuery_shouldAddParam_whenEnum()
     {
         _query = new JikanQuery<int>(Endpoint)
-            .WithParameter("airing", AiringStatusFilter.Airing.StringValue());
+            .WithParameter("airing", AiringStatusFilter.Airing);
 
         _query.GetQuery().Should().Be("api/v2/items?airing=airing");
     }
@@ -77,7 +77,7 @@ internal class QueryTests
             .WithParameter("unapproved", false)
             .WithParameter("page", 4)
             .WithParameter("q", "Naruto")
-            .WithParameter("airing", AiringStatusFilter.Airing.StringValue());
+            .WithParameter("airing", AiringStatusFilter.Airing);
 
         _query.GetQuery().Should().Be("api/v2/items?sfw&page=4&q=Naruto&airing=airing");
     }
@@ -91,7 +91,7 @@ internal class QueryTests
             { "unapproved", false },
             { "page", 4 },
             { "q", "Naruto" },
-            { "airing", AiringStatusFilter.Airing.StringValue() }
+            { "airing", AiringStatusFilter.Airing }
         };
 
         _query = new JikanQuery<int>(Endpoint)

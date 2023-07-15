@@ -31,6 +31,8 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>        
+        <IsPackable>false</IsPackable>
+        <NeutralLanguage>en-US</NeutralLanguage>        
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
@@ -44,6 +46,14 @@
       <AndroidLinkTool>r8</AndroidLinkTool>
       <EnableLLVM>True</EnableLLVM>
       <AndroidKeyStore>False</AndroidKeyStore>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <AndroidSupportedAbis>armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <AndroidSupportedAbis>armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
     </PropertyGroup>
 
     <ItemGroup>
@@ -103,6 +113,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Aosta.Core\Aosta.Core.csproj" />
     </ItemGroup>
+
 
     <ProjectExtensions>
 		<VisualStudio>

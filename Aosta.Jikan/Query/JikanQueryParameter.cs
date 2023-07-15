@@ -26,14 +26,14 @@ internal class JikanQueryParameter<T> : IQueryParameter, IEquatable<JikanQueryPa
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
-        return Name == other.Name && EqualityComparer<T>.Default.Equals(Value, other.Value);
+        return this.Name == other.Name && EqualityComparer<T>.Default.Equals(Value, other.Value);
     }
 
     public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        return obj.GetType() == this.GetType() && Equals((JikanQueryParameter<T>)obj);
+        return this.GetType() == obj.GetType() && Equals((JikanQueryParameter<T>)obj);
     }
 
     public override int GetHashCode()
