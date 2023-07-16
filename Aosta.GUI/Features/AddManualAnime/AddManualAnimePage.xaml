@@ -7,8 +7,6 @@
              x:Class="Aosta.GUI.Features.AddManualAnime.AddManualAnimePage"
              x:DataType="addManualAnime:AddManualAnimeViewModel"
              Title="Add new"
-             Shell.NavBarIsVisible="False"
-             Shell.TabBarIsVisible="False"
              Shell.BackgroundColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor60L}}">
     <Grid>
         <VerticalStackLayout

@@ -25,7 +25,7 @@ public partial class MainPageViewModel : ObservableObject
     private async Task GoToPage(Type pageType)
     {
         Log.Debug("Navigated to: {Name}", pageType.Name);
-        await Shell.Current.GoToAsync($"{pageType.Name}");
+        await Shell.Current.GoToAsync($"{pageType.Name}", true);
     }
 
     [RelayCommand]

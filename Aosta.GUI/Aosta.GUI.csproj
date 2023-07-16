@@ -56,6 +56,10 @@
       <AndroidSupportedAbis>armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|AnyCPU'">
+      <AndroidLinkTool>r8</AndroidLinkTool>
+    </PropertyGroup>
+
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\appicon.svg">
@@ -85,7 +89,7 @@
         <PackageReference Include="Realm" Version="11.2.0" />
         <PackageReference Include="Serilog" Version="3.0.1" />
         <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
-        <PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
+        <PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
     </ItemGroup>
 
     <ItemGroup>

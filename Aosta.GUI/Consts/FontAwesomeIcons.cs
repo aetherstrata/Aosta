@@ -14,4 +14,5 @@ public static class FontAwesomeIcons
     public const string Plus = "\u002b";
     public const string Star = "\u2b50";
     public const string User = "\uf007";
+    public const string UserCircle = "\uf2bd";
 }

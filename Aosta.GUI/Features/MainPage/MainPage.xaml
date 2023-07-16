@@ -10,9 +10,7 @@
              xmlns:addJikanAnime="clr-namespace:Aosta.GUI.Features.AddJikanAnime"
              x:Class="Aosta.GUI.Features.MainPage.MainPage"
              x:DataType="mainPage:MainPageViewModel"
-             Title="Home"
-             Shell.NavBarIsVisible="True"
-             Shell.TabBarIsVisible="False">
+             Title="Home">
 
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior
@@ -88,7 +86,7 @@
         <Border Background="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource BaseColor}}"
                 Margin="0, 0, 40, 125"
                 Padding="10, 0"
-                HeightRequest="30"
+                HeightRequest="40"
                 VerticalOptions="End"
                 HorizontalOptions="End"
                 StrokeThickness="0"
@@ -100,22 +98,16 @@
                 <TapGestureRecognizer Command="{Binding GoToPageCommand}"
                                       CommandParameter="{x:Type addManualAnime:AddManualAnimePage}"></TapGestureRecognizer>
             </Border.GestureRecognizers>
-            <Border.Shadow>
-                <Shadow Radius="20"
-                        Offset="10,10"
-                        Opacity="0.2"
-                        Brush="Black"/>
-            </Border.Shadow>
             <Label TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}"
                    Text="Manual"
-                   FontSize="15"
+                   FontSize="20"
                    VerticalOptions="Fill"/>
         </Border>
 
         <Border Background="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource BaseColor}}"
-                Margin="0, 0, 40, 175"
+                Margin="0, 0, 40, 190"
                 Padding="10, 0"
-                HeightRequest="30"
+                HeightRequest="40"
                 VerticalOptions="End"
                 HorizontalOptions="End"
                 StrokeThickness="0"
@@ -127,15 +119,9 @@
                 <TapGestureRecognizer Command="{Binding GoToPageCommand}"
                                       CommandParameter="{x:Type addJikanAnime:AddJikanAnimePage}"></TapGestureRecognizer>
             </Border.GestureRecognizers>
-            <Border.Shadow>
-                <Shadow Radius="20"
-                        Offset="10,10"
-                        Opacity="0.2"
-                        Brush="Black"/>
-            </Border.Shadow>
             <Label TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}"
                    Text="Jikan"
-                   FontSize="15"
+                   FontSize="20"
                    VerticalOptions="Fill"/>
         </Border>
     </Grid>

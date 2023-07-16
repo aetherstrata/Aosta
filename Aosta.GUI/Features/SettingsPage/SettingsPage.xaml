@@ -7,9 +7,7 @@
              xmlns:constants="clr-namespace:Aosta.GUI.Consts"
              x:Class="Aosta.GUI.Features.SettingsPage.SettingsPage"
              x:DataType="settingsPage:SettingsViewModel"
-             Title="Settings"
-             Shell.NavBarIsVisible="True"
-             Shell.TabBarIsVisible="False">
+             Title="Settings">
 
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior
