@@ -151,13 +151,13 @@ public class AostaConfiguration
             _aosta = aosta;
         }
 
-        public AostaConfiguration From(IJikan jikan)
+        public AostaConfiguration FromJikan(IJikan jikan)
         {
             _aosta._jikan = jikan;
             return _aosta;
         }
 
-        public AostaConfiguration From(JikanConfiguration jikanConfig)
+        public AostaConfiguration FromJikan(JikanConfiguration jikanConfig)
         {
             _aosta._jikan = jikanConfig.Use.Logger(_logger).Build();
             return _aosta;
