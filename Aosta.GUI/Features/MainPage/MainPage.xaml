@@ -16,8 +16,7 @@
 
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior
-            StatusBarColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor}}"
-            StatusBarStyle="Default" />
+            StatusBarColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor}}" />
     </ContentPage.Behaviors>
 
     <Grid>
@@ -86,22 +85,8 @@
             </Button.Shadow>
         </Button>
 
-        <Button Margin="0,0,40,120"
-                Style="{x:StaticResource Key=FloatingActionButtonSmall}"
-                Text="{x:Static constants:FontAwesomeIcons.Plus}"
-                Command="{Binding GoToPageCommand}"
-                CommandParameter="{x:Type addManualAnime:AddManualAnimePage}"
-                IsVisible="{Binding ButtonsVisible}" >
-            <Button.Shadow>
-                <Shadow Radius="10"
-                        Offset="5,5"
-                        Opacity="0.2"
-                        Brush="Black"/>
-            </Button.Shadow>
-        </Button>
-
         <Border Background="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource BaseColor}}"
-                Margin="0, 0, 90, 125"
+                Margin="0, 0, 40, 125"
                 Padding="10, 0"
                 HeightRequest="30"
                 VerticalOptions="End"
@@ -111,28 +96,24 @@
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="10" />
             </Border.StrokeShape>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GoToPageCommand}"
+                                      CommandParameter="{x:Type addManualAnime:AddManualAnimePage}"></TapGestureRecognizer>
+            </Border.GestureRecognizers>
+            <Border.Shadow>
+                <Shadow Radius="20"
+                        Offset="10,10"
+                        Opacity="0.2"
+                        Brush="Black"/>
+            </Border.Shadow>
             <Label TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}"
-                   Text="Add manually"
+                   Text="Manual"
                    FontSize="15"
                    VerticalOptions="Fill"/>
         </Border>
 
-        <Button Margin="0,0,40,170"
-                Style="{x:StaticResource Key=FloatingActionButtonSmall}"
-                Text="{x:Static constants:FontAwesomeIcons.Plus}"
-                Command="{Binding GoToPageCommand}"
-                CommandParameter="{x:Type addJikanAnime:AddJikanAnimePage}"
-                IsVisible="{Binding ButtonsVisible}" >
-            <Button.Shadow>
-                <Shadow Radius="10"
-                        Offset="5,5"
-                        Opacity="0.2"
-                        Brush="Black"/>
-            </Button.Shadow>
-        </Button>
-
         <Border Background="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource BaseColor}}"
-                Margin="0, 0, 90, 175"
+                Margin="0, 0, 40, 175"
                 Padding="10, 0"
                 HeightRequest="30"
                 VerticalOptions="End"
@@ -142,8 +123,18 @@
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="10" />
             </Border.StrokeShape>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GoToPageCommand}"
+                                      CommandParameter="{x:Type addJikanAnime:AddJikanAnimePage}"></TapGestureRecognizer>
+            </Border.GestureRecognizers>
+            <Border.Shadow>
+                <Shadow Radius="20"
+                        Offset="10,10"
+                        Opacity="0.2"
+                        Brush="Black"/>
+            </Border.Shadow>
             <Label TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}"
-                   Text="Add from Jikan"
+                   Text="Jikan"
                    FontSize="15"
                    VerticalOptions="Fill"/>
         </Border>

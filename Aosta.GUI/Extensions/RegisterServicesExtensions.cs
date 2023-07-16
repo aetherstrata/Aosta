@@ -7,6 +7,7 @@ using Aosta.GUI.Features.ProfileMainPage;
 using Aosta.GUI.Features.SettingsPage;
 using Aosta.GUI.Services;
 using Aosta.Jikan;
+using Serilog;
 
 namespace Aosta.GUI.Extensions;
 
@@ -20,9 +21,10 @@ internal static partial class MauiAppBuilderExtensions
         builder.Services.AddSingleton<ISettingsService, SettingsService>();
         builder.Services.AddSingleton<AostaDotNet>(_ => new AostaConfiguration(FileSystem.Current.AppDataDirectory)
                 .With.CacheDirectory(FileSystem.Current.CacheDirectory)
-                .Source.From(new JikanConfiguration())
+                .Source.FromJikan(new JikanConfiguration()
+                    .Use.Logger(Log.Logger))
+                .Log.With(Log.Logger)
                 .Build());
-
 
         #endregion
 

@@ -1,10 +1,14 @@
 using Aosta.Core;
+using Realms;
 
 namespace Aosta.GUI.Features.AddJikanAnime;
 
-internal partial class AddJikanAnimeViewModel : RealmViewModel
+internal class AddJikanAnimeViewModel
 {
-    public AddJikanAnimeViewModel(AostaDotNet aosta) : base(aosta)
+    private readonly Realm _realm;
+
+    public AddJikanAnimeViewModel(AostaDotNet aosta)
     {
+        _realm = aosta.GetInstance();
     }
 }
