@@ -29,7 +29,7 @@ public partial class Anime : IRealmObject, IHasGuidPrimaryKey
 
     /// <summary>The unique ID of this content</summary>
     [PrimaryKey]
-    public Guid Id { get; private set; } = Guid.NewGuid();
+    public Guid ID { get; private set; } = Guid.NewGuid();
 
     /// <summary>The online MyAnimeList metadata of this content</summary>
     public JikanAnime? Jikan { get; set; }
@@ -90,6 +90,8 @@ public partial class Anime : IRealmObject, IHasGuidPrimaryKey
         get => (GroupSeason)_Season;
         set => _Season = (int)value;
     }
+    
+    public User? User { get; set; }
 
     #endregion
 

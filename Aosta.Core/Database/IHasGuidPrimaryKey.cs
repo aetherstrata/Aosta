@@ -1,10 +1,10 @@
 ﻿using System;
+using Aosta.Core.Database.Models;
 using Realms;
 
 namespace Aosta.Core.Database;
 
 public interface IHasGuidPrimaryKey
 {
-    [PrimaryKey]
-    public Guid Id { get; }
+    public Guid ID { get; }
 }
