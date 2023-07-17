@@ -39,7 +39,7 @@ public partial class AddManualAnimeViewModel : ObservableObject
             Type = ContentType.TV
         };
 
-        var guid = anime.Id;
+        var guid = anime.ID;
 
         Guid id = await _aosta.CreateLocalContentAsync(anime, token);
 

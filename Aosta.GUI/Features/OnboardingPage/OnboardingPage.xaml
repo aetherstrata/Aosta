@@ -2,7 +2,7 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:onboardingPage="using:Aosta.GUI.Features.OnboardingPage"
              x:Class="Aosta.GUI.Features.OnboardingPage.OnboardingPage"
              x:DataType="onboardingPage:OnboardingScreenViewModel"
@@ -11,8 +11,8 @@
              Shell.TabBarIsVisible="False">
 
     <ContentPage.Behaviors>
-        <mct:StatusBarBehavior
-            StatusBarColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource BaseColor}}"
+        <toolkit:StatusBarBehavior
+            StatusBarColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource BaseColor40L}}"
             StatusBarStyle="Default" />
     </ContentPage.Behaviors>
 

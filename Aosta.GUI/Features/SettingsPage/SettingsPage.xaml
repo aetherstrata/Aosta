@@ -2,16 +2,17 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:settingsPage="using:Aosta.GUI.Features.SettingsPage"
              xmlns:constants="clr-namespace:Aosta.GUI.Consts"
              x:Class="Aosta.GUI.Features.SettingsPage.SettingsPage"
              x:DataType="settingsPage:SettingsViewModel"
-             Title="Settings">
+             Title="Settings"
+             Shell.PresentationMode="NotAnimated">
 
     <ContentPage.Behaviors>
-        <mct:StatusBarBehavior
-            StatusBarColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor}}"
+        <toolkit:StatusBarBehavior
+            StatusBarColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor40L}}"
             StatusBarStyle="Default" />
     </ContentPage.Behaviors>
 
@@ -88,7 +89,7 @@
                         Grid.Column="1"
                         IsToggled="{Binding DarkModeSwitch}">
                         <Switch.Behaviors>
-                            <mct:EventToCommandBehavior
+                            <toolkit:EventToCommandBehavior
                                 EventName="Toggled"
                                 Command="{Binding UpdateTheme}" />
                         </Switch.Behaviors>

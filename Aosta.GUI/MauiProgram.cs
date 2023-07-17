@@ -2,6 +2,7 @@ using System.Text;
 using Aosta.Common.Consts;
 using Aosta.GUI.Extensions;
 using CommunityToolkit.Maui;
+using DevExpress.Maui;
 using Serilog;
 using Serilog.Events;
 
@@ -16,6 +17,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseDevExpress()
             .RegisterFonts()
             .RegisterHandlers()
             .RegisterServices()

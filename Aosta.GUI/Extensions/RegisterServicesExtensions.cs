@@ -7,6 +7,7 @@ using Aosta.GUI.Features.ProfileMainPage;
 using Aosta.GUI.Features.SettingsPage;
 using Aosta.GUI.Services;
 using Aosta.Jikan;
+using CommunityToolkit.Maui.Storage;
 using Serilog;
 
 namespace Aosta.GUI.Extensions;
@@ -17,6 +18,7 @@ internal static partial class MauiAppBuilderExtensions
     {
         #region Services
 
+        builder.Services.AddSingleton<IFileSaver>(FileSaver.Default);
         builder.Services.AddSingleton<ISecureStorageService, SecureStorageService>();
         builder.Services.AddSingleton<ISettingsService, SettingsService>();
         builder.Services.AddSingleton<AostaDotNet>(_ => new AostaConfiguration(FileSystem.Current.AppDataDirectory)

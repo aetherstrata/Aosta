@@ -2,8 +2,15 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="Aosta.GUI.Features.AddJikanAnime.AddJikanAnimePage"
              Title="Add from Jikan">
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior
+            StatusBarColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor40L}}" />
+    </ContentPage.Behaviors>
+
     <ContentPage.Content>
         <Label Text="Ciao"></Label>
     </ContentPage.Content>

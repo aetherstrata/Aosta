@@ -208,7 +208,7 @@ public class AostaDotNet
         //Add the data to realm
         await realm.WriteAsync(() =>
         {
-            id = realm.Add(anime, update).Id;
+            id = realm.Add(anime, update).ID;
         }, ct);
 
         //Return the primary key
