@@ -8,8 +8,9 @@ namespace Aosta.GUI.Features.AddJikanAnime;
 
 public partial class AddJikanAnimePage : ContentPage
 {
-    public AddJikanAnimePage()
+    public AddJikanAnimePage(AddJikanAnimeViewModel vm)
     {
         InitializeComponent();
+        BindingContext = vm;
     }
 }

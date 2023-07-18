@@ -1,4 +1,5 @@
 using Aosta.Core;
+using Aosta.GUI.Features.AddJikanAnime;
 using Aosta.GUI.Features.AddManualAnime;
 using Aosta.GUI.Features.AnimeSummaryPage;
 using Aosta.GUI.Features.MainPage;
@@ -18,13 +19,15 @@ internal static partial class MauiAppBuilderExtensions
     {
         #region Services
 
+        var jikan = new JikanConfiguration().Use.Logger(Log.Logger).Build();
+
         builder.Services.AddSingleton<IFileSaver>(FileSaver.Default);
         builder.Services.AddSingleton<ISecureStorageService, SecureStorageService>();
         builder.Services.AddSingleton<ISettingsService, SettingsService>();
-        builder.Services.AddSingleton<AostaDotNet>(_ => new AostaConfiguration(FileSystem.Current.AppDataDirectory)
+        builder.Services.AddSingleton<IJikan >(jikan);
+        builder.Services.AddSingleton<AostaDotNet>(new AostaConfiguration(FileSystem.Current.AppDataDirectory)
                 .With.CacheDirectory(FileSystem.Current.CacheDirectory)
-                .Source.FromJikan(new JikanConfiguration()
-                    .Use.Logger(Log.Logger))
+                .Source.FromJikan(jikan)
                 .Log.With(Log.Logger)
                 .Build());
 
@@ -40,6 +43,7 @@ internal static partial class MauiAppBuilderExtensions
         //Transient ViewModels
         builder.Services.AddTransient<AnimeSummaryViewModel>();
         builder.Services.AddTransient<AddManualAnimeViewModel>();
+        builder.Services.AddTransient<AddJikanAnimeViewModel>();
 
         #endregion
 
@@ -54,6 +58,7 @@ internal static partial class MauiAppBuilderExtensions
         //Transient Views
         builder.Services.AddTransient<AnimeSummaryPage>();
         builder.Services.AddTransient<AddManualAnimePage>();
+        builder.Services.AddTransient<AddJikanAnimePage>();
 
         #endregion
 

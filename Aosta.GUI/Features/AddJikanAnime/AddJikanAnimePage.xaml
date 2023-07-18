@@ -11,7 +11,30 @@
             StatusBarColor="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource BaseColor40L}}" />
     </ContentPage.Behaviors>
 
-    <ContentPage.Content>
-        <Label Text="Ciao"></Label>
-    </ContentPage.Content>
+    <Grid Padding="15">
+        <VerticalStackLayout>
+            <SearchBar Placeholder="Insert a title..."
+                       Text="{Binding SearchQuery}">
+                <SearchBar.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="TextChanged"
+                                                    Command="{Binding UpdateListCommand}"/>
+                </SearchBar.Behaviors>
+            </SearchBar>
+            <ScrollView>
+                <CollectionView ItemsSource="{Binding AnimeList}">
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <Label Text="Ciuppa"
+                                   FontSize="100"
+                                   FontFamily="ComfortaaRegular"
+                                   TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}" />
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>
