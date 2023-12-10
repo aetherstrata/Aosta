@@ -7,7 +7,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Aosta.Ava.ViewModels;
 using Aosta.Ava.Views;
-using Aosta.Jikan;
 
 using ReactiveUI;
 using Splat;

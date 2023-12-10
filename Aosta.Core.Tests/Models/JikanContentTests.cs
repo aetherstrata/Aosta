@@ -1,6 +1,5 @@
 using Aosta.Jikan;
 using Aosta.Jikan.Models.Response;
-using Realms;
 
 //using Aosta.Core.Data.RealmObjects.Mal;
 
@@ -60,8 +59,4 @@ public class JikanContentTests
         Assert.That(inserted.AiringStatus, Is.EqualTo(AiringStatus.FinishedAiring));
     }
     */
-
-    private void AreEqual()
-    {
-    }
 }

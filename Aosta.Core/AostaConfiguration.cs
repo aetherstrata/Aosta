@@ -3,7 +3,6 @@ using Serilog;
 using Serilog.Events;
 using System.Text;
 using Aosta.Common.Consts;
-using Aosta.Jikan;
 
 namespace Aosta.Core;
 
@@ -36,9 +35,9 @@ public class AostaConfiguration
         .Enrich.WithThreadId()
         .Enrich.WithThreadName()
         .Enrich.FromLogContext()
-        .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Debug, outputTemplate: Logging.OutputTemplate)
+        .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Debug, outputTemplate: Logging.OUTPUT_TEMPLATE)
 #if DEBUG
-        .WriteTo.Debug(restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: Logging.OutputTemplate)
+        .WriteTo.Debug(restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: Logging.OUTPUT_TEMPLATE)
 #endif
         .WriteTo.Async(sink => sink.File(path: Path.Combine(logPath, log_filename),
             restrictedToMinimumLevel: LogEventLevel.Debug,
@@ -47,7 +46,7 @@ public class AostaConfiguration
             encoding: Encoding.UTF8,
             rollingInterval: RollingInterval.Day,
             retainedFileCountLimit: 7,
-            outputTemplate: Logging.OutputTemplate));
+            outputTemplate: Logging.OUTPUT_TEMPLATE));
 
     internal AostaConfiguration() : this(AppContext.BaseDirectory)
     {

@@ -3,7 +3,6 @@
 
 using System.Linq;
 using System.Reactive;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 using Aosta.Core;
@@ -13,8 +12,6 @@ using Aosta.Core.Database.Models.Jikan;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
-
-using Realms;
 
 namespace Aosta.Ava.ViewModels;
 

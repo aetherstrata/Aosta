@@ -7,42 +7,42 @@ public class ProducersQueryParameters : JikanQueryParameterSet
     public ProducersQueryParameters SetPage(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        base.Add(QueryParameter.Page, page);
+        Add(QueryParameter.PAGE, page);
         return this;
     }
 
     public ProducersQueryParameters SetLimit(int limit)
     {
         Guard.IsGreaterThanZero(limit, nameof(limit));
-        Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MaximumPageSize, nameof(limit));
-        base.Add(QueryParameter.Limit, limit);
+        Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MAXIMUM_PAGE_SIZE, nameof(limit));
+        Add(QueryParameter.LIMIT, limit);
         return this;
     }
 
     public ProducersQueryParameters SetQuery(string query)
     {
-        base.Add(QueryParameter.Query, query);
+        Add(QueryParameter.QUERY, query);
         return this;
     }
 
     public ProducersQueryParameters OrderBy(ProducerOrderBy orderBy)
     {
         Guard.IsValidEnum(orderBy, nameof(orderBy));
-        base.Add(QueryParameter.OrderBy, orderBy);
+        Add(QueryParameter.ORDER_BY, orderBy);
         return this;
     }
 
     public ProducersQueryParameters Sort(SortDirection sort)
     {
         Guard.IsValidEnum(sort, nameof(sort));
-        base.Add(QueryParameter.Sort, sort);
+        Add(QueryParameter.SORT, sort);
         return this;
     }
 
     public ProducersQueryParameters SetLetter(char letter)
     {
         Guard.IsLetter(letter, nameof(letter));
-        base.Add(QueryParameter.Letter, letter);
+        Add(QueryParameter.LETTER, letter);
         return this;
     }
 }

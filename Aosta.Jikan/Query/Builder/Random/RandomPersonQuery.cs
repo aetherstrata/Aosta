@@ -5,14 +5,14 @@ namespace Aosta.Jikan.Query;
 
 internal static class RandomPersonQuery
 {
-    private static readonly string[] QueryEndpoint =
+    private static readonly string[] s_QueryEndpoint =
     {
-        JikanEndpointConsts.Random,
-        JikanEndpointConsts.People
+        JikanEndpointConsts.RANDOM,
+        JikanEndpointConsts.PEOPLE
     };
 
     internal static IQuery<BaseJikanResponse<PersonResponse>> Create()
     {
-        return new JikanQuery<BaseJikanResponse<PersonResponse>>(QueryEndpoint);
+        return new JikanQuery<BaseJikanResponse<PersonResponse>>(s_QueryEndpoint);
     }
 }

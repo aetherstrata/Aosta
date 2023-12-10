@@ -49,7 +49,7 @@
                         double delay = _interval - (DateTime.UtcNow - _lastInvokeTime).TotalMilliseconds;
                         await Task.Delay((int)(delay < 0 ? 0 : delay), cancellationToken);
                     }
-                    while (DelayCondition());
+                    while (delayCondition());
 
                     T res;
                     try
@@ -71,7 +71,7 @@
             }
         }
 
-        private bool DelayCondition()
+        private bool delayCondition()
         {
             return (DateTime.UtcNow - _lastInvokeTime).TotalMilliseconds < _interval;
         }
@@ -114,9 +114,9 @@
         /// <param name="cancellationToken">An optional CancellationToken</param>
         public void Debounce(Action action, CancellationToken cancellationToken = default)
         {
-            _ = DebounceAsync(ActionAsync, cancellationToken);
+            _ = DebounceAsync(actionAsync, cancellationToken);
 
-            Task<bool> ActionAsync() => Task.Run(() =>
+            Task<bool> actionAsync() => Task.Run(() =>
             {
                 action.Invoke();
                 return true;

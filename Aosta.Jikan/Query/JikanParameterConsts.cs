@@ -8,5 +8,5 @@ public static class JikanParameterConsts
     /// <summary>
     /// Maximum page size for general requests
     /// </summary>
-    public const int MaximumPageSize = 25;
+    public const int MAXIMUM_PAGE_SIZE = 25;
 }

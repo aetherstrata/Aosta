@@ -6,21 +6,21 @@ namespace Aosta.Jikan.Query;
 
 internal static class MangaSearchQuery
 {
-    private static readonly string[] QueryEndpoint = new []
+    private static readonly string[] s_QueryEndpoint = new []
     {
-        JikanEndpointConsts.Manga
+        JikanEndpointConsts.MANGA
     };
 
     internal static IQuery<PaginatedJikanResponse<ICollection<MangaResponse>>> Create(string query)
     {
         Guard.IsNotNullOrWhiteSpace(query, nameof(query));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MangaResponse>>>(QueryEndpoint)
-            .WithParameter(QueryParameter.Query, query);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<MangaResponse>>>(s_QueryEndpoint)
+            .WithParameter(QueryParameter.QUERY, query);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<MangaResponse>>> Create(MangaSearchQueryParameters parameters)
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MangaResponse>>>(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<MangaResponse>>>(s_QueryEndpoint)
             .WithParameterRange(parameters);
     }
 }

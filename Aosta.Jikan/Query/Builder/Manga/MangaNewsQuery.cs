@@ -5,24 +5,24 @@ namespace Aosta.Jikan.Query;
 
 internal static class MangaNewsQuery
 {
-    private static string[] GetEndpoint(long id) => new []
+    private static string[] getEndpoint(long id) => new []
     {
-        JikanEndpointConsts.Manga,
+        JikanEndpointConsts.MANGA,
         id.ToString(),
-        JikanEndpointConsts.News
+        JikanEndpointConsts.NEWS
     };
 
     internal static IQuery<PaginatedJikanResponse<ICollection<NewsResponse>>> Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<NewsResponse>>>(GetEndpoint(id));
+        return new JikanQuery<PaginatedJikanResponse<ICollection<NewsResponse>>>(getEndpoint(id));
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<NewsResponse>>> Create(long id, int page)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<NewsResponse>>>(GetEndpoint(id))
-            .WithParameter(QueryParameter.Page, page);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<NewsResponse>>>(getEndpoint(id))
+            .WithParameter(QueryParameter.PAGE, page);
     }
 }

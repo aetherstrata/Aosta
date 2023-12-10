@@ -7,42 +7,42 @@ public class TopAnimeQueryParameters : JikanQueryParameterSet
     public TopAnimeQueryParameters SetPage(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        base.Add(QueryParameter.Page, page);
+        Add(QueryParameter.PAGE, page);
         return this;
     }
 
     public TopAnimeQueryParameters SetLimit(int limit)
     {
         Guard.IsGreaterThanZero(limit, nameof(limit));
-        Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MaximumPageSize, nameof(limit));
-        base.Add(QueryParameter.Limit, limit);
+        Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MAXIMUM_PAGE_SIZE, nameof(limit));
+        Add(QueryParameter.LIMIT, limit);
         return this;
     }
 
     public TopAnimeQueryParameters SetType(AnimeTypeFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        base.Add(QueryParameter.Type, filter);
+        Add(QueryParameter.TYPE, filter);
         return this;
     }
 
     public TopAnimeQueryParameters SetFilter(TopAnimeFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        base.Add(QueryParameter.Filter, filter);
+        Add(QueryParameter.FILTER, filter);
         return this;
     }
 
     public TopAnimeQueryParameters SetRating(AnimeAgeRatingFilter rating)
     {
         Guard.IsValidEnum(rating, nameof(rating));
-        base.Add(QueryParameter.Rating, rating);
+        Add(QueryParameter.RATING, rating);
         return this;
     }
 
     public TopAnimeQueryParameters SetSafeForWork(bool sfw)
     {
-        base.Add(QueryParameter.SafeForWork, sfw);
+        Add(QueryParameter.SAFE_FOR_WORK, sfw);
         return this;
     }
 }

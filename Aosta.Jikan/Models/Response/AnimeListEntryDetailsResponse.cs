@@ -5,7 +5,7 @@ namespace Aosta.Jikan.Models.Response;
 /// <summary>
 /// Anime details on the user list.
 /// </summary>
-public partial class AnimeListEntryDetailsResponse
+public class AnimeListEntryDetailsResponse
 {
     /// <summary>
     /// ID associated with MyAnimeList.
@@ -83,23 +83,23 @@ public partial class AnimeListEntryDetailsResponse
     /// Anime's licensors numerically indexed with array values.
     /// </summary>
     [JsonPropertyName("licensors")]
-    public IList<MalUrlResponse> Licensors { get; }
+    public IList<MalUrlResponse> Licensors { get; } = [];
 
     /// <summary>
     /// Anime's studio(s) numerically indexed with array values.
     /// </summary>
     [JsonPropertyName("studios")]
-    public IList<MalUrlResponse> Studios { get; }
+    public IList<MalUrlResponse> Studios { get; } = [];
 
     /// <summary>
     /// Anime's genres numerically indexed with array values.
     /// </summary>
     [JsonPropertyName("genres")]
-    public IList<MalUrlResponse> Genres { get; }
+    public IList<MalUrlResponse> Genres { get; } = [];
 
     /// <summary>
     /// Anime's demographics
     /// </summary>
     [JsonPropertyName("demographics")]
-    public IList<MalUrlResponse> Demographics { get; }
+    public IList<MalUrlResponse> Demographics { get; } = [];
 }

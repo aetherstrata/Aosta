@@ -10,7 +10,7 @@ public class JikanTests
     public static IJikan Instance { get; private set; } = new JikanConfiguration()
         .Use.Logger(new LoggerConfiguration()
             .MinimumLevel.Is(LogEventLevel.Debug)
-            .WriteTo.Console(outputTemplate: Logging.OutputTemplate)
+            .WriteTo.Console(outputTemplate: Logging.OUTPUT_TEMPLATE)
             .CreateLogger())
         .Build();
 

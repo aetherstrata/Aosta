@@ -6,7 +6,7 @@ namespace Aosta.Jikan.Tests;
 [TestFixture]
 internal class QueryTests
 {
-    private static readonly string[] Endpoint =
+    private static readonly string[] s_Endpoint =
     {
         "api",
         "v2",
@@ -18,7 +18,7 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldReturnEndpoint_whenNoParam()
     {
-        _query = new JikanQuery<int>(Endpoint);
+        _query = new JikanQuery<int>(s_Endpoint);
 
         _query.GetQuery().Should().Be("api/v2/items");
     }
@@ -26,7 +26,7 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldAddParamName_whenTrueBool()
     {
-        _query = new JikanQuery<int>(Endpoint)
+        _query = new JikanQuery<int>(s_Endpoint)
             .WithParameter("kids", true);
 
         _query.GetQuery().Should().Be("api/v2/items?kids");
@@ -35,7 +35,7 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldNotAddParamName_whenFalseBool()
     {
-        _query = new JikanQuery<int>(Endpoint)
+        _query = new JikanQuery<int>(s_Endpoint)
             .WithParameter("kids", false);
 
         _query.GetQuery().Should().Be("api/v2/items");
@@ -44,7 +44,7 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldAddParam_whenInteger()
     {
-        _query = new JikanQuery<int>(Endpoint)
+        _query = new JikanQuery<int>(s_Endpoint)
             .WithParameter("kids", 14);
 
         _query.GetQuery().Should().Be("api/v2/items?kids=14");
@@ -53,7 +53,7 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldAddParam_whenString()
     {
-        _query = new JikanQuery<int>(Endpoint)
+        _query = new JikanQuery<int>(s_Endpoint)
             .WithParameter("kids", "other");
 
         _query.GetQuery().Should().Be("api/v2/items?kids=other");
@@ -62,7 +62,7 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldAddParam_whenEnum()
     {
-        _query = new JikanQuery<int>(Endpoint)
+        _query = new JikanQuery<int>(s_Endpoint)
             .WithParameter("airing", AiringStatusFilter.Airing);
 
         _query.GetQuery().Should().Be("api/v2/items?airing=airing");
@@ -71,7 +71,7 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldConcatParams_whenMultiple()
     {
-        _query = new JikanQuery<int>(Endpoint)
+        _query = new JikanQuery<int>(s_Endpoint)
             .WithParameter("sfw", true)
             .WithParameter("unapproved", false)
             .WithParameter("page", 4)
@@ -93,7 +93,7 @@ internal class QueryTests
             { "airing", AiringStatusFilter.Airing }
         };
 
-        _query = new JikanQuery<int>(Endpoint)
+        _query = new JikanQuery<int>(s_Endpoint)
             .WithParameterRange(set);
 
         _query.GetQuery().Should().Be("api/v2/items?sfw&page=4&q=Naruto&airing=airing");

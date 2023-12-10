@@ -6,24 +6,24 @@ namespace Aosta.Jikan.Query;
 
 internal static class UserAnimeListQuery
 {
-    private static string[] GetEndpoint(string username) => new []
+    private static string[] getEndpoint(string username) => new []
     {
-        JikanEndpointConsts.Users,
+        JikanEndpointConsts.USERS,
         username,
-        JikanEndpointConsts.AnimeList
+        JikanEndpointConsts.ANIME_LIST
     };
 
     internal static IQuery<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> Create(string username)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        return new JikanQuery<BaseJikanResponse<ICollection<AnimeListEntryResponse>>>(GetEndpoint(username));
+        return new JikanQuery<BaseJikanResponse<ICollection<AnimeListEntryResponse>>>(getEndpoint(username));
     }
 
     internal static IQuery<BaseJikanResponse<ICollection<AnimeListEntryResponse>>> Create(string username, UserAnimeStatusFilter status)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsValidEnum(status, nameof(status));
-        return new JikanQuery<BaseJikanResponse<ICollection<AnimeListEntryResponse>>>(GetEndpoint(username))
-            .WithParameter(QueryParameter.Status, status);
+        return new JikanQuery<BaseJikanResponse<ICollection<AnimeListEntryResponse>>>(getEndpoint(username))
+            .WithParameter(QueryParameter.STATUS, status);
     }
 }

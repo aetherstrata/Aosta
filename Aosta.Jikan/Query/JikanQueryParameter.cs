@@ -24,14 +24,14 @@ internal class JikanQueryParameter<T> : IQueryParameter, IEquatable<JikanQueryPa
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
-        return this.Name == other.Name && EqualityComparer<T>.Default.Equals(Value, other.Value);
+        return Name == other.Name && EqualityComparer<T>.Default.Equals(Value, other.Value);
     }
 
     public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        return this.GetType() == obj.GetType() && Equals((JikanQueryParameter<T>)obj);
+        return GetType() == obj.GetType() && Equals((JikanQueryParameter<T>)obj);
     }
 
     public override int GetHashCode()
@@ -45,32 +45,32 @@ internal class JikanQueryParameter<T> : IQueryParameter, IEquatable<JikanQueryPa
 /// </summary>
 internal static class QueryParameter
 {
-    public const string EndDate = "end_date";
-    public const string ExcludedGenres = "genres_exclude";
-    public const string Filter = "filter";
-    public const string Gender = "gender";
-    public const string Genres = "genres";
-    public const string Kids = "kids";
-    public const string Letter = "letter";
-    public const string Limit = "limit";
-    public const string MaxAge = "max_age";
-    public const string MaxScore = "max_score";
-    public const string MinAge = "min_age";
-    public const string MinScore = "min_score";
-    public const string OrderBy = "order_by";
-    public const string Page = "page";
-    public const string Preliminary = "preliminary";
-    public const string Producers = "producers";
-    public const string Query = "q";
-    public const string Rating = "rating";
-    public const string SafeForWork = "sfw";
-    public const string Score = "score";
-    public const string Sort = "sort";
-    public const string StartDate = "start_date";
-    public const string Spoilers = "spoilers";
-    public const string Status = "status";
-    public const string Type = "type";
-    public const string Unapproved = "unapproved";
+    public const string END_DATE = "end_date";
+    public const string EXCLUDED_GENRES = "genres_exclude";
+    public const string FILTER = "filter";
+    public const string GENDER = "gender";
+    public const string GENRES = "genres";
+    public const string KIDS = "kids";
+    public const string LETTER = "letter";
+    public const string LIMIT = "limit";
+    public const string MAX_AGE = "max_age";
+    public const string MAX_SCORE = "max_score";
+    public const string MIN_AGE = "min_age";
+    public const string MIN_SCORE = "min_score";
+    public const string ORDER_BY = "order_by";
+    public const string PAGE = "page";
+    public const string PRELIMINARY = "preliminary";
+    public const string PRODUCERS = "producers";
+    public const string QUERY = "q";
+    public const string RATING = "rating";
+    public const string SAFE_FOR_WORK = "sfw";
+    public const string SCORE = "score";
+    public const string SORT = "sort";
+    public const string START_DATE = "start_date";
+    public const string SPOILERS = "spoilers";
+    public const string STATUS = "status";
+    public const string TYPE = "type";
+    public const string UNAPPROVED = "unapproved";
 
     internal static IEqualityComparer<IQueryParameter> NameComparer { get; } = new NameEqualityComparer();
 

@@ -16,7 +16,7 @@ public static class Guard
 
 	public static void IsDefaultEndpoint(string? endpoint, string methodName)
 	{
-		if (JikanConfiguration.DefaultEndpoint.Equals(endpoint))
+		if (JikanConfiguration.DEFAULT_ENDPOINT.Equals(endpoint))
 		{
 			throw new NotSupportedException($"Operation {methodName} is not supported on the default endpoint.");
 		}
@@ -53,7 +53,7 @@ public static class Guard
 			throw new JikanParameterValidationException("Argument must be greater than 0.", argumentName);
 		}
 	}
-		
+
 	public static void IsLessOrEqualThan<T>(T arg, T max, string argumentName) where T : INumber<T>
 	{
 		if (arg > max)
@@ -77,7 +77,7 @@ public static class Guard
 			throw new JikanParameterValidationException("Enum value must be valid", argumentName);
 		}
 	}
-		
+
 	public static void IsLetter(char character, string argumentName)
 	{
 		if (!char.IsLetter(character))

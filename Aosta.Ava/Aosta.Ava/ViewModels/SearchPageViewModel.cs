@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 using Aosta.Core;
 using Aosta.Jikan;
-using Aosta.Jikan.Models.Response;
 
 using Avalonia.ReactiveUI;
 
@@ -16,7 +15,7 @@ namespace Aosta.Ava.ViewModels;
 public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
 {
     /// <inheritdoc />
-    public string? UrlPathSegment => "search";
+    public string UrlPathSegment => "search";
 
     /// <inheritdoc />
     public IScreen HostScreen { get; }

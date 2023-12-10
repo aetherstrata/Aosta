@@ -5,16 +5,16 @@ namespace Aosta.Jikan.Query;
 
 internal static class UserFavoritesQuery
 {
-    private static string[] GetEndpoint(string username) => new []
+    private static string[] getEndpoint(string username) => new []
     {
-        JikanEndpointConsts.Users,
+        JikanEndpointConsts.USERS,
         username,
-        JikanEndpointConsts.Favorites
+        JikanEndpointConsts.FAVORITES
     };
 
     internal static IQuery<BaseJikanResponse<UserFavoritesResponse>> Create(string username)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        return new JikanQuery<BaseJikanResponse<UserFavoritesResponse>>(GetEndpoint(username));
+        return new JikanQuery<BaseJikanResponse<UserFavoritesResponse>>(getEndpoint(username));
     }
 }

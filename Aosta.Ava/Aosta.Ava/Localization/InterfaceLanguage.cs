@@ -11,7 +11,7 @@ internal enum InterfaceLanguage
     Italian
 }
 
-internal static class UILanguageExtensions
+internal static class UiLanguageExtensions
 {
     internal static string GetLanguageName(this InterfaceLanguage uiLangEnum) => uiLangEnum switch
     {

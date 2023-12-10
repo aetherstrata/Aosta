@@ -29,7 +29,7 @@
             _resetIntervalOnException = resetIntervalOnException;
         }
 
-        private bool ShouldWait()
+        private bool shouldWait()
         {
             return _invokeTime.HasValue &&
                    (DateTime.UtcNow - _invokeTime.Value).TotalMilliseconds < _interval;
@@ -45,7 +45,7 @@
         {
             lock (_locker)
             {
-                if (_lastTask != null && (_busy || ShouldWait()))
+                if (_lastTask != null && (_busy || shouldWait()))
                 {
                     return _lastTask;
                 }
@@ -111,13 +111,13 @@
         /// <param name="cancellationToken">An optional CancellationToken.</param>
         public void Throttle(Action action, CancellationToken cancellationToken = default)
         {
-            Task<bool> ActionAsync() => Task.Run(() =>
+            Task<bool> actionAsync() => Task.Run(() =>
             {
                 action.Invoke();
                 return true;
             }, cancellationToken);
 
-            _ = ThrottleAsync(ActionAsync, cancellationToken);
+            _ = ThrottleAsync(actionAsync, cancellationToken);
         }
     }
 }

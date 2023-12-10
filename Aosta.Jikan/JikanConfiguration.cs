@@ -6,7 +6,7 @@ namespace Aosta.Jikan;
 
 public class JikanConfiguration
 {
-    internal const string DefaultEndpoint = "https://api.jikan.moe/v4/";
+    internal const string DEFAULT_ENDPOINT = "https://api.jikan.moe/v4/";
 
     private IEnumerable<TaskLimiterConfiguration>? _limiterConfigs;
     private HttpClient? _httpClient;
@@ -18,7 +18,7 @@ public class JikanConfiguration
 
     public IJikan Build()
     {
-        _httpClient ??= GetDefaultHttpClient(DefaultEndpoint);
+        _httpClient ??= getDefaultHttpClient(DEFAULT_ENDPOINT);
         ITaskLimiter limiter = new CompositeTaskLimiter(_limiterConfigs?.Distinct() ?? TaskLimiterConfiguration.Default);
 
         return new JikanClient(_httpClient, limiter, _logger);
@@ -29,7 +29,7 @@ public class JikanConfiguration
     /// </summary>
     /// <param name="endpoint">Endpoint of the REST API.</param>
     /// <returns>Static HttpClient.</returns>
-    private static HttpClient GetDefaultHttpClient(string endpoint)
+    private static HttpClient getDefaultHttpClient(string endpoint)
     {
         Guard.IsNotNullOrWhiteSpace(endpoint, nameof(endpoint));
 
@@ -79,7 +79,7 @@ public class JikanConfiguration
 
         public IJikan Endpoint(string endpoint)
         {
-            _jikan._httpClient = GetDefaultHttpClient(endpoint);
+            _jikan._httpClient = getDefaultHttpClient(endpoint);
             return _jikan.Build();
         }
 

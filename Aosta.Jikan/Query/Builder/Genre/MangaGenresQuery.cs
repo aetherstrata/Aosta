@@ -6,21 +6,21 @@ namespace Aosta.Jikan.Query;
 
 internal static class MangaGenresQuery
 {
-    private static readonly string[] QueryEndpoint =
+    private static readonly string[] s_QueryEndpoint =
     {
-        JikanEndpointConsts.Genres,
-        JikanEndpointConsts.Manga
+        JikanEndpointConsts.GENRES,
+        JikanEndpointConsts.MANGA
     };
 
     internal static IQuery<BaseJikanResponse<ICollection<GenreResponse>>> Create()
     {
-        return new JikanQuery<BaseJikanResponse<ICollection<GenreResponse>>>(QueryEndpoint);
+        return new JikanQuery<BaseJikanResponse<ICollection<GenreResponse>>>(s_QueryEndpoint);
     }
 
     internal static IQuery<BaseJikanResponse<ICollection<GenreResponse>>> Create(GenresFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        return new JikanQuery<BaseJikanResponse<ICollection<GenreResponse>>>(QueryEndpoint)
-            .WithParameter(QueryParameter.Filter, filter);
+        return new JikanQuery<BaseJikanResponse<ICollection<GenreResponse>>>(s_QueryEndpoint)
+            .WithParameter(QueryParameter.FILTER, filter);
     }
 }

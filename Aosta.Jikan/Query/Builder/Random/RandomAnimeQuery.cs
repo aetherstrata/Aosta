@@ -5,14 +5,14 @@ namespace Aosta.Jikan.Query;
 
 internal static class RandomAnimeQuery
 {
-    private static readonly string[] QueryEndpoint =
+    private static readonly string[] s_QueryEndpoint =
     {
-        JikanEndpointConsts.Random,
-        JikanEndpointConsts.Anime
+        JikanEndpointConsts.RANDOM,
+        JikanEndpointConsts.ANIME
     };
 
     internal static IQuery<BaseJikanResponse<AnimeResponse>> Create()
     {
-        return new JikanQuery<BaseJikanResponse<AnimeResponse>>(QueryEndpoint);
+        return new JikanQuery<BaseJikanResponse<AnimeResponse>>(s_QueryEndpoint);
     }
 }

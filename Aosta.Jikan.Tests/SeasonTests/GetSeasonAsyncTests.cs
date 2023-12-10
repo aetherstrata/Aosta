@@ -25,10 +25,10 @@ public class GetSeasonAsyncTests
 	[Test]
 	[TestCase((Season)int.MaxValue)]
 	[TestCase((Season)int.MinValue)]
-	public async Task InvalidSeasonValidYear_ShouldThrowValidationException(Season Season)
+	public async Task InvalidSeasonValidYear_ShouldThrowValidationException(Season season)
 	{
 		// When
-		var func = JikanTests.Instance.Awaiting(x => x.GetSeasonAsync(2021, Season));
+		var func = JikanTests.Instance.Awaiting(x => x.GetSeasonAsync(2021, season));
 
 		// Then
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();

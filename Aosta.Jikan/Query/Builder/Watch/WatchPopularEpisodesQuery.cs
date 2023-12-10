@@ -5,15 +5,15 @@ namespace Aosta.Jikan.Query;
 
 internal static class WatchPopularEpisodesQuery
 {
-    private static readonly string[] QueryEndpoint =
+    private static readonly string[] s_QueryEndpoint =
     {
-        JikanEndpointConsts.Watch,
-        JikanEndpointConsts.Episodes,
-        JikanEndpointConsts.Popular
+        JikanEndpointConsts.WATCH,
+        JikanEndpointConsts.EPISODES,
+        JikanEndpointConsts.POPULAR
     };
 
     internal static IQuery<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>> Create()
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>>(QueryEndpoint);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<WatchEpisodeResponse>>>(s_QueryEndpoint);
     }
 }

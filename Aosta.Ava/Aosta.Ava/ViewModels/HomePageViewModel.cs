@@ -1,11 +1,8 @@
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 
 using Aosta.Core;
 using Aosta.Jikan;
-
-using DynamicData;
 
 using ReactiveUI;
 

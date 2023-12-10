@@ -5,13 +5,13 @@ namespace Aosta.Jikan.Query;
 
 internal static class SeasonArchiveQuery
 {
-    private static readonly string[] QueryEndpoint =
+    private static readonly string[] s_QueryEndpoint =
     {
-        JikanEndpointConsts.Seasons
+        JikanEndpointConsts.SEASONS
     };
 
     internal static IQuery<PaginatedJikanResponse<ICollection<SeasonArchiveResponse>>> Create()
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<SeasonArchiveResponse>>>(QueryEndpoint);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<SeasonArchiveResponse>>>(s_QueryEndpoint);
     }
 }

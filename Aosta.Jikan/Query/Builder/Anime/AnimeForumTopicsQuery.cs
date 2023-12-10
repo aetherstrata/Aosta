@@ -6,24 +6,24 @@ namespace Aosta.Jikan.Query;
 
 internal static class AnimeForumTopicsQuery
 {
-    private static string[] GetEndpoint(long id) => new []
+    private static string[] getEndpoint(long id) => new []
     {
-        JikanEndpointConsts.Anime,
+        JikanEndpointConsts.ANIME,
         id.ToString(),
-        JikanEndpointConsts.Forum
+        JikanEndpointConsts.FORUM
     };
 
     internal static IQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>> Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>>(GetEndpoint(id));
+        return new JikanQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>>(getEndpoint(id));
     }
 
     internal static IQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>> Create(long id, ForumTopicTypeFilter type)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
         Guard.IsValidEnum(type, nameof(type));
-        return new JikanQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>>(GetEndpoint(id))
-            .WithParameter(QueryParameter.Filter, type);
+        return new JikanQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>>(getEndpoint(id))
+            .WithParameter(QueryParameter.FILTER, type);
     }
 }

@@ -6,27 +6,27 @@ namespace Aosta.Jikan.Query;
 
 internal static class CurrentSeasonQuery
 {
-    private static readonly string[] QueryEndpoint =
+    private static readonly string[] s_QueryEndpoint =
     {
-        JikanEndpointConsts.Seasons,
-        JikanEndpointConsts.Now
+        JikanEndpointConsts.SEASONS,
+        JikanEndpointConsts.NOW
     };
 
     internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create()
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(QueryEndpoint);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(s_QueryEndpoint);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(QueryEndpoint)
-            .WithParameter(QueryParameter.Page, page);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(s_QueryEndpoint)
+            .WithParameter(QueryParameter.PAGE, page);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(SeasonQueryParameters parameters)
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(s_QueryEndpoint)
             .WithParameterRange(parameters);
     }
 }

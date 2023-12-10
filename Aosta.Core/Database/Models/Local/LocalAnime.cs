@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using Aosta.Core.Database.Enums;
-using Aosta.Jikan.Models.Response;
 
 using Realms;
 
@@ -11,34 +10,34 @@ namespace Aosta.Core.Database.Models.Local;
 public partial class LocalAnime : IRealmObject
 {
     [Indexed]
-    internal int? _Type { get; set; }
+    internal int? _type { get; set; }
 
     /// The type of this content. (Eg. Movie, OVA)
     public ContentType? Type
     {
-        get => (ContentType?)_Type;
-        set => _Type = (int?)value;
+        get => (ContentType?)_type;
+        set => _type = (int?)value;
     }
 
     [Indexed]
-    internal int? _AiringStatus { get; private set; }
+    internal int? _airingStatus { get; private set; }
 
     /// The airing status (e. g. "Currently Airing").
     [Ignored]
     public AiringStatus? AiringStatus
     {
-        get => (AiringStatus?)_AiringStatus;
-        set => _AiringStatus = (int?)value;
+        get => (AiringStatus?)_airingStatus;
+        set => _airingStatus = (int?)value;
     }
 
-    internal int? _Season { get; private set; } = 0;
+    internal int? _season { get; private set; } = 0;
 
     /// Seasons of the year the anime premiered.
     [Ignored]
     public Season? Season
     {
-        get => (Season?)_Season;
-        set => _Season = (int?)value;
+        get => (Season?)_season;
+        set => _season = (int?)value;
     }
 
     /// The title of this content

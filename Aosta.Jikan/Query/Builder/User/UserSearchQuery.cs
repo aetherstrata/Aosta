@@ -6,21 +6,21 @@ namespace Aosta.Jikan.Query;
 
 internal static class UserSearchQuery
 {
-    private static readonly string[] QueryEndpoint = new []
+    private static readonly string[] s_QueryEndpoint = new []
     {
-        JikanEndpointConsts.Users
+        JikanEndpointConsts.USERS
     };
 
     internal static IQuery<PaginatedJikanResponse<ICollection<UserMetadataResponse>>> Create(string query)
     {
         Guard.IsNotNullOrWhiteSpace(query, nameof(query));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<UserMetadataResponse>>>(QueryEndpoint)
-            .WithParameter(QueryParameter.Query, query);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<UserMetadataResponse>>>(s_QueryEndpoint)
+            .WithParameter(QueryParameter.QUERY, query);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<UserMetadataResponse>>> Create(UserSearchQueryParameters parameters)
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<UserMetadataResponse>>>(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<UserMetadataResponse>>>(s_QueryEndpoint)
             .WithParameterRange(parameters);
     }
 }

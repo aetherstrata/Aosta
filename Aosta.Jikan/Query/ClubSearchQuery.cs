@@ -6,21 +6,21 @@ namespace Aosta.Jikan.Query;
 
 internal static class ClubSearchQuery
 {
-    private static readonly string[] QueryEndpoint = new []
+    private static readonly string[] s_QueryEndpoint = new []
     {
-        JikanEndpointConsts.Clubs
+        JikanEndpointConsts.CLUBS
     };
 
     internal static IQuery<PaginatedJikanResponse<ICollection<ClubResponse>>> Create(string query)
     {
         Guard.IsNotNullOrWhiteSpace(query, nameof(query));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<ClubResponse>>>(QueryEndpoint)
-            .WithParameter(QueryParameter.Query, query);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<ClubResponse>>>(s_QueryEndpoint)
+            .WithParameter(QueryParameter.QUERY, query);
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<ClubResponse>>> Create(ClubSearchQueryParameters parameters)
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<ClubResponse>>>(QueryEndpoint)
+        return new JikanQuery<PaginatedJikanResponse<ICollection<ClubResponse>>>(s_QueryEndpoint)
             .WithParameterRange(parameters);
     }
 }

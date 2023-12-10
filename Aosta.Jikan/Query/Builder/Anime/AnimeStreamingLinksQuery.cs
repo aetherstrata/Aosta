@@ -5,16 +5,16 @@ namespace Aosta.Jikan.Query;
 
 internal static class AnimeStreamingLinksQuery
 {
-    private static string[] GetEndpoint(long id) => new []
+    private static string[] getEndpoint(long id) => new []
     {
-        JikanEndpointConsts.Anime,
+        JikanEndpointConsts.ANIME,
         id.ToString(),
-        JikanEndpointConsts.Streaming
+        JikanEndpointConsts.STREAMING
     };
 
     internal static IQuery<BaseJikanResponse<ICollection<ExternalLinkResponse>>> Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery<BaseJikanResponse<ICollection<ExternalLinkResponse>>>(GetEndpoint(id));
+        return new JikanQuery<BaseJikanResponse<ICollection<ExternalLinkResponse>>>(getEndpoint(id));
     }
 }

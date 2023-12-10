@@ -7,33 +7,14 @@ namespace Aosta.Jikan.Converters;
 
 public class AiringStatusEnumConverter : JsonConverter<AiringStatus?>
 {
-    /*
-    public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
-    {
-        if (value is string stringValue)
-        {
-            foreach (var status in FastEnum.GetValues<AiringStatus>())
-            {
-                if (stringValue.Equals(status.GetEnumMemberValue())) return status;
-            }
-        }
-        return base.ConvertFrom(context, culture, value);
-    }
-*/
-
     public override AiringStatus? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var field = reader.GetString();
 
-        if (field != null)
-        {
-            foreach (var status in FastEnum.GetValues<AiringStatus>())
-            {
-                if (field.Equals(status.GetEnumMemberValue())) return status;
-            }
-        }
+        if (field == null) return null;
 
-        return null;
+        return FastEnum.GetValues<AiringStatus>()
+            .FirstOrDefault(status => status.GetEnumMemberValue() == field);
     }
 
     public override void Write(Utf8JsonWriter writer, AiringStatus? value, JsonSerializerOptions options)

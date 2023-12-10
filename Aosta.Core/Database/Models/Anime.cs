@@ -1,5 +1,4 @@
 using Aosta.Core.Database.Enums;
-using Aosta.Core.Database.Mapper;
 using Aosta.Core.Database.Models.Embedded;
 using Aosta.Core.Database.Models.Jikan;
 using Aosta.Core.Database.Models.Local;
@@ -51,13 +50,13 @@ public partial class Anime : IRealmObject, IHasPrimaryKey<Guid>
     public string Review { get; set; } = string.Empty;
 
     [Indexed]
-    internal int _WatchStatus { get; private set; } = -1;
+    internal int WatchStatus { get; private set; } = -1;
 
     ///  The watch status (e. g. "Completed")
     [Ignored]
     public WatchingStatus WatchingStatus
     {
-        get => (WatchingStatus)_WatchStatus;
-        set => _WatchStatus = (int)value;
+        get => (WatchingStatus)WatchStatus;
+        set => WatchStatus = (int)value;
     }
 }

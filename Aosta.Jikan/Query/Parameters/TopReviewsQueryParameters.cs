@@ -8,27 +8,27 @@ public class TopReviewsQueryParameters : JikanQueryParameterSet
     public TopReviewsQueryParameters SetPage(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        base.Add(QueryParameter.Page, page);
+        Add(QueryParameter.PAGE, page);
         return this;
     }
 
     public TopReviewsQueryParameters SetType(TopReviewsTypeFilter type)
     {
         Guard.IsValidEnum(type, nameof(type));
-        base.Add(QueryParameter.Type, type);
+        Add(QueryParameter.TYPE, type);
         return this;
     }
 
     // These parameters act like bools but have to be set like strings (eg. ?name=true)
     public TopReviewsQueryParameters SetPreliminary(bool preliminary)
     {
-        base.Add(QueryParameter.Preliminary, preliminary.ToStringLower());
+        Add(QueryParameter.PRELIMINARY, preliminary.ToStringLower());
         return this;
     }
 
     public TopReviewsQueryParameters SetSpoilers(bool spoiler)
     {
-        base.Add(QueryParameter.Spoilers, spoiler.ToStringLower());
+        Add(QueryParameter.SPOILERS, spoiler.ToStringLower());
         return this;
     }
 }

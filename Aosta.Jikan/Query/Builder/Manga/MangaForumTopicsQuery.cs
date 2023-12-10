@@ -5,16 +5,16 @@ namespace Aosta.Jikan.Query;
 
 internal static class MangaForumTopicsQuery
 {
-    private static string[] GetEndpoint(long id) => new []
+    private static string[] getEndpoint(long id) => new []
     {
-        JikanEndpointConsts.Manga,
+        JikanEndpointConsts.MANGA,
         id.ToString(),
-        JikanEndpointConsts.Forum
+        JikanEndpointConsts.FORUM
     };
 
     internal static IQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>> Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>>(GetEndpoint(id));
+        return new JikanQuery<BaseJikanResponse<ICollection<ForumTopicResponse>>>(getEndpoint(id));
     }
 }

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Aosta.Core.Database.Models;
 using Realms;
 

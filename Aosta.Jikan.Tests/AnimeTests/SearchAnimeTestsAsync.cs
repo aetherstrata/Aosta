@@ -43,7 +43,7 @@ public class SearchAnimeTestsAsync
 		var anime = await JikanTests.Instance.SearchAnimeAsync(config);
 
 		using var _ = new AssertionScope();
-		anime.Data.Should().HaveCount(JikanParameterConsts.MaximumPageSize);
+		anime.Data.Should().HaveCount(JikanParameterConsts.MAXIMUM_PAGE_SIZE);
 		anime.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("Rurouni Kenshin: Meiji Kenkaku Romantan - Tsuioku-hen");
 		anime.Pagination.LastVisiblePage.Should().BeGreaterThan(780);
 		anime.Pagination.CurrentPage.Should().Be(2);
@@ -157,9 +157,9 @@ public class SearchAnimeTestsAsync
 		var anime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
 		using var _ = new AssertionScope();
-		anime.Data.Should().Contain(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Fairy Tail (2014)"));
-		anime.Data.Should().Contain(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Fairy Tail: Final Series"));
-		anime.Data.Should().Contain(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Fairy Tail"));
+		anime.Data.Should().Contain(x => x.Titles.First(entry => entry.Type.Equals("Default")).Title.Equals("Fairy Tail (2014)"));
+		anime.Data.Should().Contain(x => x.Titles.First(entry => entry.Type.Equals("Default")).Title.Equals("Fairy Tail: Final Series"));
+		anime.Data.Should().Contain(x => x.Titles.First(entry => entry.Type.Equals("Default")).Title.Equals("Fairy Tail"));
 	}
 
 	[Test]
@@ -222,8 +222,8 @@ public class SearchAnimeTestsAsync
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
-		returnedAnime.Data.Should().Contain(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Contains("Full Metal Panic? Fumoffu"));
-		returnedAnime.Data.Should().Contain(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Contains("Lucky☆Star"));
+		returnedAnime.Data.Should().Contain(x => x.Titles.First(entry => entry.Type.Equals("Default")).Title.Contains("Full Metal Panic? Fumoffu"));
+		returnedAnime.Data.Should().Contain(x => x.Titles.First(entry => entry.Type.Equals("Default")).Title.Contains("Lucky☆Star"));
 	}
 
 	[Test]

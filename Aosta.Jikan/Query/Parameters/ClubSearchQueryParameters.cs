@@ -8,43 +8,43 @@ public class ClubSearchQueryParameters : JikanQueryParameterSet
     public ClubSearchQueryParameters SetPage(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        base.Add(QueryParameter.Page, page);
+        Add(QueryParameter.PAGE, page);
         return this;
     }
 
     public ClubSearchQueryParameters SetLimit(int limit)
     {
         Guard.IsGreaterThanZero(limit, nameof(limit));
-        Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MaximumPageSize, nameof(limit));
-        base.Add(QueryParameter.Limit, limit);
+        Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MAXIMUM_PAGE_SIZE, nameof(limit));
+        Add(QueryParameter.LIMIT, limit);
         return this;
     }
 
     public ClubSearchQueryParameters SetQuery(string query)
     {
         Guard.IsNotNullOrWhiteSpace(query, nameof(query));
-        base.Add(QueryParameter.Query, query);
+        Add(QueryParameter.QUERY, query);
         return this;
     }
 
     public ClubSearchQueryParameters SetOrder(ClubSearchOrderBy orderBy)
     {
         Guard.IsValidEnum(orderBy, nameof(orderBy));
-        base.Add(QueryParameter.OrderBy, orderBy);
+        Add(QueryParameter.ORDER_BY, orderBy);
         return this;
     }
 
     public ClubSearchQueryParameters SetSortDirection(SortDirection sort)
     {
         Guard.IsValidEnum(sort, nameof(sort));
-        base.Add(QueryParameter.Sort, sort);
+        Add(QueryParameter.SORT, sort);
         return this;
     }
 
     public ClubSearchQueryParameters SetLetter(char letter)
     {
         Guard.IsLetter(letter, nameof(letter));
-        base.Add(QueryParameter.Letter, letter);
+        Add(QueryParameter.LETTER, letter);
         return this;
     }
 }

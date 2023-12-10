@@ -21,13 +21,13 @@ public class GetUserRecommendationsAsyncTests
 	public async Task Ervelan_ShouldParseErvelanRecommendations()
 	{
 		// When
-		var Recommendations = await JikanTests.Instance.GetUserRecommendationsAsync("Ervelan");
+		var recommendations = await JikanTests.Instance.GetUserRecommendationsAsync("Ervelan");
 
 		// Then
 		using (new AssertionScope())
 		{
-			Recommendations.Should().NotBeNull();
-			Recommendations.Data.Should().BeEmpty();
+			recommendations.Should().NotBeNull();
+			recommendations.Data.Should().BeEmpty();
 		}
 	}
 
@@ -35,13 +35,13 @@ public class GetUserRecommendationsAsyncTests
 	public async Task Progeusz_ShouldParseProgeuszRecommendations()
 	{
 		// When
-		var Recommendations = await JikanTests.Instance.GetUserRecommendationsAsync("Progeusz");
+		var recommendations = await JikanTests.Instance.GetUserRecommendationsAsync("Progeusz");
 
 		// Then
 		using (new AssertionScope())
 		{
-			Recommendations.Data.Should().ContainSingle().Which.Content.StartsWith("Both anime are survival death games.");
-			Recommendations.Pagination.HasNextPage.Should().BeFalse();
+			recommendations.Data.Should().ContainSingle().Which.Content.StartsWith("Both anime are survival death games.");
+			recommendations.Pagination.HasNextPage.Should().BeFalse();
 		}
 	}
 
@@ -75,9 +75,9 @@ public class GetUserRecommendationsAsyncTests
 	public async Task IchiyonyuuzlotySecondPage_ShouldParseIchiyonjuuzlotyRecommendations()
 	{
 		// When
-		var Recommendations = await JikanTests.Instance.GetUserRecommendationsAsync("Ichiyonjuuzloty", 2);
+		var recommendations = await JikanTests.Instance.GetUserRecommendationsAsync("Ichiyonjuuzloty", 2);
 
 		// Then
-		Recommendations.Data.Should().BeEmpty();
+		recommendations.Data.Should().BeEmpty();
 	}
 }

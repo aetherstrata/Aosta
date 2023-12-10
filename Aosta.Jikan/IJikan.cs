@@ -675,7 +675,7 @@ public interface IJikan
 	/// Returns list of most popular people.
 	/// </summary>
 	/// <param name="page">Index of page folding 25 records of top ranging (e.g. 1 will return first 25 records, 2 will return record from 26 to 50 etc.)</param>
-	/// <param name="limit">Maximum number of results per page (Maximum is <see cref="JikanParameterConsts.MaximumPageSize"/>)</param>
+	/// <param name="limit">Maximum number of results per page (Maximum is <see cref="JikanParameterConsts.MAXIMUM_PAGE_SIZE"/>)</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of most popular people.</returns>
 	Task<PaginatedJikanResponse<ICollection<PersonResponse>>> GetTopPeopleAsync(int page, int limit, CancellationToken ct = default);
@@ -698,7 +698,7 @@ public interface IJikan
 	/// Returns list of most popular characters.
 	/// </summary>
 	/// <param name="page">Index of page folding 25 records of top ranging (e.g. 1 will return first 25 records, 2 will return record from 26 to 50 etc.)</param>
-	/// <param name="limit">Maximum number of results per page (Maximum is <see cref="JikanParameterConsts.MaximumPageSize"/>)</param>
+	/// <param name="limit">Maximum number of results per page (Maximum is <see cref="JikanParameterConsts.MAXIMUM_PAGE_SIZE"/>)</param>
 	/// <param name="ct">Cancellation token.</param>
 	/// <returns>List of most popular characters.</returns>
 	Task<PaginatedJikanResponse<ICollection<CharacterResponse>>> GetTopCharactersAsync(int page, int limit, CancellationToken ct = default);

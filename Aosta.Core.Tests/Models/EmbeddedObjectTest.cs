@@ -62,6 +62,7 @@ public class EmbeddedObjectTest
         });
 
         var testObject = _realm.Find<EmbedTestObject>(id);
+        Debug.Assert(testObject != null, nameof(testObject) + " != null");
 
         Assert.Multiple(() =>
         {
@@ -87,6 +88,7 @@ public class EmbeddedObjectTest
         });
 
         var testObject = _realm.Find<EmbedTestObject>(id);
+        Debug.Assert(testObject != null, nameof(testObject) + " != null");
 
         Assert.Multiple(() =>
         {

@@ -5,16 +5,16 @@ namespace Aosta.Jikan.Query;
 
 internal static class UserExternalLinksQuery
 {
-    private static string[] GetEndpoint(string username) => new []
+    private static string[] getEndpoint(string username) => new []
     {
-        JikanEndpointConsts.Users,
+        JikanEndpointConsts.USERS,
         username,
-        JikanEndpointConsts.External
+        JikanEndpointConsts.EXTERNAL
     };
 
     internal static IQuery<BaseJikanResponse<ICollection<ExternalLinkResponse>>> Create(string username)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        return new JikanQuery<BaseJikanResponse<ICollection<ExternalLinkResponse>>>(GetEndpoint(username));
+        return new JikanQuery<BaseJikanResponse<ICollection<ExternalLinkResponse>>>(getEndpoint(username));
     }
 }

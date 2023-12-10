@@ -7,8 +7,6 @@ using Aosta.Core.Database.Models.Jikan;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Response;
 
-using Microsoft.Win32;
-
 using Riok.Mapperly.Abstractions;
 
 namespace Aosta.Core.Database.Mapper;

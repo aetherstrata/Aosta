@@ -5,15 +5,15 @@ namespace Aosta.Jikan.Query;
 
 internal static class ProducerQuery
 {
-    private static string[] GetEndpoint(long id) => new []
+    private static string[] getEndpoint(long id) => new []
     {
-        JikanEndpointConsts.Producers,
+        JikanEndpointConsts.PRODUCERS,
         id.ToString()
     };
 
     internal static IQuery<BaseJikanResponse<ProducerResponse>> Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery<BaseJikanResponse<ProducerResponse>>(GetEndpoint(id));
+        return new JikanQuery<BaseJikanResponse<ProducerResponse>>(getEndpoint(id));
     }
 }

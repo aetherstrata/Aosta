@@ -15,14 +15,14 @@ public class SearchMangaAsyncTests
 	{
 		// Given
 		var config = new MangaSearchQueryParameters().SetPage(page);
-            
+
 		// When
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(config));
 
 		// Then
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
-        
+
 	[Test]
 	[TestCase(int.MinValue)]
 	[TestCase(-1)]
@@ -33,40 +33,40 @@ public class SearchMangaAsyncTests
 	{
 		// Given
 		var config = new MangaSearchQueryParameters().SetLimit(pageSize);
-            
+
 		// When
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(config));
 
 		// Then
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
-        
+
 	[Test]
 	public async Task GivenSecondPage_ShouldReturnSecondPage()
 	{
 		// Given
 		var config = new MangaSearchQueryParameters().SetPage(2);
-            
+
 		// When
 		var manga = await JikanTests.Instance.SearchMangaAsync(config);
 
 		// Then
 		using var _ = new AssertionScope();
-		manga.Data.Should().HaveCount(JikanParameterConsts.MaximumPageSize);
+		manga.Data.Should().HaveCount(JikanParameterConsts.MAXIMUM_PAGE_SIZE);
 		manga.Data.First().Title.Should().Be("Nana");
 		manga.Pagination.LastVisiblePage.Should().BeGreaterThan(780);
 		manga.Pagination.CurrentPage.Should().Be(2);
 		manga.Pagination.Items.Count.Should().Be(25);
 		manga.Pagination.Items.PerPage.Should().Be(25);
 	}
-        
+
 	[Test]
 	public async Task GivenValidPageSize_ShouldReturnPageSizeNumberOfRecords()
 	{
 		// Given
 		const int pageSize = 5;
 		var config = new MangaSearchQueryParameters().SetLimit(pageSize);
-            
+
 		// When
 		var manga = await JikanTests.Instance.SearchMangaAsync(config);
 
@@ -78,14 +78,14 @@ public class SearchMangaAsyncTests
 		manga.Pagination.Items.Count.Should().Be(pageSize);
 		manga.Pagination.Items.PerPage.Should().Be(pageSize);
 	}
-        
+
 	[Test]
 	public async Task GivenValidPageAndPageSize_ShouldReturnPageSizeNumberOfRecordsFromNextPage()
 	{
 		// Given
 		const int pageSize = 5;
 		var config = new MangaSearchQueryParameters().SetPage(2).SetLimit(pageSize);
-            
+
 		// When
 		var manga = await JikanTests.Instance.SearchMangaAsync(config);
 
@@ -97,7 +97,7 @@ public class SearchMangaAsyncTests
 		manga.Pagination.Items.Count.Should().Be(pageSize);
 		manga.Pagination.Items.PerPage.Should().Be(pageSize);
 	}
-        
+
 	[Test]
 	[TestCase("berserk")]
 	[TestCase("monster")]
@@ -119,7 +119,7 @@ public class SearchMangaAsyncTests
 
 		danganronpaManga.Data.Should().HaveCountGreaterThan(15);
 	}
-        
+
 	[Test]
 	public async Task YotsubaQuery_ShouldReturnYotsubatoManga()
 	{
@@ -154,7 +154,7 @@ public class SearchMangaAsyncTests
 		firstResult.Volumes.Should().BeNull();
 		firstResult.MalId.Should().Be(104);
 	}
-        
+
 	[Test]
 	[TestCase(int.MinValue)]
 	[TestCase(-1)]
@@ -165,7 +165,7 @@ public class SearchMangaAsyncTests
 		var searchConfig = new MangaSearchQueryParameters()
 			.SetQuery("yotsuba")
 			.SetPage(page);
-            
+
 		// When
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(searchConfig));
 
@@ -180,16 +180,16 @@ public class SearchMangaAsyncTests
 		var searchConfig = new MangaSearchQueryParameters()
 			.SetQuery("girl")
 			.SetPage(2);
-            
+
 		// When
 		var returnedAnime = await JikanTests.Instance.SearchMangaAsync(searchConfig);
 
 		// Then
 		using var _ = new AssertionScope();
-		returnedAnime.Data.Select(x => x.Title).Should().Contain("Misty Girl"); 
+		returnedAnime.Data.Select(x => x.Title).Should().Contain("Misty Girl");
 		returnedAnime.Pagination.LastVisiblePage.Should().BeGreaterThan(15);
 	}
-        
+
 	[Test]
 	[TestCase("berserk")]
 	[TestCase("monster")]
@@ -222,8 +222,8 @@ public class SearchMangaAsyncTests
 		// Then
 		danganronpaManga.Data.Should().HaveCountGreaterThan(12);
 	}
-        
-        
+
+
 	[Test]
 	public async Task DanganronpaMangaAbove7Config_ShouldReturnDanganronpaMangaScore()
 	{
@@ -262,7 +262,7 @@ public class SearchMangaAsyncTests
 			.SetQuery("metal")
 			.SetOrder(MangaSearchOrderBy.Members)
 			.SetSortDirection(SortDirection.Descending);
-        
+
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
 

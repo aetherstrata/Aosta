@@ -12,9 +12,9 @@ namespace Aosta.Core.Database.Models.Jikan;
 [Preserve(AllMembers = true)]
 public partial class JikanAnime : IRealmObject
 {
-	private byte _season { get; set; }
-	private byte _status { get; set; }
-	private byte _type { get; set; }
+	private byte season { get; set; }
+	private byte status { get; set; }
+	private byte type { get; set; }
 
 	/// <summary>
 	/// ID associated with MyAnimeList.
@@ -48,8 +48,8 @@ public partial class JikanAnime : IRealmObject
 	[Ignored]
 	public ContentType Type
 	{
-		get => (ContentType)_type;
-		set => _type = (byte)value;
+		get => (ContentType)type;
+		set => type = (byte)value;
 	}
 
 	/// <summary>
@@ -68,8 +68,8 @@ public partial class JikanAnime : IRealmObject
 	[Ignored]
 	public AiringStatus Status
 	{
-		get => (AiringStatus)_status;
-		set => _status = (byte)value;
+		get => (AiringStatus)status;
+		set => status = (byte)value;
 
 	}
 
@@ -139,8 +139,8 @@ public partial class JikanAnime : IRealmObject
 	[Ignored]
 	public Season Season
 	{
-		get => (Season)_season;
-		set => _season = (byte)value;
+		get => (Season)season;
+		set => season = (byte)value;
 	}
 
 	/// <summary>

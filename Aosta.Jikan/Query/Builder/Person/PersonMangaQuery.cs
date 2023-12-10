@@ -5,16 +5,16 @@ namespace Aosta.Jikan.Query;
 
 internal static class PersonMangaQuery
 {
-    private static string[] GetEndpoint(long id) => new []
+    private static string[] getEndpoint(long id) => new []
     {
-        JikanEndpointConsts.People,
+        JikanEndpointConsts.PEOPLE,
         id.ToString(),
-        JikanEndpointConsts.Manga
+        JikanEndpointConsts.MANGA
     };
 
     internal static IQuery<BaseJikanResponse<ICollection<PersonMangaographyEntryResponse>>> Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery<BaseJikanResponse<ICollection<PersonMangaographyEntryResponse>>>(GetEndpoint(id));
+        return new JikanQuery<BaseJikanResponse<ICollection<PersonMangaographyEntryResponse>>>(getEndpoint(id));
     }
 }

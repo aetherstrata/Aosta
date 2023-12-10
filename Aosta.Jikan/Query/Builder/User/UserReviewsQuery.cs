@@ -5,24 +5,24 @@ namespace Aosta.Jikan.Query;
 
 internal static class UserReviewsQuery
 {
-    private static string[] GetEndpoint(string username) => new []
+    private static string[] getEndpoint(string username) => new []
     {
-        JikanEndpointConsts.Users,
+        JikanEndpointConsts.USERS,
         username,
-        JikanEndpointConsts.Reviews
+        JikanEndpointConsts.REVIEWS
     };
 
     internal static IQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>> Create(string username)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(GetEndpoint(username));
+        return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(getEndpoint(username));
     }
 
     internal static IQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>> Create(string username, int page)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(GetEndpoint(username))
-            .WithParameter(QueryParameter.Page, page);
+        return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(getEndpoint(username))
+            .WithParameter(QueryParameter.PAGE, page);
     }
 }

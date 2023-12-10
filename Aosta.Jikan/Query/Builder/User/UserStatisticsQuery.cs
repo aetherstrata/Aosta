@@ -5,16 +5,16 @@ namespace Aosta.Jikan.Query;
 
 internal static class UserStatisticsQuery
 {
-    private static string[] GetEndpoint(string username) => new []
+    private static string[] getEndpoint(string username) => new []
     {
-        JikanEndpointConsts.Users,
+        JikanEndpointConsts.USERS,
         username,
-        JikanEndpointConsts.Statistics
+        JikanEndpointConsts.STATISTICS
     };
 
     internal static IQuery<BaseJikanResponse<UserStatisticsResponse>> Create(string username)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        return new JikanQuery<BaseJikanResponse<UserStatisticsResponse>>(GetEndpoint(username));
+        return new JikanQuery<BaseJikanResponse<UserStatisticsResponse>>(getEndpoint(username));
     }
 }

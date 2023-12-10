@@ -21,14 +21,14 @@ public class GetUserClubsAsyncTests
 	public async Task Progeusz_ShouldParseProgeuszClubs()
 	{
 		// When
-		var Clubs = await JikanTests.Instance.GetUserClubsAsync("Progeusz");
+		var clubs = await JikanTests.Instance.GetUserClubsAsync("Progeusz");
 
 		// Then
 		using (new AssertionScope())
 		{
-			Clubs.Data.Should().HaveCount(19);
-			Clubs.Data.Should().Contain(x => x.Name.Equals("Hatsune Miku - the Goddess ~FanClub~"));
-			Clubs.Data.Should().Contain(x => x.MalId.Equals(65525)); // Manga Sales Rankings
+			clubs.Data.Should().HaveCount(19);
+			clubs.Data.Should().Contain(x => x.Name.Equals("Hatsune Miku - the Goddess ~FanClub~"));
+			clubs.Data.Should().Contain(x => x.MalId.Equals(65525)); // Manga Sales Rankings
 		}
 	}
 
@@ -36,14 +36,14 @@ public class GetUserClubsAsyncTests
 	public async Task Ervelan_ShouldParseErvelanClubs()
 	{
 		// When
-		var Clubs = await JikanTests.Instance.GetUserClubsAsync("Ervelan");
+		var clubs = await JikanTests.Instance.GetUserClubsAsync("Ervelan");
 
 		// Then
 		using (new AssertionScope())
 		{
-			Clubs.Data.Should().HaveCount(15);
-			Clubs.Data.Should().Contain(x => x.Name.Equals("JoJo's Bizarre Adventure Club"));
-			Clubs.Data.Should().Contain(x => x.MalId.Equals(14689)); // Sakuya fanclub
+			clubs.Data.Should().HaveCount(15);
+			clubs.Data.Should().Contain(x => x.Name.Equals("JoJo's Bizarre Adventure Club"));
+			clubs.Data.Should().Contain(x => x.MalId.Equals(14689)); // Sakuya fanclub
 		}
 	}
 
