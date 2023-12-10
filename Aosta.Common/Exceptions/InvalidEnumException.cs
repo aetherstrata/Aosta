@@ -5,7 +5,7 @@ namespace Aosta.Common.Exceptions;
 /// <summary>
 /// Exception class thrown when trying to do operations on an invalid enums
 /// </summary>
-public class InvalidEnumException<T> : ArgumentException where T : Enum
+public class InvalidEnumException<T> : ArgumentException where T : struct, Enum
 {
     public T Enum { get; }
 

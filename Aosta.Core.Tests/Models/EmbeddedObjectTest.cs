@@ -38,7 +38,13 @@ public class EmbeddedObjectTest
     [SetUp]
     public void SetUp()
     {
-        _realm = RealmSetup.CreateNewRealm();
+        _realm = RealmSetup.NewRealm();
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        _realm.Dispose();
     }
 
     [Test]

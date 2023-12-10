@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Security.Cryptography;
+using System.Text.Json.Serialization;
 
 namespace Aosta.Jikan.Models.Response;
 
@@ -6,7 +7,6 @@ namespace Aosta.Jikan.Models.Response;
 /// Set of images in various formats.
 /// </summary>
 public class ImagesSetResponse
-
 {
 	/// <summary>
 	/// Images in JPG format.

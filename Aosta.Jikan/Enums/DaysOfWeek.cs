@@ -5,12 +5,6 @@ namespace Aosta.Jikan.Enums;
 public enum DaysOfWeek
 {
     /// <summary>
-    /// Unknown
-    /// </summary>
-    [EnumMember(Value = "unknown")]
-    Unknown,
-
-    /// <summary>
     /// Aired on mondays
     /// </summary>
     [EnumMember(Value = "monday")]

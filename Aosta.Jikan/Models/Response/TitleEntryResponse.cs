@@ -11,13 +11,11 @@ public class TitleEntryResponse
     /// Type of title (usually the language).
     /// </summary>
     [JsonPropertyName("type")]
-    public string Type { get; init; } = string.Empty;
+    public string? Type { get; init; }
 
     /// <summary>
     /// Value of the Title.
     /// </summary>
     [JsonPropertyName("title")]
-    public string Title { get; init; } = string.Empty;
-
-    public static TitleEntryResponse Empty = new();
+    public string? Title { get; init; }
 }

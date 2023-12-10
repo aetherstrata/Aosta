@@ -1,5 +1,4 @@
 using System.Collections;
-using Aosta.Common.Extensions;
 
 namespace Aosta.Jikan.Query;
 
@@ -69,7 +68,7 @@ public class JikanQueryParameterSet : IEnumerable<IQueryParameter>
 
     internal void Add(string name, bool value)
     {
-        Add(new BoolQueryParameter()
+        Add(new BoolQueryParameter
         {
             Name = name,
             Value = value

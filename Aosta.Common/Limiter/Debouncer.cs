@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Aosta.Common.Limiter
+﻿namespace Aosta.Common.Limiter
 {
     /// <summary>
     /// The Debounce dispatcher delays the invocation of an action until a predetermined interval has elapsed since the last call. <br/>
@@ -13,11 +7,12 @@ namespace Aosta.Common.Limiter
     /// <typeparam name="T">Type of the debouncing Task</typeparam>
     public class Debouncer<T>
     {
-        private Task<T> _waitingTask;
-        private Func<Task<T>> _functToInvoke;
-        private object _locker = new object();
-        private DateTime _lastInvokeTime;
+        private readonly object _locker = new();
         private readonly int _interval;
+
+        private Task<T>? _waitingTask;
+        private Func<Task<T>>? _funcToInvoke;
+        private DateTime _lastInvokeTime;
 
         /// <summary>
         /// Debouncing the execution of asynchronous tasks.
@@ -39,7 +34,7 @@ namespace Aosta.Common.Limiter
         {
             lock (_locker)
             {
-                _functToInvoke = function;
+                _funcToInvoke = function;
                 _lastInvokeTime = DateTime.UtcNow;
 
                 if (_waitingTask != null)
@@ -54,16 +49,12 @@ namespace Aosta.Common.Limiter
                         double delay = _interval - (DateTime.UtcNow - _lastInvokeTime).TotalMilliseconds;
                         await Task.Delay((int)(delay < 0 ? 0 : delay), cancellationToken);
                     }
-                    while (DelayContidion());
+                    while (DelayCondition());
 
                     T res;
                     try
                     {
-                        res = await _functToInvoke.Invoke();
-                    }
-                    catch (Exception)
-                    {
-                        throw;
+                        res = await _funcToInvoke.Invoke();
                     }
                     finally
                     {
@@ -80,7 +71,7 @@ namespace Aosta.Common.Limiter
             }
         }
 
-        private bool DelayContidion()
+        private bool DelayCondition()
         {
             return (DateTime.UtcNow - _lastInvokeTime).TotalMilliseconds < _interval;
         }
@@ -123,13 +114,13 @@ namespace Aosta.Common.Limiter
         /// <param name="cancellationToken">An optional CancellationToken</param>
         public void Debounce(Action action, CancellationToken cancellationToken = default)
         {
-            Task<bool> actionAsync() => Task.Run(() =>
+            _ = DebounceAsync(ActionAsync, cancellationToken);
+
+            Task<bool> ActionAsync() => Task.Run(() =>
             {
                 action.Invoke();
                 return true;
             }, cancellationToken);
-
-            Task _ = DebounceAsync((Func<Task<bool>>)actionAsync, cancellationToken);
         }
     }
 }

@@ -1,8 +1,14 @@
 using System.Globalization;
+
+using Aosta.Core.Database.Enums;
+using Aosta.Core.Database.Models;
 using Aosta.Core.Database.Models.Embedded;
 using Aosta.Core.Database.Models.Jikan;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Response;
+
+using Microsoft.Win32;
+
 using Riok.Mapperly.Abstractions;
 
 namespace Aosta.Core.Database.Mapper;
@@ -10,10 +16,22 @@ namespace Aosta.Core.Database.Mapper;
 [Mapper]
 public static partial class JikanMapper
 {
-    private static readonly IFormatProvider _formatProvider = new CultureInfo("en-US");
-
     public static partial JikanAnime ToJikanAnime(this AnimeResponse source);
     public static partial JikanAnime ToJikanAnime(this AnimeResponseFull source);
+
+    [MapperIgnoreTarget(nameof(Anime.Score))]
+    public static partial Anime ToRealmModel(this JikanAnime source);
+
+    internal static ContentType ToLocalType(this AnimeType type) => type switch
+    {
+        AnimeType.TV => ContentType.TV,
+        AnimeType.OVA => ContentType.OVA,
+        AnimeType.Movie => ContentType.Movie,
+        AnimeType.Special => ContentType.Special,
+        AnimeType.ONA => ContentType.ONA,
+        AnimeType.Music => ContentType.Music,
+        _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+    };
 
     internal static AnimeBroadcast ToRealmModel(this AnimeBroadcastResponse source)
     {
@@ -22,12 +40,11 @@ public static partial class JikanMapper
         {
             var zoneinfo = TimeZoneInfo.FindSystemTimeZoneById(source.Timezone ?? "UTC");
             target.Time = DateTimeOffset
-                .Parse(source.Time, _formatProvider, DateTimeStyles.AssumeUniversal)
+                .Parse(source.Time, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal)
                 .Subtract(zoneinfo.BaseUtcOffset)
                 .ToOffset(zoneinfo.BaseUtcOffset);
         }
-        target.Day = source.Day ?? DaysOfWeek.Unknown;
-        target.String = source.String;
+        target.Day = source.Day;
         return target;
     }
 

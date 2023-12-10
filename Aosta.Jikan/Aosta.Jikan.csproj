@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>Aosta.Jikan</AssemblyName>
         <RootNamespace>Aosta.Jikan</RootNamespace>
+        <LangVersion>default</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,7 +15,7 @@
     
     <ItemGroup>
       <PackageReference Include="FastEnum" Version="1.8.0" />
-      <PackageReference Include="Serilog" Version="3.0.1" />
+      <PackageReference Include="Serilog" Version="3.1.1" />
     </ItemGroup>
 
     <ItemGroup>

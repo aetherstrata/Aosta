@@ -1,5 +1,4 @@
 using Realms;
-using System.Runtime.CompilerServices;
 
 namespace Aosta.Core.Database.Models.Embedded;
 

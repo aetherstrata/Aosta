@@ -84,7 +84,7 @@ public class GetSeasonAsyncTests
 		{
 			winter2017.Pagination.Items.Count.Should().Be(25);
 			winter2017.Pagination.Items.Total.Should().Be(57);
-				
+
 			var youjoSenki = winter2017.Data.FirstOrDefault(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Youjo Senki"));
 
 			youjoSenki.Type.Should().Be(AnimeType.TV);
@@ -101,7 +101,7 @@ public class GetSeasonAsyncTests
 			youjoSenki.Year.Should().Be(2017);
 		}
 	}
-		
+
 	[Test]
 	[TestCase(int.MinValue)]
 	[TestCase(-1)]
@@ -114,7 +114,7 @@ public class GetSeasonAsyncTests
 		// Then
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
-		
+
 	[Test]
 	public async Task Winter2017SecondPage_ShouldParseYowamushiPedal()
 	{

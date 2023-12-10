@@ -1,5 +1,5 @@
-﻿using Aosta.Core.Database.Models.Embedded;
-using Aosta.Jikan.Enums;
+﻿using Aosta.Core.Database.Enums;
+using Aosta.Core.Database.Models.Embedded;
 using Realms;
 using AiringStatus = Aosta.Core.Database.Enums.AiringStatus;
 using Season = Aosta.Core.Database.Enums.Season;
@@ -37,18 +37,18 @@ public partial class JikanAnime : IRealmObject
 	/// </summary>
 	public YouTubeVideo? Trailer { get; set; }
 
-	/// <summary>
-	/// Anime's multiple titles (if any).
-	/// </summary>
-	public IList<TitleEntry> Titles { get; }
+    /// <summary>
+    /// Anime's multiple titles (if any).
+    /// </summary>
+    public IList<TitleEntry> Titles { get; } = null!;
 
 	/// <summary>
 	/// Anime type (e. g. "TV", "Movie").
 	/// </summary>
 	[Ignored]
-	public AnimeType Type
+	public ContentType Type
 	{
-		get => (AnimeType)_type;
+		get => (ContentType)_type;
 		set => _type = (byte)value;
 	}
 
@@ -212,4 +212,10 @@ public partial class JikanAnime : IRealmObject
 	/// Anime streaming links.
 	/// </summary>
 	public IList<ExternalLink> StreamingLinks { get; } = null!;
+
+    /// <summary>
+    /// Local data for this MAL anime.
+    /// </summary>
+    [Backlink(nameof(Anime.Jikan))]
+    public IQueryable<Anime> Local { get; } = null!;
 }

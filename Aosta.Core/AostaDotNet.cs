@@ -1,10 +1,8 @@
-using Aosta.Core.Database.Mapper;
-using Aosta.Jikan;
-using Aosta.Jikan.Models.Response;
+using Aosta.Core.Data;
+using Aosta.Core.Database.Models;
+
 using Realms;
 using Serilog;
-using Anime = Aosta.Core.Database.Models.Anime;
-using JikanAnime = Aosta.Core.Database.Models.Jikan.JikanAnime;
 
 namespace Aosta.Core;
 
@@ -13,9 +11,6 @@ namespace Aosta.Core;
 /// </summary>
 public class AostaDotNet
 {
-    /// <summary> Jikan.net client </summary>
-    public required IJikan Jikan { get; init; }
-
     /// <summary> Serilog logger instance </summary>
     public required ILogger Log { get; init; }
 
@@ -27,222 +22,123 @@ public class AostaDotNet
     {
     }
 
-    #region Jikan tasks
-
-    public Task<Guid> WriteAnimeAndEpisodesAsync(int malId)
+    internal void Initialize()
     {
-        throw new NotImplementedException();
-/*
-        var animeId = await WriteContentAsync(malId);
-        await Task.Delay(500);
-        await WriteEpisodesAsync(malId, animeId);
-        return animeId;
-*/
-    }
+        using var realm = getRealm();
 
-    private Task WriteEpisodesAsync(int malId, Guid animeId)
-    {
-        throw new NotImplementedException();
-
-        /*
-        ICollection<AnimeEpisode> retrievedEpisodes = Jikan.GetAnimeEpisodesAsync(malId).Result.Data;
-
-        using var realm = GetInstance();
-        await realm.WriteAsync(() =>
+        if (realm.Find<User>(Guid.Empty) is null)
         {
-            IList<EpisodeObject> mappedEps =
-                Mapper.Map<ICollection<AnimeEpisode>, IList<EpisodeObject>>(retrievedEpisodes);
+            Log?.Warning("Local user not found. Creating new user on database");
 
-            var anime = realm.Find<AnimeObject>(animeId);
-
-            foreach (var ep in mappedEps)
+            Write(r =>
             {
-                ep.Content = anime;
-                realm.Add(ep);
-            }
-        });
-        */
-    }
-
-    /// <inheritdoc cref="UpdateJikanContentAsync(long,bool,System.Threading.CancellationToken)" />
-    public Task UpdateJikanContentAsync(long malId, CancellationToken ct = default)
-    {
-        return UpdateJikanContentAsync(malId, false, ct);
-    }
-
-    /// <summary>
-    /// Retrieve new data about a anime from MyAnimeList and save it to Realm
-    /// </summary>
-    /// <param name="malId">The MyAnimeList ID of the anime </param>
-    /// <param name="overrideLocal">If set to <c>true</c>, <see cref="Anime">local user data</see> will be overridden with new data from MyAnimeList</param>
-    /// <param name="ct">Cancellation token</param>
-    /// <exception cref="ArgumentException">The specified <paramref name="malId"/> is not present in the Realm.</exception>
-    public async Task UpdateJikanContentAsync(long malId, bool overrideLocal, CancellationToken ct = default)
-    {
-        // Throw if task was cancelled already
-        ct.ThrowIfCancellationRequested();
-
-        // Throw if the ID is not present in Realm
-        if (!RealmDataExists<JikanAnime>(malId))
-        {
-            throw new ArgumentException("The specified MyAnimeList ID is not present in Realm. " +
-                                        $"Can't update something that does not exist! MalID: {malId}", nameof(malId));
+                r.Add(User.Empty());
+            });
         }
 
-        // Get response from Jikan REST API
-        // Always await responses, never use .Result
-        var response = await Jikan.GetAnimeAsync(malId, ct);
-
-        Log.Information("Got anime: {Name} ({Id})", response.Data.Titles.First().Title, response.Data.MalId);
-
-        // Update the entities with retrieved data
-        await UpdateJikanContentAsync(response.Data, overrideLocal, ct);
+        Log?.Information("Aosta corelib initialized");
     }
 
-    /// <inheritdoc cref="UpdateJikanContentAsync(AnimeResponse,bool,System.Threading.CancellationToken)"/>
-    public Task UpdateJikanContentAsync(AnimeResponse animeResponse, CancellationToken ct = default)
+    //Most of the realm access code is taken from ppy/osu which does extensive use of realm for their game
+
+    /// <summary>
+    /// Run work on realm with a return value.
+    /// </summary>
+    /// <param name="action">The work to run.</param>
+    /// <typeparam name="T">The return type.</typeparam>
+    public T Run<T>(Func<Realm, T> action)
     {
-        return UpdateJikanContentAsync(animeResponse, false, ct);
+        using var realm = getRealm();
+
+        T res =  action(realm);
+
+        Log.Debug("Performed an action on the database. Returning its output");
+
+        return res;
     }
 
     /// <summary>
-    /// Save new Jikan API anime data to Realm
+    /// Run work on realm.
     /// </summary>
-    /// <param name="animeResponse">Response data from Jikan API</param>
-    /// <param name="overrideLocal">If set to <c>true</c>, <see cref="Anime">local user data</see> will be overridden with data from <paramref name="animeResponse"/></param>
-    /// <param name="ct">Cancellation token</param>
-    public async Task UpdateJikanContentAsync(AnimeResponse animeResponse, bool overrideLocal, CancellationToken ct = default)
+    /// <param name="action">The work to run.</param>
+    public void Run(Action<Realm> action)
     {
-        throw new NotImplementedException();
-/*
-        //Throw if task was cancelled already
-        ct.ThrowIfCancellationRequested();
+        using var realm = getRealm();
 
-        var jikanObject = animeResponse.ToRealmObject();
+        action(realm);
 
-        //Get a disposable realm instance
-        using var realm = GetInstance();
+        Log.Debug("Performed an action on the database");
+    }
 
-        //Update the data to realm
-        await realm.WriteAsync(() =>
+    public void Write(Action<Realm> action)
+    {
+        using var realm = getRealm();
+
+        realm.Write(action);
+
+        Log.Debug("Performed a write operation on the database");
+    }
+
+    public T Write<T>(Func<Realm, T> func) where T : IRealmObject
+    {
+        using var realm = getRealm();
+
+        T res =  realm.Write(func);
+
+        Log.Debug("Performed a write operation on the database. Returning its output");
+
+        return res;
+    }
+
+    private readonly CountdownEvent _pendingAsyncWrites = new(0);
+
+    /// <summary>
+    /// Write changes to realm asynchronously, guaranteeing order of execution.
+    /// </summary>
+    /// <param name="action">The work to run.</param>
+    public Task WriteAsync(Action<Realm> action)
+    {
+        // CountdownEvent will fail if already at zero.
+        if (!_pendingAsyncWrites.TryAddCount())
+            _pendingAsyncWrites.Reset(1);
+
+        // Regardless of calling Realm.GetInstance or Realm.GetInstanceAsync, there is a blocking overhead on retrieval.
+        // Adding a forced Task.Run resolves this.
+        return Task.Run(async () =>
         {
-            // Realm requires explicit consent for row upsertion.
-            // Every time the anime data is retrieved from Jikan, its row must be updated.
-            realm.Add(jikanObject, true);
+            using (var realm = getRealm())
+                // ReSharper disable once AccessToDisposedClosure (WriteAsync should be marked as [InstantHandle]).
+                await realm.WriteAsync(() => action(realm)).ConfigureAwait(false);
 
-            if (!overrideLocal) return;
+            Log.Debug("Performed an async write to the database. Emitting signal...");
 
-            // If local data override is requested, also update the local data object
-            foreach (var entity in realm.All<Anime>().Where(o => o.JikanResponseData == jikanObject))
-            {
-                entity.UpdateFromJikan(jikanObject);
-            }
-        }, ct);
-*/
-    }
-
-    public Task CreateJikanContentAsync(long malId, CancellationToken ct = default)
-    {
-        return CreateJikanContentAsync(malId, true, ct);
-    }
-
-    public async Task CreateJikanContentAsync(long malId, bool update, CancellationToken ct = default)
-    {
-        //Throw if task was cancelled already
-        ct.ThrowIfCancellationRequested();
-
-        //Get response from Jikan REST API
-        //Always await responses, never use .Result
-        var response = await Jikan.GetAnimeAsync(malId, ct);
-
-        Log.Information("Got anime: {Title} ({Id})", response.Data.Titles?.First().Title, response.Data.MalId);
-
-        //Write the data to local realm and return the primary key
-        await CreateJikanContentAsync(response.Data, update, ct);
-    }
-
-    public Task CreateJikanContentAsync(AnimeResponse animeResponse, CancellationToken ct = default)
-    {
-        return CreateJikanContentAsync(animeResponse, true, ct);
-    }
-
-    public async Task CreateJikanContentAsync(AnimeResponse animeResponse, bool update, CancellationToken ct = default)
-    {
-        //Throw if task was cancelled already
-        ct.ThrowIfCancellationRequested();
-
-        var jikanAnime = animeResponse.ToJikanAnime();
-
-        //Get a disposable realm instance
-        using var realm = GetInstance();
-
-        //Add the data to realm
-        await realm.WriteAsync(() =>
-        {
-            // Realm requires explicit consent for row upsertion.
-            // Every time the anime data is retrieved from Jikan, its row must be updated.
-            realm.Add(jikanAnime, update);
-        }, ct);
-    }
-
-    public Task<Guid> CreateLocalContentAsync(CancellationToken ct = default)
-    {
-        return CreateLocalContentAsync(new Anime(), false, ct);
-    }
-
-    public Task<Guid> CreateLocalContentAsync(Anime anime, CancellationToken ct = default)
-    {
-        return CreateLocalContentAsync(anime, false, ct);
-    }
-
-    public async Task<Guid> CreateLocalContentAsync(Anime anime, bool update, CancellationToken ct = default)
-    {
-        //Throw if task was cancelled already
-        ct.ThrowIfCancellationRequested();
-
-        var id = Guid.Empty;
-
-        //Get a disposable realm instance
-        using var realm = GetInstance();
-
-        //Add the data to realm
-        await realm.WriteAsync(() =>
-        {
-            id = realm.Add(anime, update).ID;
-        }, ct);
-
-        //Return the primary key
-        return id;
-    }
-
-    public Task WriteSingleEpisodeAsync(int animeId, int episodeId)
-    {
-        throw new NotImplementedException();
-
-        /*
-        AnimeEpisode retrievedEpisode = Jikan.GetAnimeEpisodeAsync(animeId, episodeId).Result.Data;
-
-        using var realm = GetInstance();
-        await realm.WriteAsync(() =>
-        {
-            var mappedEpisode = Mapper.Map<EpisodeObject>(retrievedEpisode);
-            realm.Add(mappedEpisode);
+            _pendingAsyncWrites.Signal();
         });
-
-        */
     }
 
-    #endregion
+    public User GetLocalUser()
+    {
+        using var realm = getRealm();
+
+        if (realm.Find<User>(Guid.Empty) is { } localUser)
+        {
+            return localUser;
+        }
+
+        var ex = new InvalidOperationException("Could not find local user");
+        Log.Error(ex, "Could not find local user in database");
+        throw ex;
+    }
 
     /// <summary>
     /// Check if Realm contains an object with a specific MAL ID
     /// </summary>
     /// <param name="malId">The MyAnimeList ID of the anime</param>
     /// <returns><c>true</c> if an object with that key is present, <c>false</c> otherwise</returns>
-    public bool RealmDataExists<T>(long malId) where T : IRealmObject
+    public bool Exists<TEntity>(long malId) where TEntity : IRealmObject
     {
-        using var realm = GetInstance();
-        return realm.Find<T>(malId) != null;
+        using var realm = getRealm();
+        return realm.Find<TEntity>(malId) != null;
     }
 
     public void DeleteRealm()
@@ -250,7 +146,7 @@ public class AostaDotNet
         Realm.DeleteRealm(RealmConfig);
     }
 
-    public Realm GetInstance()
+    private Realm getRealm()
     {
         return Realm.GetInstance(RealmConfig);
     }

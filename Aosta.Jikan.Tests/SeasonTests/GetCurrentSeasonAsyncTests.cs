@@ -1,5 +1,4 @@
 ﻿using FluentAssertions.Execution;
-using System.Linq;
 
 namespace Aosta.Jikan.Tests.SeasonTests;
 

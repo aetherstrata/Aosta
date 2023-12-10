@@ -1,5 +1,3 @@
-using FastEnumUtility;
-
 namespace Aosta.Jikan.Query;
 
 /// <summary>

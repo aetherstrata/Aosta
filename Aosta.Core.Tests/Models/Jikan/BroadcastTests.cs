@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using Aosta.Core.Database.Mapper;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Response;
@@ -22,7 +21,6 @@ public class BroadcastTests
 
         using var _ = new AssertionScope();
         converted.Day.Should().Be(DaysOfWeek.Mondays);
-        converted.String.Should().Be("Mondays at 7:00 (GMT)");
         converted.Time.Should().HaveOffset(TimeSpan.FromHours(0));
         converted.Time.Should().HaveHour(7);
     }
@@ -40,7 +38,6 @@ public class BroadcastTests
 
         using var _ = new AssertionScope();
         converted.Day.Should().Be(DaysOfWeek.Sundays);
-        converted.String.Should().Be("Sundays at 13:00 (MSK)");
         converted.Time.Should().HaveOffset(TimeSpan.FromHours(3));
         converted.Time.Should().HaveHour(13);
     }
@@ -58,7 +55,6 @@ public class BroadcastTests
 
         using var _ = new AssertionScope();
         converted.Day.Should().Be(DaysOfWeek.Saturdays);
-        converted.String.Should().Be("Saturdays at 01:00 (JST)");
         converted.Time.Should().HaveOffset(TimeSpan.FromHours(9));
         converted.Time.Should().HaveHour(1);
     }
@@ -76,7 +72,6 @@ public class BroadcastTests
 
         using var _ = new AssertionScope();
         converted.Day.Should().Be(DaysOfWeek.Mondays);
-        converted.String.Should().Be(null);
         converted.Time.Should().HaveOffset(TimeSpan.Zero);
         converted.Time.Should().HaveHour(7);
     }
@@ -87,8 +82,7 @@ public class BroadcastTests
         var newBroadcast = new AnimeBroadcastResponse().ToRealmModel();
 
         using var _ = new AssertionScope();
-        newBroadcast.Day.Should().Be(DaysOfWeek.Unknown);
-        newBroadcast.String.Should().BeNull();
+        newBroadcast.Day.Should().BeNull();
         newBroadcast.Time.Should().BeNull();
     }
 }

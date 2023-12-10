@@ -12,9 +12,15 @@ public partial class TitleEntry : IEmbeddedObject
     /// Type of title (usually the language).
     /// </summary>
     public string? Type { get; set; }
-    
+
     /// <summary>
     /// Value of the Title.
     /// </summary>
     public string? Title { get; set; }
+
+    public static readonly TitleEntry EMPTY = new()
+    {
+        Type = string.Empty,
+        Title = string.Empty
+    };
 }

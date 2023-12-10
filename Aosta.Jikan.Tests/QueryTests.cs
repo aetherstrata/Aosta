@@ -1,4 +1,3 @@
-using Aosta.Common.Extensions;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Query;
 

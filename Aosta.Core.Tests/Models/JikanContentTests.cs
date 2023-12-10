@@ -10,7 +10,6 @@ namespace Aosta.Core.Tests.Models;
 
 public class JikanContentTests
 {
-    private RealmConfiguration _config = null!;
     private IJikan _jikan = null!;
     private AnimeResponse _jikanAime = null!;
 
@@ -34,12 +33,6 @@ public class JikanContentTests
     {
         _jikan = new JikanConfiguration().Build();
         _jikanAime = _jikan.GetAnimeAsync(1).Result.Data;
-        _config = RealmSetup.NewConfig();
-    }
-
-    [OneTimeTearDown]
-    public void OneTimeTearDown()
-    {
     }
 
     /*

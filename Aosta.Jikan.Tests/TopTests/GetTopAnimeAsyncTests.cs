@@ -82,7 +82,7 @@ public class GetTopAnimeAsyncTests
 		// Then
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
-		
+
 	[Test]
 	public async Task FilterParameter_ShouldParseOP()
 	{
@@ -92,7 +92,7 @@ public class GetTopAnimeAsyncTests
 		// Then
 		top.Data.First().Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("One Piece");
 	}
-		
+
 	[Test]
 	public async Task FilterParameterWithSecondPage_ShouldParseNotOP()
 	{

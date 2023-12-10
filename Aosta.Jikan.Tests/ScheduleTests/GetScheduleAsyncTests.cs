@@ -1,5 +1,4 @@
-﻿using Aosta.Jikan.Enums;
-using Aosta.Jikan.Query.Enums;
+﻿using Aosta.Jikan.Query.Enums;
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.ScheduleTests;

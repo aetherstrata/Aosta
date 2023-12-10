@@ -10,12 +10,11 @@ namespace Aosta.Core;
 /// <summary> Aosta client configuration </summary>
 public class AostaConfiguration
 {
-    private string _databasePath;
-    private string _logPath;
+    private readonly string _databasePath;
+    private readonly string _logPath;
+
     private string _cachePath;
-    private IJikan _jikan = null!;
     private ILogger _logger = null!;
-    private RealmConfiguration _realmConfig = null!;
 
     /// <summary> Access the directory builder </summary>
     public AostaDirectoryBuilder With => new(this);
@@ -23,11 +22,8 @@ public class AostaConfiguration
     /// <summary> Access the logger builder </summary>
     public AostaLoggerBuilder Log => new(this);
 
-    /// <summary> Access the sources builder </summary>
-    public AostaSourceBuilder Source => new(this);
-
     ///<summary> Log filename template </summary>
-    private const string LogFilename = "aosta-.log";
+    private const string log_filename = "aosta-.log";
 
     /// <summary> Get a copy of the Serilog logger configuration </summary>
     internal static LoggerConfiguration GetLoggerConfig(string logPath) => new LoggerConfiguration()
@@ -44,9 +40,14 @@ public class AostaConfiguration
 #if DEBUG
         .WriteTo.Debug(restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: Logging.OutputTemplate)
 #endif
-        .WriteTo.Async(sink => sink.File(path: Path.Combine(logPath, LogFilename), restrictedToMinimumLevel: LogEventLevel.Debug,
-            buffered: true, flushToDiskInterval: TimeSpan.FromSeconds(1), encoding: Encoding.UTF8, rollingInterval: RollingInterval.Day,
-            retainedFileCountLimit: 7, outputTemplate: Logging.OutputTemplate));
+        .WriteTo.Async(sink => sink.File(path: Path.Combine(logPath, log_filename),
+            restrictedToMinimumLevel: LogEventLevel.Debug,
+            buffered: true,
+            flushToDiskInterval: TimeSpan.FromSeconds(1),
+            encoding: Encoding.UTF8,
+            rollingInterval: RollingInterval.Day,
+            retainedFileCountLimit: 7,
+            outputTemplate: Logging.OutputTemplate));
 
     internal AostaConfiguration() : this(AppContext.BaseDirectory)
     {
@@ -55,7 +56,7 @@ public class AostaConfiguration
     public AostaConfiguration(string dataDir)
     {
         string dataPath;
-        
+
         try
         {
             dataPath = Path.GetFullPath(dataDir);
@@ -83,25 +84,26 @@ public class AostaConfiguration
 
     public AostaDotNet Build()
     {
-        _jikan ??= new JikanConfiguration().Build();
         _logger ??= GetLoggerConfig(_logPath).CreateLogger();
-        _realmConfig = new RealmConfiguration(_databasePath)
+
+        var app = new AostaDotNet
         {
-            SchemaVersion = 2,
-            IsReadOnly = false,
+            Log = _logger,
+            RealmConfig = new RealmConfiguration(_databasePath)
+            {
+                SchemaVersion = 2,
+                IsReadOnly = false,
 #if DEBUG
-            ShouldDeleteIfMigrationNeeded = true
+                ShouldDeleteIfMigrationNeeded = true
 #else
-            ShouldDeleteIfMigrationNeeded = false
+                ShouldDeleteIfMigrationNeeded = false
 #endif
+            }
         };
 
-        return new AostaDotNet
-        {
-            Jikan = _jikan,
-            Log = _logger,
-            RealmConfig = _realmConfig
-        };
+        app.Initialize();
+
+        return app;
     }
 
     public class AostaDirectoryBuilder
@@ -112,7 +114,7 @@ public class AostaConfiguration
         {
             _aosta = aosta;
         }
-        
+
         public AostaConfiguration CacheDirectory(string cachePath)
         {
             _aosta._cachePath = cachePath;
@@ -138,28 +140,6 @@ public class AostaConfiguration
         public AostaConfiguration With(ILogger logger)
         {
             _aosta._logger = logger;
-            return _aosta;
-        }
-    }
-
-    public class AostaSourceBuilder : AostaConfiguration
-    {
-        private readonly AostaConfiguration _aosta;
-
-        internal AostaSourceBuilder(AostaConfiguration aosta)
-        {
-            _aosta = aosta;
-        }
-
-        public AostaConfiguration FromJikan(IJikan jikan)
-        {
-            _aosta._jikan = jikan;
-            return _aosta;
-        }
-
-        public AostaConfiguration FromJikan(JikanConfiguration jikanConfig)
-        {
-            _aosta._jikan = jikanConfig.Use.Logger(_logger).Build();
             return _aosta;
         }
     }

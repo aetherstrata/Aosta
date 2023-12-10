@@ -1,13 +1,13 @@
 using Aosta.Core.Data;
 using Aosta.Core.Database.Enums;
 using Aosta.Core.Database.Models;
+using Aosta.Core.Database.Models.Local;
 
 namespace Aosta.Core.Tests.Models;
 
 [TestFixture]
 public class AnimeTests
 {
-
     private AostaDotNet _core = null!;
 
     [SetUp]
@@ -17,33 +17,36 @@ public class AnimeTests
     }
 
     [Test]
-    public async Task CreateNewAnimeTest()
+    public void CreateNewAnimeTest()
     {
-        var id = await _core.CreateLocalContentAsync(new Anime());
-
-        using var realm = _core.GetInstance();
+        _core.AddAnime();
 
         Assert.Multiple(() =>
         {
-            Assert.That(realm.All<Anime>().Count(), Is.EqualTo(1));
-            Assert.That(realm.First<Anime>().Title, Is.Empty);
+            Assert.That(_core.Run(r => r.All<Anime>().Count()), Is.EqualTo(1));
+            Assert.That(_core.Run(r => r.First<Anime>().Title), Is.Null);
         });
     }
 
     [Test]
     public void EditAnimeTest()
     {
-        using var realm = RealmSetup.CreateNewRealm(InitConfig.OneAnime);
-        realm.Write(() => { realm.First<Anime>().Title = "Awesome Title"; });
-        Assert.That(realm.First<Anime>().Title, Is.EqualTo("Awesome Title"));
+        _core.AddAnime();
+        _core.Write(r => r.First<Anime>().Local = new LocalAnime()
+        {
+            Title = "Awesome Title"
+        });
+        Assert.That(_core.Run(r => r.First<Anime>().Title), Is.EqualTo("Awesome Title"));
     }
 
     [Test]
     public void EditContentTypeTest()
     {
-        using var realm = RealmSetup.CreateNewRealm(InitConfig.OneAnime);
-        Assert.That(realm.First<Anime>().Type, Is.EqualTo(ContentType.Unknown));
-        realm.Write(() => { realm.First<Anime>().Type = ContentType.Movie; });
-        Assert.That(realm.First<Anime>().Type, Is.EqualTo(ContentType.Movie));
+        _core.AddAnime();
+        _core.Write(r => r.First<Anime>().Local = new LocalAnime()
+        {
+            Type = ContentType.Movie
+        });
+        Assert.That(_core.Run(r => r.First<Anime>().Type), Is.EqualTo(ContentType.Movie));
     }
 }

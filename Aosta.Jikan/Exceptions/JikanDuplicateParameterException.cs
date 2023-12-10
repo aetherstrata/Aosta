@@ -9,7 +9,7 @@ internal class JikanDuplicateParameterException : ArgumentException
     {
     }
 
-    protected JikanDuplicateParameterException(SerializationInfo info, StreamingContext context) : base(info, context)
+    internal JikanDuplicateParameterException(string message) : base(message)
     {
     }
 }

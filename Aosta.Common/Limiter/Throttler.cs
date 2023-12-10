@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Aosta.Common.Limiter
+﻿namespace Aosta.Common.Limiter
 {
     /// <summary>
     /// The Throttler limits the invocation of an action to a specific time interval. <br/>
@@ -16,8 +10,8 @@ namespace Aosta.Common.Limiter
         private readonly int _interval;
         private readonly bool _delayAfterExecution;
         private readonly bool _resetIntervalOnException;
-        private readonly object _locker = new object();
-        private Task<T> _lastTask;
+        private readonly object _locker = new();
+        private Task<T>? _lastTask;
         private DateTime? _invokeTime;
         private bool _busy;
 
@@ -38,7 +32,7 @@ namespace Aosta.Common.Limiter
         private bool ShouldWait()
         {
             return _invokeTime.HasValue &&
-                (DateTime.UtcNow - _invokeTime.Value).TotalMilliseconds < _interval;
+                   (DateTime.UtcNow - _invokeTime.Value).TotalMilliseconds < _interval;
         }
 
         /// <summary>
@@ -51,8 +45,6 @@ namespace Aosta.Common.Limiter
         {
             lock (_locker)
             {
-                DateTime now = DateTime.UtcNow;
-
                 if (_lastTask != null && (_busy || ShouldWait()))
                 {
                     return _lastTask;
@@ -62,18 +54,19 @@ namespace Aosta.Common.Limiter
                 _invokeTime = DateTime.UtcNow;
 
                 _lastTask = function.Invoke();
-                _lastTask.ContinueWith(task =>
+                _lastTask.ContinueWith(_ =>
                 {
                     if (_delayAfterExecution)
                     {
                         _invokeTime = DateTime.UtcNow;
                     }
+
                     _busy = false;
                 }, cancellationToken);
 
                 if (_resetIntervalOnException)
                 {
-                    _lastTask.ContinueWith((task, obj) =>
+                    _lastTask.ContinueWith((_, _) =>
                     {
                         _lastTask = null;
                         _invokeTime = null;
@@ -118,13 +111,13 @@ namespace Aosta.Common.Limiter
         /// <param name="cancellationToken">An optional CancellationToken.</param>
         public void Throttle(Action action, CancellationToken cancellationToken = default)
         {
-            Func<Task<bool>> actionAsync = () => Task.Run(() =>
+            Task<bool> ActionAsync() => Task.Run(() =>
             {
                 action.Invoke();
                 return true;
             }, cancellationToken);
 
-            Task _ = ThrottleAsync(actionAsync, cancellationToken);
+            _ = ThrottleAsync(ActionAsync, cancellationToken);
         }
     }
 }

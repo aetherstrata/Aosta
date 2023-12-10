@@ -9,12 +9,6 @@ namespace Aosta.Jikan.Enums;
 public enum AnimeType
 {
     /// <summary>
-    /// Unknown type
-    /// </summary>
-    [EnumMember(Value = "unknown"), Label("Unknown")]
-    Unknown,
-    
-    /// <summary>
     /// TV series.
     /// </summary>
     [EnumMember(Value = "tv"), Label("TV")]

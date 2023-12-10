@@ -1,6 +1,4 @@
 using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
-using Aosta.Jikan.Converters;
 
 namespace Aosta.Jikan.Enums;
 

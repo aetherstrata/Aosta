@@ -33,11 +33,11 @@ public class AnimeResponse
 	[JsonPropertyName("trailer")]
 	public AnimeTrailerResponse? Trailer { get; init; }
 
-	/// <summary>
-	/// Anime's multiple titles (if any).
-	/// </summary>
-	[JsonPropertyName("titles")]
-	public ICollection<TitleEntryResponse>? Titles { get; init; }
+    /// <summary>
+    /// Anime's multiple titles (if any).
+    /// </summary>
+    [JsonPropertyName("titles")]
+    public ICollection<TitleEntryResponse> Titles { get; init; } = [];
 
 	/// <summary>
 	/// Anime type (e. g. "TV", "Movie").
@@ -155,47 +155,47 @@ public class AnimeResponse
 	[JsonPropertyName("broadcast")]
 	public AnimeBroadcastResponse? Broadcast { get; init; }
 
-	/// <summary>
-	/// Anime's producers numerically indexed with array values.
-	/// </summary>
-	[JsonPropertyName("producers")]
-	public ICollection<MalUrlResponse>? Producers { get; init; }
+    /// <summary>
+    /// Anime's producers numerically indexed with array values.
+    /// </summary>
+    [JsonPropertyName("producers")]
+    public ICollection<MalUrlResponse> Producers { get; init; } = [];
 
-	/// <summary>
-	/// Anime's licensors numerically indexed with array values.
-	/// </summary>
-	[JsonPropertyName("licensors")]
-	public ICollection<MalUrlResponse>? Licensors { get; init; }
+    /// <summary>
+    /// Anime's licensors numerically indexed with array values.
+    /// </summary>
+    [JsonPropertyName("licensors")]
+    public ICollection<MalUrlResponse> Licensors { get; init; } = [];
 
-	/// <summary>
-	/// Anime's studio(s) numerically indexed with array values.
-	/// </summary>
-	[JsonPropertyName("studios")]
-	public ICollection<MalUrlResponse>? Studios { get; init; }
+    /// <summary>
+    /// Anime's studio(s) numerically indexed with array values.
+    /// </summary>
+    [JsonPropertyName("studios")]
+    public ICollection<MalUrlResponse> Studios { get; init; } = [];
 
-	/// <summary>
-	/// Anime's genres numerically indexed with array values.
-	/// </summary>
-	[JsonPropertyName("genres")]
-	public ICollection<MalUrlResponse>? Genres { get; init; }
+    /// <summary>
+    /// Anime's genres numerically indexed with array values.
+    /// </summary>
+    [JsonPropertyName("genres")]
+    public ICollection<MalUrlResponse> Genres { get; init; } = [];
 
-	/// <summary>
-	/// Explicit genres
-	/// </summary>
-	[JsonPropertyName("explicit_genres")]
-	public ICollection<MalUrlResponse>? ExplicitGenres { get; init; }
+    /// <summary>
+    /// Explicit genres
+    /// </summary>
+    [JsonPropertyName("explicit_genres")]
+    public ICollection<MalUrlResponse> ExplicitGenres { get; init; } = [];
 
-	/// <summary>
-	/// Anime's themes
-	/// </summary>
-	[JsonPropertyName("themes")]
-	public ICollection<MalUrlResponse>? Themes { get; init; }
+    /// <summary>
+    /// Anime's themes
+    /// </summary>
+    [JsonPropertyName("themes")]
+    public ICollection<MalUrlResponse> Themes { get; init; } = [];
 
-	/// <summary>
-	/// Anime's demographics
-	/// </summary>
-	[JsonPropertyName("demographics")]
-	public ICollection<MalUrlResponse>? Demographics { get; init; }
+    /// <summary>
+    /// Anime's demographics
+    /// </summary>
+    [JsonPropertyName("demographics")]
+    public ICollection<MalUrlResponse> Demographics { get; init; } = [];
 
 	/// <summary>
 	/// If Approved is false then this means the entry is still pending review on MAL.

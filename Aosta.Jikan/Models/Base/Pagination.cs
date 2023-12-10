@@ -29,5 +29,5 @@ public class Pagination
 	/// Summary about current query
 	/// </summary>
 	[JsonPropertyName("items")]
-	public PaginationSummary Items { get; init; }
+	public PaginationSummary? Items { get; init; }
 }

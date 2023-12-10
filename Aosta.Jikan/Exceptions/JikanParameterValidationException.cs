@@ -9,7 +9,7 @@ public class JikanParameterValidationException : ArgumentException
     {
     }
 
-    protected JikanParameterValidationException(SerializationInfo info, StreamingContext context) : base(info, context)
+    internal JikanParameterValidationException(string message) : base(message)
     {
     }
 }
