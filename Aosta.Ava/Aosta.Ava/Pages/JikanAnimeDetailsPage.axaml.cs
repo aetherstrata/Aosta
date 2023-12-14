@@ -3,9 +3,6 @@
 
 using Aosta.Ava.ViewModels;
 
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 
 namespace Aosta.Ava.Pages;

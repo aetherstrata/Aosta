@@ -2,6 +2,7 @@
 using System.Reactive;
 using System.Reactive.Linq;
 
+using Aosta.Ava.Extensions;
 using Aosta.Core;
 using Aosta.Jikan;
 
@@ -23,11 +24,11 @@ public class MainViewModel : ReactiveObject, IScreen
 
     public MainViewModel()
     {
-        Lazy<HomePageViewModel> homePage = new(() => new HomePageViewModel(this, _jikan, _aosta));
+        var homePage = new Lazy<HomePageViewModel>(() => new HomePageViewModel(this, _jikan, _aosta));
 
         var canGoBack = this
             .WhenAnyValue(vm => vm.Router.NavigationStack.Count)
-            .Select(count => count > 0);
+            .Select(_ => this.CanGoBack());
 
         GoHome = ReactiveCommand.CreateFromObservable(
             () => Router.NavigateAndReset.Execute(homePage.Value),

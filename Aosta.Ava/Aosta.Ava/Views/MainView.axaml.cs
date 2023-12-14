@@ -1,4 +1,6 @@
 using System.Reactive.Disposables;
+
+using Aosta.Ava.Extensions;
 using Aosta.Ava.ViewModels;
 
 using Avalonia.Controls;
@@ -13,6 +15,7 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
     public MainView()
     {
         InitializeComponent();
+
         this.WhenActivated(disposables =>
         {
             this.OneWayBind(ViewModel, vm => vm.GoHome, view => view.HomeButton.Command)
@@ -44,14 +47,12 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         }
     }
 
-    private void onBackRequested(object? _, RoutedEventArgs args)
+    private void onBackRequested(object? sender, RoutedEventArgs args)
     {
-        if (ViewModel is null) return;
+        if (ViewModel is null || !ViewModel.CanGoBack())
+            return;
 
-        if (ViewModel.Router.NavigationStack.Count > 0)
-        {
-            ViewModel.GoBack.Execute();
-            args.Handled = true;
-        }
+        ViewModel.GoBack.Execute();
+        args.Handled = true;
     }
 }

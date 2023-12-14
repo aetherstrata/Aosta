@@ -10,7 +10,7 @@
         <entry key="Aosta.Ava/Aosta.Ava/Pages/JikanAnimeDetailsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/SearchPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Views/MainView.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
-        <entry key="Aosta.Ava/Aosta.Ava/Views/MainWindow.axaml" value="Aosta.Ava/Aosta.Ava.Browser/Aosta.Ava.Browser.csproj" />
+        <entry key="Aosta.Ava/Aosta.Ava/Views/MainWindow.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
       </map>
     </option>
   </component>

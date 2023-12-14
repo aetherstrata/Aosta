@@ -12,7 +12,6 @@ public class AostaConfiguration
     private readonly string _databasePath;
     private readonly string _logPath;
 
-    private string _cachePath;
     private ILogger _logger = null!;
 
     /// <summary> Access the directory builder </summary>
@@ -78,7 +77,7 @@ public class AostaConfiguration
 
         _databasePath = Path.Combine(dataPath, "aosta.realm");
         _logPath = Path.Combine(dataPath, "logs");
-        _cachePath = Path.Combine(dataPath, "cache");
+        Path.Combine(dataPath, "cache");
     }
 
     public AostaDotNet Build()
@@ -92,7 +91,7 @@ public class AostaConfiguration
 #if DEBUG
             ShouldDeleteIfMigrationNeeded = true
 #else
-                ShouldDeleteIfMigrationNeeded = false
+            ShouldDeleteIfMigrationNeeded = false
 #endif
         };
 
@@ -110,7 +109,6 @@ public class AostaConfiguration
 
         public AostaConfiguration CacheDirectory(string cachePath)
         {
-            _aosta._cachePath = cachePath;
             return _aosta;
         }
     }
