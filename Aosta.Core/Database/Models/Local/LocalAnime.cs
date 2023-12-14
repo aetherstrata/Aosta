@@ -42,7 +42,7 @@ public partial class LocalAnime : IRealmObject
 
     /// The title of this content
     [Indexed]
-    public string? Title { get; set; }
+    public string? DefaultTitle { get; set; }
 
     /// The description of this content
     public string? Synopsis { get; set; }

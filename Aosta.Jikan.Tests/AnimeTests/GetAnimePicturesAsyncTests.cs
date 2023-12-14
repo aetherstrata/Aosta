@@ -21,7 +21,7 @@ public class GetAnimePicturesAsyncTests
 		var bebop = await JikanTests.Instance.GetAnimePicturesAsync(1);
 
 		using var _ = new AssertionScope();
-		bebop.Data.Should().HaveCount(13);
+		bebop.Data.Should().HaveCount(14);
 		bebop.Data.First().JPG.ImageUrl.Should().NotBeNullOrWhiteSpace();
 		bebop.Data.First().JPG.SmallImageUrl.Should().NotBeNullOrWhiteSpace();
 		bebop.Data.First().JPG.LargeImageUrl.Should().NotBeNullOrWhiteSpace();

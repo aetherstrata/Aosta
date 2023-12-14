@@ -17,4 +17,6 @@ public partial class ImagesSet : IEmbeddedObject
 	/// Images in webp format.
 	/// </summary>
 	public Image? WebP { get; set; }
+
+    public string? GetDefault() => JPG?.ImageUrl;
 }

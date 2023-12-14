@@ -14,7 +14,7 @@ public class GetAnimeExternalLinksAsyncTests
 
         await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
-    
+
     [Test]
     public async Task BebopId_ShouldReturnBebopLinks()
     {
@@ -22,6 +22,6 @@ public class GetAnimeExternalLinksAsyncTests
 
         using var _ = new AssertionScope();
         links.Data.Should().Contain(x => x.Name.Equals("Wikipedia") && x.Url.Equals("http://en.wikipedia.org/wiki/Cowboy_Bebop"));
-        links.Data.Should().Contain(x => x.Name.Equals("AnimeDB") && x.Url.Equals("http://anidb.info/perl-bin/animedb.pl?show=anime&aid=23"));
+        links.Data.Should().Contain(x => x.Name.Equals("AniDB") && x.Url.Equals("https://anidb.net/perl-bin/animedb.pl?show=anime&aid=23"));
     }
 }

@@ -20,14 +20,4 @@ public class TitleTests
         converted.Type.Should().Be("type");
         converted.Title.Should().Be("title");
     }
-
-    [Test]
-    public void DefaultValuesTest()
-    {
-        var newTitle = new TitleEntryResponse().ToRealmModel();
-
-        using var _ = new AssertionScope();
-        newTitle.Type.Should().BeNull();
-        newTitle.Title.Should().BeNull();
-    }
 }

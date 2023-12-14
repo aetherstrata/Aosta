@@ -33,7 +33,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
         this.WhenAnyValue(vm => vm.SearchText)
             .Throttle(TimeSpan.FromMilliseconds(400))
             .ObserveOn(AvaloniaScheduler.Instance)
-            .Subscribe(s => _ = executeSearch(s));
+            .Subscribe(s => Task.Run(() => executeSearch(s)));
     }
 
     private async Task executeSearch(string s)

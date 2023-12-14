@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Reactive;
 using System.Reactive.Linq;
 
 using Aosta.Core;
@@ -16,22 +17,17 @@ public class HomePageViewModel : ReactiveObject, IRoutableViewModel
     /// <inheritdoc />
     public IScreen HostScreen { get; }
 
-    private readonly IJikan _jikan;
-    private readonly AostaDotNet _aosta;
-
     public HomePageViewModel(IScreen hostScreen, IJikan jikan, AostaDotNet aosta)
     {
         HostScreen = hostScreen;
-        _jikan = jikan;
-        _aosta = aosta;
 
         Observable.Start(() =>
         {
-            var top = _jikan.GetTopAnimeAsync().Result.Data;
+            var top = jikan.GetTopAnimeAsync().Result.Data;
 
             foreach (var anime in top)
             {
-                var vm = new AnimeCardViewModel(anime);
+                var vm = new AnimeCardViewModel(hostScreen, aosta, anime);
 
                 TopAnimes.Add(vm);
             }

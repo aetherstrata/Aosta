@@ -23,8 +23,8 @@ public class AnimeTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(_core.Run(r => r.All<Anime>().Count()), Is.EqualTo(1));
-            Assert.That(_core.Run(r => r.First<Anime>().Title), Is.Null);
+            Assert.That(_core.Realm.Run(r => r.All<Anime>().Count()), Is.EqualTo(1));
+            Assert.That(_core.Realm.Run(r => r.First<Anime>().DefaultTitle), Is.Null);
         });
     }
 
@@ -32,21 +32,21 @@ public class AnimeTests
     public void EditAnimeTest()
     {
         _core.AddAnime();
-        _core.Write(r => r.First<Anime>().Local = new LocalAnime()
+        _core.Realm.Write(r => r.First<Anime>().Local = new LocalAnime()
         {
-            Title = "Awesome Title"
+            DefaultTitle = "Awesome Title"
         });
-        Assert.That(_core.Run(r => r.First<Anime>().Title), Is.EqualTo("Awesome Title"));
+        Assert.That(_core.Realm.Run(r => r.First<Anime>().DefaultTitle), Is.EqualTo("Awesome Title"));
     }
 
     [Test]
     public void EditContentTypeTest()
     {
         _core.AddAnime();
-        _core.Write(r => r.First<Anime>().Local = new LocalAnime()
+        _core.Realm.Write(r => r.First<Anime>().Local = new LocalAnime()
         {
             Type = ContentType.Movie
         });
-        Assert.That(_core.Run(r => r.First<Anime>().Type), Is.EqualTo(ContentType.Movie));
+        Assert.That(_core.Realm.Run(r => r.First<Anime>().Type), Is.EqualTo(ContentType.Movie));
     }
 }

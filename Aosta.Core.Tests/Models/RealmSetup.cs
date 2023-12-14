@@ -25,7 +25,7 @@ internal static class RealmSetup
 
     internal static AostaDotNet AddAnime(this AostaDotNet aosta, Anime? anime = null)
     {
-        aosta.Write(r => r.Add(anime ?? new Anime()));
+        aosta.Realm.Write(r => r.Add(anime ?? new Anime()));
 
         return aosta;
     }

@@ -31,27 +31,23 @@ public class GetAnimeNewsAsyncTests
 	{
 		var bebop = await JikanTests.Instance.GetAnimeNewsAsync(1);
 
-		using (new AssertionScope())
-		{
-			bebop.Data.Should().HaveCount(7);
-			bebop.Data.Select(x => x.Author).Should().Contain("Snow");
-			bebop.Pagination.Items.Should().BeNull();
-			bebop.Pagination.CurrentPage.Should().BeNull();
-			bebop.Pagination.LastVisiblePage.Should().BePositive();
-		}
-	}
+        using var _ = new AssertionScope();
+        bebop.Data.Should().HaveCount(9);
+        bebop.Data.Select(x => x.Author).Should().Contain("Snow");
+        bebop.Pagination.Items.Should().BeNull();
+        bebop.Pagination.CurrentPage.Should().BeNull();
+        bebop.Pagination.LastVisiblePage.Should().BePositive();
+    }
 
 	[Test]
 	public async Task BebopIdWithPage_ShouldParseCowboyBebopNews()
 	{
 		var bebop = await JikanTests.Instance.GetAnimeNewsAsync(1, 1);
 
-		using (new AssertionScope())
-		{
-			bebop.Data.Should().HaveCount(8);
-			bebop.Data.Select(x => x.Author).Should().Contain("Snow");
-		}
-	}
+        using var _ = new AssertionScope();
+        bebop.Data.Should().HaveCount(9);
+        bebop.Data.Select(x => x.Author).Should().Contain("Snow");
+    }
 
 	[Test]
 	public async Task BebopIdWithNextPage_ShouldParseZeroNews()

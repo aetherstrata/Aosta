@@ -4,15 +4,64 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:localization="clr-namespace:Aosta.Ava.Localization"
              xmlns:vm="clr-namespace:Aosta.Ava.ViewModels"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.HomePage"
              x:DataType="vm:HomePageViewModel">
 
-    <Grid RowDefinitions="Auto,Auto,Auto">
-        <TextBlock Text="{localization:Localize Key=HomePage.TopAnime.Header}"/>
-        <ItemsRepeater Grid.Row="1"
-                       ItemsSource="{Binding TopAnimes}">
-
-        </ItemsRepeater>
-    </Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+        <Grid RowDefinitions="Auto,Auto">
+            <TextBlock Text="{localization:Localize Key=HomePage.TopAnime.Header}" />
+            <ScrollViewer Grid.Row="1">
+                <ListBox ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                         ItemsSource="{Binding TopAnimes}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="5"
+                                    Background="CornflowerBlue"
+                                    Width="120"
+                                    CornerRadius="5">
+                                <Interaction.Behaviors>
+                                    <EventTriggerBehavior EventName="Tapped">
+                                        <EventTriggerBehavior.Actions>
+                                            <InvokeCommandAction Command="{Binding GoToDetails}"/>
+                                        </EventTriggerBehavior.Actions>
+                                    </EventTriggerBehavior>
+                                </Interaction.Behaviors>
+                                <Grid RowDefinitions="200"
+                                      VerticalAlignment="Top">
+                                    <Border Grid.Row="0"
+                                            Padding="2"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            CornerRadius="5"
+                                            Background="White">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Score}"
+                                                       VerticalAlignment="Center" />
+                                            <PathIcon Data="{StaticResource _star_icon_base}" Foreground="Gold" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Image Grid.Row="0"
+                                           asyncImageLoader:ImageLoader.Source="{Binding Banner}"
+                                           Stretch="UniformToFill"
+                                           ZIndex="-1" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem">
+                            <Setter Property="Padding" Value="0" />
+                        </Style>
+                    </ListBox.Styles>
+                </ListBox>
+            </ScrollViewer>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

@@ -19,7 +19,7 @@ public class AnimeSearchResultViewModel : ReactiveObject
 {
     public AnimeSearchResultViewModel(AnimeResponse response, AostaDotNet aosta)
     {
-        _missing = !aosta.Exists<JikanAnime>(response.MalId);
+        _missing = !aosta.Realm.Exists<JikanAnime>(response.MalId);
 
         Title = response.Titles.First(x => x.Type == "Default").Title;
         Banner = response.Images?.JPG?.ImageUrl;
@@ -33,7 +33,7 @@ public class AnimeSearchResultViewModel : ReactiveObject
                 return Task.CompletedTask;
             }
 
-            var realmTask = aosta.WriteAsync(r =>
+            var realmTask = aosta.Realm.WriteAsync(r =>
             {
                 var jikanMetadata = response.ToJikanAnime();
 

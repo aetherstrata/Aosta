@@ -85,24 +85,18 @@ public class AostaConfiguration
     {
         _logger ??= GetLoggerConfig(_logPath).CreateLogger();
 
-        var app = new AostaDotNet
+        var realmConfig = new RealmConfiguration(_databasePath)
         {
-            Log = _logger,
-            RealmConfig = new RealmConfiguration(_databasePath)
-            {
-                SchemaVersion = 2,
-                IsReadOnly = false,
+            SchemaVersion = 2,
+            IsReadOnly = false,
 #if DEBUG
-                ShouldDeleteIfMigrationNeeded = true
+            ShouldDeleteIfMigrationNeeded = true
 #else
                 ShouldDeleteIfMigrationNeeded = false
 #endif
-            }
         };
 
-        app.Initialize();
-
-        return app;
+        return new AostaDotNet(_logger, realmConfig);
     }
 
     public class AostaDirectoryBuilder

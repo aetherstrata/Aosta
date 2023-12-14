@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 using Realms;
 
 namespace Aosta.Core.Database.Models.Embedded;
@@ -11,16 +13,23 @@ public partial class TitleEntry : IEmbeddedObject
     /// <summary>
     /// Type of title (usually the language).
     /// </summary>
-    public string? Type { get; set; }
+    public required string Type { get; set; } = null!;
 
     /// <summary>
     /// Value of the Title.
     /// </summary>
-    public string? Title { get; set; }
+    public required string Title { get; set; } = null!;
 
-    public static readonly TitleEntry EMPTY = new()
+    [SetsRequiredMembers]
+    public TitleEntry(string type, string title)
     {
-        Type = string.Empty,
-        Title = string.Empty
-    };
+        Type = type;
+        Title = title;
+    }
+
+    // Parameterless constructor required for Realm
+    [SetsRequiredMembers]
+    private TitleEntry()
+    {
+    }
 }

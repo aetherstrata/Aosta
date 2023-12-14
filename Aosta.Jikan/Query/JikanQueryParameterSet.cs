@@ -6,8 +6,6 @@ public class JikanQueryParameterSet : IEnumerable<IQueryParameter>
 {
     private readonly HashSet<IQueryParameter> _parameters = new(QueryParameter.NameComparer);
 
-    public static readonly JikanQueryParameterSet EMPTY = new();
-
     internal JikanQueryParameterSet()
     {
     }

@@ -24,15 +24,12 @@ public class GetAnimeFullDataAsyncTests
         using var _ = new AssertionScope();
         bebopAnime.Data.Titles.First(x => x.Type.Equals("Default")).Title.Should().Be("Cowboy Bebop");
         bebopAnime.Data.ExternalLinks.Should().Contain(x => x.Name.Equals("Wikipedia") && x.Url.Equals("http://en.wikipedia.org/wiki/Cowboy_Bebop"));
-        bebopAnime.Data.ExternalLinks.Should().Contain(x => x.Name.Equals("AnimeDB") && x.Url.Equals("http://anidb.info/perl-bin/animedb.pl?show=anime&aid=23"));
-        bebopAnime.Data.MusicThemes.Openings.Should().ContainSingle().Which
-            .Equals("\"Tank!\" by The Seatbelts (eps 1-25)");
+        bebopAnime.Data.ExternalLinks.Should().Contain(x => x.Name.Equals("AniDB") && x.Url.Equals("https://anidb.net/perl-bin/animedb.pl?show=anime&aid=23"));
+        bebopAnime.Data.MusicThemes.Openings.Should().ContainSingle().Which.Equals("\"Tank!\" by The Seatbelts (eps 1-25)");
         bebopAnime.Data.MusicThemes.Endings.Should().HaveCount(3);
         bebopAnime.Data.Relations.Should().HaveCount(3);
-        bebopAnime.Data.Relations.Should()
-            .ContainSingle(x => x.Relation.Equals("Adaptation") && x.Entry.Count == 2);
-        bebopAnime.Data.Relations.Should()
-            .ContainSingle(x => x.Relation.Equals("Side story") && x.Entry.Count == 2);
+        bebopAnime.Data.Relations.Should().ContainSingle(x => x.Relation.Equals("Adaptation") && x.Entry.Count == 2);
+        bebopAnime.Data.Relations.Should().ContainSingle(x => x.Relation.Equals("Side story") && x.Entry.Count == 2);
         bebopAnime.Data.Relations.Should().ContainSingle(x => x.Relation.Equals("Summary") && x.Entry.Count == 1);
         bebopAnime.Data.StreamingLinks.Should().Contain(x => x.Name.Equals("Crunchyroll") && x.Url.Equals("http://www.crunchyroll.com/series-271225"));
         bebopAnime.Data.StreamingLinks.Should().Contain(x => x.Name.Equals("Netflix") && x.Url.Equals("https://www.netflix.com/title/80001305"));

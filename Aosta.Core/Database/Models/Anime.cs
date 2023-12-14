@@ -1,7 +1,7 @@
 using Aosta.Core.Database.Enums;
-using Aosta.Core.Database.Models.Embedded;
 using Aosta.Core.Database.Models.Jikan;
 using Aosta.Core.Database.Models.Local;
+using Aosta.Core.Extensions;
 
 using Realms;
 
@@ -12,9 +12,6 @@ namespace Aosta.Core.Database.Models;
 [Preserve(AllMembers = true)]
 public partial class Anime : IRealmObject, IHasPrimaryKey<Guid>
 {
-    /// The user this anime belongs to
-    public User? User { get; set; }
-
     /// The unique ID of this content
     [PrimaryKey]
     public Guid ID { get; private set; } = Guid.NewGuid();
@@ -26,9 +23,9 @@ public partial class Anime : IRealmObject, IHasPrimaryKey<Guid>
     public LocalAnime? Local { get; set; }
 
     /// The episodes of this content
-    public IList<Episode> Episodes { get; }
+    public IList<Episode> Episodes { get; } = null!;
 
-    public string? Title => Local?.Title ?? Jikan?.Titles.FirstOrDefault(entry => entry.Type == "Default", TitleEntry.EMPTY).Title;
+    public string? DefaultTitle => Local?.DefaultTitle ?? Jikan?.Titles.GetDefault();
 
     public string? Synopsis => Local?.Synopsis ?? Jikan?.Synopsis;
 

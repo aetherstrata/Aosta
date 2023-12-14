@@ -102,15 +102,15 @@ public class GetAnimeAsyncTests
 		{
 			bebopAnime.Data.Trailer.Should().NotBeNull();
 
-			bebopAnime.Data.Trailer.YoutubeId.Should().Be("qig4KOK2R2g");
-			bebopAnime.Data.Trailer.Url.Should().Be("https://www.youtube.com/watch?v=qig4KOK2R2g");
-			bebopAnime.Data.Trailer.EmbedUrl.Should().Be("https://www.youtube.com/embed/qig4KOK2R2g?enablejsapi=1&wmode=opaque&autoplay=1");
+			bebopAnime.Data.Trailer.YoutubeId.Should().Be("gY5nDXOtv_o");
+			bebopAnime.Data.Trailer.Url.Should().Be("https://www.youtube.com/watch?v=gY5nDXOtv_o");
+			bebopAnime.Data.Trailer.EmbedUrl.Should().Be("https://www.youtube.com/embed/gY5nDXOtv_o?enablejsapi=1&wmode=opaque&autoplay=1");
 
-			bebopAnime.Data.Trailer.Image.ImageUrl.Should().Be("https://img.youtube.com/vi/qig4KOK2R2g/default.jpg");
-			bebopAnime.Data.Trailer.Image.SmallImageUrl.Should().Be("https://img.youtube.com/vi/qig4KOK2R2g/sddefault.jpg");
-			bebopAnime.Data.Trailer.Image.MediumImageUrl.Should().Be("https://img.youtube.com/vi/qig4KOK2R2g/mqdefault.jpg");
-			bebopAnime.Data.Trailer.Image.LargeImageUrl.Should().Be("https://img.youtube.com/vi/qig4KOK2R2g/hqdefault.jpg");
-			bebopAnime.Data.Trailer.Image.MaximumImageUrl.Should().Be("https://img.youtube.com/vi/qig4KOK2R2g/maxresdefault.jpg");
+			bebopAnime.Data.Trailer.Image.ImageUrl.Should().Be("https://img.youtube.com/vi/gY5nDXOtv_o/default.jpg");
+			bebopAnime.Data.Trailer.Image.SmallImageUrl.Should().Be("https://img.youtube.com/vi/gY5nDXOtv_o/sddefault.jpg");
+			bebopAnime.Data.Trailer.Image.MediumImageUrl.Should().Be("https://img.youtube.com/vi/gY5nDXOtv_o/mqdefault.jpg");
+			bebopAnime.Data.Trailer.Image.LargeImageUrl.Should().Be("https://img.youtube.com/vi/gY5nDXOtv_o/hqdefault.jpg");
+			bebopAnime.Data.Trailer.Image.MaximumImageUrl.Should().Be("https://img.youtube.com/vi/gY5nDXOtv_o/maxresdefault.jpg");
 		}
 	}
 

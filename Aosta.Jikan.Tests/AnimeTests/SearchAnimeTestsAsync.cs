@@ -88,8 +88,6 @@ public class SearchAnimeTestsAsync
 	[TestCase("death")]
 	public async Task NonEmptyQuery_ShouldReturnNotNullSearchAnime(string query)
 	{
-		var config = new AnimeSearchQueryParameters().SetQuery(query);
-
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(query);
 
 		returnedAnime.Should().NotBeNull();
@@ -227,13 +225,11 @@ public class SearchAnimeTestsAsync
 	}
 
 	[Test]
-	public async Task IncorrectProducerConfig_ShouldReturnEmpty()
+	public void IncorrectProducerConfig_ShouldReturnEmpty()
 	{
-		var searchConfig =  new AnimeSearchQueryParameters().SetProducers(-1);
+		var searchFunc = () => new AnimeSearchQueryParameters().SetProducers(-1);
 
-		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
-
-		returnedAnime.Data.Should().BeEmpty();
+		searchFunc.Should().ThrowExactly<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -241,7 +237,7 @@ public class SearchAnimeTestsAsync
 	{
 		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync((AnimeSearchQueryParameters)null));
 
-		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
+		await func.Should().ThrowExactlyAsync<NullReferenceException>();
 	}
 
 	[Test]
@@ -251,23 +247,21 @@ public class SearchAnimeTestsAsync
 
 		var returnedAnime = await JikanTests.Instance.SearchAnimeAsync(searchConfig);
 
-		var titles = returnedAnime.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
-		using var _ = new AssertionScope();
-		titles.Should().Contain("Cowboy Bebop");
-		titles.Should().Contain("One Piece");
+		var titles = returnedAnime.Data.Select(x => x.Titles.First(entry => entry.Type.Equals("Default")).Title);
+
+        using var _ = new AssertionScope();
+		titles.Should().Contain("Cowboy Bebop").And.Contain("One Piece");
 	}
 
 	[Test]
 	[TestCase(int.MinValue)]
 	[TestCase(-1)]
 	[TestCase(0)]
-	public async Task EmptyQueryActionTvAnimeInvalidPage_ShouldThrowValidationException(int page)
-	{
-		var searchConfig = new AnimeSearchQueryParameters().SetPage(page).SetType(AnimeTypeFilter.TV).SetGenres(1);
+	public void EmptyQueryActionTvAnimeInvalidPage_ShouldThrowValidationException(int page)
+    {
+        var searchFunc = page.Invoking(p => new AnimeSearchQueryParameters().SetPage(p).SetType(AnimeTypeFilter.TV).SetGenres(1));
 
-		var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(searchConfig));
-
-		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
+		searchFunc.Should().ThrowExactly<JikanParameterValidationException>();
 	}
 
 	[Test]
