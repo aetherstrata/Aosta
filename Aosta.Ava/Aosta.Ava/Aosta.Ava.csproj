@@ -26,4 +26,8 @@
       <ProjectReference Include="..\..\Aosta.Core\Aosta.Core.csproj" />
       <ProjectReference Include="..\..\Aosta.Jikan\Aosta.Jikan.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Assets\Fonts\" />
+    </ItemGroup>
 </Project>

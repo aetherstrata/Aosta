@@ -3,8 +3,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Aosta.Ava.ViewModels"
+             xmlns:local="clr-namespace:Aosta.Ava.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.JikanAnimeDetailsPage"
              x:DataType="viewModels:JikanAnimeDetailsViewModel">
-    <TextBlock Text="{Binding Title}"></TextBlock>
+    <Grid RowDefinitions="Auto,*"
+          ColumnDefinitions="Auto,*">
+        <local:TitleBar Grid.Row="0"
+                        Grid.ColumnSpan="2"
+                        IsBackEnabled="True"
+                        BackCommand="{Binding GoBack}"
+                        Title="{Binding Title}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Title}"/>
+    </Grid>
 </UserControl>

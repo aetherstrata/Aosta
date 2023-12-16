@@ -1,0 +1,40 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Aosta.Ava.Controls"
+        xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia">
+    <Design.PreviewWith>
+        <controls:TitleBar />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|TitleBar">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="Auto,5,*,5,Auto"
+                      Margin="10,5">
+                    <Button Grid.Column="0"
+                            IsVisible="{TemplateBinding IsBackEnabled}"
+                            Command="{TemplateBinding BackCommand}"
+                            Theme="{StaticResource TransparentButton}">
+                        <fluent:FontIcon Glyph="{StaticResource ChevronLeftGlyph}"
+                                         FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                         FontSize="20"/>
+                    </Button>
+                    <TextBlock Grid.Column="2"
+                               Text="{TemplateBinding Title}"
+                               FontWeight="Bold"
+                               FontSize="24"
+                               VerticalAlignment="Center"/>
+                    <Button Grid.Column="4"
+                            IsVisible="{TemplateBinding IsMenuEnabled}"
+                            Command="{TemplateBinding MenuCommand}"
+                            Theme="{StaticResource TransparentButton}">
+                        <fluent:FontIcon Glyph="{StaticResource MoreVerticalGlyph}"
+                                         FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                         FontSize="20"/>
+                    </Button>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
