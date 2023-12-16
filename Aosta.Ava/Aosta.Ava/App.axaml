@@ -13,7 +13,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="/Assets/Resources/IconGeometry.axaml" />
+                <ResourceInclude Source="/Assets/Resources/Fonts.axaml"/>
+                <ResourceInclude Source="/Assets/Resources/Glyphs.axaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
