@@ -14,19 +14,18 @@ public class AostaConfiguration
 
     private ILogger _logger = null!;
 
-    /// <summary> Access the directory builder </summary>
-    public AostaDirectoryBuilder With => new(this);
-
     /// <summary> Access the logger builder </summary>
-    public AostaLoggerBuilder Log => new(this);
+    public AostaServicesBuilder With => new(this);
 
     ///<summary> Log filename template </summary>
     private const string log_filename = "aosta-.log";
 
     /// <summary> Get a copy of the Serilog logger configuration </summary>
-    internal static LoggerConfiguration GetLoggerConfig(string logPath) => new LoggerConfiguration()
+    public static LoggerConfiguration GetDefaultLoggerConfig(string logPath) => new LoggerConfiguration()
 #if DEBUG
         .MinimumLevel.Verbose()
+        .WriteTo.Console(outputTemplate: Logging.OUTPUT_TEMPLATE)
+        .WriteTo.Debug(outputTemplate: Logging.OUTPUT_TEMPLATE)
 #else
         .MinimumLevel.Debug()
 #endif
@@ -34,10 +33,6 @@ public class AostaConfiguration
         .Enrich.WithThreadId()
         .Enrich.WithThreadName()
         .Enrich.FromLogContext()
-        .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Debug, outputTemplate: Logging.OUTPUT_TEMPLATE)
-#if DEBUG
-        .WriteTo.Debug(restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: Logging.OUTPUT_TEMPLATE)
-#endif
         .WriteTo.Async(sink => sink.File(path: Path.Combine(logPath, log_filename),
             restrictedToMinimumLevel: LogEventLevel.Debug,
             buffered: true,
@@ -46,10 +41,6 @@ public class AostaConfiguration
             rollingInterval: RollingInterval.Day,
             retainedFileCountLimit: 7,
             outputTemplate: Logging.OUTPUT_TEMPLATE));
-
-    internal AostaConfiguration() : this(AppContext.BaseDirectory)
-    {
-    }
 
     public AostaConfiguration(string dataDir)
     {
@@ -82,7 +73,7 @@ public class AostaConfiguration
 
     public AostaDotNet Build()
     {
-        _logger ??= GetLoggerConfig(_logPath).CreateLogger();
+        _logger ??= GetDefaultLoggerConfig(_logPath).CreateLogger();
 
         var realmConfig = new RealmConfiguration(_databasePath)
         {
@@ -98,37 +89,22 @@ public class AostaConfiguration
         return new AostaDotNet(_logger, realmConfig);
     }
 
-    public class AostaDirectoryBuilder
+    public class AostaServicesBuilder
     {
         private readonly AostaConfiguration _aosta;
 
-        internal AostaDirectoryBuilder(AostaConfiguration aosta)
+        internal AostaServicesBuilder(AostaConfiguration aosta)
         {
             _aosta = aosta;
         }
 
-        public AostaConfiguration CacheDirectory(string cachePath)
-        {
-            return _aosta;
-        }
-    }
-
-    public class AostaLoggerBuilder
-    {
-        private readonly AostaConfiguration _aosta;
-
-        internal AostaLoggerBuilder(AostaConfiguration aosta)
-        {
-            _aosta = aosta;
-        }
-
-        public AostaConfiguration With(LoggerConfiguration logConfig)
+        public AostaConfiguration Logger(LoggerConfiguration logConfig)
         {
             _aosta._logger = logConfig.CreateLogger();
             return _aosta;
         }
 
-        public AostaConfiguration With(ILogger logger)
+        public AostaConfiguration Logger(ILogger logger)
         {
             _aosta._logger = logger;
             return _aosta;

@@ -1,8 +1,21 @@
-﻿using Android.App;
+﻿using System.IO;
+
+using Android.App;
 using Android.Content.PM;
+
+using Aosta.Common.Consts;
+using Aosta.Common.Extensions;
+using Aosta.Core;
+
 using Avalonia;
 using Avalonia.Android;
 using Avalonia.ReactiveUI;
+
+using Serilog.Events;
+
+using Splat;
+
+using ILogger = Serilog.ILogger;
 
 namespace Aosta.Ava.Android;
 
@@ -17,7 +30,14 @@ public class MainActivity : AvaloniaMainActivity<App>
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
         return base.CustomizeAppBuilder(builder)
-            .WithInterFont()
-            .UseReactiveUI();
+            .UseReactiveUI()
+            .LogToTrace()
+            .AfterSetup(_ =>
+            {
+                Locator.CurrentMutable.Register<ILogger>(() => AostaConfiguration
+                    .GetDefaultLoggerConfig(Path.Combine(global::Android.App.Application.Context.FilesDir.AsNonNull().Path, "logs"))
+                    .WriteTo.Logcat("AOSTA", Logging.OUTPUT_TEMPLATE, LogEventLevel.Debug)
+                    .CreateLogger());
+            });
     }
 }

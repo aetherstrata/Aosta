@@ -1,6 +1,6 @@
 namespace Aosta.Common.Consts;
 
-public class Logging
+public static class Logging
 {
     ///<summary> Output template </summary>
     public const string OUTPUT_TEMPLATE =

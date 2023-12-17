@@ -12,19 +12,17 @@ namespace Aosta.Ava.ViewModels;
 
 public class MainViewModel : ReactiveObject, IScreen
 {
-    private readonly AostaDotNet _aosta = new AostaConfiguration(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Build();
-    private readonly IJikan _jikan = new JikanConfiguration().Build();
-
     /// <inheritdoc />
     public RoutingState Router { get; } = new();
 
     public ReactiveCommand<Unit, IRoutableViewModel> GoHome { get; }
+    public ReactiveCommand<Unit, IRoutableViewModel> GoList { get; }
     public ReactiveCommand<Unit, IRoutableViewModel> GoSearch { get; }
     public ReactiveCommand<Unit, IRoutableViewModel> GoBack { get; }
 
     public MainViewModel()
     {
-        var homePage = new Lazy<HomePageViewModel>(() => new HomePageViewModel(this, _jikan, _aosta));
+        var homePage = new Lazy<HomePageViewModel>(() => new HomePageViewModel(this));
 
         var canGoBack = this
             .WhenAnyValue(vm => vm.Router.NavigationStack.Count)
@@ -34,8 +32,12 @@ public class MainViewModel : ReactiveObject, IScreen
             () => Router.NavigateAndReset.Execute(homePage.Value),
             isDifferentFrom<HomePageViewModel>());
 
+        GoList = ReactiveCommand.CreateFromObservable(
+            () => Router.NavigateAndReset.Execute(new AnimeListPageViewModel(this)),
+            isDifferentFrom<AnimeListPageViewModel>());
+
         GoSearch = ReactiveCommand.CreateFromObservable(
-            () => Router.Navigate.Execute(new SearchPageViewModel(this, _aosta)),
+            () => Router.Navigate.Execute(new SearchPageViewModel(this)),
             isDifferentFrom<SearchPageViewModel>());
 
         GoBack = ReactiveCommand.CreateFromObservable(

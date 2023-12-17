@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 
+using Aosta.Ava.Extensions;
 using Aosta.Core;
 using Aosta.Core.Database.Mapper;
 using Aosta.Core.Database.Models;
@@ -13,12 +14,16 @@ using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
 
+using Splat;
+
 namespace Aosta.Ava.ViewModels;
 
 public class AnimeSearchResultViewModel : ReactiveObject
 {
-    public AnimeSearchResultViewModel(AnimeResponse response, AostaDotNet aosta)
+    public AnimeSearchResultViewModel(AnimeResponse response)
     {
+        var aosta = Locator.Current.GetSafely<AostaDotNet>();
+
         _missing = !aosta.Realm.Exists<JikanAnime>(response.MalId);
 
         Title = response.Titles.First(x => x.Type == "Default").Title;

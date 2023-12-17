@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:Aosta.Ava.ViewModels"
              xmlns:localize="clr-namespace:Aosta.Ava.Localization"
              xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.SearchPage"
              x:DataType="vm:SearchPageViewModel">
@@ -23,9 +24,14 @@
                                    TextWrapping="Wrap"
                                    HorizontalAlignment="Left" />
                         <Button Grid.Column="2"
+                                Padding="0"
+                                Width="36"
+                                Height="36"
                                 IsEnabled="{Binding CanBeAdded}"
                                 Command="{Binding AddCommand}">
-                           <TextBlock Text="Add"/>
+                           <controls:FontIcon Glyph="{StaticResource PlusGlyph}"
+                                              FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                              FontSize="20"/>
                         </Button>
                     </Grid>
                 </DataTemplate>

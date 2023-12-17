@@ -1,5 +1,6 @@
 using System.Reflection;
 
+using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 
 using Avalonia;
@@ -7,8 +8,11 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Aosta.Ava.ViewModels;
 using Aosta.Ava.Views;
+using Aosta.Core;
+using Aosta.Jikan;
 
 using ReactiveUI;
+
 using Splat;
 
 namespace Aosta.Ava;
@@ -24,7 +28,11 @@ public partial class App : Application
     {
         Localizer.Instance.Language = InterfaceLanguage.English;
 
-        Locator.CurrentMutable.RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
+        Locator.CurrentMutable
+            .RegisterAnd(() => new JikanConfiguration()
+                .Use.Logger(Locator.Current.GetSafely<Serilog.ILogger>())
+                .Build())
+            .RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

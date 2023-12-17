@@ -15,7 +15,7 @@
     </Design.DataContext>
 
     <Grid RowDefinitions="*,Auto">
-        <rxui:RoutedViewHost Name="RoutedViewHost"
+        <rxui:RoutedViewHost Router="{Binding Router}"
                              HorizontalContentAlignment="Stretch"
                              VerticalContentAlignment="Stretch" />
 
@@ -24,17 +24,22 @@
                         HorizontalAlignment="Center">
                 <controls:CommandBar>
                     <controls:CommandBar.PrimaryCommands>
-                        <controls:CommandBarButton x:Name="HomeButton"
-                                                   IconSource="Home"
-                                                   IsDefault="True"
-                                                   IsCompact="True"
-                                                   Width="42"/>
+                        <controls:CommandBarButton Command="{Binding GoList}"
+                                                   IconSource="List" />
 
-                        <controls:CommandBarButton x:Name="SearchButton"
-                                                   IconSource="Find"
-                                                   IsCompact="True"
-                                                   Width="42"/>
+                        <controls:CommandBarButton Command="{Binding GoHome}"
+                                                   IconSource="Home"
+                                                   IsDefault="True"/>
+
+                        <controls:CommandBarButton Command="{Binding GoSearch}"
+                                                   IconSource="Find"/>
                     </controls:CommandBar.PrimaryCommands>
+                    <controls:CommandBar.Styles>
+                        <Style Selector="controls|CommandBarButton">
+                            <Setter Property="Width" Value="42"/>
+                            <Setter Property="IsCompact" Value="True"/>
+                        </Style>
+                    </controls:CommandBar.Styles>
                 </controls:CommandBar>
             </StackPanel>
         </Border>

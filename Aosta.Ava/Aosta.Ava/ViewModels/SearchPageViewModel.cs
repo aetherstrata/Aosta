@@ -3,12 +3,15 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
+using Aosta.Ava.Extensions;
 using Aosta.Core;
 using Aosta.Jikan;
 
 using Avalonia.ReactiveUI;
 
 using ReactiveUI;
+
+using Splat;
 
 namespace Aosta.Ava.ViewModels;
 
@@ -20,15 +23,12 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
     /// <inheritdoc />
     public IScreen HostScreen { get; }
 
-    private readonly AostaDotNet _aosta;
-    private readonly IJikan _client;
+    private readonly AostaDotNet _aosta = Locator.Current.GetSafely<AostaDotNet>();
+    private readonly IJikan _client = Locator.Current.GetSafely<IJikan>();
 
-    public SearchPageViewModel(IScreen screen, AostaDotNet aosta)
+    public SearchPageViewModel(IScreen screen)
     {
         HostScreen = screen;
-
-        _aosta = aosta;
-        _client = new JikanConfiguration().Build();
 
         this.WhenAnyValue(vm => vm.SearchText)
             .Throttle(TimeSpan.FromMilliseconds(400))
@@ -47,7 +47,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
 
             foreach (var anime in result.Data)
             {
-                var vm = new AnimeSearchResultViewModel(anime, _aosta);
+                var vm = new AnimeSearchResultViewModel(anime);
                 SearchResults.Add(vm);
             }
         }

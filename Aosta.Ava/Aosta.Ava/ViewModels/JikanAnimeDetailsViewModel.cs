@@ -3,6 +3,7 @@
 
 using System.Reactive;
 
+using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Core;
 using Aosta.Core.Database.Mapper;
@@ -11,6 +12,8 @@ using Aosta.Core.Extensions;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
+
+using Splat;
 
 namespace Aosta.Ava.ViewModels;
 
@@ -24,16 +27,13 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
 
     private readonly JikanAnime _response;
 
-    private readonly AostaDotNet _aosta;
-
-    public JikanAnimeDetailsViewModel(IScreen hostScreen, AnimeResponse response, AostaDotNet aosta)
+    public JikanAnimeDetailsViewModel(IScreen hostScreen, AnimeResponse response)
     {
         UrlPathSegment = $"jikan-details-{response.MalId}";
         HostScreen = hostScreen;
         GoBack = ReactiveCommand.CreateFromObservable(() => HostScreen.Router.NavigateBack.Execute(Unit.Default))!;
 
         _response = response.ToJikanAnime();
-        _aosta = aosta;
     }
 
     public string Title => _response.Titles.GetDefault();

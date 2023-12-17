@@ -4,19 +4,22 @@
 using System.Linq;
 using System.Reactive;
 
+using Aosta.Ava.Extensions;
 using Aosta.Core;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
 
+using Splat;
+
 namespace Aosta.Ava.ViewModels;
 
 public class AnimeCardViewModel : ReactiveObject
 {
-    public AnimeCardViewModel(IScreen host, AostaDotNet aosta, AnimeResponse response)
+    public AnimeCardViewModel(IScreen host, AnimeResponse response)
     {
         GoToDetails = ReactiveCommand.CreateFromObservable(() =>
-                host.Router.Navigate.Execute(new JikanAnimeDetailsViewModel(host, response, aosta)));
+                host.Router.Navigate.Execute(new JikanAnimeDetailsViewModel(host, response)));
 
         Banner = response.Images?.JPG?.ImageUrl;
         Title = response.Titles.First(entry => entry.Type == "Default").Title;
