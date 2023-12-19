@@ -4,4 +4,5 @@
     <x:String x:Key="ChevronLeftGlyph">&#xE76B;</x:String>
     <x:String x:Key="MoreVerticalGlyph">&#xF809E;</x:String>
     <x:String x:Key="PlusGlyph">&#xE109;</x:String>
+    <x:String x:Key="StarGlyph">&#xE1CF;</x:String>
 </ResourceDictionary>

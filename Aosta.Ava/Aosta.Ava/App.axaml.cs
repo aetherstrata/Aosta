@@ -2,14 +2,14 @@ using System.Reflection;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
-
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Markup.Xaml;
 using Aosta.Ava.ViewModels;
 using Aosta.Ava.Views;
 using Aosta.Core;
 using Aosta.Jikan;
+
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
 
 using ReactiveUI;
 
@@ -32,6 +32,7 @@ public partial class App : Application
             .RegisterAnd(() => new JikanConfiguration()
                 .Use.Logger(Locator.Current.GetSafely<Serilog.ILogger>())
                 .Build())
+            .RegisterAnd(() => Locator.Current.GetSafely<AostaDotNet>().Realm)
             .RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

@@ -1,4 +1,5 @@
 {
+  "AnimeList.Header.NoAnime" : "The list is empty",
   "HomePage.TopAnime.Header" : "Top anime",
   "Label.NotAvailable" : "Not available",
   "SearchPage.SearchBox.Watermark" : "Search anime"

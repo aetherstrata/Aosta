@@ -22,6 +22,9 @@ public static class ObjectExtensions
     /// <summary>
     /// Coerces a nullable object as non-nullable. If the object is null returns the provided fallback value instead.
     /// </summary>
+    /// <remarks>
+    /// This should only be used when an assertion or other handling is not a reasonable alternative.
+    /// </remarks>
     /// <param name="obj">The nullable object.</param>
     /// <param name="fallback">The fallback value for the object.</param>
     /// <typeparam name="T">The type of the object.</typeparam>

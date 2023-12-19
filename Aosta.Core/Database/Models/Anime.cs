@@ -25,7 +25,7 @@ public partial class Anime : IRealmObject, IHasPrimaryKey<Guid>
     /// The episodes of this content
     public IList<Episode> Episodes { get; } = null!;
 
-    public string? DefaultTitle => Local?.DefaultTitle ?? Jikan?.Titles.GetDefault();
+    public string DefaultTitle => Local?.DefaultTitle ?? Jikan?.Titles.GetDefault() ?? "N/A";
 
     public string? Synopsis => Local?.Synopsis ?? Jikan?.Synopsis;
 

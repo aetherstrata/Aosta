@@ -4,13 +4,16 @@
     <option name="projectPerEditor">
       <map>
         <entry key="Aosta.Ava/Aosta.Ava/App.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
+        <entry key="Aosta.Ava/Aosta.Ava/Assets/Resources/DataTemplates.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Assets/Resources/Fonts.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Assets/Resources/Glyphs.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Assets/Resources/IconGeometry.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
+        <entry key="Aosta.Ava/Aosta.Ava/Assets/Resources/Measures.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Assets/Styles/DefaultTextBlock.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Assets/Styles/TemplatedControls.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Controls/TitleBar.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/AnimeDetailsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
+        <entry key="Aosta.Ava/Aosta.Ava/Pages/AnimeListPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/HomePage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/JikanAnimeDetailsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/SearchPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />

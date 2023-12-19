@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Aosta.Ava.ViewModels"
+             xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Aosta.Ava.Pages.AnimeListPage"
+             x:DataType="vm:AnimeListPageViewModel">
+    <Grid RowDefinitions="Auto,*">
+        <TextBlock Grid.Row="0" Text="{Binding AnimeCount}"/>
+        <ListBox Grid.Row="1"
+                 ItemsSource="{Binding AnimeList}">
+           <ListBox.ItemsPanel>
+               <ItemsPanelTemplate>
+                   <WrapPanel HorizontalAlignment="Center"/>
+               </ItemsPanelTemplate>
+           </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Image async:ImageLoader.Source="{Binding BannerUrl}"
+                           Width="{StaticResource AnimeCardWidth}"
+                           Height="{StaticResource AnimeCardHeight}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

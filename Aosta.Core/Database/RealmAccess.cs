@@ -12,12 +12,9 @@ namespace Aosta.Core.Database;
 /// <summary>
 /// Use this class to interact with the realm. It acts as an access layer
 /// </summary>
-public sealed class RealmAccess
+public sealed class RealmAccess(ILogger log, RealmConfigurationBase config)
 {
     //Most of the realm access code is taken from ppy/osu of which does extensive use for their game
-
-    private readonly ILogger _log;
-    private readonly RealmConfigurationBase _config;
 
     /// <summary>
     /// Run work on realm with a return value.
@@ -26,11 +23,11 @@ public sealed class RealmAccess
     /// <typeparam name="T">The return type.</typeparam>
     public T Run<T>(Func<Realm, T> action)
     {
-        using var realm = getRealm();
+        using var realm = GetRealm();
 
         T res =  action(realm);
 
-        _log.Debug("Performed an action on the database. Returning its output");
+        log.Debug("Performed an action on the database. Returning its output");
 
         return res;
     }
@@ -41,11 +38,11 @@ public sealed class RealmAccess
     /// <param name="action">The work to run.</param>
     public void Run(Action<Realm> action)
     {
-        using var realm = getRealm();
+        using var realm = GetRealm();
 
         action(realm);
 
-        _log.Debug("Performed an action on the database");
+        log.Debug("Performed an action on the database");
     }
 
     /// <summary>
@@ -54,11 +51,11 @@ public sealed class RealmAccess
     /// <param name="action">The work to run inside the realm's scope.</param>
     public void Write(Action<Realm> action)
     {
-        using var realm = getRealm();
+        using var realm = GetRealm();
 
         realm.Write(action);
 
-        _log.Debug("Performed a write operation on the database");
+        log.Debug("Performed a write operation on the database");
     }
 
     /// <summary>
@@ -69,24 +66,16 @@ public sealed class RealmAccess
     /// <returns>The instance of the written object</returns>
     public T Write<T>(Func<Realm, T> func) where T : IRealmObject
     {
-        using var realm = getRealm();
+        using var realm = GetRealm();
 
         T res =  realm.Write(func);
 
-        _log.Debug("Performed a write operation on the database. Returning its output");
+        log.Debug("Performed a write operation on the database. Returning its output");
 
         return res;
     }
 
     private readonly CountdownEvent _pendingAsyncWrites = new(0);
-
-    public RealmAccess(ILogger log, RealmConfigurationBase config)
-    {
-        _log = log;
-        _config = config;
-
-        _log.Information("Aosta corelib initialized");
-    }
 
     /// <summary>
     /// Write changes to realm asynchronously, guaranteeing order of execution.
@@ -102,11 +91,11 @@ public sealed class RealmAccess
         // Adding a forced Task.Run resolves this.
         return Task.Run(async () =>
         {
-            using (var realm = getRealm())
+            using (var realm = GetRealm())
                 // ReSharper disable once AccessToDisposedClosure (WriteAsync should be marked as [InstantHandle]).
                 await realm.WriteAsync(() => action(realm)).ConfigureAwait(false);
 
-            _log.Debug("Performed an async write to the database. Emitting signal...");
+            log.Debug("Performed an async write to the database. Emitting signal...");
 
             _pendingAsyncWrites.Signal();
         });
@@ -119,17 +108,17 @@ public sealed class RealmAccess
     /// <returns><c>true</c> if an object with that key is present, <c>false</c> otherwise</returns>
     public bool Exists<TEntity>(long malId) where TEntity : IRealmObject
     {
-        using var realm = getRealm();
+        using var realm = GetRealm();
         return realm.Find<TEntity>(malId) != null;
     }
 
     public void Delete()
     {
-        Realm.DeleteRealm(_config);
+        Realm.DeleteRealm(config);
     }
 
-    private Realm getRealm()
+    public Realm GetRealm()
     {
-        return Realm.GetInstance(_config);
+        return Realm.GetInstance(config);
     }
 }

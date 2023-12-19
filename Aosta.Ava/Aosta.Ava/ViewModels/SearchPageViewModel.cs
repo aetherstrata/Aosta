@@ -23,7 +23,6 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
     /// <inheritdoc />
     public IScreen HostScreen { get; }
 
-    private readonly AostaDotNet _aosta = Locator.Current.GetSafely<AostaDotNet>();
     private readonly IJikan _client = Locator.Current.GetSafely<IJikan>();
 
     public SearchPageViewModel(IScreen screen)

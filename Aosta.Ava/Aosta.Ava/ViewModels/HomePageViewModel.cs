@@ -2,7 +2,6 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 
 using Aosta.Ava.Extensions;
-using Aosta.Core;
 using Aosta.Jikan;
 
 using ReactiveUI;
@@ -29,12 +28,12 @@ public class HomePageViewModel : ReactiveObject, IRoutableViewModel
 
             foreach (var anime in top)
             {
-                var vm = new AnimeCardViewModel(hostScreen, anime);
+                var vm = new TopAnimeCardViewModel(hostScreen, anime);
 
                 TopAnimes.Add(vm);
             }
         });
     }
 
-    public ObservableCollection<AnimeCardViewModel> TopAnimes { get; } = new();
+    public ObservableCollection<TopAnimeCardViewModel> TopAnimes { get; } = new();
 }
