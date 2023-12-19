@@ -56,4 +56,20 @@ public partial class Anime : IRealmObject, IHasPrimaryKey<Guid>
         get => (WatchingStatus)WatchStatus;
         set => WatchStatus = (int)value;
     }
+
+    public static readonly AnimeTitleComparator TITLE_COMPARATOR = new();
+
+    public sealed class AnimeTitleComparator : IComparer<Anime>
+    {
+        public int Compare(Anime? x, Anime? y)
+        {
+            if (ReferenceEquals(x, y)) return 0;
+            if (ReferenceEquals(null, y)) return 1;
+            if (ReferenceEquals(null, x)) return -1;
+
+            int titleCompare = string.Compare(x.DefaultTitle, y.DefaultTitle, StringComparison.Ordinal);
+
+            return titleCompare != 0 ? titleCompare : x.ID.CompareTo(y.ID);
+        }
+    }
 }

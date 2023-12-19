@@ -15,5 +15,7 @@ public class AnimeListCardViewModel(IScreen host, Anime data) : ReactiveObject, 
     public string Title => data.DefaultTitle;
 
     public string BannerUrl => data.Jikan?.Images?.JPG?.ImageUrl ?? IOnlineCardViewModel.PORTRAIT_PLACEHOLDER;
+
+    //TODO: fai pagina di dettagli
     public ReactiveCommand<Unit,IRoutableViewModel> GoToDetails { get; }
 }
