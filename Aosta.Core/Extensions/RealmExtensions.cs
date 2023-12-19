@@ -71,18 +71,24 @@ public static class RealmExtensions
         }
     }
 
-    /* TODO: fix after models
-    public static IOrderedQueryable<Anime> OrderBy(this IQueryable<Anime> query, AnimeOrdering ordering)
+    public static IEnumerable<TOut> Select<TSource, TOut>(this IQueryable<TSource> source, Func<TSource, TOut> selector)
+        where TSource : IRealmObject
     {
-        return ordering switch
-        {
-            AnimeOrdering.ByTitle => query.OrderBy(x => x.Title).ThenBy(x => x.Id),
-            AnimeOrdering.ByScore => query.OrderBy(x => x.Score).ThenBy(x => x.Id),
-            AnimeOrdering.ByYear => query.OrderBy(x => x.Year).ThenBy(x => x.Id),
-            AnimeOrdering.ByAiringStatus => query.OrderBy(x => x._AiringStatus).ThenBy(x => x.Id),
-            AnimeOrdering.ByWatchStatus => query.OrderByDescending(x => x._WatchStatus).ThenBy(x => x.Id),
-            _ => query.OrderBy(x => x.Id)
-        };
+        if (selector is null) throw new ArgumentNullException(nameof(selector) ,"Selector function was null");
+
+        var elems = source.AsRealmCollection();
+
+        return Select(elems, selector);
     }
-    */
+
+    public static IEnumerable<TOut> Select<TSource, TOut>(this IRealmCollection<TSource> source, Func<TSource, TOut> selector)
+    {
+        if (selector is null) throw new ArgumentNullException(nameof(selector) ,"Selector function was null");
+
+        for (int index = 0; index < source.Count; index++)
+        {
+            var elem = source[index];
+            yield return selector(elem);
+        }
+    }
 }
