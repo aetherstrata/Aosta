@@ -23,7 +23,7 @@
 
     <Application.Styles>
         <styling:FluentAvaloniaTheme />
-        <StyleInclude Source="/Assets/Styles/DefaultTextBlock.axaml"/>
+        <StyleInclude Source="/Assets/Styles/DefaultStyles.axaml"/>
         <StyleInclude Source="/Assets/Styles/TemplatedControls.axaml"/>
     </Application.Styles>
 </Application>
