@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 using Android.App;
 using Android.Content.PM;
 
+using Aosta.Ava.Extensions;
 using Aosta.Common.Consts;
 using Aosta.Common.Extensions;
 using Aosta.Core;
@@ -34,10 +36,13 @@ public class MainActivity : AvaloniaMainActivity<App>
             .LogToTrace()
             .AfterSetup(_ =>
             {
-                Locator.CurrentMutable.Register<ILogger>(() => AostaConfiguration
+                Locator.CurrentMutable.RegisterAnd<ILogger>(() => AostaConfiguration
                     .GetDefaultLoggerConfig(Path.Combine(global::Android.App.Application.Context.FilesDir.AsNonNull().Path, "logs"))
                     .WriteTo.Logcat("AOSTA", Logging.OUTPUT_TEMPLATE, LogEventLevel.Debug)
-                    .CreateLogger());
+                    .CreateLogger())
+                    .Register(() =>  new AostaConfiguration(Environment.GetFolderPath(Environment.SpecialFolder.Personal))
+                        .With.Logger(Locator.Current.GetSafely<ILogger>())
+                        .Build());
             });
     }
 }
