@@ -32,24 +32,22 @@ public sealed class AnimeListPageViewModel : ReactiveObject, IRoutableViewModel,
     /// <inheritdoc />
     public IScreen HostScreen { get; }
 
-    private readonly Realm _realm = Locator.Current.GetSafely<RealmAccess>().GetRealm();
+    private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
 
     public AnimeListPageViewModel(IScreen host)
     {
         HostScreen = host;
 
-        var changeset = _realm.All<Anime>()
-            .AsRealmCollection()
-            .ToObservableChangeSet<IRealmCollection<Anime>, Anime>();
-
-        _countObserver = changeset
+        _countObserver = _realm.Connect<Anime>()
             .Count()
-            .Select(c => c == 0 ? Localizer.Instance["AnimeList.Header.NoAnime"] : $"{c} Anime")
+            .Select(c => c == 0
+                ? Localizer.Instance["AnimeList.Header.NoAnime"]
+                : string.Format(Localizer.Instance["AnimeList.Header.AnimeCount"], c))
             .ToProperty(this, x => x.AnimeCount);
 
-        _listObserver = changeset
+        _listObserver = _realm.Connect<Anime>()
             .Sort(Anime.TITLE_COMPARATOR)
-            .Transform(model => new AnimeListCardViewModel(host, model))
+            .Transform(model => new AnimeListCardViewModel(HostScreen, model))
             .ObserveOn(AvaloniaScheduler.Instance)
             .Bind(out _animeList)
             .Subscribe();
@@ -66,7 +64,6 @@ public sealed class AnimeListPageViewModel : ReactiveObject, IRoutableViewModel,
     /// <inheritdoc />
     public void Dispose()
     {
-        _realm.Dispose();
         _countObserver.Dispose();
         _listObserver.Dispose();
     }
