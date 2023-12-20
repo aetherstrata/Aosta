@@ -17,7 +17,9 @@
     <Grid RowDefinitions="*,Auto">
         <rxui:RoutedViewHost Router="{Binding Router}"
                              HorizontalContentAlignment="Stretch"
-                             VerticalContentAlignment="Stretch" />
+                             VerticalContentAlignment="Stretch"
+                             Background="{DynamicResource MainBackgroundBrush}">
+        </rxui:RoutedViewHost>
 
         <Border Grid.Row="1">
             <StackPanel Orientation="Horizontal"

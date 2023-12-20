@@ -32,12 +32,6 @@
                             <Setter Property="Padding" Value="0" />
                         </Style>
                     </ListBox.Styles>
-                    <ListBox.GestureRecognizers>
-                        <ScrollGestureRecognizer CanHorizontallyScroll="True"
-                                                 CanVerticallyScroll="False"
-                                                 IsScrollInertiaEnabled="True"
-                                                 ></ScrollGestureRecognizer>
-                    </ListBox.GestureRecognizers>
                 </ListBox>
             </ScrollViewer>
         </Grid>

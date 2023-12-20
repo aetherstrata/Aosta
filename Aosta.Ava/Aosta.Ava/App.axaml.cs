@@ -15,6 +15,8 @@ using ReactiveUI;
 
 using Splat;
 
+using ILogger = Serilog.ILogger;
+
 namespace Aosta.Ava;
 
 public partial class App : Application
@@ -30,7 +32,7 @@ public partial class App : Application
 
         Locator.CurrentMutable
             .RegisterAnd(() => new JikanConfiguration()
-                .Use.Logger(Locator.Current.GetSafely<Serilog.ILogger>())
+                .Use.Logger(Locator.Current.GetSafely<ILogger>())
                 .Build())
             .RegisterAnd(() => Locator.Current.GetSafely<AostaDotNet>().Realm)
             .RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
@@ -49,6 +51,8 @@ public partial class App : Application
                 DataContext = new MainViewModel()
             };
         }
+
+        Locator.Current.GetSafely<ILogger>().Debug("Framework initialization completed");
 
         base.OnFrameworkInitializationCompleted();
     }

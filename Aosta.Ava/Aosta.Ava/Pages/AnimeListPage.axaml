@@ -4,25 +4,47 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Aosta.Ava.ViewModels"
              xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.AnimeListPage"
              x:DataType="vm:AnimeListPageViewModel">
-    <Grid RowDefinitions="Auto,*">
-        <TextBlock Grid.Row="0" Text="{Binding AnimeCount}"/>
+    <Grid RowDefinitions="Auto,*"
+          ColumnDefinitions="*,Auto">
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="{Binding AnimeCount}"/>
+        <fluent:CommandBar Grid.Row="0"
+                           Grid.Column="1">
+            <fluent:CommandBar.PrimaryCommands>
+                <fluent:CommandBarButton IsCompact="True"
+                                         IconSource="Search"></fluent:CommandBarButton>
+            </fluent:CommandBar.PrimaryCommands>
+        </fluent:CommandBar>
         <ListBox Grid.Row="1"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="2"
+                 Name="AnimeListBox"
                  ItemsSource="{Binding AnimeList}">
-           <ListBox.ItemsPanel>
-               <ItemsPanelTemplate>
-                   <WrapPanel HorizontalAlignment="Center"/>
-               </ItemsPanelTemplate>
-           </ListBox.ItemsPanel>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"
+                               Margin="0"
+                               HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Image async:ImageLoader.Source="{Binding BannerUrl}"
+                           Stretch="UniformToFill"
                            Width="{StaticResource AnimeCardWidth}"
                            Height="{StaticResource AnimeCardHeight}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </ListBox.Styles>
         </ListBox>
     </Grid>
 </UserControl>

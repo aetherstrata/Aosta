@@ -3,7 +3,7 @@
              xmlns:local="using:Aosta.Ava"
              xmlns:styling="clr-namespace:FluentAvalonia.Styling;assembly=FluentAvalonia"
              x:Class="Aosta.Ava.App"
-             RequestedThemeVariant="Default">
+             RequestedThemeVariant="Light">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
@@ -14,6 +14,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="/Assets/Resources/DataTemplates.axaml"/>
+                <ResourceInclude Source="/Assets/Resources/Colors.axaml"/>
                 <ResourceInclude Source="/Assets/Resources/Fonts.axaml"/>
                 <ResourceInclude Source="/Assets/Resources/Measures.axaml"/>
                 <ResourceInclude Source="/Assets/Resources/Glyphs.axaml"/>

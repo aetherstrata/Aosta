@@ -54,7 +54,7 @@ public sealed class AnimeListPageViewModel : ReactiveObject, IRoutableViewModel,
     }
 
     private readonly ObservableAsPropertyHelper<string> _countObserver;
-    public string AnimeCount => _countObserver.Value;
+    public string AnimeCount => _countObserver.Value ?? Localizer.Instance["AnimeList.Header.NoAnime"];
 
     private readonly IDisposable _listObserver;
 
