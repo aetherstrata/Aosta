@@ -4,6 +4,7 @@ using Aosta.Core.Database.Enums;
 using Aosta.Core.Database.Models;
 using Aosta.Core.Database.Models.Embedded;
 using Aosta.Core.Database.Models.Jikan;
+using Aosta.Core.Database.Models.Local;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Response;
 
@@ -14,11 +15,20 @@ namespace Aosta.Core.Database.Mapper;
 [Mapper]
 public static partial class JikanMapper
 {
+    [MapProperty(nameof(AnimeResponse.MalId), nameof(JikanAnime.ID))]
     public static partial JikanAnime ToJikanAnime(this AnimeResponse source);
+
+    [MapProperty(nameof(AnimeResponse.MalId), nameof(JikanAnime.ID))]
     public static partial JikanAnime ToJikanAnime(this AnimeResponseFull source);
 
-    [MapperIgnoreTarget(nameof(Anime.Score))]
-    public static partial Anime ToRealmModel(this JikanAnime source);
+    public static Anime ToRealmModel(this JikanAnime source)
+    {
+        return new Anime
+        {
+            Jikan = source,
+            Local = new LocalAnime()
+        };
+    }
 
     internal static ContentType ToLocalType(this AnimeType type) => type switch
     {

@@ -41,7 +41,7 @@ public partial class Anime : IRealmObject, IHasPrimaryKey<Guid>
 
     /// The score from 0 to 100
     [Indexed]
-    public int? Score { get; set; }
+    public int? UserScore { get; set; }
 
     /// The review of this content
     public string Review { get; set; } = string.Empty;

@@ -4,6 +4,7 @@
 using Aosta.Ava.ViewModels;
 
 using Avalonia.Interactivity;
+using Avalonia.LogicalTree;
 using Avalonia.ReactiveUI;
 
 

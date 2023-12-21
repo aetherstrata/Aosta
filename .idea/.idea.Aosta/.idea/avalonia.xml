@@ -4,6 +4,7 @@
     <option name="projectPerEditor">
       <map>
         <entry key="Aosta.Ava/Aosta.Ava/App.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
+        <entry key="Aosta.Ava/Aosta.Ava/Assets/Resources/Colors.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Assets/Resources/DataTemplates.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Assets/Resources/Fonts.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Assets/Resources/Glyphs.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />

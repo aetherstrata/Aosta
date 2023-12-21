@@ -10,7 +10,7 @@ namespace Aosta.Core.Database.Models.Jikan;
 /// Jikan anime model class.
 /// </summary>
 [Preserve(AllMembers = true)]
-public partial class JikanAnime : IRealmObject
+public partial class JikanAnime : IRealmObject, IHasPrimaryKey<long>
 {
 	private byte season { get; set; }
 	private byte status { get; set; }
@@ -20,7 +20,7 @@ public partial class JikanAnime : IRealmObject
 	/// ID associated with MyAnimeList.
 	/// </summary>
 	[PrimaryKey]
-	public long MalId { get; internal set; }
+	public long ID { get; internal set; }
 
 	/// <summary>
 	/// Anime's canonical link.
@@ -212,10 +212,4 @@ public partial class JikanAnime : IRealmObject
 	/// Anime streaming links.
 	/// </summary>
 	public IList<ExternalLink> StreamingLinks { get; } = null!;
-
-    /// <summary>
-    /// Local data for this MAL anime.
-    /// </summary>
-    [Backlink(nameof(Anime.Jikan))]
-    public IQueryable<Anime> Local { get; } = null!;
 }

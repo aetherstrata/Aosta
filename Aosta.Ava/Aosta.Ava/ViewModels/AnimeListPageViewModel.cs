@@ -32,20 +32,22 @@ public sealed class AnimeListPageViewModel : ReactiveObject, IRoutableViewModel,
     /// <inheritdoc />
     public IScreen HostScreen { get; }
 
-    private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
+    private readonly Realm _realm = Locator.Current.GetSafely<RealmAccess>().GetRealm();
 
     public AnimeListPageViewModel(IScreen host)
     {
         HostScreen = host;
 
-        _countObserver = _realm.Connect<Anime>()
+        var connection = _realm.All<Anime>().Connect<Anime, Guid>();
+
+        _countObserver = connection
             .Count()
             .Select(c => c == 0
                 ? Localizer.Instance["AnimeList.Header.NoAnime"]
                 : string.Format(Localizer.Instance["AnimeList.Header.AnimeCount"], c))
-            .ToProperty(this, x => x.AnimeCount);
+            .ToProperty(this, nameof(AnimeCount));
 
-        _listObserver = _realm.Connect<Anime>()
+        _listObserver = connection
             .Sort(Anime.TITLE_COMPARATOR)
             .Transform(model => new AnimeListCardViewModel(HostScreen, model))
             .ObserveOn(AvaloniaScheduler.Instance)
@@ -66,5 +68,6 @@ public sealed class AnimeListPageViewModel : ReactiveObject, IRoutableViewModel,
     {
         _countObserver.Dispose();
         _listObserver.Dispose();
+        _realm.Dispose();
     }
 }

@@ -2,31 +2,37 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics;
-using System.Threading;
+using System.Linq;
 
 using Aosta.Core.Database;
 
 using DynamicData;
-using DynamicData.Binding;
 
 using Realms;
+
+using Splat;
 
 namespace Aosta.Ava.Extensions;
 
 public static class RealmExtensions
 {
-    private static readonly ThreadLocal<Realm> s_UpdateRealm = new();
+    private static readonly Serilog.ILogger s_Logger = Locator.Current.GetSafely<Serilog.ILogger>();
 
-    public static IObservable<IChangeSet<T>> Connect<T>(this RealmAccess access) where T : IRealmObject
+    public static IObservable<IChangeSet<T,TKey>> Connect<T, TKey>(this IQueryable<T> query)
+        where T : IRealmObject, IHasPrimaryKey<TKey>
+        where TKey : struct
     {
-        if (!s_UpdateRealm.IsValueCreated)
+        var cache = new SourceCache<T, TKey>(x => x.ID);
+
+        query.SubscribeForNotifications((sender, changes) =>
         {
-            s_UpdateRealm.Value = access.GetRealm();
-        }
+            s_Logger.Verbose("Projection for {Type} changed, adding changes to observable cache", typeof(T));
 
-        Debug.Assert(s_UpdateRealm.Value != null, "updateRealm.Value != null");
+            if (changes is null) return;
 
-        return s_UpdateRealm.Value.All<T>().AsRealmCollection().ToObservableChangeSet<IRealmCollection<T>, T>();
+            cache.AddOrUpdate(sender);
+        });
+
+        return cache.Connect();
     }
 }
