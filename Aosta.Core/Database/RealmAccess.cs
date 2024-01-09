@@ -10,8 +10,9 @@ using Serilog;
 namespace Aosta.Core.Database;
 
 /// <summary>
-/// Use this class to interact with the realm. It acts as an access layer
+/// Use this class to interact with the realm. It acts as an access layer.
 /// </summary>
+/// <remarks>Prefer the methods offered by this class for one-time operations, get a Realm instance only when working with UI.</remarks>
 public sealed class RealmAccess(ILogger log, RealmConfigurationBase config)
 {
     //Most of the realm access code is taken from ppy/osu of which does extensive use for their game
@@ -25,7 +26,7 @@ public sealed class RealmAccess(ILogger log, RealmConfigurationBase config)
     {
         using var realm = GetRealm();
 
-        T res =  action(realm);
+        T res = action(realm);
 
         log.Debug("Performed an action on the database. Returning its output");
 
@@ -68,7 +69,7 @@ public sealed class RealmAccess(ILogger log, RealmConfigurationBase config)
     {
         using var realm = GetRealm();
 
-        T res =  realm.Write(func);
+        T res = realm.Write(func);
 
         log.Debug("Performed a write operation on the database. Returning its output");
 

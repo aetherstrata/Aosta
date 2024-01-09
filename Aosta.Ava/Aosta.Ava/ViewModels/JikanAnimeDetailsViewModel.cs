@@ -3,17 +3,13 @@
 
 using System.Reactive;
 
-using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
-using Aosta.Core;
 using Aosta.Core.Database.Mapper;
 using Aosta.Core.Database.Models.Jikan;
 using Aosta.Core.Extensions;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
-
-using Splat;
 
 namespace Aosta.Ava.ViewModels;
 

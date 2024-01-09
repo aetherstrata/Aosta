@@ -6,25 +6,26 @@ using System.Reactive;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
-using Aosta.Core;
+using Aosta.Core.Database;
 using Aosta.Core.Database.Mapper;
-using Aosta.Core.Database.Models;
-using Aosta.Core.Database.Models.Jikan;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
 
 using Splat;
 
+using ILogger = Serilog.ILogger;
+
 namespace Aosta.Ava.ViewModels;
 
 public class AnimeSearchResultViewModel : ReactiveObject
 {
-    public AnimeSearchResultViewModel(AnimeResponse response)
-    {
-        var aosta = Locator.Current.GetSafely<AostaDotNet>();
+    private readonly ILogger _logger = Locator.Current.GetSafely<ILogger>();
+    private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
 
-        _missing = !aosta.Realm.Exists<JikanAnime>(response.MalId);
+    public AnimeSearchResultViewModel(AnimeResponse response, bool found)
+    {
+        _missing = !found;
 
         Title = response.Titles.First(x => x.Type == "Default").Title;
         Banner = response.Images?.JPG?.ImageUrl;
@@ -34,27 +35,27 @@ public class AnimeSearchResultViewModel : ReactiveObject
         {
             if (!CanBeAdded)
             {
-                aosta.Log.Debug("User tried adding already existing anime from Jikan: {Id}", response.MalId);
+                _logger.Debug("User tried adding already existing anime from Jikan: {Id}", response.MalId);
                 return Task.CompletedTask;
             }
 
-            var realmTask = aosta.Realm.WriteAsync(r =>
+            var realmTask = _realm.WriteAsync(r =>
             {
                 var jikanMetadata = response.ToJikanAnime();
 
-                r.Add(jikanMetadata);
                 r.Add(jikanMetadata.ToRealmModel());
             });
 
             CanBeAdded = false;
 
-            aosta.Log.Information("Adding new anime from Jikan: {Id}", response.MalId);
+            _logger.Information("Adding new anime from Jikan: {Id}", response.MalId);
 
             return realmTask;
         });
     }
 
     private bool _missing;
+
     public bool CanBeAdded
     {
         get => _missing;

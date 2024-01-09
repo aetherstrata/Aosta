@@ -3,19 +3,32 @@
 
 using System.Reactive;
 
+using Aosta.Ava.Extensions;
 using Aosta.Ava.ViewModels.Interfaces;
+using Aosta.Core.Database;
 using Aosta.Core.Database.Models;
 
 using ReactiveUI;
 
+using Splat;
+
 namespace Aosta.Ava.ViewModels;
 
-public class AnimeListCardViewModel(IScreen host, Anime data) : ReactiveObject, IOnlineCardViewModel
+public class AnimeListCardViewModel : ReactiveObject, IOnlineCardViewModel
 {
-    public string Title => data.DefaultTitle;
+    private readonly Anime _data;
+    private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
 
-    public string BannerUrl => data.Jikan?.Images?.JPG?.ImageUrl ?? IOnlineCardViewModel.PORTRAIT_PLACEHOLDER;
+    public AnimeListCardViewModel(IScreen host, Anime data)
+    {
+        _data = data;
 
-    //TODO: fai pagina di dettagli
-    public ReactiveCommand<Unit,IRoutableViewModel> GoToDetails { get; }
+        GoToDetails = ReactiveCommand.Create(() => _realm.Write(r => r.Remove(_data)));
+    }
+
+    public string Title => _data.DefaultTitle;
+
+    public string BannerUrl => _data.Jikan?.Images?.JPG?.ImageUrl ?? IOnlineCardViewModel.PORTRAIT_PLACEHOLDER;
+
+    public ReactiveCommand<Unit,Unit> GoToDetails { get; }
 }

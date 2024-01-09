@@ -1,15 +1,21 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
-using Aosta.Core;
+using Aosta.Core.Database;
+using Aosta.Core.Database.Models;
 using Aosta.Jikan;
 
 using Avalonia.ReactiveUI;
 
+using DynamicData;
+
 using ReactiveUI;
+
+using Realms;
 
 using Splat;
 
@@ -24,6 +30,8 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
     public IScreen HostScreen { get; }
 
     private readonly IJikan _client = Locator.Current.GetSafely<IJikan>();
+    private readonly Serilog.ILogger _logger = Locator.Current.GetSafely<Serilog.ILogger>();
+    private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
 
     public SearchPageViewModel(IScreen screen)
     {
@@ -42,12 +50,23 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
 
         if (!string.IsNullOrWhiteSpace(s))
         {
-            var result = await _client.SearchAnimeAsync(s);
-
-            foreach (var anime in result.Data)
+            try
             {
-                var vm = new AnimeSearchResultViewModel(anime);
-                SearchResults.Add(vm);
+                var result = await _client.SearchAnimeAsync(s);
+
+                // Mongo please, for the love of God, add better support for LINQ 😭
+                var added = _realm.Run(r => r.All<Anime>()
+                    .Filter($"{nameof(Anime.Jikan)}.{nameof(Anime.Jikan.ID)} IN {{{string.Join(',', result.Data.Select(x => x.MalId))}}}")
+                    .AsRealmCollection()
+                    .Select(x => x.Jikan!.ID)
+                    .ToHashSet());
+
+                SearchResults.AddRange(result.Data.Select(response =>
+                    new AnimeSearchResultViewModel(response, added.Contains(response.MalId))));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Anime search query failed for string: {SearchText}", SearchText);
             }
         }
 
@@ -55,6 +74,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
     }
 
     private bool _isBusy;
+
     public bool IsBusy
     {
         get => _isBusy;
@@ -62,6 +82,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
     }
 
     private string _searchText = string.Empty;
+
     public string SearchText
     {
         get => _searchText;

@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Aosta.Jikan.Converters;
 using Aosta.Jikan.Enums;
 
 namespace Aosta.Jikan.Models.Response;
@@ -43,7 +42,7 @@ public class AnimeResponse
 	/// Anime type (e. g. "TV", "Movie").
 	/// </summary>
 	[JsonPropertyName("type")]
-	[JsonConverter(typeof(JsonStringEnumConverter))]
+	[JsonConverter(typeof(JsonNullableEnumMemberConverter<AnimeType>))]
 	public AnimeType? Type { get; init; }
 
 	/// <summary>
@@ -62,8 +61,7 @@ public class AnimeResponse
 	/// Anime's airing status (e. g. "Currently Airing").
 	/// </summary>
 	[JsonPropertyName("status")]
-	[JsonConverter(typeof(AiringStatusEnumConverter))]
-	public AiringStatus? Status { get; init; }
+	public AiringStatus Status { get; init; }
 
 	/// <summary>
 	/// Is anime currently airing.

@@ -3,8 +3,6 @@
 
 using Aosta.Ava.ViewModels;
 
-using Avalonia.Interactivity;
-using Avalonia.LogicalTree;
 using Avalonia.ReactiveUI;
 
 
@@ -15,12 +13,5 @@ public partial class AnimeListPage : ReactiveUserControl<AnimeListPageViewModel>
     public AnimeListPage()
     {
         InitializeComponent();
-    }
-
-    /// <inheritdoc />
-    protected override void OnUnloaded(RoutedEventArgs e)
-    {
-        base.OnUnloaded(e);
-        ViewModel?.Dispose();
     }
 }

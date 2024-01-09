@@ -7,7 +7,7 @@ using Realms;
 
 namespace Aosta.Core.Database.Models.Local;
 
-public partial class LocalAnime : IRealmObject
+public partial class LocalAnime : IEmbeddedObject
 {
     [Indexed]
     internal int? _type { get; set; }

@@ -14,7 +14,6 @@ using Avalonia.ReactiveUI;
 
 using DynamicData;
 using DynamicData.Aggregation;
-using DynamicData.Binding;
 
 using ReactiveUI;
 
@@ -33,12 +32,13 @@ public sealed class AnimeListPageViewModel : ReactiveObject, IRoutableViewModel,
     public IScreen HostScreen { get; }
 
     private readonly Realm _realm = Locator.Current.GetSafely<RealmAccess>().GetRealm();
+    private readonly IDisposable _notificationToken;
 
     public AnimeListPageViewModel(IScreen host)
     {
         HostScreen = host;
 
-        var connection = _realm.All<Anime>().Connect<Anime, Guid>();
+        var connection = _realm.All<Anime>().Connect(out _notificationToken);
 
         _countObserver = connection
             .Count()
@@ -66,6 +66,7 @@ public sealed class AnimeListPageViewModel : ReactiveObject, IRoutableViewModel,
     /// <inheritdoc />
     public void Dispose()
     {
+        _notificationToken.Dispose();
         _countObserver.Dispose();
         _listObserver.Dispose();
         _realm.Dispose();

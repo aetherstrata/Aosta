@@ -10,17 +10,16 @@ namespace Aosta.Core.Database.Models.Jikan;
 /// Jikan anime model class.
 /// </summary>
 [Preserve(AllMembers = true)]
-public partial class JikanAnime : IRealmObject, IHasPrimaryKey<long>
+public partial class JikanAnime : IEmbeddedObject
 {
 	private byte season { get; set; }
 	private byte status { get; set; }
 	private byte type { get; set; }
 
-	/// <summary>
-	/// ID associated with MyAnimeList.
-	/// </summary>
-	[PrimaryKey]
-	public long ID { get; internal set; }
+    /// <summary>
+    /// MyAnimeList ID of this anime.
+    /// </summary>
+    public long ID { get; set; }
 
 	/// <summary>
 	/// Anime's canonical link.

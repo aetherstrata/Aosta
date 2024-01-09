@@ -3,8 +3,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 
 using Aosta.Ava.Extensions;
-using Aosta.Core;
-using Aosta.Jikan;
 
 using ReactiveUI;
 
@@ -23,6 +21,7 @@ public class MainViewModel : ReactiveObject, IScreen
     public MainViewModel()
     {
         var homePage = new Lazy<HomePageViewModel>(() => new HomePageViewModel(this));
+        var listPage = new Lazy<AnimeListPageViewModel>(() => new AnimeListPageViewModel(this));
 
         var canGoBack = this
             .WhenAnyValue(vm => vm.Router.NavigationStack.Count)
@@ -33,7 +32,7 @@ public class MainViewModel : ReactiveObject, IScreen
             isDifferentFrom<HomePageViewModel>());
 
         GoList = ReactiveCommand.CreateFromObservable(
-            () => Router.NavigateAndReset.Execute(new AnimeListPageViewModel(this)),
+            () => Router.NavigateAndReset.Execute(listPage.Value),
             isDifferentFrom<AnimeListPageViewModel>());
 
         GoSearch = ReactiveCommand.CreateFromObservable(

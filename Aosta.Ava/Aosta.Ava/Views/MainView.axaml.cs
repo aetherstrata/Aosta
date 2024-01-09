@@ -1,5 +1,3 @@
-using System.Reactive.Disposables;
-
 using Aosta.Ava.Extensions;
 using Aosta.Ava.ViewModels;
 
