@@ -36,13 +36,21 @@ public class MainActivity : AvaloniaMainActivity<App>
             .LogToTrace()
             .AfterSetup(_ =>
             {
-                Locator.CurrentMutable.RegisterAnd<ILogger>(() => AostaConfiguration
-                    .GetDefaultLoggerConfig(Path.Combine(global::Android.App.Application.Context.FilesDir.AsNonNull().Path, "logs"))
-                    .WriteTo.Logcat("AOSTA", Logging.OUTPUT_TEMPLATE, LogEventLevel.Debug)
-                    .CreateLogger())
-                    .Register(() =>  new AostaConfiguration(Environment.GetFolderPath(Environment.SpecialFolder.Personal))
-                        .With.Logger(Locator.Current.GetSafely<ILogger>())
-                        .Build());
+                // The default current directory on android is '/'.
+                // On some devices '/' maps to the app data directory. On others it maps to the root of the internal storage.
+                // In order to have a consistent current directory on all devices the full path of the app data directory is set as the current directory.
+                Environment.CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+                Locator.CurrentMutable
+                    .RegisterAnd<ILogger>(() => AostaConfiguration
+                        .GetDefaultLoggerConfig(
+                            Path.Combine(global::Android.App.Application.Context.FilesDir.AsNonNull().Path, "logs"))
+                        .WriteTo.Logcat("AOSTA", Logging.OUTPUT_TEMPLATE, LogEventLevel.Debug)
+                        .CreateLogger())
+                    .Register(() =>
+                        new AostaConfiguration(Environment.CurrentDirectory)
+                            .With.Logger(Locator.Current.GetSafely<ILogger>())
+                            .Build());
             });
     }
 }

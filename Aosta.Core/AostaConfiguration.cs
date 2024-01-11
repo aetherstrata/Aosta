@@ -33,7 +33,8 @@ public class AostaConfiguration
         .Enrich.WithThreadId()
         .Enrich.WithThreadName()
         .Enrich.FromLogContext()
-        .WriteTo.Async(sink => sink.File(path: Path.Combine(logPath, log_filename),
+        .WriteTo.Async(sink => sink.File(
+            path: Path.Combine(logPath, log_filename),
             restrictedToMinimumLevel: LogEventLevel.Debug,
             buffered: true,
             flushToDiskInterval: TimeSpan.FromSeconds(1),
@@ -42,15 +43,15 @@ public class AostaConfiguration
             retainedFileCountLimit: 7,
             outputTemplate: Logging.OUTPUT_TEMPLATE));
 
-    public AostaConfiguration(string dataDir)
+    public AostaConfiguration(string? dataDir = null)
     {
         string dataPath;
 
         try
         {
-            dataPath = Path.GetFullPath(dataDir);
+            dataPath = dataDir is null ? Environment.CurrentDirectory : Path.GetFullPath(dataDir);
         }
-        catch (Exception)
+        catch
         {
             Console.WriteLine("Provided path is not valid!");
             throw;
@@ -60,7 +61,7 @@ public class AostaConfiguration
         {
             Directory.CreateDirectory(dataPath);
         }
-        catch (Exception)
+        catch
         {
             Console.WriteLine("Could not create application folder!");
             throw;

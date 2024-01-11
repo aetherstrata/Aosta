@@ -26,7 +26,7 @@ namespace Aosta.Ava.ViewModels;
 public sealed class AnimeListPageViewModel : ReactiveObject, IRoutableViewModel, IDisposable
 {
     /// <inheritdoc />
-    public string? UrlPathSegment => "list";
+    public string UrlPathSegment => "list";
 
     /// <inheritdoc />
     public IScreen HostScreen { get; }

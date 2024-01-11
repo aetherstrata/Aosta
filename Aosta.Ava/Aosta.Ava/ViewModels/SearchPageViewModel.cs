@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
+using Aosta.Core.Data;
 using Aosta.Core.Database;
 using Aosta.Core.Database.Models;
 using Aosta.Jikan;
@@ -53,10 +54,10 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
             try
             {
                 var result = await _client.SearchAnimeAsync(s);
+                var resultIds = result.Data.Select(x => x.MalId);
 
-                // Mongo please, for the love of God, add better support for LINQ 😭
                 var added = _realm.Run(r => r.All<Anime>()
-                    .Filter($"{nameof(Anime.Jikan)}.{nameof(Anime.Jikan.ID)} IN {{{string.Join(',', result.Data.Select(x => x.MalId))}}}")
+                    .In($"{nameof(Anime.Jikan)}.{nameof(Anime.Jikan.ID)}", resultIds)
                     .AsRealmCollection()
                     .Select(x => x.Jikan!.ID)
                     .ToHashSet());
