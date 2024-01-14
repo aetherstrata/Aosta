@@ -20,7 +20,7 @@ public static class RealmExtensions
     private static readonly Serilog.ILogger s_Logger = Locator.Current.GetSafely<Serilog.ILogger>();
 
     /// <summary>
-    /// Convert the Realm projection into an observable list and subscribe to collection changes.
+    /// Convert the Realm projection into an observable list and subscribe to the collection changes.
     /// </summary>
     /// <param name="query">The Realm projection.</param>
     /// <param name="token">The returned subscription token.</param>
@@ -35,14 +35,15 @@ public static class RealmExtensions
         {
             s_Logger.Debug("Projection for {Type} changed, adding changes to observable cache", typeof(T).Name);
 
+            // This can happen when the collection is called for the first time.
             if (changes is null)
             {
                 if (cache.Count == sender.Count) return;
 
                 // If this is the first call, the cache must be initialized.
                 cache.AddRange(sender);
-                s_Logger.Verbose("Initialized the {Type} observable cache with {Count} elements", typeof(T).Name,
-                    sender.Count);
+                s_Logger.Verbose("Initialized the {Type} observable cache with {Count} elements",
+                    typeof(T).Name, sender.Count);
 
                 return;
             }
@@ -50,31 +51,23 @@ public static class RealmExtensions
             cache.Edit(update =>
             {
                 // Handle deleted elements
-                int deletes = changes.DeletedIndices
-                    .Except(changes.Moves.Select(move => move.From))
-                    .Aggregate(0, (acc, curr) =>
-                    {
-                        update.RemoveAt(curr);
-                        return acc + 1;
-                    });
+                foreach (int i in changes.DeletedIndices)
+                {
+                    update.RemoveAt(i);
+                }
 
                 // Handle inserted elements
-                int inserts = changes.InsertedIndices
-                    .Except(changes.Moves.Select(move => move.To))
-                    .Aggregate(0, (acc, curr) =>
-                    {
-                        update.Insert(curr, sender[curr]);
-                        return acc + 1;
-                    });
-
-                // Handle moved elements
-                foreach (var move in changes.Moves)
+                foreach (int i in changes.InsertedIndices)
                 {
-                    update.Move(move.From, move.To);
+                    update.Insert(i, sender[i]);
                 }
 
                 s_Logger.Verbose("Processed {ChangesCount} changes for {Type} observable cache: [Removed: {Removed}, Added: {Added}, Moved: {Moved}]",
-                    deletes + inserts + changes.Moves.Length, typeof(T).Name, deletes, inserts, changes.Moves.Length);
+                    changes.DeletedIndices.Length + changes.InsertedIndices.Length,
+                    typeof(T).Name,
+                    changes.DeletedIndices.Length - changes.Moves.Length,
+                    changes.InsertedIndices.Length - changes.Moves.Length,
+                    changes.Moves.Length);
             });
         });
 

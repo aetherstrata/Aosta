@@ -1,6 +1,11 @@
+using System.Linq.Expressions;
+using System.Text;
+
+using Aosta.Common.Extensions;
+
 using Realms;
 
-namespace Aosta.Core.Data;
+namespace Aosta.Core.Extensions;
 
 public static class RealmExtensions
 {
@@ -24,11 +29,42 @@ public static class RealmExtensions
     /// <typeparam name="TEntity">The type of the entities.</typeparam>
     /// <typeparam name="TArgument">The type of the arguments.</typeparam>
     /// <returns>The updated projection.</returns>
-    public static IQueryable<TEntity> In<TEntity, TArgument>(this IQueryable<TEntity> source, string propertyName, IEnumerable<TArgument> objList)
+    public static IQueryable<TEntity> In<TEntity, TArgument>(
+        this IQueryable<TEntity> source,
+        string propertyName,
+        IEnumerable<TArgument> objList)
         where TEntity : IRealmObject
     {
         string query = $"{propertyName} IN {{{string.Join(',', objList)}}}";
         return source.Filter(query);
+    }
+
+    public static IQueryable<TEntity> In<TEntity, TArgument>(
+        this IQueryable<TEntity> source,
+        Expression<Func<TEntity, TArgument>> lambda,
+        IEnumerable<TArgument> objList)
+        where TEntity : IRealmObject
+    {
+        var member = lambda.GetMemberExpression();
+        var path = new StringBuilder();
+
+        while (member != null)
+        {
+            if (path.Length > 0) path.Prepend('.');
+
+            path.Prepend(member.Member.Name);
+
+            member = member.Expression?.GetMemberExpression();
+        }
+
+        string property = path.ToString();
+
+        if (string.IsNullOrEmpty(property))
+        {
+            throw new ArgumentException("This is not a valid member expression", nameof(lambda));
+        }
+
+        return source.In(property, objList);
     }
 
     /// <summary>

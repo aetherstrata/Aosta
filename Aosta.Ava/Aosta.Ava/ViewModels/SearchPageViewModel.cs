@@ -5,9 +5,9 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
-using Aosta.Core.Data;
 using Aosta.Core.Database;
 using Aosta.Core.Database.Models;
+using Aosta.Core.Extensions;
 using Aosta.Jikan;
 
 using Avalonia.ReactiveUI;
@@ -41,7 +41,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
         this.WhenAnyValue(vm => vm.SearchText)
             .Throttle(TimeSpan.FromMilliseconds(400))
             .ObserveOn(AvaloniaScheduler.Instance)
-            .Subscribe(s => Task.Run(() => executeSearch(s)));
+            .Subscribe( s => _ = executeSearch(s));
     }
 
     private async Task executeSearch(string s)
@@ -57,7 +57,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
                 var resultIds = result.Data.Select(x => x.MalId);
 
                 var added = _realm.Run(r => r.All<Anime>()
-                    .In($"{nameof(Anime.Jikan)}.{nameof(Anime.Jikan.ID)}", resultIds)
+                    .In(x => x.Jikan!.ID, resultIds)
                     .AsRealmCollection()
                     .Select(x => x.Jikan!.ID)
                     .ToHashSet());

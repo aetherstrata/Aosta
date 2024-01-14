@@ -1,7 +1,7 @@
-using Aosta.Core.Data;
 using Aosta.Core.Database.Enums;
 using Aosta.Core.Database.Models;
 using Aosta.Core.Database.Models.Local;
+using Aosta.Core.Extensions;
 
 namespace Aosta.Core.Tests.Models;
 
