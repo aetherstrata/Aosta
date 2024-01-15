@@ -1,4 +1,6 @@
+using System;
 using System.Collections.ObjectModel;
+using System.Reactive;
 using System.Reactive.Linq;
 
 using Aosta.Ava.Extensions;
@@ -28,12 +30,18 @@ public class HomePageViewModel : ReactiveObject, IRoutableViewModel
 
             foreach (var anime in top)
             {
-                var vm = new TopAnimeCardViewModel(hostScreen, anime);
+                var vm = new TopAnimeCardViewModel(HostScreen, anime);
 
                 TopAnimes.Add(vm);
             }
         });
+
+        var settingsPage = new Lazy<SettingsViewModel>(() => new SettingsViewModel(HostScreen));
+
+        GoToSettings = ReactiveCommand.CreateFromObservable(() => HostScreen.Router.Navigate.Execute(settingsPage.Value));
     }
 
     public ObservableCollection<TopAnimeCardViewModel> TopAnimes { get; } = new();
+
+    public ReactiveCommand<Unit, IRoutableViewModel> GoToSettings { get; }
 }

@@ -41,7 +41,7 @@ public class MainViewModel : ReactiveObject, IScreen
 
         GoBack = ReactiveCommand.CreateFromObservable(
             () => Router.NavigateBack.Execute(Unit.Default),
-            canGoBack)!;
+            canGoBack);
 
         GoHome.Execute();
     }

@@ -2,10 +2,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
-using Aosta.Core.Database;
+using Aosta.Core;
 using Aosta.Core.Database.Models;
 using Aosta.Core.Extensions;
 using Aosta.Jikan;
@@ -15,6 +16,7 @@ using Avalonia.ReactiveUI;
 using DynamicData;
 
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 using Realms;
 
@@ -31,20 +33,30 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
     public IScreen HostScreen { get; }
 
     private readonly IJikan _client = Locator.Current.GetSafely<IJikan>();
-    private readonly Serilog.ILogger _logger = Locator.Current.GetSafely<Serilog.ILogger>();
-    private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
+    private readonly AostaDotNet _aosta = Locator.Current.GetSafely<AostaDotNet>();
+
+    [Reactive] public bool IsBusy { get; set; }
+
+    [Reactive] public string SearchText { get; set; } = string.Empty;
+
+    [Reactive] public bool IsFilterPaneOpen { get; set; }
+
+    public ObservableCollection<AnimeSearchResultViewModel> SearchResults { get; } = [];
+
 
     public SearchPageViewModel(IScreen screen)
     {
         HostScreen = screen;
 
+        var searchCommand = ReactiveCommand.CreateFromTask((string s, CancellationToken ct) => executeSearch(s, ct));
+
         this.WhenAnyValue(vm => vm.SearchText)
             .Throttle(TimeSpan.FromMilliseconds(400))
             .ObserveOn(AvaloniaScheduler.Instance)
-            .Subscribe( s => _ = executeSearch(s));
+            .InvokeCommand(searchCommand);
     }
 
-    private async Task executeSearch(string s)
+    private async Task executeSearch(string s, CancellationToken ct = default)
     {
         IsBusy = true;
         SearchResults.Clear();
@@ -53,10 +65,10 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
         {
             try
             {
-                var result = await _client.SearchAnimeAsync(s);
+                var result = await _client.SearchAnimeAsync(s, ct);
                 var resultIds = result.Data.Select(x => x.MalId);
 
-                var added = _realm.Run(r => r.All<Anime>()
+                var added = _aosta.Realm.Run(r => r.All<Anime>()
                     .In(x => x.Jikan!.ID, resultIds)
                     .AsRealmCollection()
                     .Select(x => x.Jikan!.ID)
@@ -67,28 +79,15 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Anime search query failed for string: {SearchText}", SearchText);
+                _aosta.Log.Error(ex, "Anime search query failed for string: {SearchText}", SearchText);
             }
         }
 
         IsBusy = false;
     }
 
-    private bool _isBusy;
-
-    public bool IsBusy
+    public void ToggleFilterMenu()
     {
-        get => _isBusy;
-        set => this.RaiseAndSetIfChanged(ref _isBusy, value);
+        IsFilterPaneOpen = !IsFilterPaneOpen;
     }
-
-    private string _searchText = string.Empty;
-
-    public string SearchText
-    {
-        get => _searchText;
-        set => this.RaiseAndSetIfChanged(ref _searchText, value);
-    }
-
-    public ObservableCollection<AnimeSearchResultViewModel> SearchResults { get; } = [];
 }

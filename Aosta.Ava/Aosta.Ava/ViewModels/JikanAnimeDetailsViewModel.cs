@@ -27,7 +27,7 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
     {
         UrlPathSegment = $"jikan-details-{response.MalId}";
         HostScreen = hostScreen;
-        GoBack = ReactiveCommand.CreateFromObservable(() => HostScreen.Router.NavigateBack.Execute(Unit.Default))!;
+        GoBack = ReactiveCommand.CreateFromObservable(() => HostScreen.Router.NavigateBack.Execute(Unit.Default));
 
         _response = response.ToJikanAnime();
     }
