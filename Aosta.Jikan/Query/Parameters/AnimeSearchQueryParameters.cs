@@ -4,9 +4,10 @@ using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Query.Parameters;
 
-public class AnimeSearchQueryParameters : JikanQueryParameterSet
+public partial class AnimeSearchQueryParameters : JikanQueryParameterSet
 {
-    private static readonly Regex s_Regex = new(@"^\d{4}(-\d{2}){0,2}$", RegexOptions.Compiled);
+    [GeneratedRegex(@"^\d{4}(-\d{2}){0,2}$", RegexOptions.CultureInvariant, 1)]
+    private static partial Regex dateRegex();
 
     public AnimeSearchQueryParameters SetPage(int page)
     {
@@ -179,14 +180,14 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet
 
     public AnimeSearchQueryParameters SetStartDate(string date)
     {
-        Guard.IsValid(s => s_Regex.IsMatch(s), date, nameof(date), "This date is not in a valid format.");
+        Guard.IsValid(s => dateRegex().IsMatch(s), date, nameof(date), "This date is not in a valid format.");
         Add(QueryParameter.START_DATE, date);
         return this;
     }
 
     public AnimeSearchQueryParameters SetEndDate(string date)
     {
-        Guard.IsValid(s => s_Regex.IsMatch(s), date, nameof(date), "This date is not in a valid format.");
+        Guard.IsValid(s => dateRegex().IsMatch(s), date, nameof(date), "This date is not in a valid format.");
         Add(QueryParameter.END_DATE, date);
         return this;
     }

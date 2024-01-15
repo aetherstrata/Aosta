@@ -5,8 +5,8 @@ namespace Aosta.Jikan.Query.Parameters;
 
 public partial class MangaSearchQueryParameters : JikanQueryParameterSet
 {
-    [GeneratedRegex(@"^\d{4}(-\d{2}){0,2}$", RegexOptions.Compiled)]
-    private static partial Regex dateFormatRegex();
+    [GeneratedRegex(@"^\d{4}(-\d{2}){0,2}$", RegexOptions.CultureInvariant, 1)]
+    private static partial Regex dateRegex();
 
     public MangaSearchQueryParameters SetPage(int page)
     {
@@ -163,14 +163,14 @@ public partial class MangaSearchQueryParameters : JikanQueryParameterSet
 
     public MangaSearchQueryParameters SetStartDate(string date)
     {
-        Guard.IsValid(s => dateFormatRegex().IsMatch(s), date, nameof(date), "This date is not in a valid format.");
+        Guard.IsValid(s => dateRegex().IsMatch(s), date, nameof(date), "This date is not in a valid format.");
         Add(QueryParameter.START_DATE, date);
         return this;
     }
 
     public MangaSearchQueryParameters SetEndDate(string date)
     {
-        Guard.IsValid(s => dateFormatRegex().IsMatch(s), date, nameof(date), "This date is not in a valid format.");
+        Guard.IsValid(s => dateRegex().IsMatch(s), date, nameof(date), "This date is not in a valid format.");
         Add(QueryParameter.END_DATE, date);
         return this;
     }
