@@ -1,9 +1,47 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- Add Resources Here -->
 
     <Color x:Key="BaseColor">#0AF</Color>
-    <Color x:Key="FluentDarkBackground">#202020</Color>
+
+    <!-- Brightness Palette -->
+    <Color x:Key="BaseColor0B">#000000</Color>
+    <Color x:Key="BaseColor10B">#19C3FF</Color>
+    <Color x:Key="BaseColor20B">#33DDFF</Color>
+    <Color x:Key="BaseColor30B">#4CF6FF</Color>
+    <Color x:Key="BaseColor40B">#66FFFF</Color>
+    <Color x:Key="BaseColor50B">#7FFFFF</Color>
+    <Color x:Key="BaseColor60B">#99FFFF</Color>
+    <Color x:Key="BaseColor70B">#B2FFFF</Color>
+    <Color x:Key="BaseColor80B">#CCFFFF</Color>
+    <Color x:Key="BaseColor90B">#E5FFFF</Color>
+    <Color x:Key="BaseColor100B">#FFFFFF</Color>
+
+    <!-- Lightness Palette -->
+    <Color x:Key="BaseColor0L">#000000</Color>
+    <Color x:Key="BaseColor10L">#002233</Color>
+    <Color x:Key="BaseColor20L">#004466</Color>
+    <Color x:Key="BaseColor30L">#006699</Color>
+    <Color x:Key="BaseColor40L">#0088CC</Color>
+    <Color x:Key="BaseColor50L">#00AAFF</Color>
+    <Color x:Key="BaseColor60L">#33BBFF</Color>
+    <Color x:Key="BaseColor70L">#66CCFF</Color>
+    <Color x:Key="BaseColor80L">#99DDFF</Color>
+    <Color x:Key="BaseColor90L">#CCEEFF</Color>
+    <Color x:Key="BaseColor100L">#FFFFFF</Color>
+
+    <Color x:Key="Analogous1">#00FFEE</Color>
+    <Color x:Key="Analogous2">#00DDFF</Color>
+    <Color x:Key="Analogous3">#0077FF</Color>
+    <Color x:Key="Analogous4">#0044FF</Color>
+
+    <Color x:Key="Gray100">#E1E1E1</Color>
+    <Color x:Key="Gray200">#C8C8C8</Color>
+    <Color x:Key="Gray300">#ACACAC</Color>
+    <Color x:Key="Gray400">#919191</Color>
+    <Color x:Key="Gray500">#6E6E6E</Color>
+    <Color x:Key="Gray600">#404040</Color>
+    <Color x:Key="Gray900">#212121</Color>
+    <Color x:Key="Gray950">#141414</Color>
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
