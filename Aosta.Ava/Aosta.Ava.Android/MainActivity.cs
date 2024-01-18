@@ -45,10 +45,9 @@ public class MainActivity : AvaloniaMainActivity<App>
                     .RegisterAnd<ILogger>(() => AostaConfiguration
                         .GetDefaultLoggerConfig(
                             Path.Combine(global::Android.App.Application.Context.FilesDir.AsNonNull().Path, "logs"))
-                        .WriteTo.Logcat("AOSTA", Logging.OUTPUT_TEMPLATE, LogEventLevel.Debug)
+                        .WriteTo.Logcat("AOSTA", "{Message:lj} <{ThreadId}><{ThreadName}>{NewLine}{Exception}", LogEventLevel.Debug)
                         .CreateLogger())
-                    .Register(() =>
-                        new AostaConfiguration(Environment.CurrentDirectory)
+                    .Register(() => new AostaConfiguration(Environment.CurrentDirectory)
                             .With.Logger(Locator.Current.GetSafely<ILogger>())
                             .Build());
             });
