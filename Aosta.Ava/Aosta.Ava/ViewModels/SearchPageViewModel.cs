@@ -10,6 +10,7 @@ using Aosta.Core;
 using Aosta.Core.Database.Models;
 using Aosta.Core.Extensions;
 using Aosta.Jikan;
+using Aosta.Jikan.Query.Parameters;
 
 using Avalonia.ReactiveUI;
 
@@ -35,14 +36,19 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
     private readonly IJikan _client = Locator.Current.GetSafely<IJikan>();
     private readonly AostaDotNet _aosta = Locator.Current.GetSafely<AostaDotNet>();
 
-    [Reactive] public bool IsBusy { get; set; }
+    [Reactive]
+    public bool IsBusy { get; set; }
 
-    [Reactive] public string SearchText { get; set; } = string.Empty;
+    [Reactive]
+    public string SearchText { get; set; } = string.Empty;
 
-    [Reactive] public bool IsFilterPaneOpen { get; set; }
+    [Reactive]
+    public bool IsFilterPaneOpen { get; set; }
+
+    [Reactive]
+    public bool IncludeNsfw { get; set; }
 
     public ObservableCollection<AnimeSearchResultViewModel> SearchResults { get; } = [];
-
 
     public SearchPageViewModel(IScreen screen)
     {
@@ -59,23 +65,33 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
     private async Task executeSearch(string s, CancellationToken ct = default)
     {
         IsBusy = true;
-        SearchResults.Clear();
 
         if (!string.IsNullOrWhiteSpace(s))
         {
             try
             {
-                var result = await _client.SearchAnimeAsync(s, ct);
+                var queryParams = new AnimeSearchQueryParameters
+                {
+                    Query = s,
+                    SFW = !IncludeNsfw
+                };
+
+                var result = await _client.SearchAnimeAsync(queryParams, ct);
                 var resultIds = result.Data.Select(x => x.MalId);
 
-                var added = _aosta.Realm.Run(r => r.All<Anime>()
-                    .In(x => x.Jikan!.ID, resultIds)
-                    .AsRealmCollection()
-                    .Select(x => x.Jikan!.ID)
-                    .ToHashSet());
+                // Check if the MAL IDs returned from Jikan appear in Realm
+                var found = _aosta.Realm.Run(r =>
+                    r.All<Anime>()
+                        .In(x => x.Jikan!.ID, resultIds)
+                        .AsRealmCollection()
+                        .Select(x => x.Jikan!.ID)
+                        .ToHashSet());
 
-                SearchResults.AddRange(result.Data.Select(response =>
-                    new AnimeSearchResultViewModel(response, added.Contains(response.MalId))));
+                var viewModels = result.Data
+                    .Select(response => new AnimeSearchResultViewModel(response, found.Contains(response.MalId)));
+
+                SearchResults.Clear();
+                SearchResults.AddRange(viewModels);
             }
             catch (Exception ex)
             {

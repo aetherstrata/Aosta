@@ -74,12 +74,17 @@
                 Opacity="0.8"
                 CornerRadius="5,5,0,0"
                 IsVisible="{Binding IsFilterPaneOpen}">
-            <StackPanel>
-                <controls:SettingsExpanderItem Description="Include NSFW">
-                    <controls:SettingsExpanderItem.Footer>
-                        <ToggleSwitch></ToggleSwitch>
-                    </controls:SettingsExpanderItem.Footer>
-                </controls:SettingsExpanderItem>
+            <StackPanel Spacing="10"
+                        Margin="10, 10, 10, 0">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Left"
+                               VerticalAlignment="Center"
+                               Text="Include NSFW works"/>
+                    <ToggleSwitch DockPanel.Dock="Right"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Right"
+                                  IsChecked="{Binding IncludeNsfw}"/>
+                </DockPanel>
             </StackPanel>
         </Border>
     </Grid>
