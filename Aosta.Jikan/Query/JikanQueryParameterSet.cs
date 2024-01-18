@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace Aosta.Jikan.Query;
 
-public class JikanQueryParameterSet : IEnumerable<IQueryParameter>
+public class JikanQueryParameterSet : IReadOnlySet<IQueryParameter>
 {
     private readonly HashSet<IQueryParameter> _parameters = new(QueryParameter.NameComparer);
 
@@ -86,13 +86,33 @@ public class JikanQueryParameterSet : IEnumerable<IQueryParameter>
             : "?" + parameterString;
     }
 
-    public IEnumerator<IQueryParameter> GetEnumerator()
-    {
-        return _parameters.GetEnumerator();
-    }
+    /// <inheritdoc />
+    public IEnumerator<IQueryParameter> GetEnumerator() => _parameters.GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    /// <inheritdoc />
+    public int Count => _parameters.Count;
+
+    /// <inheritdoc />
+    public bool Contains(IQueryParameter item) => _parameters.Contains(item);
+
+    /// <inheritdoc />
+    public bool IsProperSubsetOf(IEnumerable<IQueryParameter> other) => _parameters.IsProperSubsetOf(other);
+
+    /// <inheritdoc />
+    public bool IsProperSupersetOf(IEnumerable<IQueryParameter> other) => _parameters.IsProperSupersetOf(other);
+
+    /// <inheritdoc />
+    public bool IsSubsetOf(IEnumerable<IQueryParameter> other) => _parameters.IsSubsetOf(other);
+
+    /// <inheritdoc />
+    public bool IsSupersetOf(IEnumerable<IQueryParameter> other) => _parameters.IsSupersetOf(other);
+
+    /// <inheritdoc />
+    public bool Overlaps(IEnumerable<IQueryParameter> other) => _parameters.Overlaps(other);
+
+    /// <inheritdoc />
+    public bool SetEquals(IEnumerable<IQueryParameter> other) => _parameters.SetEquals(other);
 }
