@@ -9,6 +9,8 @@ jobs:
   build:
     name: Build and analyze
     runs-on: windows-latest
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages 
     steps:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
