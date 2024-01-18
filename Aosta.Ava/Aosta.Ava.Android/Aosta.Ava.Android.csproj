@@ -4,11 +4,11 @@
         <TargetFramework>net8.0-android</TargetFramework>
         <SupportedOSPlatformVersion>30</SupportedOSPlatformVersion>
         <Nullable>enable</Nullable>
-        <ApplicationId>com.CompanyName.Aosta.Ava</ApplicationId>
+        <ApplicationId>dev.aest.aosta</ApplicationId>
         <ApplicationVersion>1</ApplicationVersion>
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <AndroidPackageFormat>apk</AndroidPackageFormat>
-        <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+        <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
         <LangVersion>default</LangVersion>
     </PropertyGroup>
 
