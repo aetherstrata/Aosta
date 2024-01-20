@@ -3,7 +3,7 @@ using Aosta.Ava.ViewModels;
 using Avalonia;
 using Avalonia.ReactiveUI;
 
-namespace Aosta.Ava.Views;
+namespace Aosta.Ava;
 
 public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {

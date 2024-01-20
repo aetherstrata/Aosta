@@ -1,0 +1,25 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Aosta.Ava.Controls">
+    <Design.PreviewWith>
+        <controls:SettingSwitch />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|SettingSwitch">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="*,Auto"
+                                      HorizontalAlignment="Stretch">
+                    <TextBlock Grid.Column="0"
+                               Text="{TemplateBinding Entry}"
+                               VerticalAlignment="Center"/>
+                    <ContentControl Grid.Column="1"
+                                    Content="{TemplateBinding Action}"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    HorizontalContentAlignment="Right"/>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

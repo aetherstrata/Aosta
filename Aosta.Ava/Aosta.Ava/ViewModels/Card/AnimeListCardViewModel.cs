@@ -4,7 +4,6 @@
 using System.Reactive;
 
 using Aosta.Ava.Extensions;
-using Aosta.Ava.ViewModels.Interfaces;
 using Aosta.Core.Database;
 using Aosta.Core.Database.Models;
 
@@ -12,7 +11,7 @@ using ReactiveUI;
 
 using Splat;
 
-namespace Aosta.Ava.ViewModels;
+namespace Aosta.Ava.ViewModels.Card;
 
 public class AnimeListCardViewModel : ReactiveObject, IOnlineCardViewModel
 {

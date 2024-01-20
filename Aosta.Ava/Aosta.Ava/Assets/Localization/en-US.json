@@ -1,7 +1,14 @@
 {
   "AnimeList.Header.NoAnime" : "The list is empty",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
+  "App.Version": "Version {0}",
   "HomePage.TopAnime.Header" : "Top anime",
   "Label.NotAvailable" : "Not available",
-  "SearchPage.SearchBox.Watermark" : "Search anime"
+  "SearchPage.SearchBox.Watermark" : "Search anime",
+  "SettingsPage.ApplicationSettings.Header": "Application settings",
+  "SettingsPage.AppTheme.Entry": "Application theme",
+  "SettingsPage.Title": "Settings",
+  "Theme.Dark": "Dark",
+  "Theme.System": "System",
+  "Theme.Light": "Light"
 }

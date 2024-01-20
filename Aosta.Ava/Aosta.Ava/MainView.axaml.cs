@@ -5,7 +5,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 
-namespace Aosta.Ava.Views;
+namespace Aosta.Ava;
 
 public partial class MainView : ReactiveUserControl<MainViewModel>
 {

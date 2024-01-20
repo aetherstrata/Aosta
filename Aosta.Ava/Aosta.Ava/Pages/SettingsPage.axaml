@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:localization="clr-namespace:Aosta.Ava.Localization"
+             xmlns:controls="clr-namespace:Aosta.Ava.Controls"
+             xmlns:viewModels="clr-namespace:Aosta.Ava.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Aosta.Ava.Pages.SettingsPage"
+             x:DataType="viewModels:SettingsViewModel">
+    <ScrollViewer>
+        <Grid RowDefinitions="Auto,Auto">
+            <TextBlock Grid.Row="0"
+                       Margin="20,10, 0, 0"
+                       FontSize="36"
+                       FontWeight="Bold"
+                       Text="{localization:Localize Key=SettingsPage.Title}"/>
+            <TextBlock Grid.Row="0"
+                       Margin="0, 5,5, 0"
+                       HorizontalAlignment="Right"
+                       Text="{Binding AppVersion}"/>
+            <Expander Grid.Row="1"
+                      Header="{localization:Localize Key=SettingsPage.ApplicationSettings.Header}"
+                      Margin="5,5"
+                      BorderThickness="0">
+                <StackPanel Spacing="10"
+                            Margin="20,0">
+                    <controls:SettingSwitch Entry="{localization:Localize Key=SettingsPage.AppTheme.Entry}">
+                        <controls:SettingSwitch.Action>
+                            <ComboBox ItemsSource="{Binding ThemeManager.AppThemes}"
+                                      SelectedItem="{Binding ThemeManager.CurrentAppTheme}">
+                            </ComboBox>
+                        </controls:SettingSwitch.Action>
+                    </controls:SettingSwitch>
+                </StackPanel>
+                <Expander.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock FontSize="18"
+                                   FontWeight="Bold"></TextBlock>
+                    </DataTemplate>
+                </Expander.HeaderTemplate>
+            </Expander>
+
+            <Grid.Styles>
+                <Style Selector="Expander">
+                    <Setter Property="IsExpanded" Value="True"/>
+                    <Setter Property="BorderThickness" Value="0"></Setter>
+                </Style>
+                <Style Selector="Expander /template/ ToggleButton#PART_toggle">
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+            </Grid.Styles>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

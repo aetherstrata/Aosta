@@ -3,12 +3,11 @@
 
 using System.Reactive;
 
-using Aosta.Ava.ViewModels.Interfaces;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
 
-namespace Aosta.Ava.ViewModels;
+namespace Aosta.Ava.ViewModels.Card;
 
 public class TopAnimeCardViewModel(IScreen host, AnimeResponse response) : ReactiveObject, IOnlineCardViewModel
 {

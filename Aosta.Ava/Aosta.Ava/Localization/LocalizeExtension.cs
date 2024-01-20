@@ -21,15 +21,9 @@ internal class LocalizeExtension : MarkupExtension
 
     public string Key { get; set; } = string.Empty;
 
-    public string Context { get; set; } = string.Empty;
-
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        var keyToUse = Key;
-        if (!string.IsNullOrWhiteSpace(Context))
-            keyToUse = $"{Context}/{Key}";
-
-        var binding = new ReflectionBindingExtension($"[{keyToUse}]")
+        var binding = new ReflectionBindingExtension($"[{Key}]")
         {
             Mode = BindingMode.OneWay,
             Source = Localizer.Instance,

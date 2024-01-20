@@ -3,8 +3,9 @@ using System.Reflection;
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Ava.ViewModels;
-using Aosta.Ava.Views;
+using Aosta.Ava.ViewModels.Settings;
 using Aosta.Core;
+using Aosta.Core.Database;
 using Aosta.Jikan;
 
 using Avalonia;
@@ -21,6 +22,10 @@ namespace Aosta.Ava;
 
 public partial class App : Application
 {
+    public const string Version = "0.0.1";
+
+    private ILogger _logger = null!;
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -28,14 +33,18 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        Localizer.Instance.Language = InterfaceLanguage.English;
+        _logger = Locator.Current.GetSafely<ILogger>();
 
         Locator.CurrentMutable
             .RegisterAnd(() => new JikanConfiguration()
-                .Use.Logger(Locator.Current.GetSafely<ILogger>())
+                .Use.Logger(_logger)
                 .Build())
             .RegisterAnd(() => Locator.Current.GetSafely<AostaDotNet>().Realm)
             .RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
+
+        Localizer.Instance.Language = InterfaceLanguage.English;
+
+        setTheme();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -52,8 +61,21 @@ public partial class App : Application
             };
         }
 
-        Locator.Current.GetSafely<ILogger>().Debug("Framework initialization completed");
+        _logger.Debug("Framework initialization completed");
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private void setTheme()
+    {
+        string? settingValue = Locator.Current
+            .GetSafely<RealmAccess>()
+            .GetSetting<string>(Settings.AppTheme);
+
+        var key = settingValue is null ? ThemeKey.DEFAULT : (ThemeKey)settingValue;
+
+        RequestedThemeVariant = key.Theme;
+
+        _logger.Information("Loaded theme {Variant}", key.Theme.Key);
     }
 }

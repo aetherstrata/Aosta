@@ -3,7 +3,7 @@
 
 using Realms;
 
-namespace Aosta.Ava.Models;
+namespace Aosta.Core.Database.Models;
 
 public partial class Setting : IRealmObject
 {

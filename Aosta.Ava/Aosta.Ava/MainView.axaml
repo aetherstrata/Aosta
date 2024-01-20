@@ -6,7 +6,7 @@
              xmlns:rxui="http://reactiveui.net"
              xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Aosta.Ava.Views.MainView"
+             x:Class="Aosta.Ava.MainView"
              x:DataType="vm:MainViewModel">
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,

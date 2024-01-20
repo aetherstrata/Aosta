@@ -23,7 +23,7 @@
             <TextBlock Grid.Row="0"
                        Margin="20, 10"
                        FontWeight="Bold"
-                       FontSize="24"
+                       FontSize="36"
                        Text="{localization:Localize Key=HomePage.TopAnime.Header}" />
             <ScrollViewer Grid.Row="1">
                 <ListBox ScrollViewer.HorizontalScrollBarVisibility="Hidden"

@@ -17,7 +17,6 @@ namespace Aosta.Ava.Localization;
 /// </summary>
 internal sealed class Localizer : INotifyPropertyChanged, ILocalizer
 {
-    /// Singleton instance of the localizer service
     public static Localizer Instance { get; } = new();
 
     private const string indexer_name = "Item";
@@ -28,6 +27,8 @@ internal sealed class Localizer : INotifyPropertyChanged, ILocalizer
 
     private IReadOnlyDictionary<string, string> _localized = null!;
     private InterfaceLanguage _language = (InterfaceLanguage)(-1);
+
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     /// Current interface language of the application
     public InterfaceLanguage Language
@@ -49,8 +50,6 @@ internal sealed class Localizer : INotifyPropertyChanged, ILocalizer
         }
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-
     /// <summary>
     /// Access the localized string for the given key
     /// </summary>
@@ -69,8 +68,6 @@ internal sealed class Localizer : INotifyPropertyChanged, ILocalizer
         }
     }
 
-    #region Private methods
-
     private void invalidate()
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(indexer_name));
@@ -79,26 +76,18 @@ internal sealed class Localizer : INotifyPropertyChanged, ILocalizer
 
     private static IReadOnlyDictionary<string, string> getLocalization(InterfaceLanguage language)
     {
-        var uri = getResourceUri(language);
+        var uri = new Uri($"avares://{nameof(Aosta)}.{nameof(Ava)}/Assets/Localization/{language.GetLanguageCode()}.json");
+
         if (!AssetLoader.Exists(uri))
+        {
             throw new IOException($"Could not find file {uri}");
+        }
 
-        return deserializeLocalization(uri);
-    }
-
-    private static IReadOnlyDictionary<string, string> deserializeLocalization(Uri uri)
-    {
         using var sr = new StreamReader(AssetLoader.Open(uri), Encoding.UTF8);
+
         return JsonSerializer.Deserialize(sr.ReadToEnd(), LocalizationJsonContext.Default.IReadOnlyDictionaryStringString)
                ?? throw new JsonException($"Could not deserialize localization at {uri}");
     }
-
-    private static Uri getResourceUri(InterfaceLanguage lang)
-    {
-        return new Uri($"avares://{nameof(Aosta)}.{nameof(Ava)}/Assets/Localization/{lang.GetLanguageCode()}.json");
-    }
-
-    #endregion
 }
 
 [JsonSerializable(typeof(IReadOnlyDictionary<string, string>))]

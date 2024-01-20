@@ -7,6 +7,7 @@ using System.Reactive.Linq;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
+using Aosta.Ava.ViewModels.Card;
 using Aosta.Core.Database;
 using Aosta.Core.Database.Models;
 

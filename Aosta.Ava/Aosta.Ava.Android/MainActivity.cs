@@ -5,7 +5,6 @@ using Android.App;
 using Android.Content.PM;
 
 using Aosta.Ava.Extensions;
-using Aosta.Common.Consts;
 using Aosta.Common.Extensions;
 using Aosta.Core;
 

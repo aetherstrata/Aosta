@@ -45,20 +45,10 @@
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
-            <LinearGradientBrush x:Key="MainBackgroundBrush" StartPoint="0%,0%" EndPoint="0%,100%">
-                <LinearGradientBrush.GradientStops>
-                    <GradientStop Offset="0" Color="{StaticResource BaseColor}"></GradientStop>
-                    <GradientStop Offset="1" Color="#fff"></GradientStop>
-                </LinearGradientBrush.GradientStops>
-            </LinearGradientBrush>
+            <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource Gray100}"/>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
-            <LinearGradientBrush x:Key="MainBackgroundBrush" StartPoint="0%,0%" EndPoint="0%,100%">
-                <LinearGradientBrush.GradientStops>
-                    <GradientStop Offset="0" Color="{StaticResource BaseColor}"></GradientStop>
-                    <GradientStop Offset="1" Color="{StaticResource FluentDarkBackground}"></GradientStop>
-                </LinearGradientBrush.GradientStops>
-            </LinearGradientBrush>
+            <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource Gray950}"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
