@@ -1,4 +1,6 @@
-﻿namespace Aosta.Jikan.Tests.MangaTests;
+﻿using Aosta.Jikan.Exceptions;
+
+namespace Aosta.Jikan.Tests.MangaTests;
 
 public class GetMangaMoreInfoAsyncTests
 {

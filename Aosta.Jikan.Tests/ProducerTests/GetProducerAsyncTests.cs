@@ -1,3 +1,5 @@
+using Aosta.Jikan.Exceptions;
+
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.ProducerTests;
@@ -16,7 +18,7 @@ public class GetProducerAsyncTests
         // Then
         await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
-    
+
     [Test]
     public async Task PierrotId_ShouldParsePierrot()
     {
@@ -29,7 +31,7 @@ public class GetProducerAsyncTests
         results.Data.TotalCount.Should().BeGreaterThan(250);
         results.Data.Established.Should().HaveYear(1979);
     }
-    
+
     [Test]
     public async Task KyoAniId_ShouldParsePierrot()
     {

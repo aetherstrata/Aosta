@@ -1,4 +1,5 @@
-using Aosta.Jikan.Enums;
+using Aosta.Jikan.Exceptions;
+using Aosta.Jikan.Query.Enums;
 using Aosta.Jikan.Query.Parameters;
 using FluentAssertions.Execution;
 
@@ -11,7 +12,7 @@ public class SearchUserAsyncTests
     {
         // Given
         var config = new UserSearchQueryParameters();
-            
+
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
 
@@ -20,7 +21,7 @@ public class SearchUserAsyncTests
         users.Data.Should().HaveCount(20);
         users.Data.First().Username.Should().Be("ErickGabriel555");
     }
-        
+
     [Test]
     [TestCase(int.MinValue)]
     [TestCase(-1)]
@@ -29,20 +30,20 @@ public class SearchUserAsyncTests
     {
         // Given
         var config = new UserSearchQueryParameters().SetPage(page);
-            
+
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchUserAsync(config));
 
         // Then
         await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
-        
+
     [Test]
     public async Task GivenSecondPage_ShouldReturnSecondPage()
     {
         // Given
         var config = new UserSearchQueryParameters().SetPage(2);
-            
+
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
 
@@ -52,7 +53,7 @@ public class SearchUserAsyncTests
         users.Data.First().Username.Should().Be("EnricoA128");
         users.Data.First().Images.Should().NotBeNull();
     }
-        
+
     [Test]
     [TestCase((UserGenderFilter)int.MinValue)]
     [TestCase((UserGenderFilter)int.MaxValue)]
@@ -60,14 +61,14 @@ public class SearchUserAsyncTests
     {
         // Given
         var config =new UserSearchQueryParameters().SetGender(gender);
-            
+
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchUserAsync(config));
 
         // Then
         await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
-        
+
     [Test]
     [TestCase(UserGenderFilter.Any, "ErickGabriel555")]
     [TestCase(UserGenderFilter.Male, "ErickGabriel555")]
@@ -77,7 +78,7 @@ public class SearchUserAsyncTests
     {
         // Given
         var config =new UserSearchQueryParameters().SetGender(gender);
-            
+
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
 
@@ -86,26 +87,26 @@ public class SearchUserAsyncTests
         users.Data.Should().HaveCount(20);
         users.Data.First().Username.Should().Be(expectedFirstUser);
     }
-        
+
     [Test]
     public async Task SonMatiQuery_ShouldReturnSonMati()
     {
         // Given
         var config = new UserSearchQueryParameters().SetQuery("SonMati");
-            
+
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
 
         // Then
         users.Data.Should().Contain(x => x.Username.Equals("SonMati") && x.Url.Equals("https://myanimelist.net/profile/SonMati"));
     }
-        
+
     [Test]
     public async Task WithLocation_ShouldReturnFilteredByLocation()
     {
         // Given
         var config = new UserSearchQueryParameters().SetLocation("mysłowice");
-            
+
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
 
@@ -114,13 +115,13 @@ public class SearchUserAsyncTests
         users.Data.Should().HaveCount(20);
         users.Data.First().Username.Should().Be("P3gueiA1ds");
     }
-        
+
     [Test]
     public async Task WithMinAge_ShouldReturnFilteredByMinAge()
     {
         // Given
         var config = new UserSearchQueryParameters().SetMinimumAge(20);
-            
+
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
 
@@ -129,13 +130,13 @@ public class SearchUserAsyncTests
         users.Data.Should().HaveCount(20);
         users.Data.First().Username.Should().Be("DeafExorcist");
     }
-        
+
     [Test]
     public async Task WithMaxAge_ShouldReturnFilteredByMaxAge()
     {
         // Given
         var config =  new UserSearchQueryParameters().SetMaximumAge(20);
-            
+
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
 

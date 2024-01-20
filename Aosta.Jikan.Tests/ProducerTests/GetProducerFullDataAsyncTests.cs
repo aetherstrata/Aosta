@@ -1,3 +1,5 @@
+using Aosta.Jikan.Exceptions;
+
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.ProducerTests;
@@ -16,7 +18,7 @@ public class GetProducerFullDataAsyncTests
         // Then
         await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
-    
+
     [Test]
     public async Task PierrotId_ShouldParsePierrot()
     {
@@ -31,7 +33,7 @@ public class GetProducerFullDataAsyncTests
         results.Data.External.Should().HaveCountGreaterOrEqualTo(5);
         results.Data.External.Should().Contain(x => x.Name.Equals("pierrot.jp") && x.Url.Equals("http://pierrot.jp/\r"));
     }
-    
+
     [Test]
     public async Task KyoAniId_ShouldParsePierrot()
     {

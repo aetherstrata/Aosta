@@ -1,4 +1,6 @@
-﻿namespace Aosta.Jikan.Tests.UserTests;
+﻿using Aosta.Jikan.Exceptions;
+
+namespace Aosta.Jikan.Tests.UserTests;
 
 public class GetUserAboutAsyncTests
 {

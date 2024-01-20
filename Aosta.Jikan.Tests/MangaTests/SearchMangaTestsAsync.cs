@@ -1,3 +1,4 @@
+using Aosta.Jikan.Exceptions;
 using Aosta.Jikan.Query;
 using Aosta.Jikan.Query.Enums;
 using Aosta.Jikan.Query.Parameters;
@@ -425,7 +426,6 @@ public class SearchMangaAsyncTests
 		var searchConfig = new MangaSearchQueryParameters()
 			.SetQuery("ore")
 			.SetPage(2)
-			.SetGenres(new long[] { 4 })
 			.SetType(MangaTypeFilter.Manga);
 
 		// When

@@ -1,3 +1,5 @@
+using Aosta.Jikan.Exceptions;
+
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.PersonTests;
@@ -16,7 +18,7 @@ public class GetPersonFullDataAsyncTests
 		// Then
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
-		
+
 	[Test]
 	public async Task YuasaId_ShouldParseMasaakiYuasa()
 	{
@@ -31,7 +33,7 @@ public class GetPersonFullDataAsyncTests
 		yuasa.Data.Animeography.Should().Contain(x => x.Anime.Title.Equals("Yojouhan Shinwa Taikei"));
 		yuasa.Data.VoiceActingRoles.Should().BeEmpty();
 	}
-		
+
 	[Test]
 	public async Task OdaId_ShouldParseEiichiroOda()
 	{

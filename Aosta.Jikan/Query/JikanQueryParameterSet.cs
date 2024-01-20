@@ -1,5 +1,7 @@
 using System.Collections;
 
+using Aosta.Jikan.Exceptions;
+
 namespace Aosta.Jikan.Query;
 
 public class JikanQueryParameterSet : IReadOnlySet<IQueryParameter>
@@ -12,8 +14,10 @@ public class JikanQueryParameterSet : IReadOnlySet<IQueryParameter>
 
     internal void Add(IQueryParameter parameter)
     {
-        bool result = _parameters.Add(parameter);
-        if(!result) throw new JikanDuplicateParameterException($"A query parameter named {parameter.GetName()} already exists.", nameof(parameter));
+        if (!_parameters.Add(parameter))
+        {
+            throw new JikanDuplicateParameterException($"A query parameter named {parameter.GetName()} already exists.", nameof(parameter));
+        }
     }
 
     internal void Add<T>(string name, T value) where T : struct, Enum

@@ -1,4 +1,6 @@
-﻿using FluentAssertions.Execution;
+﻿using Aosta.Jikan.Exceptions;
+
+using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.SeasonTests;
 
@@ -19,7 +21,7 @@ public class GetUpcomingSeasonAsyncTests
 		upcomingSeason.Pagination.Items.Total.Should().BeGreaterThan(300);
 		upcomingSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title).Should().Contain("Goblin Slayer 2nd Season");
 	}
-		
+
 	[Test]
 	[TestCase(int.MinValue)]
 	[TestCase(-1)]
@@ -32,7 +34,7 @@ public class GetUpcomingSeasonAsyncTests
 		// Then
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
-		
+
 	[Test]
 	public async Task WithTooBigPage_ShouldParseAndReturnNothing()
 	{

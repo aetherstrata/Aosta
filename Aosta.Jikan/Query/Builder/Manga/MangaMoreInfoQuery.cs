@@ -1,7 +1,7 @@
 using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
 
-namespace Aosta.Jikan.Query;
+namespace Aosta.Jikan.Query.Builder.Manga;
 
 internal static class MangaMoreInfoQuery
 {

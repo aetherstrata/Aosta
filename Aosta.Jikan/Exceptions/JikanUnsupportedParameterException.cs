@@ -1,4 +1,4 @@
-namespace Aosta.Jikan;
+namespace Aosta.Jikan.Exceptions;
 
 public class JikanUnsupportedParameterException : ArgumentException
 {

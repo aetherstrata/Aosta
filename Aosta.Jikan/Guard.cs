@@ -1,5 +1,7 @@
 ﻿using System.Numerics;
 using Aosta.Common.Extensions;
+using Aosta.Jikan.Exceptions;
+
 using FastEnumUtility;
 
 namespace Aosta.Jikan;

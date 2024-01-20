@@ -1,4 +1,5 @@
 using Aosta.Jikan.Enums;
+using Aosta.Jikan.Exceptions;
 using Aosta.Jikan.Query;
 using Aosta.Jikan.Query.Enums;
 using Aosta.Jikan.Query.Parameters;

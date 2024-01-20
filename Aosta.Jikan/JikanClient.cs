@@ -3,14 +3,32 @@
 using Aosta.Common.Consts;
 using Aosta.Common.Limiter;
 using Aosta.Jikan.Enums;
+using Aosta.Jikan.Exceptions;
 using Aosta.Jikan.Models;
 using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Query;
+using Aosta.Jikan.Query.Builder.Anime;
+using Aosta.Jikan.Query.Builder.Character;
+using Aosta.Jikan.Query.Builder.Club;
+using Aosta.Jikan.Query.Builder.Genre;
+using Aosta.Jikan.Query.Builder.Magazine;
+using Aosta.Jikan.Query.Builder.Manga;
+using Aosta.Jikan.Query.Builder.Person;
+using Aosta.Jikan.Query.Builder.Producer;
+using Aosta.Jikan.Query.Builder.Random;
+using Aosta.Jikan.Query.Builder.Recommendations;
+using Aosta.Jikan.Query.Builder.Reviews;
+using Aosta.Jikan.Query.Builder.Schedule;
+using Aosta.Jikan.Query.Builder.Season;
+using Aosta.Jikan.Query.Builder.Top;
+using Aosta.Jikan.Query.Builder.User;
+using Aosta.Jikan.Query.Builder.Watch;
 using Aosta.Jikan.Query.Enums;
 using Aosta.Jikan.Query.Parameters;
 
 using Serilog;
+using Serilog.Context;
 
 namespace Aosta.Jikan;
 
@@ -28,34 +46,46 @@ public sealed class JikanClient : IJikan, IDisposable
     {
         string queryEndpoint = query.GetQuery();
         string fullUrl = _http.BaseAddress + queryEndpoint;
-        try
+
+        using (LogContext.PushProperty("Endpoint", queryEndpoint))
         {
-            _logger?.Debug("Performing GET request: \"{Request}\"", fullUrl);
-            using var response = await _limiter.LimitAsync(() => _http.GetAsync(queryEndpoint, ct))
-                .ConfigureAwait(false);
-
-            string json = await response.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
-            _logger?.Verbose("Retrieved JSON string: {Json}", json);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                _logger?.Debug("Got HTTP response for \"{Request}\" successfully", fullUrl);
-                return JsonSerializer.Deserialize<T>(json) ?? throw new JikanRequestException(
-                    ErrorMessages.SERIALIZATION_NULL_RESULT + Environment.NewLine + "Raw JSON string:" +
-                    Environment.NewLine + json);
+                _logger?.Debug("Performing GET request: \"{Request}\"", fullUrl);
+                using var response = await _limiter.LimitAsync(() => _http.GetAsync(queryEndpoint, ct))
+                    .ConfigureAwait(false);
+
+                string json = await response.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
+
+                using (LogContext.PushProperty("Json", json))
+                {
+                    _logger?.Verbose("Content retrieved successfully");
+                }
+
+                if (response.IsSuccessStatusCode)
+                {
+                    _logger?.Debug("Got HTTP response for \"{Request}\" successfully", fullUrl);
+                    return JsonSerializer.Deserialize<T>(json) ?? throw new JikanRequestException(
+                        ErrorMessages.SERIALIZATION_NULL_RESULT + Environment.NewLine + "Raw JSON string:" +
+                        Environment.NewLine + json);
+                }
+
+                var errorData = JsonSerializer.Deserialize<JikanApiError>(json);
+
+                using (LogContext.PushProperty("Response", errorData))
+                {
+                    _logger?.Error("Failed to get HTTP resource for \"{Resource}\", Status Code: {Status}",
+                        queryEndpoint, response.StatusCode);
+                }
+
+                throw new JikanRequestException(
+                    string.Format(ErrorMessages.FAILED_REQUEST, response.StatusCode, response.Content), errorData);
             }
-
-            var errorData = JsonSerializer.Deserialize<JikanApiError>(json);
-
-            _logger?.Error("Failed to get HTTP resource for \"{Resource}\", Status Code: {Status}\n{@ApiResponse}",
-                queryEndpoint, response.StatusCode, errorData);
-
-            throw new JikanRequestException(
-                string.Format(ErrorMessages.FAILED_REQUEST, response.StatusCode, response.Content), errorData);
-        }
-        catch (JsonException ex)
-        {
-            throw new JikanRequestException(ErrorMessages.SERIALIZATION_FAILED, ex);
+            catch (JsonException ex)
+            {
+                _logger?.Error(ex, ErrorMessages.SERIALIZATION_FAILED);
+                throw;
+            }
         }
     }
 

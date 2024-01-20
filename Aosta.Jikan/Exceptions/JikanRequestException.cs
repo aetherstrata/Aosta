@@ -1,6 +1,6 @@
 ﻿using Aosta.Jikan.Models;
 
-namespace Aosta.Jikan;
+namespace Aosta.Jikan.Exceptions;
 
 /// <summary>
 /// Exception class thrown when request is not handled properly.

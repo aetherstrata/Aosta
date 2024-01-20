@@ -2,7 +2,7 @@ using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Query.Enums;
 
-namespace Aosta.Jikan.Query;
+namespace Aosta.Jikan.Query.Builder.Genre;
 
 internal static class AnimeGenresQuery
 {

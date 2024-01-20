@@ -1,4 +1,5 @@
-﻿using Aosta.Jikan.Query.Enums;
+﻿using Aosta.Jikan.Exceptions;
+using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Tests.GenreTests;
 

@@ -1,4 +1,6 @@
 using Aosta.Jikan.Enums;
+using Aosta.Jikan.Exceptions;
+
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.AnimeTests;

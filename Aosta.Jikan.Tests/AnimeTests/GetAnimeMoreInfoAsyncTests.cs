@@ -1,4 +1,6 @@
-﻿namespace Aosta.Jikan.Tests.AnimeTests;
+﻿using Aosta.Jikan.Exceptions;
+
+namespace Aosta.Jikan.Tests.AnimeTests;
 
 public class GetAnimeMoreInfoAsyncTests
 {

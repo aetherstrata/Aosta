@@ -1,3 +1,5 @@
+using Aosta.Jikan.Exceptions;
+
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.ReviewTests;
@@ -42,7 +44,7 @@ public class GetRecentMangaReviewsAsyncTests
         reviews.Data.Should().HaveCount(50);
         reviews.Data.Should().OnlyContain(x => x.Type == "manga");
     }
-    
+
     [Test]
     public async Task SecondPage_ShouldParseSecondPageReviews()
     {

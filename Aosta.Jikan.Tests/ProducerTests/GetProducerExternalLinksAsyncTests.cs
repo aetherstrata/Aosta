@@ -1,3 +1,5 @@
+using Aosta.Jikan.Exceptions;
+
 using FluentAssertions.Execution;
 
 namespace Aosta.Jikan.Tests.ProducerTests;
@@ -16,7 +18,7 @@ public class GetProducerExternalLinksAsyncTests
         // Then
         await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
-    
+
     [Test]
     public async Task PierrotId_ShouldParsePierrot()
     {

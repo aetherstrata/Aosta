@@ -1,4 +1,6 @@
-﻿namespace Aosta.Jikan.Tests.PersonTests;
+﻿using Aosta.Jikan.Exceptions;
+
+namespace Aosta.Jikan.Tests.PersonTests;
 
 public class GetPersonPicturesAsyncTests
 {
