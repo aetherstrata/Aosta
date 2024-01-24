@@ -1,10 +1,7 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Common.Extensions;
@@ -30,13 +27,16 @@ public class ThemeViewModel : ReactiveObject
 
         var stored = (ThemeKey)_aosta.Realm.GetSetting<string>(Settings.AppTheme).OrDefault(ThemeKey.DEFAULT.Key);
 
-        _currentTheme = new LocalizableData<ThemeVariant>(stored.Theme, stored.Key);
+        _currentTheme = stored.Localize();
     }
 
     [Reactive]
     public ObservableCollection<LocalizableData<ThemeVariant>> AppThemes { get; set; } =
-        new(getLocalizedThemes().Select(x =>
-            new LocalizableData<ThemeVariant>(x.Key, x.Value)));
+    [
+        ThemeKey.DEFAULT.Localize(),
+        ThemeKey.DARK.Localize(),
+        ThemeKey.LIGHT.Localize()
+    ];
 
     private LocalizableData<ThemeVariant> _currentTheme;
     public LocalizableData<ThemeVariant> CurrentAppTheme
@@ -49,10 +49,10 @@ public class ThemeViewModel : ReactiveObject
             this.RaisePropertyChanging();
 
             _currentTheme = value;
-            _aosta.Realm.SetSetting(Settings.AppTheme, getThemeKey(value.Data));
+            _aosta.Realm.SetSetting(Settings.AppTheme, value.Data.GetThemeKey().Key);
 
             Application.Current!.RequestedThemeVariant = value.Data;
-            _aosta.Log.Information("Application theme set to {Variant}", getThemeKey(value.Data));
+            _aosta.Log.Information("Application theme set to {Variant}", value.Data.GetThemeKey().Key);
 
             this.RaisePropertyChanged();
         }
@@ -60,27 +60,21 @@ public class ThemeViewModel : ReactiveObject
 
     private void updateThemeList()
     {
-        var previous = CurrentAppTheme.Data ?? ThemeVariant.Default;
-        var updatedLocalizations = getLocalizedThemes();
-
-        AppThemes = new ObservableCollection<LocalizableData<ThemeVariant>>(updatedLocalizations
-            .Select(pair => new LocalizableData<ThemeVariant>(pair.Key, pair.Value)));
-
-        CurrentAppTheme = new LocalizableData<ThemeVariant>(previous, updatedLocalizations[previous]);
+        foreach (var entry in AppThemes)
+        {
+            entry.LocalizedName = entry.Data.GetLocalizedKey();
+        }
     }
+}
 
-    private static Dictionary<ThemeVariant, string> getLocalizedThemes() => new()
-    {
-        { ThemeVariant.Default, Localizer.Instance[ThemeKey.DEFAULT] },
-        { ThemeVariant.Dark, Localizer.Instance[ThemeKey.DARK] },
-        { ThemeVariant.Light, Localizer.Instance[ThemeKey.LIGHT] }
-    };
-
-    private static string getThemeKey(ThemeVariant theme) => theme.Key switch
+static file class ThemeVariantExtensions
+{
+    public static ThemeKey GetThemeKey(this ThemeVariant theme) => theme.Key switch
     {
         nameof(ThemeVariant.Dark) => ThemeKey.DARK,
         nameof(ThemeVariant.Light) => ThemeKey.LIGHT,
         _ => ThemeKey.DEFAULT
     };
 
+    public static string GetLocalizedKey(this ThemeVariant theme) => Localizer.Instance[theme.GetThemeKey()];
 }

@@ -3,6 +3,8 @@
 
 using System;
 
+using Aosta.Ava.Localization;
+
 using Avalonia.Styling;
 
 namespace Aosta.Ava.ViewModels.Settings;
@@ -27,9 +29,11 @@ internal sealed record ThemeKey
     public static readonly ThemeKey DARK = new(dark_key, ThemeVariant.Dark);
     public static readonly ThemeKey LIGHT = new(light_key, ThemeVariant.Light);
 
+    public LocalizableData<ThemeVariant> Localize() => new(Theme, Localizer.Instance[Key]);
+
     public static implicit operator string(ThemeKey key) => key.Key;
 
-    public static explicit operator ThemeKey(string key) => key switch
+    public static explicit operator ThemeKey(string? key) => key switch
     {
         dark_key => DARK,
         default_key => DEFAULT,
