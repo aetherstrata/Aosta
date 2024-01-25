@@ -12,13 +12,14 @@ using Realms;
 
 using Splat;
 
+using ILogger = Serilog.ILogger;
 using Setting = Aosta.Core.Database.Models.Setting;
 
 namespace Aosta.Ava.Extensions;
 
 public static class RealmExtensions
 {
-    private static readonly Serilog.ILogger s_Logger = Locator.Current.GetSafely<Serilog.ILogger>();
+    private static readonly ILogger s_Logger = Locator.Current.GetSafely<ILogger>();
 
     /// <summary>
     /// Convert the Realm projection into an observable list and subscribe to the collection changes.
@@ -82,6 +83,8 @@ public static class RealmExtensions
     /// <exception cref="InvalidCastException">The <see cref="RealmValue"/> could not be cast to <typeparamref name="T"/>.</exception>
     public static T? GetSetting<T>(this RealmAccess realm, string key)
     {
+        Locator.Current.GetSafely<ILogger>().Debug("Getting setting value for {Key}", key);
+
         return realm.Run(r =>
         {
             var setting = r.Find<Setting>(key);
@@ -128,6 +131,8 @@ public static class RealmExtensions
                 r.Write(() => setting.Value = value);
             }
         });
+
+        Locator.Current.GetSafely<ILogger>().Debug("Setting setting value for {Key}", key);
 
         return realm;
     }

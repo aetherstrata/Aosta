@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.ViewModels.Card;
+using Aosta.Ava.ViewModels.Settings;
 using Aosta.Jikan;
 
 using ReactiveUI;

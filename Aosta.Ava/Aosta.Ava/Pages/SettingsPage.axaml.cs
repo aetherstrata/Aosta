@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using Aosta.Ava.ViewModels;
+using Aosta.Ava.ViewModels.Settings;
 
 using Avalonia.ReactiveUI;
 

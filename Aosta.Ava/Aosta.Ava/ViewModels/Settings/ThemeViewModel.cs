@@ -1,14 +1,22 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
+
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
+using Aosta.Ava.Models;
 using Aosta.Common.Extensions;
 using Aosta.Core;
 
 using Avalonia;
-using Avalonia.Styling;
+
+using DynamicData.Binding;
 
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -17,64 +25,40 @@ using Splat;
 
 namespace Aosta.Ava.ViewModels.Settings;
 
-public class ThemeViewModel : ReactiveObject
+internal class ThemeViewModel : ReactiveObject
 {
     private readonly AostaDotNet _aosta = Locator.Current.GetSafely<AostaDotNet>();
 
     internal ThemeViewModel()
     {
-        Localizer.Instance.PropertyChanged += (_, _) => updateThemeList();
-
-        var stored = (ThemeKey)_aosta.Realm.GetSetting<string>(Settings.AppTheme).OrDefault(ThemeKey.DEFAULT.Key);
+        var stored = ThemeKey.Load().OrDefault(ThemeKey.DEFAULT);
 
         _currentTheme = stored.Localize();
     }
 
     [Reactive]
-    public ObservableCollection<LocalizableData<ThemeVariant>> AppThemes { get; set; } =
+    public ObservableCollection<LocalizedData<ThemeKey>> AppThemes { get; set; } =
     [
         ThemeKey.DEFAULT.Localize(),
         ThemeKey.DARK.Localize(),
         ThemeKey.LIGHT.Localize()
     ];
 
-    private LocalizableData<ThemeVariant> _currentTheme;
-    public LocalizableData<ThemeVariant> CurrentAppTheme
+    private LocalizedData<ThemeKey> _currentTheme;
+
+    public LocalizedData<ThemeKey> CurrentAppTheme
     {
         get => _currentTheme;
         set
         {
-            if (_currentTheme.Data.Equals(value.Data)) return;
+            if (!_currentTheme.Data.Equals(value.Data))
+            {
+                value.Data.Save();
+                Application.Current!.RequestedThemeVariant = value.Data.Theme;
+                _aosta.Log.Information("Application theme set to {Variant}", value.Data.Key);
+            }
 
-            this.RaisePropertyChanging();
-
-            _currentTheme = value;
-            _aosta.Realm.SetSetting(Settings.AppTheme, value.Data.GetThemeKey().Key);
-
-            Application.Current!.RequestedThemeVariant = value.Data;
-            _aosta.Log.Information("Application theme set to {Variant}", value.Data.GetThemeKey().Key);
-
-            this.RaisePropertyChanged();
+            this.RaiseAndSetIfChanged(ref _currentTheme, value);
         }
     }
-
-    private void updateThemeList()
-    {
-        foreach (var entry in AppThemes)
-        {
-            entry.LocalizedName = entry.Data.GetLocalizedKey();
-        }
-    }
-}
-
-static file class ThemeVariantExtensions
-{
-    public static ThemeKey GetThemeKey(this ThemeVariant theme) => theme.Key switch
-    {
-        nameof(ThemeVariant.Dark) => ThemeKey.DARK,
-        nameof(ThemeVariant.Light) => ThemeKey.LIGHT,
-        _ => ThemeKey.DEFAULT
-    };
-
-    public static string GetLocalizedKey(this ThemeVariant theme) => Localizer.Instance[theme.GetThemeKey()];
 }

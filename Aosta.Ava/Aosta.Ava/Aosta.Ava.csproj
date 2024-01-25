@@ -20,6 +20,7 @@
         <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.0.6" />
         <PackageReference Include="FluentAvaloniaUI" Version="2.0.4" />
         <PackageReference Include="ReactiveUI.Fody" Version="19.5.39" />
+        <PackageReference Include="Splat.Serilog" Version="14.8.12" />
     </ItemGroup>
 
     <ItemGroup>

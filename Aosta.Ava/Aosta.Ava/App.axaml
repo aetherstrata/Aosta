@@ -2,12 +2,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:Aosta.Ava"
              xmlns:styling="clr-namespace:FluentAvalonia.Styling;assembly=FluentAvalonia"
+             xmlns:localization="clr-namespace:Aosta.Ava.Localization"
              x:Class="Aosta.Ava.App"
              RequestedThemeVariant="Light">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
         <local:ViewLocator />
+        <DataTemplate DataType="{x:Type localization:ILocalized}">
+            <TextBlock Text="{Binding Localized}"/>
+        </DataTemplate>
     </Application.DataTemplates>
 
     <Application.Resources>

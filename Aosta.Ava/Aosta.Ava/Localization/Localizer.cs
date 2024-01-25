@@ -5,10 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+
+using Aosta.Ava.Extensions;
+
 using Avalonia.Platform;
+
+using Splat;
+
+using ILogger = Serilog.ILogger;
 
 namespace Aosta.Ava.Localization;
 
@@ -18,6 +26,18 @@ namespace Aosta.Ava.Localization;
 internal sealed class Localizer : INotifyPropertyChanged, ILocalizer
 {
     public static Localizer Instance { get; } = new();
+
+    private Localizer()
+    {
+        PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == indexer_name)
+            {
+                Locator.Current.GetSafely<ILogger>()
+                    .Information("Interface language changed to {Lang}", Language.GetLanguageCode());
+            }
+        };
+    }
 
     private const string indexer_name = "Item";
     private const string indexer_array_name = "Item[]";
@@ -64,7 +84,7 @@ internal sealed class Localizer : INotifyPropertyChanged, ILocalizer
             // Try to get the english value before giving up
             return _fallback.TryGetValue(key, out string? fallbackRes)
                 ? fallbackRes.Replace("\\n", "\n")
-                : $"Could not find string {Language}:{key}";
+                : $"{{ {Language} : {key} }}";
         }
     }
 

@@ -5,20 +5,12 @@ using System;
 using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Markup.Xaml.MarkupExtensions.CompiledBindings;
 
 namespace Aosta.Ava.Localization;
 
 internal class LocalizeExtension : MarkupExtension
 {
-    public LocalizeExtension(string key)
-    {
-        Key = key;
-    }
-
-    public LocalizeExtension()
-    {
-    }
-
     public string Key { get; set; } = string.Empty;
 
     public override object ProvideValue(IServiceProvider serviceProvider)
@@ -26,7 +18,7 @@ internal class LocalizeExtension : MarkupExtension
         var binding = new ReflectionBindingExtension($"[{Key}]")
         {
             Mode = BindingMode.OneWay,
-            Source = Localizer.Instance,
+            Source = Localizer.Instance
         };
 
         return binding.ProvideValue(serviceProvider);

@@ -2,10 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:Aosta.Ava.Controls">
     <Design.PreviewWith>
-        <controls:SettingSwitch />
+        <controls:SettingsEntry />
     </Design.PreviewWith>
 
-    <Style Selector="controls|SettingSwitch">
+    <Style Selector="controls|SettingsEntry">
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid ColumnDefinitions="*,Auto"

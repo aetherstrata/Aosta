@@ -5,9 +5,10 @@
              xmlns:localization="clr-namespace:Aosta.Ava.Localization"
              xmlns:controls="clr-namespace:Aosta.Ava.Controls"
              xmlns:viewModels="clr-namespace:Aosta.Ava.ViewModels"
+             xmlns:settings="clr-namespace:Aosta.Ava.ViewModels.Settings"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.SettingsPage"
-             x:DataType="viewModels:SettingsViewModel">
+             x:DataType="settings:SettingsViewModel">
     <ScrollViewer>
         <Grid RowDefinitions="Auto,Auto">
             <TextBlock Grid.Row="0"
@@ -18,20 +19,31 @@
             <TextBlock Grid.Row="0"
                        Margin="0, 5,5, 0"
                        HorizontalAlignment="Right"
-                       Text="{Binding AppVersion}"/>
+                       Text="{Binding AppVersion.Localized}"/>
             <Expander Grid.Row="1"
                       Header="{localization:Localize Key=SettingsPage.ApplicationSettings.Header}"
                       Margin="5,5"
                       BorderThickness="0">
                 <StackPanel Spacing="10"
                             Margin="20,0">
-                    <controls:SettingSwitch Entry="{localization:Localize Key=SettingsPage.AppTheme.Entry}">
-                        <controls:SettingSwitch.Action>
+                    <controls:SettingsEntry Entry="{localization:Localize Key=SettingsPage.AppTheme.Entry}">
+                        <controls:SettingsEntry.Action>
                             <ComboBox ItemsSource="{Binding ThemeManager.AppThemes}"
-                                      SelectedItem="{Binding ThemeManager.CurrentAppTheme}">
+                                      SelectedItem="{Binding ThemeManager.CurrentAppTheme}"/>
+                        </controls:SettingsEntry.Action>
+                    </controls:SettingsEntry>
+                    <controls:SettingsEntry Entry="{localization:Localize Key=SettingsPage.Language.Entry}">
+                        <controls:SettingsEntry.Action>
+                            <ComboBox ItemsSource="{Binding LanguageManager.Languages}"
+                                      SelectedItem="{Binding LanguageManager.CurrentLanguage}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
                             </ComboBox>
-                        </controls:SettingSwitch.Action>
-                    </controls:SettingSwitch>
+                        </controls:SettingsEntry.Action>
+                    </controls:SettingsEntry>
                 </StackPanel>
                 <Expander.HeaderTemplate>
                     <DataTemplate>

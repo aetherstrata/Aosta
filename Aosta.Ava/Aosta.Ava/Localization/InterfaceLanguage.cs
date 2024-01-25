@@ -5,13 +5,13 @@ using System.Diagnostics;
 
 namespace Aosta.Ava.Localization;
 
-internal enum InterfaceLanguage
+public enum InterfaceLanguage
 {
     English,
     Italian
 }
 
-internal static class UiLanguageExtensions
+public static class InterfaceLanguageExtensions
 {
     internal static string GetLanguageName(this InterfaceLanguage uiLangEnum) => uiLangEnum switch
     {

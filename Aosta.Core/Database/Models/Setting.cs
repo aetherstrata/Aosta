@@ -8,7 +8,7 @@ namespace Aosta.Core.Database.Models;
 public partial class Setting : IRealmObject
 {
     [PrimaryKey]
-    public string Key { get; private set; }
+    public string Key { get; private set; } = null!;
 
     public RealmValue Value { get; set; }
 

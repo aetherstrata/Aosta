@@ -8,10 +8,10 @@ using Avalonia.Controls.Primitives;
 namespace Aosta.Ava.Controls;
 
 // ReSharper disable InconsistentNaming //Avalonia convention
-public class SettingSwitch : TemplatedControl
+public class SettingsEntry : TemplatedControl
 {
     public static readonly StyledProperty<string> EntryProperty =
-        AvaloniaProperty.Register<SettingSwitch, string>(nameof(Entry),"Setting entry");
+        AvaloniaProperty.Register<SettingsEntry, string>(nameof(Entry),"Setting entry");
 
     public string Entry
     {
@@ -20,7 +20,7 @@ public class SettingSwitch : TemplatedControl
     }
 
     public static readonly StyledProperty<Control> ActionProperty =
-        AvaloniaProperty.Register<SettingSwitch, Control>(nameof(Action), new ToggleSwitch());
+        AvaloniaProperty.Register<SettingsEntry, Control>(nameof(Action), new ToggleSwitch());
 
     public Control Action
     {

@@ -28,7 +28,7 @@ public sealed class RealmAccess(ILogger log, RealmConfigurationBase config)
 
         T res = action(realm);
 
-        log.Debug("Performed an action on the database. Returning its output");
+        log.Verbose("Performed an action on the database. Returning its output");
 
         return res;
     }
@@ -43,7 +43,7 @@ public sealed class RealmAccess(ILogger log, RealmConfigurationBase config)
 
         action(realm);
 
-        log.Debug("Performed an action on the database");
+        log.Verbose("Performed an action on the database");
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public sealed class RealmAccess(ILogger log, RealmConfigurationBase config)
 
         realm.Write(action);
 
-        log.Debug("Performed a write operation on the database");
+        log.Verbose("Performed a write operation on the database");
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ public sealed class RealmAccess(ILogger log, RealmConfigurationBase config)
 
         T res = realm.Write(func);
 
-        log.Debug("Performed a write operation on the database. Returning its output");
+        log.Verbose("Performed a write operation on the database. Returning its output");
 
         return res;
     }
@@ -96,7 +96,7 @@ public sealed class RealmAccess(ILogger log, RealmConfigurationBase config)
                 // ReSharper disable once AccessToDisposedClosure (WriteAsync should be marked as [InstantHandle]).
                 await realm.WriteAsync(() => action(realm)).ConfigureAwait(false);
 
-            log.Debug("Performed an async write to the database. Emitting signal...");
+            log.Verbose("Performed an async write to the database. Emitting signal...");
 
             _pendingAsyncWrites.Signal();
         });
