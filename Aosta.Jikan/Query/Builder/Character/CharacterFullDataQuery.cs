@@ -5,16 +5,16 @@ namespace Aosta.Jikan.Query.Builder.Character;
 
 internal static class CharacterFullDataQuery
 {
-    private static string[] getEndpoint(long id) => new []
-    {
+    private static string[] getEndpoint(long id) =>
+    [
         JikanEndpointConsts.CHARACTERS,
         id.ToString(),
         JikanEndpointConsts.FULL
-    };
+    ];
 
-    internal static IQuery<BaseJikanResponse<CharacterResponseFull>> Create(long id)
+    internal static IQuery Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery<BaseJikanResponse<CharacterResponseFull>>(getEndpoint(id));
+        return new JikanQuery(getEndpoint(id));
     }
 }

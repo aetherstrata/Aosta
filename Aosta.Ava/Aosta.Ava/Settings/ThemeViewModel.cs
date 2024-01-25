@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
-using Aosta.Ava.Models;
 using Aosta.Common.Extensions;
 using Aosta.Core;
 
@@ -16,7 +15,7 @@ using ReactiveUI.Fody.Helpers;
 
 using Splat;
 
-namespace Aosta.Ava.ViewModels.Settings;
+namespace Aosta.Ava.Settings;
 
 internal class ThemeViewModel : ReactiveObject
 {

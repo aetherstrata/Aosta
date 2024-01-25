@@ -12,9 +12,9 @@ using Aosta.Core.Database;
 
 using Splat;
 
-namespace Aosta.Ava.Models;
+namespace Aosta.Ava.Settings;
 
-public record LanguageKey : ISetting<LanguageKey>
+public sealed record LanguageKey : ISetting<LanguageKey>
 {
     private const string setting_key = "AppLang";
 

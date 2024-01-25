@@ -15,15 +15,15 @@ public sealed class TaskLimiterConfiguration : IEquatable<TaskLimiterConfigurati
     public double MaximumRate => Count / TimeSpan.TotalSeconds;
 
     /// <summary> Disable task limiting </summary>
-    public static List<TaskLimiterConfiguration> None { get; } = new();
+    public static List<TaskLimiterConfiguration> None { get; } = [];
 
     /// <summary> Default task limiting configuration tuned for public endpoint (https://api.jikan.moe/v4/)</summary>
-    public static List<TaskLimiterConfiguration> Default { get; } = new()
-    {
-        new TaskLimiterConfiguration(1, TimeSpan.FromMilliseconds(300)),    // Space every request by at least 300ms
-        new TaskLimiterConfiguration(3, TimeSpan.FromMilliseconds(1000)),   // Rate limit for request bursts (3/s)
-        new TaskLimiterConfiguration(4, TimeSpan.FromMilliseconds(4000))    // Baseline limit (60/min)
-    };
+    public static List<TaskLimiterConfiguration> Default { get; } =
+    [
+        new TaskLimiterConfiguration(1, TimeSpan.FromMilliseconds(300)), // Space every request by at least 300ms
+        new TaskLimiterConfiguration(3, TimeSpan.FromMilliseconds(1000)), // Rate limit for request bursts (3/s)
+        new TaskLimiterConfiguration(4, TimeSpan.FromMilliseconds(4000))
+    ];
 
     public TaskLimiterConfiguration(int count, TimeSpan timeSpan)
     {

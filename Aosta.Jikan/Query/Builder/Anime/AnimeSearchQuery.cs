@@ -6,21 +6,21 @@ namespace Aosta.Jikan.Query.Builder.Anime;
 
 internal static class AnimeSearchQuery
 {
-    private static readonly string[] s_QueryEndpoint = new []
-    {
+    private static readonly string[] s_QueryEndpoint =
+    [
         JikanEndpointConsts.ANIME
-    };
+    ];
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(string query)
+    internal static IQuery Create(string query)
     {
         Guard.IsNotNullOrWhiteSpace(query, nameof(query));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(s_QueryEndpoint)
-            .WithParameter(QueryParameter.QUERY, query);
+        return new JikanQuery(s_QueryEndpoint)
+            .Add(QueryParameter.QUERY, query);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(AnimeSearchQueryParameters parameters)
+    internal static IQuery Create(AnimeSearchQueryParameters parameters)
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(s_QueryEndpoint)
-            .WithParameterRange(parameters);
+        return new JikanQuery(s_QueryEndpoint)
+            .AddRange(parameters);
     }
 }

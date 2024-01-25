@@ -5,16 +5,16 @@ namespace Aosta.Jikan.Query.Builder.Person;
 
 internal static class PersonVoiceActingRolesQuery
 {
-    private static string[] getEndpoint(long id) => new []
-    {
+    private static string[] getEndpoint(long id) =>
+    [
         JikanEndpointConsts.PEOPLE,
         id.ToString(),
         JikanEndpointConsts.VOICES
-    };
+    ];
 
-    internal static IQuery<BaseJikanResponse<ICollection<VoiceActingRoleResponse>>> Create(long id)
+    internal static IQuery Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery<BaseJikanResponse<ICollection<VoiceActingRoleResponse>>>(getEndpoint(id));
+        return new JikanQuery(getEndpoint(id));
     }
 }

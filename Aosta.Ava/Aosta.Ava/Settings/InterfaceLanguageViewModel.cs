@@ -4,12 +4,11 @@
 using System.Collections.Generic;
 
 using Aosta.Ava.Localization;
-using Aosta.Ava.Models;
 using Aosta.Common.Extensions;
 
 using ReactiveUI;
 
-namespace Aosta.Ava.ViewModels.Settings;
+namespace Aosta.Ava.Settings;
 
 internal class InterfaceLanguageViewModel : ReactiveObject
 {

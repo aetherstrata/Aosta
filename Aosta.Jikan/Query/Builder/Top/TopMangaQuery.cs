@@ -8,42 +8,42 @@ namespace Aosta.Jikan.Query.Builder.Top;
 internal static class TopMangaQuery
 {
     private static readonly string[] s_QueryEndpoint =
-    {
+    [
         JikanEndpointConsts.TOP_LIST,
         JikanEndpointConsts.MANGA
-    };
+    ];
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<MangaResponse>>> Create()
+    internal static IQuery Create()
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MangaResponse>>>(s_QueryEndpoint);
+        return new JikanQuery(s_QueryEndpoint);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<MangaResponse>>> Create(int page)
+    internal static IQuery Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MangaResponse>>>(s_QueryEndpoint)
-            .WithParameter(QueryParameter.PAGE, page);
+        return new JikanQuery(s_QueryEndpoint)
+            .Add(QueryParameter.PAGE, page);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<MangaResponse>>> Create(TopMangaFilter filter)
+    internal static IQuery Create(TopMangaFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MangaResponse>>>(s_QueryEndpoint)
-            .WithParameter(QueryParameter.FILTER, filter);
+        return new JikanQuery(s_QueryEndpoint)
+            .Add(QueryParameter.FILTER, filter);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<MangaResponse>>> Create(int page, TopMangaFilter filter)
+    internal static IQuery Create(int page, TopMangaFilter filter)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
         Guard.IsValidEnum(filter, nameof(filter));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MangaResponse>>>(s_QueryEndpoint)
-            .WithParameter(QueryParameter.PAGE, page)
-            .WithParameter(QueryParameter.FILTER, filter);
+        return new JikanQuery(s_QueryEndpoint)
+            .Add(QueryParameter.PAGE, page)
+            .Add(QueryParameter.FILTER, filter);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<MangaResponse>>> Create(TopMangaQueryParameters parameters)
+    internal static IQuery Create(TopMangaQueryParameters parameters)
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MangaResponse>>>(s_QueryEndpoint)
-            .WithParameterRange(parameters);
+        return new JikanQuery(s_QueryEndpoint)
+            .AddRange(parameters);
     }
 }

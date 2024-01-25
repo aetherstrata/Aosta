@@ -5,7 +5,7 @@ using System.Reflection;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
-using Aosta.Ava.Models;
+using Aosta.Ava.Settings;
 using Aosta.Ava.ViewModels;
 using Aosta.Common.Extensions;
 using Aosta.Core;

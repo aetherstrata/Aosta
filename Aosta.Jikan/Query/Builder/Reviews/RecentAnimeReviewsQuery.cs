@@ -6,20 +6,20 @@ namespace Aosta.Jikan.Query.Builder.Reviews;
 internal static class RecentAnimeReviewsQuery
 {
     private static readonly string[] s_QueryEndpoint =
-    {
+    [
         JikanEndpointConsts.REVIEWS,
         JikanEndpointConsts.ANIME
-    };
+    ];
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>> Create()
+    internal static IQuery Create()
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(s_QueryEndpoint);
+        return new JikanQuery(s_QueryEndpoint);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>> Create(int page)
+    internal static IQuery Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<ReviewResponse>>>(s_QueryEndpoint)
-            .WithParameter(QueryParameter.PAGE, page);
+        return new JikanQuery(s_QueryEndpoint)
+            .Add(QueryParameter.PAGE, page);
     }
 }

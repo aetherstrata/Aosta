@@ -7,34 +7,34 @@ namespace Aosta.Jikan.Query.Builder.Season;
 
 internal static class SeasonQuery
 {
-    private static string[] getEndpoint(int year, Jikan.Enums.Season season) => new []
-    {
+    private static string[] getEndpoint(int year, Jikan.Enums.Season season) =>
+    [
         JikanEndpointConsts.SEASONS,
         year.ToString(),
         season.StringValue()
-    };
+    ];
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(int year, Jikan.Enums.Season season)
+    internal static IQuery Create(int year, Jikan.Enums.Season season)
     {
-        Guard.IsValid(x => x is >= 1000 and < 10000, year, nameof(year));
+        Guard.IsValid(x => x is >= 1900 and < 2050, year, nameof(year));
         Guard.IsValidEnum(season, nameof(season));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(getEndpoint(year, season));
+        return new JikanQuery(getEndpoint(year, season));
     }
 
-    public static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(int year, Jikan.Enums.Season season, int page)
+    public static IQuery Create(int year, Jikan.Enums.Season season, int page)
     {
-        Guard.IsValid(x => x is >= 1000 and < 10000, year, nameof(year));
+        Guard.IsValid(x => x is >= 1900 and < 2050, year, nameof(year));
         Guard.IsValidEnum(season, nameof(season));
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(getEndpoint(year, season))
-            .WithParameter(QueryParameter.PAGE, page);
+        return new JikanQuery(getEndpoint(year, season))
+            .Add(QueryParameter.PAGE, page);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(int year, Jikan.Enums.Season season, SeasonQueryParameters parameters)
+    internal static IQuery Create(int year, Jikan.Enums.Season season, SeasonQueryParameters parameters)
     {
-        Guard.IsValid(x => x is >= 1000 and < 10000, year, nameof(year));
+        Guard.IsValid(x => x is >= 1900 and < 2050, year, nameof(year));
         Guard.IsValidEnum(season, nameof(season));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(getEndpoint(year, season))
-            .WithParameterRange(parameters);
+        return new JikanQuery(getEndpoint(year, season))
+            .AddRange(parameters);
     }
 }

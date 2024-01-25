@@ -5,16 +5,16 @@ namespace Aosta.Jikan.Query.Builder.Club;
 
 internal static class ClubRelationsQuery
 {
-    private static string[] getEndpoint(long id) => new []
-    {
+    private static string[] getEndpoint(long id) =>
+    [
         JikanEndpointConsts.CLUBS,
         id.ToString(),
         JikanEndpointConsts.RELATIONS
-    };
+    ];
 
-    internal static IQuery<BaseJikanResponse<ClubRelationsResponse>> Create(long id)
+    internal static IQuery Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery<BaseJikanResponse<ClubRelationsResponse>>(getEndpoint(id));
+        return new JikanQuery(getEndpoint(id));
     }
 }

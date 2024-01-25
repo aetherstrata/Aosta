@@ -6,7 +6,7 @@ using Aosta.Ava.Localization;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-namespace Aosta.Ava.ViewModels.Settings;
+namespace Aosta.Ava.Settings;
 
 public class SettingsViewModel : ReactiveObject, IRoutableViewModel
 {

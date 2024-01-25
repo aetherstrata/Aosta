@@ -7,26 +7,26 @@ namespace Aosta.Jikan.Query.Builder.Season;
 internal static class UpcomingSeasonQuery
 {
     private static readonly string[] s_QueryEndpoint =
-    {
+    [
         JikanEndpointConsts.SEASONS,
         JikanEndpointConsts.UPCOMING
-    };
+    ];
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create()
+    internal static IQuery Create()
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(s_QueryEndpoint);
+        return new JikanQuery(s_QueryEndpoint);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(int page)
+    internal static IQuery Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(s_QueryEndpoint)
-            .WithParameter(QueryParameter.PAGE, page);
+        return new JikanQuery(s_QueryEndpoint)
+            .Add(QueryParameter.PAGE, page);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>> Create(SeasonQueryParameters parameters)
+    internal static IQuery Create(SeasonQueryParameters parameters)
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeResponse>>>(s_QueryEndpoint)
-            .WithParameterRange(parameters);
+        return new JikanQuery(s_QueryEndpoint)
+            .AddRange(parameters);
     }
 }

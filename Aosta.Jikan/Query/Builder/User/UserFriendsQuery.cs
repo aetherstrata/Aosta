@@ -5,24 +5,24 @@ namespace Aosta.Jikan.Query.Builder.User;
 
 internal static class UserFriendsQuery
 {
-    private static string[] getEndpoint(string username) => new []
-    {
+    private static string[] getEndpoint(string username) =>
+    [
         JikanEndpointConsts.USERS,
         username,
         JikanEndpointConsts.FRIENDS
-    };
+    ];
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<FriendResponse>>> Create(string username)
+    internal static IQuery Create(string username)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<FriendResponse>>>(getEndpoint(username));
+        return new JikanQuery(getEndpoint(username));
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<FriendResponse>>> Create(string username, int page)
+    internal static IQuery Create(string username, int page)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<FriendResponse>>>(getEndpoint(username))
-            .WithParameter(QueryParameter.PAGE, page);
+        return new JikanQuery(getEndpoint(username))
+            .Add(QueryParameter.PAGE, page);
     }
 }

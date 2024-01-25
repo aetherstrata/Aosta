@@ -1,8 +1,10 @@
+using System.Collections;
+
 using Aosta.Common.Extensions;
 
 namespace Aosta.Jikan.Query;
 
-internal sealed class JikanQuery<T> : IQuery<T>
+internal sealed class JikanQuery : IQuery, IReadOnlySet<IQueryParameter>
 {
     /// <summary>
     /// Query endpoint
@@ -12,13 +14,13 @@ internal sealed class JikanQuery<T> : IQuery<T>
     /// <summary>
     /// Query parameters
     /// </summary>
-    private readonly JikanQueryParameterSet _parameters = new();
+    private readonly JikanQueryParameterSet _parameters = [];
 
     /// <summary>
     /// Initialize the query using endpoint route.
     /// </summary>
     /// <param name="routeSections">Route sections to be joined to form the endpoint url.</param>
-    internal JikanQuery(IEnumerable<string> routeSections)
+    internal JikanQuery(string[] routeSections)
     {
         _endpoint = string.Join("/", routeSections);
     }
@@ -30,7 +32,7 @@ internal sealed class JikanQuery<T> : IQuery<T>
     /// <param name="value">Parameter value</param>
     /// <typeparam name="TParam">Enum type</typeparam>
     /// <returns>The updated query</returns>
-    internal JikanQuery<T> WithParameter<TParam>(string name, TParam value) where TParam : struct, Enum
+    internal JikanQuery Add<TParam>(string name, TParam value) where TParam : struct, Enum
     {
         _parameters.Add(name, value);
         return this;
@@ -42,21 +44,21 @@ internal sealed class JikanQuery<T> : IQuery<T>
     /// <param name="name">Parameter name</param>
     /// <param name="value">Parameter value</param>
     /// <returns>The updated query</returns>
-    internal JikanQuery<T> WithParameter(string name, bool value)
+    internal JikanQuery Add(string name, bool value)
     {
         _parameters.Add(name, value);
         return this;
     }
 
-    /// <inheritdoc cref="WithParameter(string,bool)"/>
-    internal JikanQuery<T> WithParameter(string name, string value)
+    /// <inheritdoc cref="Add(string,bool)"/>
+    internal JikanQuery Add(string name, string value)
     {
         _parameters.Add(name, value);
         return this;
     }
 
-    /// <inheritdoc cref="WithParameter(string,bool)"/>
-    internal JikanQuery<T> WithParameter(string name, int value)
+    /// <inheritdoc cref="Add(string,bool)"/>
+    internal JikanQuery Add(string name, int value)
     {
         _parameters.Add(name, value);
         return this;
@@ -67,7 +69,7 @@ internal sealed class JikanQuery<T> : IQuery<T>
     /// </summary>
     /// <param name="parameters">Range of query parameters</param>
     /// <returns>The updated query</returns>
-    internal JikanQuery<T> WithParameterRange(JikanQueryParameterSet parameters)
+    internal JikanQuery AddRange(JikanQueryParameterSet parameters)
     {
         parameters.ForEach(_parameters.Add);
         return this;
@@ -81,4 +83,24 @@ internal sealed class JikanQuery<T> : IQuery<T>
     {
         return _endpoint + _parameters;
     }
+
+    public IEnumerator<IQueryParameter> GetEnumerator()
+    {
+        return _parameters.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public int Count => _parameters.Count;
+    public bool Contains(IQueryParameter item) => _parameters.Contains(item);
+
+    public bool IsProperSubsetOf(IEnumerable<IQueryParameter> other) => _parameters.IsProperSubsetOf(other);
+    public bool IsProperSupersetOf(IEnumerable<IQueryParameter> other) => _parameters.IsProperSupersetOf(other);
+    public bool IsSubsetOf(IEnumerable<IQueryParameter> other) => _parameters.IsSubsetOf(other);
+    public bool IsSupersetOf(IEnumerable<IQueryParameter> other) => _parameters.IsSupersetOf(other);
+    public bool Overlaps(IEnumerable<IQueryParameter> other) => _parameters.Overlaps(other);
+    public bool SetEquals(IEnumerable<IQueryParameter> other) => _parameters.SetEquals(other);
 }

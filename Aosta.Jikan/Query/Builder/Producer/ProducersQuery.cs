@@ -7,25 +7,25 @@ namespace Aosta.Jikan.Query.Builder.Producer;
 internal static class ProducersQuery
 {
     private static readonly string[] s_QueryEndpoint =
-    {
+    [
         JikanEndpointConsts.PRODUCERS
-    };
+    ];
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<ProducerResponse>>> Create()
+    internal static IQuery Create()
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<ProducerResponse>>>(s_QueryEndpoint);
+        return new JikanQuery(s_QueryEndpoint);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<ProducerResponse>>> Create(int page)
+    internal static IQuery Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<ProducerResponse>>>(s_QueryEndpoint)
-            .WithParameter(QueryParameter.PAGE, page);
+        return new JikanQuery(s_QueryEndpoint)
+            .Add(QueryParameter.PAGE, page);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<ProducerResponse>>> Create(ProducersQueryParameters parameters)
+    internal static IQuery Create(ProducersQueryParameters parameters)
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<ProducerResponse>>>(s_QueryEndpoint)
-            .WithParameterRange(parameters);
+        return new JikanQuery(s_QueryEndpoint)
+            .AddRange(parameters);
     }
 }

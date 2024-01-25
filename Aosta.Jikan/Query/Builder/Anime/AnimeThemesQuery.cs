@@ -5,16 +5,16 @@ namespace Aosta.Jikan.Query.Builder.Anime;
 
 internal static class AnimeThemesQuery
 {
-    private static string[] getEndpoint(long id) => new []
-    {
+    private static string[] getEndpoint(long id) =>
+    [
         JikanEndpointConsts.ANIME,
         id.ToString(),
         JikanEndpointConsts.THEMES
-    };
+    ];
 
-    internal static IQuery<BaseJikanResponse<AnimeThemesResponse>> Create(long id)
+    internal static IQuery Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery<BaseJikanResponse<AnimeThemesResponse>>(getEndpoint(id));
+        return new JikanQuery(getEndpoint(id));
     }
 }

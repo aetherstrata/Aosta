@@ -5,24 +5,24 @@ namespace Aosta.Jikan.Query.Builder.Anime;
 
 internal static class AnimeEpisodesQuery
 {
-    private static string[] getEndpoint(long id) => new []
-    {
+    private static string[] getEndpoint(long id) =>
+    [
         JikanEndpointConsts.ANIME,
         id.ToString(),
         JikanEndpointConsts.EPISODES
-    };
+    ];
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeEpisodeResponse>>> Create(long id)
+    internal static IQuery Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeEpisodeResponse>>>(getEndpoint(id));
+        return new JikanQuery(getEndpoint(id));
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<AnimeEpisodeResponse>>> Create(long id, int page)
+    internal static IQuery Create(long id, int page)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<AnimeEpisodeResponse>>>(getEndpoint(id))
-            .WithParameter(QueryParameter.PAGE, page);
+        return new JikanQuery(getEndpoint(id))
+            .Add(QueryParameter.PAGE, page);
     }
 }

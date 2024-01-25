@@ -9,7 +9,7 @@ using Avalonia.Styling;
 
 using Splat;
 
-namespace Aosta.Ava.Models;
+namespace Aosta.Ava.Settings;
 
 public sealed record ThemeKey : ISetting<ThemeKey>, ILocalizable<ThemeKey>
 {

@@ -7,41 +7,41 @@ namespace Aosta.Jikan.Query.Builder.Magazine;
 internal static class MagazinesQuery
 {
     private static readonly string[] s_QueryEndpoint =
-    {
+    [
         JikanEndpointConsts.MAGAZINES
-    };
+    ];
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<MagazineResponse>>> Create()
+    internal static IQuery Create()
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MagazineResponse>>>(s_QueryEndpoint);
+        return new JikanQuery(s_QueryEndpoint);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<MagazineResponse>>> Create(int page)
+    internal static IQuery Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MagazineResponse>>>(s_QueryEndpoint)
-            .WithParameter(QueryParameter.PAGE, page);
+        return new JikanQuery(s_QueryEndpoint)
+            .Add(QueryParameter.PAGE, page);
     }
 
-    public static IQuery<PaginatedJikanResponse<ICollection<MagazineResponse>>> Create(string query)
+    public static IQuery Create(string query)
     {
         Guard.IsNotNullOrWhiteSpace(query, nameof(query));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MagazineResponse>>>(s_QueryEndpoint)
-            .WithParameter(QueryParameter.QUERY, query);
+        return new JikanQuery(s_QueryEndpoint)
+            .Add(QueryParameter.QUERY, query);
     }
 
-    public static IQuery<PaginatedJikanResponse<ICollection<MagazineResponse>>> Create(string query, int page)
+    public static IQuery Create(string query, int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
         Guard.IsNotNullOrWhiteSpace(query, nameof(query));
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MagazineResponse>>>(s_QueryEndpoint)
-            .WithParameter(QueryParameter.PAGE, page)
-            .WithParameter(QueryParameter.QUERY, query);
+        return new JikanQuery(s_QueryEndpoint)
+            .Add(QueryParameter.PAGE, page)
+            .Add(QueryParameter.QUERY, query);
     }
 
-    internal static IQuery<PaginatedJikanResponse<ICollection<MagazineResponse>>> Create(MagazinesQueryParameters parameters)
+    internal static IQuery Create(MagazinesQueryParameters parameters)
     {
-        return new JikanQuery<PaginatedJikanResponse<ICollection<MagazineResponse>>>(s_QueryEndpoint)
-            .WithParameterRange(parameters);
+        return new JikanQuery(s_QueryEndpoint)
+            .AddRange(parameters);
     }
 }

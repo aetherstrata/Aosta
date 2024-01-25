@@ -2,13 +2,13 @@ using Aosta.Jikan.Models.Base;
 using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Query.Parameters;
 
-namespace Aosta.Jikan.Query.Builder.User;
+namespace Aosta.Jikan.Query;
 
-internal static class UserSearchQuery
+internal static class ClubSearchQuery
 {
     private static readonly string[] s_QueryEndpoint =
     [
-        JikanEndpointConsts.USERS
+        JikanEndpointConsts.CLUBS
     ];
 
     internal static IQuery Create(string query)
@@ -18,7 +18,7 @@ internal static class UserSearchQuery
             .Add(QueryParameter.QUERY, query);
     }
 
-    internal static IQuery Create(UserSearchQueryParameters parameters)
+    internal static IQuery Create(ClubSearchQueryParameters parameters)
     {
         return new JikanQuery(s_QueryEndpoint)
             .AddRange(parameters);

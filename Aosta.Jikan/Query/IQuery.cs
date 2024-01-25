@@ -4,8 +4,7 @@ namespace Aosta.Jikan.Query;
 /// <summary>
 /// An encapsulation of an HTTP request
 /// </summary>
-/// <typeparam name="T">Return type of the query</typeparam>
-internal interface IQuery<out T>
+internal interface IQuery
 {
     /// <summary>
     /// Get the query string

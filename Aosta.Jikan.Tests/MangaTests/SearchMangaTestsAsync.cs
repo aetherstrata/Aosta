@@ -338,7 +338,7 @@ public class SearchMangaAsyncTests
 			.SetType(mangaType.GetValueOrDefault())
 			.SetOrder(orderBy.GetValueOrDefault())
 			.SetSortDirection(sortDirection.GetValueOrDefault())
-			.SetGenres(genreId.HasValue ? new long[] { genreId.Value } : Array.Empty<long>());
+			.SetGenres(genreId.HasValue ? [genreId.Value] : Array.Empty<long>());
 
 		// When
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(searchConfig));
