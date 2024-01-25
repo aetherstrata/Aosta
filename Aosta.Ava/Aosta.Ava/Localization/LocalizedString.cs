@@ -1,8 +1,6 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
-
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -27,4 +25,6 @@ public sealed class LocalizedString : ReactiveObject, ILocalized
 
         Localizer.Instance.PropertyChanged += (_, _) => Localized = string.Format(Localizer.Instance[key], args);
     }
+
+    public override string ToString() => Localized;
 }

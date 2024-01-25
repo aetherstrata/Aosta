@@ -5,7 +5,6 @@ using System;
 using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
-using Avalonia.Markup.Xaml.MarkupExtensions.CompiledBindings;
 
 namespace Aosta.Ava.Localization;
 

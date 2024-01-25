@@ -1,12 +1,7 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
@@ -15,8 +10,6 @@ using Aosta.Common.Extensions;
 using Aosta.Core;
 
 using Avalonia;
-
-using DynamicData.Binding;
 
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;

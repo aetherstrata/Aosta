@@ -12,10 +12,7 @@ using Aosta.Core;
 using Aosta.Jikan;
 
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Controls.Templates;
-using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 
 using ReactiveUI;
@@ -35,12 +32,6 @@ public partial class App : Application
 
     public override void Initialize()
     {
-        DataTemplates.Add(new FuncDataTemplate<ILocalized>(_ => true,
-            _ => new TextBlock
-            {
-                [!TextBlock.TextProperty] = new Binding(nameof(ILocalized.Localized))
-            }));
-
         AvaloniaXamlLoader.Load(this);
     }
 

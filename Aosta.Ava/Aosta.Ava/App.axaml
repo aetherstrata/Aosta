@@ -8,10 +8,10 @@
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
-        <local:ViewLocator />
-        <DataTemplate DataType="{x:Type localization:ILocalized}">
+        <DataTemplate DataType="localization:ILocalized">
             <TextBlock Text="{Binding Localized}"/>
         </DataTemplate>
+        <local:ViewLocator />
     </Application.DataTemplates>
 
     <Application.Resources>
