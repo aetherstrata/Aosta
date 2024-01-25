@@ -79,8 +79,8 @@ public static class LogcatConfigurationExtensions
         LoggingLevelSwitch? levelSwitch = null,
         IFormatProvider? formatProvider = null)
     {
-        if (sinkConfiguration is null) throw new ArgumentNullException(nameof(sinkConfiguration));
-        if (outputTemplate is null) throw new ArgumentNullException(nameof(outputTemplate));
+        ArgumentNullException.ThrowIfNull(sinkConfiguration);
+        ArgumentNullException.ThrowIfNull(outputTemplate);
 
         var formatter = new MessageTemplateTextFormatter(outputTemplate, formatProvider);
 
@@ -107,8 +107,8 @@ public static class LogcatConfigurationExtensions
         LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum,
         LoggingLevelSwitch? levelSwitch = null)
     {
-        if (sinkConfiguration is null) throw new ArgumentNullException(nameof(sinkConfiguration));
-        if (formatter is null) throw new ArgumentNullException(nameof(formatter));
+        ArgumentNullException.ThrowIfNull(sinkConfiguration);
+        ArgumentNullException.ThrowIfNull(formatter);
 
         return sinkConfiguration.Sink(new LogcatSink(tag, formatter, restrictedToMinimumLevel, levelSwitch));
     }
