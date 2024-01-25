@@ -14,7 +14,7 @@ internal class QueryTests
         "items"
     ];
 
-    private IQuery _query;
+    private JikanQuery _query;
 
     [Test]
     public void GetQuery_shouldReturnEndpoint_whenNoParam()

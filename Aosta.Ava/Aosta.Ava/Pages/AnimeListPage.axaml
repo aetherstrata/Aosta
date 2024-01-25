@@ -18,7 +18,7 @@
                            Grid.Column="1">
             <fluent:CommandBar.PrimaryCommands>
                 <fluent:CommandBarButton IsCompact="True"
-                                         IconSource="Search"></fluent:CommandBarButton>
+                                         IconSource="Search" />
             </fluent:CommandBar.PrimaryCommands>
         </fluent:CommandBar>
         <ListBox Grid.Row="1"

@@ -14,7 +14,7 @@
             <Setter Property="Transitions">
                 <Transitions>
 
-                    <DoubleTransition Property="Height" Duration="0:0:0.1"></DoubleTransition>
+                    <DoubleTransition Property="Height" Duration="0:0:0.1" />
                 </Transitions>
             </Setter>
         </Style>

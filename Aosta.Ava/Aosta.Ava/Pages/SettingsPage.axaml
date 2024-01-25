@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:localization="clr-namespace:Aosta.Ava.Localization"
              xmlns:controls="clr-namespace:Aosta.Ava.Controls"
-             xmlns:viewModels="clr-namespace:Aosta.Ava.ViewModels"
              xmlns:settings="clr-namespace:Aosta.Ava.Settings"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.SettingsPage"
@@ -48,7 +47,7 @@
                 <Expander.HeaderTemplate>
                     <DataTemplate>
                         <TextBlock FontSize="18"
-                                   FontWeight="Bold"></TextBlock>
+                                   FontWeight="Bold" />
                     </DataTemplate>
                 </Expander.HeaderTemplate>
             </Expander>
@@ -56,7 +55,7 @@
             <Grid.Styles>
                 <Style Selector="Expander">
                     <Setter Property="IsExpanded" Value="True"/>
-                    <Setter Property="BorderThickness" Value="0"></Setter>
+                    <Setter Property="BorderThickness" Value="0" />
                 </Style>
                 <Style Selector="Expander /template/ ToggleButton#PART_toggle">
                     <Setter Property="BorderThickness" Value="0"/>

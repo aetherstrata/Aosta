@@ -14,8 +14,7 @@
 
     <Window.KeyBindings>
         <KeyBinding Gesture="CTRL+Q"
-                    Command="{Binding QuitProgram}">
-        </KeyBinding>
+                    Command="{Binding QuitProgram}" />
     </Window.KeyBindings>
 
 </Window>
