@@ -10,9 +10,10 @@
         <!-- Set Defaults -->
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid ColumnDefinitions="Auto,5,*,5,Auto"
-                      Margin="10,5">
-                    <Button Grid.Column="0"
+                <Grid ColumnDefinitions="10,Auto,5,*,5,Auto,10"
+                      Background="{TemplateBinding Background}">
+                    <Button Grid.Column="1"
+                            Margin="0,5"
                             IsVisible="{TemplateBinding IsBackEnabled}"
                             Command="{TemplateBinding BackCommand}"
                             Theme="{StaticResource TransparentButton}">
@@ -20,12 +21,14 @@
                                          FontFamily="{StaticResource SymbolThemeFontFamily}"
                                          FontSize="20"/>
                     </Button>
-                    <TextBlock Grid.Column="2"
+                    <TextBlock Grid.Column="3"
+                               Margin="0,5"
                                Text="{TemplateBinding Title}"
                                FontWeight="Bold"
                                FontSize="24"
                                VerticalAlignment="Center"/>
-                    <Button Grid.Column="4"
+                    <Button Grid.Column="5"
+                            Margin="0,5"
                             IsVisible="{TemplateBinding IsMenuEnabled}"
                             Command="{TemplateBinding MenuCommand}"
                             Theme="{StaticResource TransparentButton}">

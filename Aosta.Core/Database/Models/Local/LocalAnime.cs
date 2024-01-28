@@ -40,9 +40,9 @@ public partial class LocalAnime : IEmbeddedObject
         set => _season = (int?)value;
     }
 
-    /// The title of this content
+    /// The local title of this content
     [Indexed]
-    public string? DefaultTitle { get; set; }
+    public string? Title { get; set; }
 
     /// The description of this content
     public string? Synopsis { get; set; }

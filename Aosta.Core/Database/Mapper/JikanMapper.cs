@@ -16,10 +16,12 @@ namespace Aosta.Core.Database.Mapper;
 public static partial class JikanMapper
 {
     [MapProperty(nameof(AnimeResponse.MalId), nameof(JikanAnime.ID))]
-    public static partial JikanAnime ToJikanAnime(this AnimeResponse source);
+    public static partial JikanAnime ToModel(this AnimeResponse source);
 
     [MapProperty(nameof(AnimeResponse.MalId), nameof(JikanAnime.ID))]
-    public static partial JikanAnime ToJikanAnime(this AnimeResponseFull source);
+    public static partial JikanAnime ToModel(this AnimeResponseFull source);
+
+    public static partial JikanEpisode ToModel(this AnimeEpisodeResponse source);
 
     public static Anime ToRealmModel(this JikanAnime source)
     {
@@ -29,17 +31,6 @@ public static partial class JikanMapper
             Local = new LocalAnime()
         };
     }
-
-    internal static ContentType ToLocalType(this AnimeType type) => type switch
-    {
-        AnimeType.TV => ContentType.TV,
-        AnimeType.OVA => ContentType.OVA,
-        AnimeType.Movie => ContentType.Movie,
-        AnimeType.Special => ContentType.Special,
-        AnimeType.ONA => ContentType.ONA,
-        AnimeType.Music => ContentType.Music,
-        _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-    };
 
     internal static AnimeBroadcast ToRealmModel(this AnimeBroadcastResponse source)
     {
@@ -62,4 +53,18 @@ public static partial class JikanMapper
     internal static partial MalUrl ToRealmModel(this MalUrlResponse source);
     internal static partial TitleEntry ToRealmModel(this TitleEntryResponse source);
     internal static partial YouTubeVideo ToRealmModel(this AnimeTrailerResponse source);
+
+    private static ContentType toLocalType(this AnimeType type) => type switch
+    {
+        AnimeType.TV => ContentType.TV,
+        AnimeType.TVSpecial => ContentType.Special,
+        AnimeType.Special => ContentType.Special,
+        AnimeType.OVA => ContentType.OVA,
+        AnimeType.ONA => ContentType.ONA,
+        AnimeType.Movie => ContentType.Movie,
+        AnimeType.Music => ContentType.Music,
+        AnimeType.PromotionalVideo => ContentType.Promotional,
+        AnimeType.CommercialMessage => ContentType.Promotional,
+        _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+    };
 }

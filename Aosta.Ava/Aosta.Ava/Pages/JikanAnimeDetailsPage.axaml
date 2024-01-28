@@ -7,14 +7,29 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.JikanAnimeDetailsPage"
              x:DataType="viewModels:JikanAnimeDetailsViewModel">
-    <Grid RowDefinitions="Auto,*"
-          ColumnDefinitions="Auto,*">
-        <local:TitleBar Grid.Row="0"
-                        Grid.ColumnSpan="2"
-                        IsBackEnabled="True"
-                        BackCommand="{Binding GoBack}"
-                        Title="{Binding Title}"/>
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Hidden">
+        <Grid RowDefinitions="Auto,*">
+            <local:TitleBar Grid.Row="0"
+                            IsBackEnabled="True"
+                            BackCommand="{Binding GoBack}"
+                            Title="{Binding Title}"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Title}"/>
-    </Grid>
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Episodes"
+                           FontSize="18"
+                           FontWeight="Bold"/>
+                <RefreshContainer PullDirection="BottomToTop"
+                                  RefreshRequested="onEpisodesRefreshRequested">
+                        <ListBox ItemsSource="{Binding Episodes}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding MalId}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                </RefreshContainer>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

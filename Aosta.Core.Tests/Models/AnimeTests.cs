@@ -34,7 +34,7 @@ public class AnimeTests
         _core.AddAnime();
         _core.Realm.Write(r => r.First<Anime>().Local = new LocalAnime()
         {
-            DefaultTitle = "Awesome Title"
+            Title = "Awesome Title"
         });
         Assert.That(_core.Realm.Run(r => r.First<Anime>().DefaultTitle), Is.EqualTo("Awesome Title"));
     }

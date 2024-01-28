@@ -5,7 +5,7 @@
              xmlns:localization="clr-namespace:Aosta.Ava.Localization"
              xmlns:controls="clr-namespace:Aosta.Ava.Controls"
              xmlns:settings="clr-namespace:Aosta.Ava.Settings"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.SettingsPage"
              x:DataType="settings:SettingsViewModel">
     <ScrollViewer>

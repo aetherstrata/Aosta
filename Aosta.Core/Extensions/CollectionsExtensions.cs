@@ -7,8 +7,8 @@ namespace Aosta.Core.Extensions;
 
 public static class CollectionExtensions
 {
-    public static string GetDefault(this ICollection<TitleEntry> entries)
+    public static string? GetDefault(this ICollection<TitleEntry> entries)
     {
-        return entries.First(entry => entry.Type == "Default").Title;
+        return entries.FirstOrDefault(entry => entry.Type == "Default")?.Title;
     }
 }

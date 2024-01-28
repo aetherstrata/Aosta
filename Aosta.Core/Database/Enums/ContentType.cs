@@ -7,5 +7,6 @@ public enum ContentType
     ONA,
     OVA,
     Special,
-    TV
+    TV,
+    Promotional
 }

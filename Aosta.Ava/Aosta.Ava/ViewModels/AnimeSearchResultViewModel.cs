@@ -38,7 +38,7 @@ public class AnimeSearchResultViewModel : ReactiveObject
 
             var realmTask = _aosta.Realm.WriteAsync(r =>
             {
-                var jikanMetadata = response.ToJikanAnime();
+                var jikanMetadata = response.ToModel();
 
                 r.Add(jikanMetadata.ToRealmModel());
             });
