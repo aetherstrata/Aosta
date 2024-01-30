@@ -20,12 +20,12 @@ public class SerilogSink(ILogger log) : ILogSink
 
     public void Log(LogEventLevel level, string area, object? source, string messageTemplate)
     {
-        log.Write(toSerilog(level), messageTemplate);
+        log.Write(toSerilog(level), $"{area} :: {messageTemplate}");
     }
 
     public void Log(LogEventLevel level, string area, object? source, string messageTemplate, params object?[] propertyValues)
     {
-        log.Write(toSerilog(level), messageTemplate, propertyValues);
+        log.Write(toSerilog(level), $"{area} :: {messageTemplate}", propertyValues);
     }
 
     private static Serilog.Events.LogEventLevel toSerilog(LogEventLevel level) => level switch
