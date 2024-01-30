@@ -1,6 +1,3 @@
-using Aosta.Jikan.Models.Base;
-using Aosta.Jikan.Models.Response;
-
 namespace Aosta.Jikan.Query.Builder.Club;
 
 internal static class ClubMembersQuery

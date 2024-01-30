@@ -1,5 +1,3 @@
-using Aosta.Jikan.Models.Base;
-using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Query.Parameters;
 
 namespace Aosta.Jikan.Query.Builder.Character;
