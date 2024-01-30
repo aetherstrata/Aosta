@@ -24,12 +24,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Aosta.Core\Aosta.Core.csproj" />
+      <ProjectReference Include="..\..\Aosta.Data\Aosta.Data.csproj" />
       <ProjectReference Include="..\..\Aosta.Jikan\Aosta.Jikan.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Assets\Fonts\" />
-      <Folder Include="ViewModels\Settings\" />
     </ItemGroup>
 </Project>

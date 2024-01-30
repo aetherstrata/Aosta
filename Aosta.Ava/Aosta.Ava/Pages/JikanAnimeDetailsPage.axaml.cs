@@ -6,6 +6,7 @@ using System;
 using Aosta.Ava.ViewModels;
 
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.ReactiveUI;
 
 using Splat;
@@ -19,7 +20,18 @@ public partial class JikanAnimeDetailsPage : ReactiveUserControl<JikanAnimeDetai
         InitializeComponent();
     }
 
-    private void onEpisodesRefreshRequested(object? sender, RefreshRequestedEventArgs e)
+    private void onEpisodesPullRefresh(object? sender, RefreshRequestedEventArgs e)
+    {
+        var deferral = e.GetDeferral();
+
+        refreshEpisodesList();
+
+        deferral.Complete();
+    }
+
+    private void onMoreEpisodesTapped(object? sender, TappedEventArgs e) => refreshEpisodesList();
+
+    private void refreshEpisodesList()
     {
         this.Log().Debug<JikanAnimeDetailsPage>("Triggered episodes list refresh event");
         ViewModel?.UpdateEpisodesList.Execute().Subscribe();

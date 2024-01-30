@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-using Aosta.Core.Database;
+using Aosta.Data;
 
 using DynamicData;
 
@@ -13,7 +13,7 @@ using Realms;
 using Splat;
 
 using ILogger = Serilog.ILogger;
-using Setting = Aosta.Core.Database.Models.Setting;
+using Setting = Aosta.Data.Database.Models.Setting;
 
 namespace Aosta.Ava.Extensions;
 
@@ -41,7 +41,7 @@ public static class RealmExtensions
             if (changes is null)
             {
                 cache.AddRange(sender);
-                s_Logger.Verbose("Initialized the {Type} observable cache with {Count} elements",
+                s_Logger.Debug("Initialized the {Type} observable cache with {Count} elements",
                     typeof(T).Name, sender.Count);
             }
             else
@@ -60,7 +60,7 @@ public static class RealmExtensions
                         update.Insert(i, sender[i]);
                     }
 
-                    s_Logger.Verbose("Processed {ChangesCount} changes for {Type} observable cache: [Removed: {Removed}, Added: {Added}, Moved: {Moved}]",
+                    s_Logger.Debug("Processed {ChangesCount} changes for {Type} observable cache: [Removed: {Removed}, Added: {Added}, Moved: {Moved}]",
                         changes.DeletedIndices.Length + changes.InsertedIndices.Length,
                         typeof(T).Name,
                         changes.DeletedIndices.Length - changes.Moves.Length,

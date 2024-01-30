@@ -4,9 +4,7 @@ using System.IO;
 using Android.App;
 using Android.Content.PM;
 
-using Aosta.Ava.Extensions;
-using Aosta.Common.Extensions;
-using Aosta.Core;
+using Aosta.Data;
 
 using Avalonia;
 using Avalonia.Android;
@@ -31,6 +29,7 @@ public class MainActivity : AvaloniaMainActivity<App>
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
         return base.CustomizeAppBuilder(builder)
+            .UseAndroid()
             .UseReactiveUI()
             .LogToTrace()
             .AfterSetup(_ =>
@@ -39,16 +38,13 @@ public class MainActivity : AvaloniaMainActivity<App>
                 // On some devices '/' maps to the app data directory. On others it maps to the root of the internal storage.
                 // In order to have a consistent current directory on all devices the full path of the app data directory is set as the current directory.
                 Environment.CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                ILogger logger = App.SetupLogger(Path.Combine(Environment.CurrentDirectory, "logs"))
+                                    .WriteTo.Logcat("dev.aest.aosta", "{Message:lj} <{ThreadId}><{ThreadName}>{NewLine}{Exception}", LogEventLevel.Debug)
+                                    .CreateLogger();
 
                 Locator.CurrentMutable
-                    .RegisterAnd<ILogger>(() => AostaConfiguration
-                        .GetDefaultLoggerConfig(
-                            Path.Combine(global::Android.App.Application.Context.FilesDir.AsNonNull().Path, "logs"))
-                        .WriteTo.Logcat("AOSTA", "{Message:lj} <{ThreadId}><{ThreadName}>{NewLine}{Exception}", LogEventLevel.Debug)
-                        .CreateLogger())
-                    .Register(() => new AostaConfiguration(Environment.CurrentDirectory)
-                            .With.Logger(Locator.Current.GetSafely<ILogger>())
-                            .Build());
+                    .RegisterConstantAnd(logger)
+                    .Register(() => new RealmAccess(Path.Combine(Environment.CurrentDirectory, "aosta.realm"), logger));
             });
     }
 }

@@ -4,32 +4,41 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Aosta.Ava.ViewModels"
              xmlns:local="clr-namespace:Aosta.Ava.Controls"
+             xmlns:localization="clr-namespace:Aosta.Ava.Localization"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.JikanAnimeDetailsPage"
              x:DataType="viewModels:JikanAnimeDetailsViewModel">
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                  VerticalScrollBarVisibility="Hidden">
-        <Grid RowDefinitions="Auto,*">
-            <local:TitleBar Grid.Row="0"
-                            IsBackEnabled="True"
-                            BackCommand="{Binding GoBack}"
-                            Title="{Binding Title}"/>
-
-            <StackPanel Grid.Row="1">
+    <Grid RowDefinitions="Auto,*">
+        <local:TitleBar Grid.Row="0"
+                        IsBackEnabled="True"
+                        BackCommand="{Binding GoBack}"
+                        Title="{Binding Title}" />
+        <ScrollViewer Grid.Row="1"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Hidden">
+            <StackPanel>
                 <TextBlock Text="Episodes"
                            FontSize="18"
-                           FontWeight="Bold"/>
+                           FontWeight="Bold" />
                 <RefreshContainer PullDirection="BottomToTop"
-                                  RefreshRequested="onEpisodesRefreshRequested">
-                        <ListBox ItemsSource="{Binding Episodes}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding MalId}"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                                  RefreshRequested="onEpisodesPullRefresh">
+                    <ListBox ItemsSource="{Binding Episodes}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0}. {1}">
+                                            <Binding Path="MalId" />
+                                            <Binding Path="Title" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </RefreshContainer>
+                <Button Tapped="onMoreEpisodesTapped" Content="{localization:Localize Key=Button.LoadMore}"/>
             </StackPanel>
-        </Grid>
-    </ScrollViewer>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

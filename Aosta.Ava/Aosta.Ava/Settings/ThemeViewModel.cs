@@ -3,10 +3,8 @@
 
 using System.Collections.ObjectModel;
 
-using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Common.Extensions;
-using Aosta.Core;
 
 using Avalonia;
 
@@ -19,8 +17,6 @@ namespace Aosta.Ava.Settings;
 
 internal class ThemeViewModel : ReactiveObject
 {
-    private readonly AostaDotNet _aosta = Locator.Current.GetSafely<AostaDotNet>();
-
     internal ThemeViewModel()
     {
         var stored = ThemeKey.Load().OrDefault(ThemeKey.DEFAULT);
@@ -47,7 +43,7 @@ internal class ThemeViewModel : ReactiveObject
             {
                 value.Data.Save();
                 Application.Current!.RequestedThemeVariant = value.Data.Theme;
-                _aosta.Log.Information("Application theme set to {Variant}", value.Data.Key);
+                this.Log().Info("Application theme set to {Variant}", value.Data.Key);
             }
 
             this.RaiseAndSetIfChanged(ref _currentTheme, value);

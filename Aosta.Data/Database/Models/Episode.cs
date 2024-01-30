@@ -1,0 +1,14 @@
+using Realms;
+
+namespace Aosta.Data.Database.Models;
+
+/// <summary>
+/// Episode model class
+/// </summary>
+[Preserve(AllMembers = true)]
+public partial class Episode : IRealmObject, IHasPrimaryKey<Guid>
+{
+    /// <summary>The unique ID of this content</summary>
+    [PrimaryKey]
+    public Guid ID { get; private set; } = Guid.NewGuid();
+}

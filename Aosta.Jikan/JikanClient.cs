@@ -40,7 +40,7 @@ public sealed class JikanClient : IJikan, IDisposable
     private readonly string _baseAddress;
     private readonly HttpClient _http;
     private readonly ITaskLimiter _limiter;
-    private readonly ILogger? _logger;
+    private readonly ILogger? _log;
 
     private async Task<T> getRequestAsync<T>(IQuery query, CancellationToken ct = default)
     {
@@ -51,7 +51,7 @@ public sealed class JikanClient : IJikan, IDisposable
         {
             try
             {
-                _logger?.Debug("Performing GET request: \"{Request}\"", fullUrl);
+                _log?.Debug("Performing GET request: \"{Request}\"", fullUrl);
                 using var response = await _limiter.LimitAsync(() => _http.GetAsync(queryEndpoint, ct))
                     .ConfigureAwait(false);
 
@@ -59,12 +59,12 @@ public sealed class JikanClient : IJikan, IDisposable
 
                 using (LogContext.PushProperty("Response", json))
                 {
-                    _logger?.Verbose("Content retrieved successfully");
+                    _log?.Verbose("Content retrieved successfully");
                 }
 
                 if (response.IsSuccessStatusCode)
                 {
-                    _logger?.Debug("Got HTTP response for \"{Request}\" successfully", fullUrl);
+                    _log?.Debug("Got HTTP response for \"{Request}\" successfully", fullUrl);
                     return JsonSerializer.Deserialize<T>(json) ?? throw new JikanRequestException(
                         ErrorMessages.SERIALIZATION_NULL_RESULT + Environment.NewLine + "Raw JSON string:" +
                         Environment.NewLine + json);
@@ -74,7 +74,7 @@ public sealed class JikanClient : IJikan, IDisposable
 
                 using (LogContext.PushProperty("Response", errorData))
                 {
-                    _logger?.Error("Failed to get HTTP resource for \"{Resource}\", Status Code: {Status}",
+                    _log?.Error("Failed to get HTTP resource for \"{Resource}\", Status Code: {Status}",
                         queryEndpoint, response.StatusCode);
                 }
 
@@ -83,7 +83,7 @@ public sealed class JikanClient : IJikan, IDisposable
             }
             catch (Exception ex)
             {
-                _logger?.Error(ex, ErrorMessages.SERIALIZATION_FAILED);
+                _log?.Error(ex, ErrorMessages.SERIALIZATION_FAILED);
                 throw;
             }
         }
@@ -94,13 +94,15 @@ public sealed class JikanClient : IJikan, IDisposable
     /// </summary>
     /// <param name="http"> Static http client instance.</param>
     /// <param name="taskLimiter"> API limiter </param>
-    /// <param name="logger"> Serilog logger </param>
-    internal JikanClient(HttpClient http, ITaskLimiter taskLimiter, ILogger? logger)
+    /// <param name="log"> Serilog logger </param>
+    internal JikanClient(HttpClient http, ITaskLimiter taskLimiter, ILogger? log)
     {
         _baseAddress = http.BaseAddress!.ToString();
         _http = http;
         _limiter = taskLimiter;
-        _logger = logger;
+        _log = log;
+
+        _log?.Information("Initializing Jikan API client for {Endpoint}", _baseAddress);
     }
 
     /// <summary>

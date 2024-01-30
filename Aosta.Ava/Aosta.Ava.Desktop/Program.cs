@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
 
-using Aosta.Ava.Extensions;
-using Aosta.Core;
+using Aosta.Data;
 
 using Avalonia;
 using Avalonia.ReactiveUI;
@@ -29,16 +28,15 @@ internal static class Program
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
-            .LogToTrace()
             .UseReactiveUI()
+            .LogToTrace()
             .AfterSetup(_ =>
             {
+                ILogger logger = App.SetupLogger(Path.Combine(AppContext.BaseDirectory, "logs"))
+                                    .CreateLogger();
+
                 Locator.CurrentMutable
-                    .RegisterAnd<ILogger>(() => AostaConfiguration
-                        .GetDefaultLoggerConfig(Path.Combine(AppContext.BaseDirectory, "logs"))
-                        .CreateLogger())
-                    .Register(() => new AostaConfiguration(AppContext.BaseDirectory)
-                        .With.Logger(Locator.Current.GetSafely<ILogger>())
-                        .Build());
+                    .RegisterConstantAnd(logger)
+                    .RegisterConstant(new RealmAccess(Path.Combine(AppContext.BaseDirectory, "aosta.realm"), logger));
             });
 }

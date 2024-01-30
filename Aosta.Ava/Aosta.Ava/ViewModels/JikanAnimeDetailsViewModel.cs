@@ -2,16 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reactive;
 using System.Threading;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
-using Aosta.Core.Database.Mapper;
-using Aosta.Core.Database.Models.Jikan;
-using Aosta.Core.Extensions;
 using Aosta.Jikan;
 using Aosta.Jikan.Models.Response;
 

@@ -1,4 +1,5 @@
 {
+  "Button.LoadMore": "Load more",
   "AnimeList.Header.NoAnime" : "The list is empty",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
   "App.Version": "Version {0}",

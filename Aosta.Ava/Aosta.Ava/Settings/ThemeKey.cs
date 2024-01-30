@@ -3,7 +3,7 @@
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
-using Aosta.Core.Database;
+using Aosta.Data;
 
 using Avalonia.Styling;
 

@@ -6,8 +6,8 @@ using System.Reactive;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
-using Aosta.Core;
-using Aosta.Core.Database.Mapper;
+using Aosta.Data;
+using Aosta.Data.Database.Mapper;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
@@ -18,7 +18,7 @@ namespace Aosta.Ava.ViewModels;
 
 public class AnimeSearchResultViewModel : ReactiveObject
 {
-    private readonly AostaDotNet _aosta = Locator.Current.GetSafely<AostaDotNet>();
+    private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
 
     public AnimeSearchResultViewModel(AnimeResponse response, bool found)
     {
@@ -32,11 +32,11 @@ public class AnimeSearchResultViewModel : ReactiveObject
         {
             if (!CanBeAdded)
             {
-                _aosta.Log.Debug("User tried adding already existing anime from Jikan: {Id}", response.MalId);
+                this.Log().Debug("User tried adding already existing anime from Jikan: {Id}", response.MalId);
                 return Task.CompletedTask;
             }
 
-            var realmTask = _aosta.Realm.WriteAsync(r =>
+            var realmTask = _realm.WriteAsync(r =>
             {
                 var jikanMetadata = response.ToModel();
 
@@ -45,7 +45,7 @@ public class AnimeSearchResultViewModel : ReactiveObject
 
             CanBeAdded = false;
 
-            _aosta.Log.Information("Adding new anime from Jikan: {Id}", response.MalId);
+            this.Log().Info("Adding new anime from Jikan: {Id}", response.MalId);
 
             return realmTask;
         });

@@ -4,8 +4,8 @@
 using System.Reactive;
 
 using Aosta.Ava.Extensions;
-using Aosta.Core.Database;
-using Aosta.Core.Database.Models;
+using Aosta.Data;
+using Aosta.Data.Database.Models;
 
 using ReactiveUI;
 

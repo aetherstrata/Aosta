@@ -6,9 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
-using Aosta.Core;
-using Aosta.Core.Database.Models;
-using Aosta.Core.Extensions;
+using Aosta.Data;
+using Aosta.Data.Database.Models;
+using Aosta.Data.Extensions;
 using Aosta.Jikan;
 using Aosta.Jikan.Query.Parameters;
 
@@ -34,7 +34,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
     public IScreen HostScreen { get; }
 
     private readonly IJikan _client = Locator.Current.GetSafely<IJikan>();
-    private readonly AostaDotNet _aosta = Locator.Current.GetSafely<AostaDotNet>();
+    private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
 
     [Reactive]
     public bool IsBusy { get; set; }
@@ -80,7 +80,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
                 var resultIds = result.Data.Select(x => x.MalId);
 
                 // Check if the MAL IDs returned from Jikan appear in Realm
-                var found = _aosta.Realm.Run(r =>
+                var found = _realm.Run(r =>
                     r.All<Anime>()
                         .In(x => x.Jikan!.ID, resultIds)
                         .AsRealmCollection()
@@ -95,7 +95,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
             }
             catch (Exception ex)
             {
-                _aosta.Log.Error(ex, "Anime search query failed for string: {SearchText}", SearchText);
+                this.Log().Error(ex, "Anime search query failed for string: {SearchText}", SearchText);
             }
         }
 

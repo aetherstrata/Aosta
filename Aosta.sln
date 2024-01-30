@@ -2,9 +2,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32916.344
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aosta.Core", "Aosta.Core\Aosta.Core.csproj", "{74D2E280-454A-4CFA-BB83-ADBB54CCAD4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aosta.Data", "Aosta.Data\Aosta.Data.csproj", "{74D2E280-454A-4CFA-BB83-ADBB54CCAD4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aosta.Core.Tests", "Aosta.Core.Tests\Aosta.Core.Tests.csproj", "{0173EC11-5DF4-4ACB-AC9C-36517433100A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aosta.Data.Tests", "Aosta.Data.Tests\Aosta.Data.Tests.csproj", "{0173EC11-5DF4-4ACB-AC9C-36517433100A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aosta.Jikan", "Aosta.Jikan\Aosta.Jikan.csproj", "{E400FE90-D071-436F-9D09-15020E97C41E}"
 EndProject
