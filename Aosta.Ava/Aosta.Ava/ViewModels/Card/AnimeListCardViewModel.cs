@@ -4,6 +4,7 @@
 using System.Reactive;
 
 using Aosta.Ava.Extensions;
+using Aosta.Ava.ViewModels.Contracts;
 using Aosta.Data;
 using Aosta.Data.Database.Models;
 
@@ -13,7 +14,7 @@ using Splat;
 
 namespace Aosta.Ava.ViewModels.Card;
 
-public class AnimeListCardViewModel : ReactiveObject, IOnlineCardViewModel
+public class AnimeListCardViewModel : ReactiveObject, IOnlineCard
 {
     private readonly Anime _data;
     private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
@@ -27,7 +28,7 @@ public class AnimeListCardViewModel : ReactiveObject, IOnlineCardViewModel
 
     public string Title => _data.DefaultTitle;
 
-    public string BannerUrl => _data.Jikan?.Images?.JPG?.ImageUrl ?? IOnlineCardViewModel.PORTRAIT_PLACEHOLDER;
+    public string BannerUrl => _data.Jikan?.Images?.JPG?.ImageUrl ?? IOnlineCard.PORTRAIT_PLACEHOLDER;
 
     public ReactiveCommand<Unit,Unit> GoToDetails { get; }
 }

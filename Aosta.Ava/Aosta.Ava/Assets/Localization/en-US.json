@@ -3,6 +3,7 @@
   "AnimeList.Header.NoAnime" : "The list is empty",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
   "App.Version": "Version {0}",
+  "HomePage.SeasonalAnime.Header" : "Currently airing",
   "HomePage.TopAnime.Header" : "Top anime",
   "Label.NotAvailable" : "Not available",
   "SearchPage.SearchBox.Watermark" : "Search anime",

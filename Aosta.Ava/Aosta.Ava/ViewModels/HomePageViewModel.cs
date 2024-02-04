@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Settings;
@@ -26,15 +27,27 @@ public class HomePageViewModel : ReactiveObject, IRoutableViewModel
     {
         HostScreen = hostScreen;
 
-        Observable.Start(() =>
+        Observable.Start(async () =>
         {
-            var top = Locator.Current.GetSafely<IJikan>().GetTopAnimeAsync().Result.Data;
+            var jikan = Locator.Current.GetSafely<IJikan>();
 
-            foreach (var anime in top)
+            var topTask = jikan.GetTopAnimeAsync();
+            var currentTask = jikan.GetCurrentSeasonAsync();
+
+            var top = await Task.WhenAll(topTask, currentTask);
+
+            foreach (var anime in top[0].Data)
             {
-                var vm = new TopAnimeCardViewModel(HostScreen, anime);
+                var vm = new JikanAnimeCardViewModel(HostScreen, anime);
 
                 TopAnimes.Add(vm);
+            }
+
+            foreach (var anime in top[1].Data)
+            {
+                var vm = new JikanAnimeCardViewModel(hostScreen, anime);
+
+                CurrentAnimes.Add(vm);
             }
         });
 
@@ -43,7 +56,8 @@ public class HomePageViewModel : ReactiveObject, IRoutableViewModel
         GoToSettings = ReactiveCommand.CreateFromObservable(() => HostScreen.Router.Navigate.Execute(settingsPage.Value));
     }
 
-    public ObservableCollection<TopAnimeCardViewModel> TopAnimes { get; } = new();
+    public ObservableCollection<JikanAnimeCardViewModel> TopAnimes { get; } = [];
+    public ObservableCollection<JikanAnimeCardViewModel> CurrentAnimes { get; } = [];
 
     public ReactiveCommand<Unit, IRoutableViewModel> GoToSettings { get; }
 }

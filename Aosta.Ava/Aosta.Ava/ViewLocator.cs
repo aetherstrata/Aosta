@@ -8,8 +8,6 @@ using Avalonia.Controls.Templates;
 
 using ReactiveUI;
 
-using Realms;
-
 using Splat;
 
 namespace Aosta.Ava;

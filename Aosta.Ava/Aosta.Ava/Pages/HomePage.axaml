@@ -10,7 +10,7 @@
              x:DataType="vm:HomePageViewModel">
 
     <ScrollViewer VerticalScrollBarVisibility="Hidden">
-        <Grid RowDefinitions="Auto,Auto,Auto">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto">
             <Button Grid.Row="0"
                     Command="{Binding GoToSettings}"
                     HorizontalAlignment="Right"
@@ -28,6 +28,32 @@
             <ScrollViewer Grid.Row="1">
                 <ListBox ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                          ItemsSource="{Binding TopAnimes}"
+                         ItemTemplate="{StaticResource JikanAnimeCard}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem:nth-child(1)">
+                            <Setter Property="Margin" Value="15,0,3,0" />
+                        </Style>
+                        <Style Selector="ListBoxItem">
+                            <Setter Property="Margin" Value="3,0" />
+                            <Setter Property="Padding" Value="0" />
+                        </Style>
+                    </ListBox.Styles>
+                </ListBox>
+            </ScrollViewer>
+
+            <TextBlock Grid.Row="2"
+                       Margin="20, 10"
+                       FontWeight="Bold"
+                       FontSize="36"
+                       Text="{localization:Localize Key=HomePage.SeasonalAnime.Header}" />
+            <ScrollViewer Grid.Row="3">
+                <ListBox ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                         ItemsSource="{Binding CurrentAnimes}"
                          ItemTemplate="{StaticResource JikanAnimeCard}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>

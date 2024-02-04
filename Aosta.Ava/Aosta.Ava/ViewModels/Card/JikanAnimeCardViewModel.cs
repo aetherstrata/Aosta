@@ -3,15 +3,16 @@
 
 using System.Reactive;
 
+using Aosta.Ava.ViewModels.Contracts;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
 
 namespace Aosta.Ava.ViewModels.Card;
 
-public class TopAnimeCardViewModel(IScreen host, AnimeResponse response) : ReactiveObject, IOnlineCardViewModel
+public class JikanAnimeCardViewModel(IScreen host, AnimeResponse response) : ReactiveObject, IOnlineCard
 {
-    public string BannerUrl { get; } = response.Images?.JPG?.ImageUrl ?? IOnlineCardViewModel.PORTRAIT_PLACEHOLDER;
+    public string BannerUrl { get; } = response.Images?.JPG?.ImageUrl ?? IOnlineCard.PORTRAIT_PLACEHOLDER;
 
     public ReactiveCommand<Unit, IRoutableViewModel> GoToDetails { get; } =
         ReactiveCommand.CreateFromObservable(() =>

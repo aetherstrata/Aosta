@@ -9,174 +9,152 @@ public partial class AnimeSearchQueryParameters : JikanQueryParameterSet
     [GeneratedRegex(@"^\d{4}(-\d{2}){0,2}$", RegexOptions.CultureInvariant, 1)]
     private static partial Regex dateRegex();
 
-    public int Page
+    public AnimeSearchQueryParameters SetPage(int page)
     {
-        init
-        {
-            Guard.IsGreaterThanZero(value, nameof(Page));
-            Add(QueryParameter.PAGE, value);
-        }
+        Guard.IsGreaterThanZero(page, nameof(page));
+        Add(QueryParameter.PAGE, page);
+        return this;
     }
 
-    public int Limit
+    public AnimeSearchQueryParameters SetLimit(int limit)
     {
-        init
-        {
-            Guard.IsGreaterThanZero(value, nameof(Limit));
-            Guard.IsLessOrEqualThan(value, JikanParameterConsts.MAXIMUM_PAGE_SIZE, nameof(Limit));
-            Add(QueryParameter.LIMIT, value);
-        }
+        Guard.IsGreaterThanZero(limit, nameof(limit));
+        Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MAXIMUM_PAGE_SIZE, nameof(limit));
+        Add(QueryParameter.LIMIT, limit);
+        return this;
     }
 
-    public string Query
+    public AnimeSearchQueryParameters SetQuery(string query)
     {
-        init
-        {
-            Guard.IsNotNullOrWhiteSpace(value, nameof(Query));
-            Add(QueryParameter.QUERY, value);
-        }
+        Guard.IsNotNullOrWhiteSpace(query, nameof(query));
+        Add(QueryParameter.QUERY, query);
+        return this;
     }
 
-    public bool SFW
+    public AnimeSearchQueryParameters SetSfw(bool sfw)
     {
-        init => Add(QueryParameter.SAFE_FOR_WORK, value);
+        Add(QueryParameter.SAFE_FOR_WORK, sfw);
+        return this;
     }
 
-    public bool Unapproved
+    public AnimeSearchQueryParameters SetUnapproved(bool approved)
     {
-        init => Add(QueryParameter.UNAPPROVED, value);
+        Add(QueryParameter.UNAPPROVED, approved);
+        return this;
     }
 
-    public AnimeTypeFilter Type
+    public AnimeSearchQueryParameters SetType(AnimeTypeFilter type)
     {
-        init
-        {
-            Guard.IsValidEnum(value, nameof(Type));
-            Add(QueryParameter.TYPE, value);
-        }
+        Guard.IsValidEnum(type, nameof(Type));
+        Add(QueryParameter.TYPE, type);
+        return this;
     }
 
-    public double Score
+    public AnimeSearchQueryParameters SetScore(double score)
     {
-        init
-        {
-            Guard.IsGreaterThanZero(value, nameof(Score));
-            Guard.IsLessOrEqualThan(value, 10, nameof(Score));
-            Add(QueryParameter.SCORE, value);
-        }
+        Guard.IsGreaterThanZero(score, nameof(score));
+        Guard.IsLessOrEqualThan(score, 10, nameof(score));
+        Add(QueryParameter.SCORE, score);
+        return this;
     }
 
-    public double MinScore
+    public AnimeSearchQueryParameters SetMinScore(double minScore)
     {
-        init
-        {
-            Guard.IsGreaterThanZero(value, nameof(MinScore));
-            Guard.IsLessOrEqualThan(value, 10, nameof(MinScore));
-            Add(QueryParameter.MIN_SCORE, value);
-        }
+        Guard.IsGreaterThanZero(minScore, nameof(minScore));
+        Guard.IsLessOrEqualThan(minScore, 10, nameof(minScore));
+        Add(QueryParameter.MIN_SCORE, minScore);
+        return this;
     }
 
-    public double MaxScore
+    public AnimeSearchQueryParameters SetMaxScore(double maxScore)
     {
-        init
-        {
-            Guard.IsGreaterThanZero(value, nameof(MaxScore));
-            Guard.IsLessOrEqualThan(value, 10, nameof(MaxScore));
-            Add(QueryParameter.MAX_SCORE, value);
-        }
+        Guard.IsGreaterThanZero(maxScore, nameof(maxScore));
+        Guard.IsLessOrEqualThan(maxScore, 10, nameof(maxScore));
+        Add(QueryParameter.MAX_SCORE, maxScore);
+        return this;
     }
 
-    public AiringStatusFilter Status
+    public AnimeSearchQueryParameters SetStatus(AiringStatusFilter status)
     {
-        init
-        {
-            Guard.IsValidEnum(value, nameof(Status));
-            Add(QueryParameter.STATUS, value);
-        }
+        Guard.IsValidEnum(status, nameof(status));
+        Add(QueryParameter.STATUS, status);
+        return this;
     }
 
-    public AnimeAgeRatingFilter Rating
+    public AnimeSearchQueryParameters SetRating(AnimeAgeRatingFilter rating)
     {
-        init
-        {
-            Guard.IsValidEnum(value, nameof(Rating));
-            Add(QueryParameter.RATING, value);
-        }
+        Guard.IsValidEnum(rating, nameof(rating));
+        Add(QueryParameter.RATING, rating);
+        return this;
     }
 
-    public ICollection<long> Genres
+    public AnimeSearchQueryParameters SetGenres(ICollection<long> genres)
     {
-        init
-        {
-            Guard.IsNotNull(value, nameof(Genres));
-            Guard.IsValid(list => list.Any(id => id <= 0), value, nameof(Genres), "All genre IDs must be greater than 0.");
-            Add(QueryParameter.GENRES, string.Join(",", value.Select(id => id.ToString())));
-        }
+        Guard.IsNotNull(genres, nameof(genres));
+        Guard.IsValid(list => list.Any(id => id <= 0),
+            genres, nameof(genres),
+            "All genre IDs must be greater than 0.");
+        Add(QueryParameter.GENRES, string.Join(",", genres.Select(id => id.ToString())));
+        return this;
     }
 
-    public ICollection<long> ExcludedGenres
+    public AnimeSearchQueryParameters SetExcludedGenres(ICollection<long> excludedGenres)
     {
-        init
-        {
-            Guard.IsNotNull(value, nameof(ExcludedGenres));
-            Guard.IsValid(list => list.Any(id => id <= 0), value, nameof(ExcludedGenres), "All genre IDs must be greater than 0.");
-            Add(QueryParameter.EXCLUDED_GENRES, string.Join(",", value.Select(id => id.ToString())));
-        }
+        Guard.IsNotNull(excludedGenres, nameof(excludedGenres));
+        Guard.IsValid(list => list.Any(id => id <= 0),
+            excludedGenres, nameof(excludedGenres),
+            "All genre IDs must be greater than 0.");
+        Add(QueryParameter.EXCLUDED_GENRES, string.Join(",", excludedGenres.Select(id => id.ToString())));
+        return this;
     }
 
-    public AnimeSearchOrderBy Order
+    public AnimeSearchQueryParameters SetSort(AnimeSearchOrderBy order)
     {
-        init
-        {
-            Guard.IsValidEnum(value, nameof(Order));
-            Add(QueryParameter.ORDER_BY, value);
-        }
+        Guard.IsValidEnum(order, nameof(order));
+        Add(QueryParameter.ORDER_BY, order);
+        return this;
     }
 
-    public SortDirection SortDirection
+    public AnimeSearchQueryParameters SetSortDirection(SortDirection sortDirection)
     {
-        init
-        {
-            Guard.IsValidEnum(value, nameof(SortDirection));
-            Add(QueryParameter.SORT, value);
-        }
+        Guard.IsValidEnum(sortDirection, nameof(sortDirection));
+        Add(QueryParameter.SORT, sortDirection);
+        return this;
     }
 
-    public ICollection<long> Producers
+    public AnimeSearchQueryParameters SetProducers(ICollection<long> producers)
     {
-        init
-        {
-            Guard.IsNotNull(value, nameof(Producers));
-            Guard.IsValid(list => list.Any(id => id <= 0), value, nameof(Producers), "All producer IDs must be greater than 0.");
-            Add(QueryParameter.PRODUCERS, string.Join(",", value.Select(id => id.ToString())));
-        }
+        Guard.IsNotNull(producers, nameof(producers));
+        Guard.IsValid(list => list.Any(id => id <= 0),
+            producers, nameof(producers),
+            "All producer IDs must be greater than 0.");
+        Add(QueryParameter.PRODUCERS, string.Join(",", producers.Select(id => id.ToString())));
+        return this;
     }
 
-    public char Letter
+    public AnimeSearchQueryParameters SetLetter(char letter)
     {
-        init
-        {
-            Guard.IsLetter(value, nameof(Letter));
-            Add(QueryParameter.LETTER, value);
-        }
+        Guard.IsLetter(letter, nameof(letter));
+        Add(QueryParameter.LETTER, letter);
+        return this;
     }
 
     //[Obsolete("Change this to a DateOnly")]
-    public string StartDate
+    public AnimeSearchQueryParameters SetStartDate(string startDate)
     {
-        init
-        {
-            Guard.IsValid(s => dateRegex().IsMatch(s), value, nameof(StartDate), "This date is not in a valid format.");
-            Add(QueryParameter.START_DATE, value);
-        }
+        Guard.IsValid(s => dateRegex().IsMatch(s),
+            startDate, nameof(startDate),
+            "This date is not in a valid format.");
+        Add(QueryParameter.START_DATE, startDate);
+        return this;
     }
 
-    public string EndDate
+    public AnimeSearchQueryParameters SetEndDate(string endDate)
     {
-        init
-        {
-            Guard.IsValid(s => dateRegex().IsMatch(s), value, nameof(EndDate), "This date is not in a valid format.");
-            Add(QueryParameter.END_DATE, value);
-        }
+        Guard.IsValid(s => dateRegex().IsMatch(s),
+            endDate, nameof(endDate),
+            "This date is not in a valid format.");
+        Add(QueryParameter.END_DATE, endDate);
+        return this;
     }
 }

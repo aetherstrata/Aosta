@@ -25,7 +25,8 @@
                  Grid.Column="0"
                  Grid.ColumnSpan="2"
                  Name="AnimeListBox"
-                 ItemsSource="{Binding AnimeList}">
+                 ItemsSource="{Binding AnimeList}"
+                 ItemTemplate="{StaticResource RealmAnimeCard}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal"
@@ -33,16 +34,6 @@
                                HorizontalAlignment="Center"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Button Command="{Binding GoToDetails}">
-                        <Image async:ImageLoader.Source="{Binding BannerUrl}"
-                               Stretch="UniformToFill"
-                               Width="{StaticResource AnimeCardWidth}"
-                               Height="{StaticResource AnimeCardHeight}"/>
-                    </Button>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
             <ListBox.Styles>
                 <Style Selector="ListBoxItem">
                     <Setter Property="Padding" Value="0"/>

@@ -70,11 +70,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
         {
             try
             {
-                var queryParams = new AnimeSearchQueryParameters
-                {
-                    Query = s,
-                    SFW = !IncludeNsfw
-                };
+                var queryParams = new AnimeSearchQueryParameters().SetQuery(s).SetSfw(!IncludeNsfw);
 
                 var result = await _client.SearchAnimeAsync(queryParams, ct);
                 var resultIds = result.Data.Select(x => x.MalId);
