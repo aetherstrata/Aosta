@@ -1,18 +1,18 @@
-using System.Collections;
-
 using Aosta.Jikan.Exceptions;
 
 namespace Aosta.Jikan.Query;
 
-public class JikanQueryParameterSet : Dictionary<string, IQueryParameter>
+public class JikanQueryParameterSet
 {
+    private readonly Dictionary<string, IQueryParameter> _inner = new();
+
     internal JikanQueryParameterSet()
     {
     }
 
     internal void Add<T>(string name, T value) where T : struct, Enum
     {
-        this[name] = new EnumQueryParameter<T>()
+        _inner[name] = new EnumQueryParameter<T>()
         {
             Name = name,
             Value = value
@@ -21,17 +21,16 @@ public class JikanQueryParameterSet : Dictionary<string, IQueryParameter>
 
     internal void Add(string name, double value)
     {
-        this[name] = new JikanQueryParameter<double>()
+        _inner[name] = new JikanQueryParameter<double>()
         {
             Name = name,
             Value = value
         };
     }
 
-
     internal void Add(string name, long value)
     {
-        this[name] = new JikanQueryParameter<long>()
+        _inner[name] = new JikanQueryParameter<long>()
         {
             Name = name,
             Value = value
@@ -40,7 +39,7 @@ public class JikanQueryParameterSet : Dictionary<string, IQueryParameter>
 
     internal void Add(string name, int value)
     {
-        this[name] = new JikanQueryParameter<int>()
+        _inner[name] = new JikanQueryParameter<int>()
         {
             Name = name,
             Value = value
@@ -49,7 +48,7 @@ public class JikanQueryParameterSet : Dictionary<string, IQueryParameter>
 
     internal void Add(string name, string value)
     {
-        this[name] = new JikanQueryParameter<string>()
+        _inner[name] = new JikanQueryParameter<string>()
         {
             Name = name,
             Value = value
@@ -60,7 +59,7 @@ public class JikanQueryParameterSet : Dictionary<string, IQueryParameter>
 
     internal void Add(string name, bool value)
     {
-        this[name] = new BoolQueryParameter
+        _inner[name] = new BoolQueryParameter
         {
             Name = name,
             Value = value
@@ -69,9 +68,20 @@ public class JikanQueryParameterSet : Dictionary<string, IQueryParameter>
 
     internal void Add(string name) => Add(name, true);
 
+    internal void AddRange(JikanQueryParameterSet other)
+    {
+        foreach (var val in other._inner)
+        {
+            if (!_inner.TryAdd(val.Key, val.Value))
+            {
+                throw new JikanDuplicateParameterException($"Parameter {val.Key} was set already");
+            }
+        }
+    }
+
     public override string ToString()
     {
-        string parameterString = string.Join("&", Values
+        string parameterString = string.Join("&", _inner.Values
             .Select(x => x.ToString())
             .Where(s => !string.IsNullOrEmpty(s)));
 

@@ -19,6 +19,27 @@ public sealed class LocalizedString : ReactiveObject, ILocalized
         Localizer.Instance.PropertyChanged += (_, _) => Localized = Localizer.Instance[key];
     }
 
+    public LocalizedString(string key, object arg0)
+    {
+        Localized = string.Format(Localizer.Instance[key], arg0);
+
+        Localizer.Instance.PropertyChanged += (_, _) => Localized = string.Format(Localizer.Instance[key], arg0);
+    }
+
+    public LocalizedString(string key, object arg0, object arg1)
+    {
+        Localized = string.Format(Localizer.Instance[key], arg0, arg1);
+
+        Localizer.Instance.PropertyChanged += (_, _) => Localized = string.Format(Localizer.Instance[key], arg0, arg1);
+    }
+
+    public LocalizedString(string key, object arg0, object arg1, object arg2)
+    {
+        Localized = string.Format(Localizer.Instance[key], arg0, arg1, arg2);
+
+        Localizer.Instance.PropertyChanged += (_, _) => Localized = string.Format(Localizer.Instance[key], arg0, arg1, arg2);
+    }
+
     public LocalizedString(string key, params object[] args)
     {
         Localized = string.Format(Localizer.Instance[key], args);

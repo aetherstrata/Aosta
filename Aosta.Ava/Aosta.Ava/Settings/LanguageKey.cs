@@ -67,5 +67,10 @@ public sealed record LanguageKey : ISetting<LanguageKey>
 
         realm.SetSetting(setting_key, Key);
     }
+
+    public override string ToString()
+    {
+        return Language.GetLanguageName();
+    }
 }
 

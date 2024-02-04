@@ -9,6 +9,6 @@ internal static class SeasonArchiveQuery
 
     internal static IQuery Create()
     {
-        return new JikanQuery(s_QueryEndpoint);
+        return JikanQuery.Create(s_QueryEndpoint);
     }
 }

@@ -12,6 +12,6 @@ internal static class ClubStaffQuery
     internal static IQuery Crete(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery(getEndpoint(id));
+        return JikanQuery.Create(getEndpoint(id));
     }
 }

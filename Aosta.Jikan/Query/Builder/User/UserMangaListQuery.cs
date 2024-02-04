@@ -14,14 +14,14 @@ internal static class UserMangaListQuery
     internal static IQuery Create(string username)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        return new JikanQuery(getEndpoint(username));
+        return JikanQuery.Create(getEndpoint(username));
     }
 
     internal static IQuery Create(string username, UserMangaStatusFilter status)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsValidEnum(status, nameof(status));
-        return new JikanQuery(getEndpoint(username))
-            .Add(QueryParameter.STATUS, status);
+        return JikanQuery.Create(getEndpoint(username))
+            .With(QueryParameter.STATUS, status);
     }
 }

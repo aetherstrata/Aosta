@@ -11,6 +11,6 @@ internal static class PersonQuery
     internal static IQuery Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery(getEndpoint(id));
+        return JikanQuery.Create(getEndpoint(id));
     }
 }

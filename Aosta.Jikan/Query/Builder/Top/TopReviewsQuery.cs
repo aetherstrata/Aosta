@@ -13,35 +13,35 @@ internal static class TopReviewsQuery
 
     internal static IQuery Create()
     {
-        return new JikanQuery(s_QueryEndpoint);
+        return JikanQuery.Create(s_QueryEndpoint);
     }
 
     internal static IQuery Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery(s_QueryEndpoint)
-            .Add(QueryParameter.PAGE, page);
+        return JikanQuery.Create(s_QueryEndpoint)
+            .With(QueryParameter.PAGE, page);
     }
 
     internal static IQuery Create(TopReviewsTypeFilter type)
     {
         Guard.IsValidEnum(type, nameof(type));
-        return new JikanQuery(s_QueryEndpoint)
-            .Add(QueryParameter.TYPE, type);
+        return JikanQuery.Create(s_QueryEndpoint)
+            .With(QueryParameter.TYPE, type);
     }
 
     internal static IQuery Create(int page, TopReviewsTypeFilter type)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
         Guard.IsValidEnum(type, nameof(type));
-        return new JikanQuery(s_QueryEndpoint)
-            .Add(QueryParameter.PAGE, page)
-            .Add(QueryParameter.TYPE, type);
+        return JikanQuery.Create(s_QueryEndpoint)
+            .With(QueryParameter.PAGE, page)
+            .With(QueryParameter.TYPE, type);
     }
 
     internal static IQuery Create(TopReviewsQueryParameters parameters)
     {
-        return new JikanQuery(s_QueryEndpoint)
+        return JikanQuery.Create(s_QueryEndpoint)
             .AddRange(parameters);
     }
 }

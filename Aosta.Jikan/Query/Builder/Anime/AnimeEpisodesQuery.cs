@@ -12,14 +12,14 @@ internal static class AnimeEpisodesQuery
     internal static IQuery Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery(getEndpoint(id));
+        return JikanQuery.Create(getEndpoint(id));
     }
 
     internal static IQuery Create(long id, int page)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery(getEndpoint(id))
-            .Add(QueryParameter.PAGE, page);
+        return JikanQuery.Create(getEndpoint(id))
+            .With(QueryParameter.PAGE, page);
     }
 }

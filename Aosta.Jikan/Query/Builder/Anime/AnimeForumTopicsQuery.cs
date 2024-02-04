@@ -14,14 +14,14 @@ internal static class AnimeForumTopicsQuery
     internal static IQuery Create(long id)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
-        return new JikanQuery(getEndpoint(id));
+        return JikanQuery.Create(getEndpoint(id));
     }
 
     internal static IQuery Create(long id, ForumTopicTypeFilter type)
     {
         Guard.IsGreaterThanZero(id, nameof(id));
         Guard.IsValidEnum(type, nameof(type));
-        return new JikanQuery(getEndpoint(id))
-            .Add(QueryParameter.FILTER, type);
+        return JikanQuery.Create(getEndpoint(id))
+            .With(QueryParameter.FILTER, type);
     }
 }

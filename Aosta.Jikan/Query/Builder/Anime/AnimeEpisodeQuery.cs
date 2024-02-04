@@ -14,6 +14,6 @@ internal static class AnimeEpisodeQuery
     {
         Guard.IsGreaterThanZero(animeId, nameof(animeId));
         Guard.IsGreaterThanZero(episodeId, nameof(episodeId));
-        return new JikanQuery(getEndpoint(animeId, episodeId));
+        return JikanQuery.Create(getEndpoint(animeId, episodeId));
     }
 }

@@ -12,6 +12,6 @@ internal static class UserFavoritesQuery
     internal static IQuery Create(string username)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        return new JikanQuery(getEndpoint(username));
+        return JikanQuery.Create(getEndpoint(username));
     }
 }

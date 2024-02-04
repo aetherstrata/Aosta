@@ -16,7 +16,7 @@ internal static class SeasonQuery
     {
         Guard.IsValid(x => x is >= 1900 and < 2050, year, nameof(year));
         Guard.IsValidEnum(season, nameof(season));
-        return new JikanQuery(getEndpoint(year, season));
+        return JikanQuery.Create(getEndpoint(year, season));
     }
 
     public static IQuery Create(int year, Jikan.Enums.Season season, int page)
@@ -24,15 +24,15 @@ internal static class SeasonQuery
         Guard.IsValid(x => x is >= 1900 and < 2050, year, nameof(year));
         Guard.IsValidEnum(season, nameof(season));
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery(getEndpoint(year, season))
-            .Add(QueryParameter.PAGE, page);
+        return JikanQuery.Create(getEndpoint(year, season))
+            .With(QueryParameter.PAGE, page);
     }
 
     internal static IQuery Create(int year, Jikan.Enums.Season season, SeasonQueryParameters parameters)
     {
         Guard.IsValid(x => x is >= 1900 and < 2050, year, nameof(year));
         Guard.IsValidEnum(season, nameof(season));
-        return new JikanQuery(getEndpoint(year, season))
+        return JikanQuery.Create(getEndpoint(year, season))
             .AddRange(parameters);
     }
 }

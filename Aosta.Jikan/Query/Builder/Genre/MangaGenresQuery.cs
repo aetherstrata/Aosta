@@ -12,13 +12,13 @@ internal static class MangaGenresQuery
 
     internal static IQuery Create()
     {
-        return new JikanQuery(s_QueryEndpoint);
+        return JikanQuery.Create(s_QueryEndpoint);
     }
 
     internal static IQuery Create(GenresFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
-        return new JikanQuery(s_QueryEndpoint)
-            .Add(QueryParameter.FILTER, filter);
+        return JikanQuery.Create(s_QueryEndpoint)
+            .With(QueryParameter.FILTER, filter);
     }
 }

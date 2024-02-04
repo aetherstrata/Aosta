@@ -10,6 +10,6 @@ internal static class WatchRecentEpisodesQuery
 
     internal static IQuery Create()
     {
-        return new JikanQuery(s_QueryEndpoint);
+        return JikanQuery.Create(s_QueryEndpoint);
     }
 }

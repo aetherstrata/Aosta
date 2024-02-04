@@ -12,26 +12,26 @@ internal static class ScheduleQuery
 
     internal static IQuery Create()
     {
-        return new JikanQuery(s_QueryEndpoint);
+        return JikanQuery.Create(s_QueryEndpoint);
     }
 
     internal static IQuery Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery(s_QueryEndpoint)
-            .Add(QueryParameter.PAGE, page);
+        return JikanQuery.Create(s_QueryEndpoint)
+            .With(QueryParameter.PAGE, page);
     }
 
     internal static IQuery Create(ScheduledDayFilter day)
     {
         Guard.IsValidEnum(day, nameof(day));
-        return new JikanQuery(s_QueryEndpoint)
-            .Add(QueryParameter.FILTER, day);
+        return JikanQuery.Create(s_QueryEndpoint)
+            .With(QueryParameter.FILTER, day);
     }
 
     internal static IQuery Create(ScheduleQueryParameters parameters)
     {
-        return new JikanQuery(s_QueryEndpoint)
+        return JikanQuery.Create(s_QueryEndpoint)
             .AddRange(parameters);
     }
 }

@@ -1,26 +1,25 @@
-using System.Collections;
-
 namespace Aosta.Jikan.Query;
 
-internal sealed class JikanQuery : IQuery, IEnumerable
+internal sealed class JikanQuery : IQuery
 {
-    /// <summary>
     /// Query endpoint
-    /// </summary>
     private readonly string _endpoint;
 
-    /// <summary>
     /// Query parameters
-    /// </summary>
-    private readonly JikanQueryParameterSet _parameters = [];
+    private readonly JikanQueryParameterSet _parameters = new();
+
+    private JikanQuery(string[] routeSections)
+    {
+        _endpoint = string.Join("/", routeSections);
+    }
 
     /// <summary>
     /// Initialize the query using endpoint route.
     /// </summary>
     /// <param name="routeSections">Route sections to be joined to form the endpoint url.</param>
-    internal JikanQuery(string[] routeSections)
+    internal static JikanQuery Create(string[] routeSections)
     {
-        _endpoint = string.Join("/", routeSections);
+        return new JikanQuery(routeSections);
     }
 
     /// <summary>
@@ -30,7 +29,7 @@ internal sealed class JikanQuery : IQuery, IEnumerable
     /// <param name="value">Parameter value</param>
     /// <typeparam name="TParam">Enum type</typeparam>
     /// <returns>The updated query</returns>
-    internal JikanQuery Add<TParam>(string name, TParam value) where TParam : struct, Enum
+    internal JikanQuery With<TParam>(string name, TParam value) where TParam : struct, Enum
     {
         _parameters.Add(name, value);
         return this;
@@ -42,21 +41,21 @@ internal sealed class JikanQuery : IQuery, IEnumerable
     /// <param name="name">Parameter name</param>
     /// <param name="value">Parameter value</param>
     /// <returns>The updated query</returns>
-    internal JikanQuery Add(string name, bool value)
+    internal JikanQuery With(string name, bool value)
     {
         _parameters.Add(name, value);
         return this;
     }
 
-    /// <inheritdoc cref="Add(string,bool)"/>
-    internal JikanQuery Add(string name, string value)
+    /// <inheritdoc cref="With(string,bool)"/>
+    internal JikanQuery With(string name, string value)
     {
         _parameters.Add(name, value);
         return this;
     }
 
-    /// <inheritdoc cref="Add(string,bool)"/>
-    internal JikanQuery Add(string name, int value)
+    /// <inheritdoc cref="With(string,bool)"/>
+    internal JikanQuery With(string name, int value)
     {
         _parameters.Add(name, value);
         return this;
@@ -69,11 +68,7 @@ internal sealed class JikanQuery : IQuery, IEnumerable
     /// <returns>The updated query</returns>
     internal JikanQuery AddRange(JikanQueryParameterSet parameters)
     {
-        foreach (var param in parameters)
-        {
-            _parameters.TryAdd(param.Key, param.Value);
-        }
-
+        _parameters.AddRange(parameters);
         return this;
     }
 
@@ -84,10 +79,5 @@ internal sealed class JikanQuery : IQuery, IEnumerable
     public string GetQuery()
     {
         return _endpoint + _parameters;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return _parameters.GetEnumerator();
     }
 }

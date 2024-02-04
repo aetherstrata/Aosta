@@ -14,14 +14,14 @@ internal static class UserHistoryQuery
     internal static IQuery Create(string username)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        return new JikanQuery(getEndpoint(username));
+        return JikanQuery.Create(getEndpoint(username));
     }
 
     internal static IQuery Create(string username, UserHistoryTypeFilter type)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsValidEnum(type, nameof(type));
-        return new JikanQuery(getEndpoint(username))
-            .Add(QueryParameter.TYPE, type);
+        return JikanQuery.Create(getEndpoint(username))
+            .With(QueryParameter.TYPE, type);
     }
 }

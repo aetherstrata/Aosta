@@ -10,13 +10,13 @@ internal static class RecentMangaReviewsQuery
 
     internal static IQuery Create()
     {
-        return new JikanQuery(s_QueryEndpoint);
+        return JikanQuery.Create(s_QueryEndpoint);
     }
 
     internal static IQuery Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery(s_QueryEndpoint)
-            .Add(QueryParameter.PAGE, page);
+        return JikanQuery.Create(s_QueryEndpoint)
+            .With(QueryParameter.PAGE, page);
     }
 }

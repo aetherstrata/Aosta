@@ -10,14 +10,14 @@ internal static class TopCharacterQuery
 
     internal static IQuery Create()
     {
-        return new JikanQuery(s_QueryEndpoint);
+        return JikanQuery.Create(s_QueryEndpoint);
     }
 
     internal static IQuery Create(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery(s_QueryEndpoint)
-            .Add(QueryParameter.PAGE, page);
+        return JikanQuery.Create(s_QueryEndpoint)
+            .With(QueryParameter.PAGE, page);
     }
 
     internal static IQuery Create(int page, int limit)
@@ -25,8 +25,8 @@ internal static class TopCharacterQuery
         Guard.IsGreaterThanZero(page, nameof(page));
         Guard.IsGreaterThanZero(limit, nameof(limit));
         Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MAXIMUM_PAGE_SIZE, nameof(limit));
-        return new JikanQuery(s_QueryEndpoint)
-            .Add(QueryParameter.PAGE, page)
-            .Add(QueryParameter.LIMIT, limit);
+        return JikanQuery.Create(s_QueryEndpoint)
+            .With(QueryParameter.PAGE, page)
+            .With(QueryParameter.LIMIT, limit);
     }
 }

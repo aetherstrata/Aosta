@@ -19,7 +19,7 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldReturnEndpoint_whenNoParam()
     {
-        _query = new JikanQuery(s_Endpoint);
+        _query = JikanQuery.Create(s_Endpoint);
 
         _query.GetQuery().Should().Be("api/v2/items");
     }
@@ -27,8 +27,8 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldAddParamName_whenTrueBool()
     {
-        _query = new JikanQuery(s_Endpoint)
-            .Add(QueryParameter.KIDS, true);
+        _query = JikanQuery.Create(s_Endpoint)
+            .With(QueryParameter.KIDS, true);
 
         _query.GetQuery().Should().Be("api/v2/items?kids");
     }
@@ -36,8 +36,8 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldNotAddParamName_whenFalseBool()
     {
-        _query = new JikanQuery(s_Endpoint)
-            .Add(QueryParameter.KIDS, false);
+        _query = JikanQuery.Create(s_Endpoint)
+            .With(QueryParameter.KIDS, false);
 
         _query.GetQuery().Should().Be("api/v2/items");
     }
@@ -45,8 +45,8 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldAddParam_whenInteger()
     {
-        _query = new JikanQuery(s_Endpoint)
-            .Add(QueryParameter.KIDS, 14);
+        _query = JikanQuery.Create(s_Endpoint)
+            .With(QueryParameter.KIDS, 14);
 
         _query.GetQuery().Should().Be("api/v2/items?kids=14");
     }
@@ -54,8 +54,8 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldAddParam_whenString()
     {
-        _query = new JikanQuery(s_Endpoint)
-            .Add(QueryParameter.KIDS, "other");
+        _query = JikanQuery.Create(s_Endpoint)
+            .With(QueryParameter.KIDS, "other");
 
         _query.GetQuery().Should().Be("api/v2/items?kids=other");
     }
@@ -63,8 +63,8 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldAddParam_whenEnum()
     {
-        _query = new JikanQuery(s_Endpoint)
-            .Add(QueryParameter.STATUS, AiringStatusFilter.Airing);
+        _query = JikanQuery.Create(s_Endpoint)
+            .With(QueryParameter.STATUS, AiringStatusFilter.Airing);
 
         _query.GetQuery().Should().Be("api/v2/items?status=airing");
     }
@@ -72,14 +72,12 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldConcatParams_whenMultiple()
     {
-        _query = new JikanQuery(s_Endpoint)
-        {
-            { QueryParameter.SAFE_FOR_WORK, true },
-            { QueryParameter.UNAPPROVED, false },
-            { QueryParameter.PAGE, 4 },
-            { QueryParameter.QUERY, "Naruto" },
-            { QueryParameter.STATUS, AiringStatusFilter.Airing }
-        };
+        _query = JikanQuery.Create(s_Endpoint)
+            .With(QueryParameter.SAFE_FOR_WORK, true)
+            .With(QueryParameter.UNAPPROVED, false)
+            .With(QueryParameter.PAGE, 4)
+            .With(QueryParameter.QUERY, "Naruto")
+            .With(QueryParameter.STATUS, AiringStatusFilter.Airing);
 
         _query.GetQuery().Should().Be("api/v2/items?sfw&page=4&q=Naruto&airing=airing");
     }
@@ -87,16 +85,15 @@ internal class QueryTests
     [Test]
     public void GetQuery_shouldConcatParams_whenSet()
     {
-        var set = new JikanQueryParameterSet
-        {
-            { QueryParameter.SAFE_FOR_WORK, true },
-            { QueryParameter.UNAPPROVED, false },
-            { QueryParameter.PAGE, 4 },
-            { QueryParameter.QUERY, "Naruto" },
-            { QueryParameter.STATUS, AiringStatusFilter.Airing }
-        };
+        var set = new JikanQueryParameterSet();
 
-        _query = new JikanQuery(s_Endpoint).AddRange(set);
+        set.Add(QueryParameter.SAFE_FOR_WORK, true);
+        set.Add(QueryParameter.UNAPPROVED, false);
+        set.Add(QueryParameter.PAGE, 4);
+        set.Add(QueryParameter.QUERY, "Naruto");
+        set.Add(QueryParameter.STATUS, AiringStatusFilter.Airing);
+
+        _query = JikanQuery.Create(s_Endpoint).AddRange(set);
 
         _query.GetQuery().Should().Be("api/v2/items?sfw&page=4&q=Naruto&status=airing");
     }
@@ -104,7 +101,8 @@ internal class QueryTests
     [Test]
     public void QueryParameterSet_shouldThrow_onDuplicateParamName()
     {
-        var set = new JikanQueryParameterSet { { "name", 1 } };
+        var set = new JikanQueryParameterSet();
+        set.Add("name", 1);
 
         var act = () => set.Add("name", "test");
 

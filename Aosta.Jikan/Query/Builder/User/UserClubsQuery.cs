@@ -12,14 +12,14 @@ internal static class UserClubsQuery
     internal static IQuery Create(string username)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
-        return new JikanQuery(getEndpoint(username));
+        return JikanQuery.Create(getEndpoint(username));
     }
 
     internal static IQuery Create(string username, int page)
     {
         Guard.IsNotNullOrWhiteSpace(username, nameof(username));
         Guard.IsGreaterThanZero(page, nameof(page));
-        return new JikanQuery(getEndpoint(username))
-            .Add(QueryParameter.PAGE, page);
+        return JikanQuery.Create(getEndpoint(username))
+            .With(QueryParameter.PAGE, page);
     }
 }
