@@ -1,0 +1,97 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:localization="clr-namespace:Aosta.Ava.Localization"
+             xmlns:controls="clr-namespace:Aosta.Ava.Controls"
+             xmlns:settings="clr-namespace:Aosta.Ava.Settings"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
+             x:Class="Aosta.Ava.Settings.SettingsPage"
+             x:DataType="settings:SettingsViewModel">
+    <ScrollViewer>
+        <Grid RowDefinitions="Auto,Auto">
+            <TextBlock Grid.Row="0"
+                       Margin="20,10, 0, 0"
+                       FontSize="36"
+                       FontWeight="Bold"
+                       Text="{localization:Localize Key=SettingsPage.Title}" />
+            <TextBlock Grid.Row="0"
+                       Margin="0, 5,5, 0"
+                       HorizontalAlignment="Right"
+                       Text="{Binding AppVersion.Localized}" />
+            <StackPanel Grid.Row="1"
+                        Margin="5,5"
+                        Spacing="5">
+                <Expander Header="{localization:Localize Key=SettingsPage.ApplicationSettings.Header}"
+                          BorderThickness="0">
+                    <StackPanel Spacing="10"
+                                Margin="20,0">
+                        <controls:SettingsEntry Entry="{localization:Localize Key=SettingsPage.AppTheme.Entry}">
+                            <controls:SettingsEntry.Action>
+                                <ComboBox ItemsSource="{Binding ThemeManager.AppThemes}"
+                                          SelectedItem="{Binding ThemeManager.CurrentAppTheme}" />
+                            </controls:SettingsEntry.Action>
+                        </controls:SettingsEntry>
+                        <controls:SettingsEntry Entry="{localization:Localize Key=SettingsPage.Language.Entry}">
+                            <controls:SettingsEntry.Action>
+                                <ComboBox ItemsSource="{Binding LanguageManager.Languages}"
+                                          SelectedItem="{Binding LanguageManager.CurrentLanguage}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </controls:SettingsEntry.Action>
+                        </controls:SettingsEntry>
+                    </StackPanel>
+                    <Expander.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="18"
+                                       FontWeight="Bold" />
+                        </DataTemplate>
+                    </Expander.HeaderTemplate>
+                </Expander>
+
+                <Expander Header="{localization:Localize Key=SettingsPage.ContentSettings.Header}"
+                          BorderThickness="0">
+                    <StackPanel Spacing="10"
+                                Margin="20,0">
+                        <controls:SettingsEntry Entry="{localization:Localize Key=SettingsPage.IncludeNsfw.Entry}">
+                            <controls:SettingsEntry.Action>
+                                <ToggleSwitch IsChecked="{Binding IncludeNsfw}"/>
+                            </controls:SettingsEntry.Action>
+                        </controls:SettingsEntry>
+                        <controls:SettingsEntry Entry="{localization:Localize Key=SettingsPage.IncludeUnapproved.Entry}">
+                            <controls:SettingsEntry.Action>
+                                <ToggleSwitch IsChecked="{Binding IncludeUnapproved}" />
+                            </controls:SettingsEntry.Action>
+                        </controls:SettingsEntry>
+                    </StackPanel>
+                    <Expander.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="18"
+                                       FontWeight="Bold" />
+                        </DataTemplate>
+                    </Expander.HeaderTemplate>
+                </Expander>
+
+                <StackPanel.Styles>
+                    <Style Selector="ComboBox">
+                        <Setter Property="MinWidth" Value="125" />
+                    </Style>
+                </StackPanel.Styles>
+            </StackPanel>
+
+            <Grid.Styles>
+                <Style Selector="Expander">
+                    <Setter Property="IsExpanded" Value="True" />
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+                <Style Selector="Expander /template/ ToggleButton#PART_toggle">
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </Grid.Styles>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

@@ -80,7 +80,7 @@ public static class RealmExtensions
     /// <param name="key">The setting key.</param>
     /// <typeparam name="T">The type of the setting.</typeparam>
     /// <returns>The setting value or <c>default(<typeparamref name="T">T</typeparamref>)</c> if not found.</returns>
-    /// <exception cref="InvalidCastException">The <see cref="RealmValue"/> could not be cast to <typeparamref name="T"/>.</exception>
+    /// <exception cref="InvalidCastException">The underlying <see cref="RealmValue"/> could not be cast to <typeparamref name="T"/>.</exception>
     public static T? GetSetting<T>(this RealmAccess realm, string key)
     {
         Locator.Current.GetSafely<ILogger>().Debug("Getting setting value for {Key}", key);
