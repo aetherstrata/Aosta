@@ -11,7 +11,7 @@ public class SearchClubAsyncTests
     public async Task EmptyConfig_ShouldReturnFirst25People()
     {
         // Given
-        var config = new ClubSearchQueryParameters();
+        var config = ClubSearchQueryParameters.Create();
 
         // When
         var clubs = await JikanTests.Instance.SearchClubAsync(config);
@@ -29,7 +29,7 @@ public class SearchClubAsyncTests
     public async Task InvalidPage_ShouldThrowValidationException(int page)
     {
         // Given
-        var config = new ClubSearchQueryParameters().SetPage(page);
+        var config = ClubSearchQueryParameters.Create().Page(page);
 
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchClubAsync(config));
@@ -47,7 +47,7 @@ public class SearchClubAsyncTests
     public async Task InvalidPageSize_ShouldThrowValidationException(int pageSize)
     {
         // Given
-        var config = new ClubSearchQueryParameters().SetLimit(pageSize);
+        var config = ClubSearchQueryParameters.Create().Limit(pageSize);
 
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchClubAsync(config));
@@ -60,7 +60,7 @@ public class SearchClubAsyncTests
     public async Task GivenSecondPage_ShouldReturnSecondPage()
     {
         // Given
-        var config = new ClubSearchQueryParameters().SetPage(2);
+        var config = ClubSearchQueryParameters.Create().Page(2);
 
         // When
         var characters = await JikanTests.Instance.SearchClubAsync(config);
@@ -74,7 +74,7 @@ public class SearchClubAsyncTests
     {
         // Given
         const int pageSize = 5;
-        var config = new ClubSearchQueryParameters().SetLimit(pageSize);
+        var config = ClubSearchQueryParameters.Create().Limit(pageSize);
 
         // When
         var characters = await JikanTests.Instance.SearchClubAsync(config);
@@ -90,7 +90,7 @@ public class SearchClubAsyncTests
     {
         // Given
         const int pageSize = 5;
-        var config =new ClubSearchQueryParameters().SetPage(2).SetLimit(pageSize);
+        var config =ClubSearchQueryParameters.Create().Page(2).Limit(pageSize);
 
         // When
         var characters = await JikanTests.Instance.SearchClubAsync(config);
@@ -110,7 +110,7 @@ public class SearchClubAsyncTests
     public async Task InvalidLetter_ShouldThrowValidationException(char notLetter)
     {
         // Given
-        var config =new ClubSearchQueryParameters().SetLetter(notLetter);
+        var config =ClubSearchQueryParameters.Create().Letter(notLetter);
 
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchClubAsync(config));
@@ -126,7 +126,7 @@ public class SearchClubAsyncTests
     public async Task ValidLetter_ShouldReturnRecordsOnlyStartingOnLetter(char letter)
     {
         // Given
-        var config = new ClubSearchQueryParameters().SetLetter(letter);
+        var config = ClubSearchQueryParameters.Create().Letter(letter);
 
         // When
         var people = await JikanTests.Instance.SearchClubAsync(config);

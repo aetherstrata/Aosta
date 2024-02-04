@@ -1,17 +1,25 @@
+using Aosta.Common;
 using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Query.Parameters;
 
-public class TopMangaQueryParameters : JikanQueryParameterSet
+public class TopMangaQueryParameters : JikanQueryParameterSet, IFactory<TopMangaQueryParameters>
 {
-    public TopMangaQueryParameters SetPage(int page)
+    private TopMangaQueryParameters(){}
+
+    public static TopMangaQueryParameters Create()
+    {
+        return new TopMangaQueryParameters();
+    }
+
+    public TopMangaQueryParameters Page(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
         Add(QueryParameter.PAGE, page);
         return this;
     }
 
-    public TopMangaQueryParameters SetLimit(int limit)
+    public TopMangaQueryParameters Limit(int limit)
     {
         Guard.IsGreaterThanZero(limit, nameof(limit));
         Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MAXIMUM_PAGE_SIZE, nameof(limit));
@@ -19,14 +27,14 @@ public class TopMangaQueryParameters : JikanQueryParameterSet
         return this;
     }
 
-    public TopMangaQueryParameters SetType(MangaTypeFilter filter)
+    public TopMangaQueryParameters Type(MangaTypeFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
         Add(QueryParameter.TYPE, filter);
         return this;
     }
 
-    public TopMangaQueryParameters SetFilter(TopMangaFilter filter)
+    public TopMangaQueryParameters Filter(TopMangaFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
         Add(QueryParameter.FILTER, filter);

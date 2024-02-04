@@ -1,17 +1,25 @@
+using Aosta.Common;
 using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Query.Parameters;
 
-public class ScheduleQueryParameters : JikanQueryParameterSet
+public class ScheduleQueryParameters : JikanQueryParameterSet, IFactory<ScheduleQueryParameters>
 {
-    public ScheduleQueryParameters SetPage(int page)
+    private ScheduleQueryParameters(){}
+
+    public static ScheduleQueryParameters Create()
+    {
+        return new ScheduleQueryParameters();
+    }
+
+    public ScheduleQueryParameters Page(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
         Add(QueryParameter.PAGE, page);
         return this;
     }
 
-    public ScheduleQueryParameters SetLimit(int limit)
+    public ScheduleQueryParameters Limit(int limit)
     {
         Guard.IsGreaterThanZero(limit, nameof(limit));
         Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MAXIMUM_PAGE_SIZE, nameof(limit));
@@ -19,26 +27,26 @@ public class ScheduleQueryParameters : JikanQueryParameterSet
         return this;
     }
 
-    public ScheduleQueryParameters SetFilter(ScheduledDayFilter filter)
+    public ScheduleQueryParameters Filter(ScheduledDayFilter filter)
     {
         Guard.IsValidEnum(filter, nameof(filter));
         Add(QueryParameter.FILTER, filter);
         return this;
     }
 
-    public ScheduleQueryParameters SetKids(bool kids)
+    public ScheduleQueryParameters Kids(bool kids)
     {
         Add(QueryParameter.KIDS, kids);
         return this;
     }
 
-    public ScheduleQueryParameters SetSafeForWork(bool sfw)
+    public ScheduleQueryParameters SafeForWork(bool sfw)
     {
         Add(QueryParameter.SAFE_FOR_WORK, sfw);
         return this;
     }
 
-    public ScheduleQueryParameters SetUnapproved(bool unapproved)
+    public ScheduleQueryParameters Unapproved(bool unapproved)
     {
         Add(QueryParameter.UNAPPROVED, unapproved);
         return this;

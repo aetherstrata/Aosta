@@ -1,17 +1,25 @@
+using Aosta.Common;
 using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Query.Parameters;
 
-public class ClubSearchQueryParameters : JikanQueryParameterSet
+public class ClubSearchQueryParameters : JikanQueryParameterSet, IFactory<ClubSearchQueryParameters>
 {
-    public ClubSearchQueryParameters SetPage(int page)
+    private ClubSearchQueryParameters(){}
+
+    public static ClubSearchQueryParameters Create()
+    {
+        return new ClubSearchQueryParameters();
+    }
+
+    public ClubSearchQueryParameters Page(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
         Add(QueryParameter.PAGE, page);
         return this;
     }
 
-    public ClubSearchQueryParameters SetLimit(int limit)
+    public ClubSearchQueryParameters Limit(int limit)
     {
         Guard.IsGreaterThanZero(limit, nameof(limit));
         Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MAXIMUM_PAGE_SIZE, nameof(limit));
@@ -19,28 +27,28 @@ public class ClubSearchQueryParameters : JikanQueryParameterSet
         return this;
     }
 
-    public ClubSearchQueryParameters SetQuery(string query)
+    public ClubSearchQueryParameters Query(string query)
     {
         Guard.IsNotNullOrWhiteSpace(query, nameof(query));
         Add(QueryParameter.QUERY, query);
         return this;
     }
 
-    public ClubSearchQueryParameters SetOrder(ClubSearchOrderBy orderBy)
+    public ClubSearchQueryParameters Order(ClubSearchOrderBy orderBy)
     {
         Guard.IsValidEnum(orderBy, nameof(orderBy));
         Add(QueryParameter.ORDER_BY, orderBy);
         return this;
     }
 
-    public ClubSearchQueryParameters SetSortDirection(SortDirection sort)
+    public ClubSearchQueryParameters SortDirection(SortDirection sort)
     {
         Guard.IsValidEnum(sort, nameof(sort));
         Add(QueryParameter.SORT, sort);
         return this;
     }
 
-    public ClubSearchQueryParameters SetLetter(char letter)
+    public ClubSearchQueryParameters Letter(char letter)
     {
         Guard.IsLetter(letter, nameof(letter));
         Add(QueryParameter.LETTER, letter);

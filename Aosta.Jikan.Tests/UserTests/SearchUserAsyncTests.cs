@@ -11,7 +11,7 @@ public class SearchUserAsyncTests
     public async Task EmptyConfig_ShouldReturnFirst25People()
     {
         // Given
-        var config = new UserSearchQueryParameters();
+        var config = UserSearchQueryParameters.Create();
 
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -29,7 +29,7 @@ public class SearchUserAsyncTests
     public async Task InvalidPage_ShouldThrowValidationException(int page)
     {
         // Given
-        var config = new UserSearchQueryParameters().SetPage(page);
+        var config = UserSearchQueryParameters.Create().SetPage(page);
 
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchUserAsync(config));
@@ -42,7 +42,7 @@ public class SearchUserAsyncTests
     public async Task GivenSecondPage_ShouldReturnSecondPage()
     {
         // Given
-        var config = new UserSearchQueryParameters().SetPage(2);
+        var config = UserSearchQueryParameters.Create().SetPage(2);
 
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -60,7 +60,7 @@ public class SearchUserAsyncTests
     public async Task InvalidGenderEnumValue_ShouldThrowValidationException(UserGenderFilter gender)
     {
         // Given
-        var config =new UserSearchQueryParameters().SetGender(gender);
+        var config =UserSearchQueryParameters.Create().SetGender(gender);
 
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchUserAsync(config));
@@ -77,7 +77,7 @@ public class SearchUserAsyncTests
     public async Task ValidGenderEnumValue_ShouldReturnUsers(UserGenderFilter gender, string expectedFirstUser)
     {
         // Given
-        var config =new UserSearchQueryParameters().SetGender(gender);
+        var config =UserSearchQueryParameters.Create().SetGender(gender);
 
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -92,7 +92,7 @@ public class SearchUserAsyncTests
     public async Task SonMatiQuery_ShouldReturnSonMati()
     {
         // Given
-        var config = new UserSearchQueryParameters().SetQuery("SonMati");
+        var config = UserSearchQueryParameters.Create().SetQuery("SonMati");
 
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -105,7 +105,7 @@ public class SearchUserAsyncTests
     public async Task WithLocation_ShouldReturnFilteredByLocation()
     {
         // Given
-        var config = new UserSearchQueryParameters().SetLocation("mysłowice");
+        var config = UserSearchQueryParameters.Create().SetLocation("mysłowice");
 
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -120,7 +120,7 @@ public class SearchUserAsyncTests
     public async Task WithMinAge_ShouldReturnFilteredByMinAge()
     {
         // Given
-        var config = new UserSearchQueryParameters().SetMinimumAge(20);
+        var config = UserSearchQueryParameters.Create().SetMinimumAge(20);
 
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);
@@ -135,7 +135,7 @@ public class SearchUserAsyncTests
     public async Task WithMaxAge_ShouldReturnFilteredByMaxAge()
     {
         // Given
-        var config =  new UserSearchQueryParameters().SetMaximumAge(20);
+        var config =  UserSearchQueryParameters.Create().SetMaximumAge(20);
 
         // When
         var users = await JikanTests.Instance.SearchUserAsync(config);

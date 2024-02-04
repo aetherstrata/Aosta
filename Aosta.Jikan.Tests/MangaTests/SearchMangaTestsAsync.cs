@@ -15,7 +15,7 @@ public class SearchMangaAsyncTests
 	public async Task InvalidPage_ShouldThrowValidationException(int page)
 	{
 		// Given
-		var config = new MangaSearchQueryParameters().SetPage(page);
+		var config = MangaSearchQueryParameters.Create().Page(page);
 
 		// When
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(config));
@@ -33,7 +33,7 @@ public class SearchMangaAsyncTests
 	public async Task InvalidPageSize_ShouldThrowValidationException(int pageSize)
 	{
 		// Given
-		var config = new MangaSearchQueryParameters().SetLimit(pageSize);
+		var config = MangaSearchQueryParameters.Create().Limit(pageSize);
 
 		// When
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(config));
@@ -46,7 +46,7 @@ public class SearchMangaAsyncTests
 	public async Task GivenSecondPage_ShouldReturnSecondPage()
 	{
 		// Given
-		var config = new MangaSearchQueryParameters().SetPage(2);
+		var config = MangaSearchQueryParameters.Create().Page(2);
 
 		// When
 		var manga = await JikanTests.Instance.SearchMangaAsync(config);
@@ -66,7 +66,7 @@ public class SearchMangaAsyncTests
 	{
 		// Given
 		const int pageSize = 5;
-		var config = new MangaSearchQueryParameters().SetLimit(pageSize);
+		var config = MangaSearchQueryParameters.Create().Limit(pageSize);
 
 		// When
 		var manga = await JikanTests.Instance.SearchMangaAsync(config);
@@ -85,7 +85,7 @@ public class SearchMangaAsyncTests
 	{
 		// Given
 		const int pageSize = 5;
-		var config = new MangaSearchQueryParameters().SetPage(2).SetLimit(pageSize);
+		var config = MangaSearchQueryParameters.Create().Page(2).Limit(pageSize);
 
 		// When
 		var manga = await JikanTests.Instance.SearchMangaAsync(config);
@@ -140,9 +140,9 @@ public class SearchMangaAsyncTests
 	public async Task YotsubaPublishingQuery_ShouldReturnPublishedYotsubatoManga()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("yotsuba")
-			.SetStatus(PublishingStatusFilter.Publishing);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("yotsuba")
+			.Status(PublishingStatusFilter.Publishing);
 
 		// When
 		var yotsubato = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -163,9 +163,9 @@ public class SearchMangaAsyncTests
 	public async Task YotsubaQueryInvalidPage_ShouldThrowValidationException(int page)
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("yotsuba")
-			.SetPage(page);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("yotsuba")
+			.Page(page);
 
 		// When
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(searchConfig));
@@ -178,9 +178,9 @@ public class SearchMangaAsyncTests
 	public async Task GirlQuerySecondPage_ShouldFindGirlManga()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("girl")
-			.SetPage(2);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("girl")
+			.Page(2);
 
 		// When
 		var returnedAnime = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -198,9 +198,9 @@ public class SearchMangaAsyncTests
 	public async Task MangaConfig_ShouldReturnNotNullSearchManga(string query)
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery(query)
-			.SetType(MangaTypeFilter.Manga);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query(query)
+			.Type(MangaTypeFilter.Manga);
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -213,9 +213,9 @@ public class SearchMangaAsyncTests
 	public async Task DanganronpaMangaConfig_ShouldReturnDanganronpaManga()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("danganronpa")
-			.SetType(MangaTypeFilter.Manga);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("danganronpa")
+			.Type(MangaTypeFilter.Manga);
 
 		// When
 		var danganronpaManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -229,10 +229,10 @@ public class SearchMangaAsyncTests
 	public async Task DanganronpaMangaAbove7Config_ShouldReturnDanganronpaMangaScore()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("danganronpa")
-			.SetType(MangaTypeFilter.Manga)
-			.SetMinScore(7);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("danganronpa")
+			.Type(MangaTypeFilter.Manga)
+			.MinScore(7);
 
 		// When
 		var danganronpaManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -244,10 +244,10 @@ public class SearchMangaAsyncTests
 	public async Task MangaGameGenreConfig_ShouldFilterMetalFightBeyblade()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("metal")
-			.SetType(MangaTypeFilter.Manga)
-			.SetGenres(new long[] {11});
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("metal")
+			.Type(MangaTypeFilter.Manga)
+			.Genres(new long[] {11});
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -259,10 +259,10 @@ public class SearchMangaAsyncTests
 	public async Task MetalSortByMembersConfig_ShouldSortByPopularityFMAFirst()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("metal")
-			.SetOrder(MangaSearchOrderBy.Members)
-			.SetSortDirection(SortDirection.Descending);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("metal")
+			.Order(MangaSearchOrderBy.Members)
+			.SortDirection(SortDirection.Descending);
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -282,10 +282,10 @@ public class SearchMangaAsyncTests
 	public async Task OneSortByIdConfig_ShouldSortByIdOnePieceFirst()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("one")
-			.SetOrder(MangaSearchOrderBy.MalId)
-			.SetSortDirection(SortDirection.Ascending);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("one")
+			.Order(MangaSearchOrderBy.MalId)
+			.SortDirection(SortDirection.Ascending);
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -298,8 +298,8 @@ public class SearchMangaAsyncTests
 	public async Task ShonenJumpMagazineConfig_ShouldReturnNarutoAndBleach()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetMagazines(new long[] { 83 });
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Magazines(new long[] { 83 });
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -333,12 +333,12 @@ public class SearchMangaAsyncTests
 	)
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetStatus(airingStatus.GetValueOrDefault())
-			.SetType(mangaType.GetValueOrDefault())
-			.SetOrder(orderBy.GetValueOrDefault())
-			.SetSortDirection(sortDirection.GetValueOrDefault())
-			.SetGenres(genreId.HasValue ? [genreId.Value] : Array.Empty<long>());
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Status(airingStatus.GetValueOrDefault())
+			.Type(mangaType.GetValueOrDefault())
+			.Order(orderBy.GetValueOrDefault())
+			.SortDirection(sortDirection.GetValueOrDefault())
+			.Genres(genreId.HasValue ? [genreId.Value] : Array.Empty<long>());
 
 		// When
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(searchConfig));
@@ -351,8 +351,8 @@ public class SearchMangaAsyncTests
 	public async Task EmptyQueryActionManga_ShouldFindBerserkAndBlackCat()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetGenres(new long[] { 1 });
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Genres(new long[] { 1 });
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -368,9 +368,9 @@ public class SearchMangaAsyncTests
 	public async Task EmptyQueryActionMangaFirstPage_ShouldFindBerserkAndBlackCat()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetPage(1)
-			.SetGenres(new long[] { 1 });
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Page(1)
+			.Genres(new long[] { 1 });
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -386,9 +386,9 @@ public class SearchMangaAsyncTests
 	public async Task EmptyQueryActionMangaSecondPage_ShouldFindHakushoAndAirGear()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetPage(2)
-			.SetGenres(new long[] { 1 });
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Page(2)
+			.Genres(new long[] { 1 });
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -407,10 +407,10 @@ public class SearchMangaAsyncTests
 	public async Task OreQueryWithConfigInvalidPage_ShouldThrowValidationException(int page)
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("ore")
-			.SetPage(page)
-			.SetStatus(PublishingStatusFilter.Publishing);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("ore")
+			.Page(page)
+			.Status(PublishingStatusFilter.Publishing);
 
 		// When
 		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(searchConfig));
@@ -423,10 +423,10 @@ public class SearchMangaAsyncTests
 	public async Task OreQueryComedyMangaSecondPage_ShouldReturnNotEmptyCollection()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("ore")
-			.SetPage(2)
-			.SetType(MangaTypeFilter.Manga);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("ore")
+			.Page(2)
+			.Type(MangaTypeFilter.Manga);
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -439,11 +439,11 @@ public class SearchMangaAsyncTests
 	public async Task GenreInclusion_ShouldReturnNotEmptyCollection()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("ore")
-			.SetPage(2)
-			.SetGenres(new long[] { 4 })
-			.SetType(MangaTypeFilter.Manga);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("ore")
+			.Page(2)
+			.Genres(new long[] { 4 })
+			.Type(MangaTypeFilter.Manga);
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -456,11 +456,11 @@ public class SearchMangaAsyncTests
 	public async Task GenreExclusion_ShouldReturnNotEmptyCollection()
 	{
 		// Given
-		var searchConfig = new MangaSearchQueryParameters()
-			.SetQuery("ore")
-			.SetPage(2)
-			.SetExcludedGenres(new long[] { 4 })
-			.SetType(MangaTypeFilter.Manga);
+		var searchConfig = MangaSearchQueryParameters.Create()
+			.Query("ore")
+			.Page(2)
+			.ExcludedGenres(new long[] { 4 })
+			.Type(MangaTypeFilter.Manga);
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);

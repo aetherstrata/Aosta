@@ -13,8 +13,8 @@ public partial class RelatedEntry : IEmbeddedObject
 	/// </summary>
 	public string? Relation { get; set; }
 
-	/// <summary>
-	/// Collection of related anime/manga of given relation type.
-	/// </summary>
-	public IList<MalUrl> Entry { get; }
+    /// <summary>
+    /// Collection of related anime/manga of given relation type.
+    /// </summary>
+    public IList<MalUrl> Entry { get; } = null!;
 }

@@ -34,11 +34,11 @@ public class HomePageViewModel : ReactiveObject, IRoutableViewModel
             var jikan = Locator.Current.GetSafely<IJikan>();
             var realm = Locator.Current.GetSafely<RealmAccess>();
 
-            var topQueryParams = new TopAnimeQueryParameters()
-                .SetSafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false));
+            var topQueryParams = TopAnimeQueryParameters.Create()
+                .SafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false));
 
-            var seasonQueryParams = new SeasonQueryParameters()
-                .SetSafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false));
+            var seasonQueryParams = SeasonQueryParameters.Create()
+                .SafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false));
 
             var topTask = jikan.GetTopAnimeAsync(topQueryParams);
             var currentTask = jikan.GetCurrentSeasonAsync(seasonQueryParams);

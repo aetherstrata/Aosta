@@ -1,17 +1,25 @@
+using Aosta.Common;
 using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Query.Parameters;
 
-public class MagazinesQueryParameters : JikanQueryParameterSet
+public class MagazinesQueryParameters : JikanQueryParameterSet, IFactory<MagazinesQueryParameters>
 {
-    public MagazinesQueryParameters SetPage(int page)
+    private MagazinesQueryParameters(){}
+
+    public static MagazinesQueryParameters Create()
+    {
+        return new MagazinesQueryParameters();
+    }
+
+    public MagazinesQueryParameters Page(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));
         Add(QueryParameter.PAGE, page);
         return this;
     }
 
-    public MagazinesQueryParameters SetLimit(int limit)
+    public MagazinesQueryParameters Limit(int limit)
     {
         Guard.IsGreaterThanZero(limit, nameof(limit));
         Guard.IsLessOrEqualThan(limit, JikanParameterConsts.MAXIMUM_PAGE_SIZE, nameof(limit));
@@ -19,7 +27,7 @@ public class MagazinesQueryParameters : JikanQueryParameterSet
         return this;
     }
 
-    public MagazinesQueryParameters SetQuery(string query)
+    public MagazinesQueryParameters Query(string query)
     {
         Guard.IsNotNullOrWhiteSpace(query, nameof(query));
         Add(QueryParameter.QUERY, query);
@@ -40,7 +48,7 @@ public class MagazinesQueryParameters : JikanQueryParameterSet
         return this;
     }
 
-    public MagazinesQueryParameters SetLetter(char letter)
+    public MagazinesQueryParameters Letter(char letter)
     {
         Guard.IsLetter(letter, nameof(letter));
         Add(QueryParameter.LETTER, letter);

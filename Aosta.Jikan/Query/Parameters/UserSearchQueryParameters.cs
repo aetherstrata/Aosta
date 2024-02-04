@@ -1,9 +1,17 @@
+using Aosta.Common;
 using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Query.Parameters;
 
-public class UserSearchQueryParameters : JikanQueryParameterSet
+public class UserSearchQueryParameters : JikanQueryParameterSet, IFactory<UserSearchQueryParameters>
 {
+    private UserSearchQueryParameters(){}
+
+    public static UserSearchQueryParameters Create()
+    {
+        return new UserSearchQueryParameters();
+    }
+
     public UserSearchQueryParameters SetPage(int page)
     {
         Guard.IsGreaterThanZero(page, nameof(page));

@@ -1,10 +1,15 @@
+using System.Text.RegularExpressions;
+
 using Aosta.Jikan.Exceptions;
 
 namespace Aosta.Jikan.Query;
 
-public class JikanQueryParameterSet
+public partial class JikanQueryParameterSet
 {
     private readonly Dictionary<string, IQueryParameter> _inner = new();
+
+    [GeneratedRegex(@"^\d{4}(-\d{2}){0,2}$", RegexOptions.CultureInvariant, 1)]
+    protected static partial Regex DateRegex();
 
     internal JikanQueryParameterSet()
     {

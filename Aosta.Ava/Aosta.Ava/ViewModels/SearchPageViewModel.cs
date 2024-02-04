@@ -55,7 +55,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
 
         var searchCommand = ReactiveCommand.CreateFromTask((string s, CancellationToken ct) => executeSearch(s, ct));
 
-        this.WhenAnyValue(vm => vm.SearchText)
+        this.WhenAnyValue(static vm => vm.SearchText)
             .Throttle(TimeSpan.FromMilliseconds(400))
             .ObserveOn(AvaloniaScheduler.Instance)
             .InvokeCommand(searchCommand);
@@ -69,12 +69,12 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
         {
             try
             {
-                var queryParams = new AnimeSearchQueryParameters()
-                    .SetQuery(s)
-                    .SetSfw(!_realm.GetSetting(Setting.INCLUDE_NSFW, false));
+                var queryParams = AnimeSearchQueryParameters.Create()
+                    .Query(s)
+                    .SafeForWork(!_realm.GetSetting(Setting.INCLUDE_NSFW, false));
 
                 var result = await _client.SearchAnimeAsync(queryParams, ct);
-                var resultIds = result.Data.Select(x => x.MalId);
+                var resultIds = result.Data.Select(static x => x.MalId);
 
                 // Check if the MAL IDs returned from Jikan appear in Realm
                 var found = _realm.Run(r =>

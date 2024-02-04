@@ -12,7 +12,7 @@ public class SearchPersonAsyncTests
     public async Task EmptyConnfig_ShouldReturnFirst25People()
     {
         // Given
-        var config = new PersonSearchQueryParameters();
+        var config = PersonSearchQueryParameters.Create();
 
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -34,7 +34,7 @@ public class SearchPersonAsyncTests
     public async Task InvalidPage_ShouldThrowValidationException(int page)
     {
         // Given
-        var config = new PersonSearchQueryParameters().SetPage(page);
+        var config = PersonSearchQueryParameters.Create().Page(page);
 
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchPersonAsync(config));
@@ -52,7 +52,7 @@ public class SearchPersonAsyncTests
     public async Task InvalidPageSize_ShouldThrowValidationException(int pageSize)
     {
         // Given
-        var config = new PersonSearchQueryParameters().SetLimit(pageSize);
+        var config = PersonSearchQueryParameters.Create().Limit(pageSize);
 
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchPersonAsync(config));
@@ -65,7 +65,7 @@ public class SearchPersonAsyncTests
     public async Task GivenSecondPage_ShouldReturnSecondPage()
     {
         // Given
-        var config = new PersonSearchQueryParameters().SetPage(2);
+        var config = PersonSearchQueryParameters.Create().Page(2);
 
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -85,7 +85,7 @@ public class SearchPersonAsyncTests
     {
         // Given
         const int pageSize = 5;
-        var config = new PersonSearchQueryParameters().SetLimit(pageSize);
+        var config = PersonSearchQueryParameters.Create().Limit(pageSize);
 
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -104,7 +104,7 @@ public class SearchPersonAsyncTests
     {
         // Given
         const int pageSize = 5;
-        var config = new PersonSearchQueryParameters().SetPage(2).SetLimit(pageSize);
+        var config = PersonSearchQueryParameters.Create().Page(2).Limit(pageSize);
 
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -127,7 +127,7 @@ public class SearchPersonAsyncTests
     public async Task InvalidLetter_ShouldThrowValidationException(char notLetter)
     {
         // Given
-        var config = new PersonSearchQueryParameters().SetLetter(notLetter);
+        var config = PersonSearchQueryParameters.Create().Letter(notLetter);
 
         // When
         var func = JikanTests.Instance.Awaiting(x => x.SearchPersonAsync(config));
@@ -143,7 +143,7 @@ public class SearchPersonAsyncTests
     public async Task ValidLetter_ShouldReturnRecordsOnlyStartingOnLetter(char letter)
     {
         // Given
-        var config = new PersonSearchQueryParameters().SetLetter(letter);
+        var config = PersonSearchQueryParameters.Create().Letter(letter);
 
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -158,7 +158,7 @@ public class SearchPersonAsyncTests
     public async Task KanaQuery_ShouldReturnKanas()
     {
         // Given
-        var config = new PersonSearchQueryParameters().SetQuery("Kana");
+        var config = PersonSearchQueryParameters.Create().Query("Kana");
 
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -175,10 +175,10 @@ public class SearchPersonAsyncTests
     public async Task KanaQueryByPopularity_ShouldReturnKanaWithHanazawaFirst()
     {
         // Given
-        var config = new PersonSearchQueryParameters()
-            .SetQuery("Kana")
-            .SetOrder(PersonSearchOrderBy.Favorites)
-            .SetSortDirection(SortDirection.Descending);
+        var config = PersonSearchQueryParameters.Create()
+            .Query("Kana")
+            .Sort(PersonSearchOrderBy.Favorites)
+            .SortDirection(SortDirection.Descending);
 
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -195,10 +195,10 @@ public class SearchPersonAsyncTests
     public async Task KanaQueryByReversePopularity_ShouldReturnKanaWithoutHanazawa()
     {
         // Given
-        var config =  new PersonSearchQueryParameters()
-            .SetQuery("Kana")
-            .SetOrder(PersonSearchOrderBy.Favorites)
-            .SetSortDirection(SortDirection.Ascending);
+        var config =  PersonSearchQueryParameters.Create()
+            .Query("Kana")
+            .Sort(PersonSearchOrderBy.Favorites)
+            .SortDirection(SortDirection.Ascending);
 
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -216,10 +216,10 @@ public class SearchPersonAsyncTests
     public async Task KanaQueryByMalIdWithLimit2_ShouldReturnMikaKanaiAndKanakoSakai()
     {
         // Given
-        var config =  new PersonSearchQueryParameters()
-            .SetQuery("Kana")
-            .SetOrder(PersonSearchOrderBy.MalId)
-            .SetLimit(2);
+        var config =  PersonSearchQueryParameters.Create()
+            .Query("Kana")
+            .Sort(PersonSearchOrderBy.MalId)
+            .Limit(2);
 
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
@@ -235,20 +235,19 @@ public class SearchPersonAsyncTests
     public async Task MiyukiSawaQuery_ShouldReturnSingleSawashiro()
     {
         // Given
-        var config = new PersonSearchQueryParameters().SetQuery("miyuki sawa");
+        var config = PersonSearchQueryParameters.Create().Query("miyuki sawa");
 
         // When
         var people = await JikanTests.Instance.SearchPersonAsync(config);
 
         // Then
-        using var _ = new AssertionScope();
-        people.Data.Should().ContainSingle();
-
         var result = people.Data.First();
+
+        using var _ = new AssertionScope();
         result.Name.Should().Be("Miyuki Sawashiro");
         result.GivenName.Should().Be("みゆき");
         result.FamilyName.Should().Be("沢城");
-        result.Birthday.Should().BeSameDateAs(new DateTime(1985,6,2));
+        result.Birthday.Should().BeSameDateAs(new DateTime(1985,6,2, 0, 0, 0, DateTimeKind.Utc));
         result.MalId.Should().Be(99);
         result.WebsiteUrl.Should().BeNull();
     }

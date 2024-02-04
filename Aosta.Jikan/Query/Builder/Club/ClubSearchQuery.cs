@@ -1,6 +1,6 @@
 using Aosta.Jikan.Query.Parameters;
 
-namespace Aosta.Jikan.Query;
+namespace Aosta.Jikan.Query.Builder.Club;
 
 internal static class ClubSearchQuery
 {

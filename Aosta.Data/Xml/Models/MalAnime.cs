@@ -68,10 +68,10 @@ internal sealed class MalAnime
     [XmlElement("my_tags")] public string MyTags { get; set; } = "<![CDATA[]]>";
 
     /// <summary> Is the user rewatching this anime? </summary>
-    [XmlElement("my_rewatching")] public byte MyRewatching { get; set; } = 0;
+    [XmlElement("my_rewatching")] public byte MyRewatching { get; set; }
 
     /// <summary> Last episode the user watched during a rewatch </summary>
-    [XmlElement("my_rewatching_ep")] public byte MyRewatchingEp { get; set; } = 0;
+    [XmlElement("my_rewatching_ep")] public byte MyRewatchingEp { get; set; }
 
     /// <summary> Should MyAnimeList ask the user to discuss after watching an episode? </summary>
     /// <remarks>Valid values are: <br/> <c>0</c> - Do not ask <br/> <c>1</c> - Ask every time </remarks>
