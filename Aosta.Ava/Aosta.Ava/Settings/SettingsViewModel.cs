@@ -18,8 +18,8 @@ public class SettingsViewModel : ReactiveObject, IRoutableViewModel
     {
         HostScreen = host;
 
-        _realm.GetSetting(Settings.INCLUDE_NSFW, false, out _includeNsfw)
-              .GetSetting(Settings.INCLUDE_UNAPPROVED, false, out _includeUnapproved);
+        _realm.GetSetting(Setting.INCLUDE_NSFW, false, out _includeNsfw)
+              .GetSetting(Setting.INCLUDE_UNAPPROVED, false, out _includeUnapproved);
     }
 
     /// <inheritdoc />
@@ -45,7 +45,7 @@ public class SettingsViewModel : ReactiveObject, IRoutableViewModel
             if (value == _includeNsfw) return;
 
             this.RaisePropertyChanging();
-            _realm.SetSetting(Settings.INCLUDE_NSFW, value);
+            _realm.SetSetting(Setting.INCLUDE_NSFW, value);
             _includeNsfw = value;
             this.RaisePropertyChanged();
         }
@@ -60,7 +60,7 @@ public class SettingsViewModel : ReactiveObject, IRoutableViewModel
             if (value == _includeNsfw) return;
 
             this.RaisePropertyChanging();
-            _realm.SetSetting(Settings.INCLUDE_UNAPPROVED, value);
+            _realm.SetSetting(Setting.INCLUDE_UNAPPROVED, value);
             _includeUnapproved = value;
             this.RaisePropertyChanged();
         }

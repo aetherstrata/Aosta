@@ -78,17 +78,18 @@ public static class RealmExtensions
     /// </summary>
     /// <param name="realm">The realm accessor to perform the operation on.</param>
     /// <param name="key">The setting key.</param>
+    /// <param name="fallback">The default value.</param>
     /// <typeparam name="T">The type of the setting.</typeparam>
     /// <returns>The setting value or <c>default(<typeparamref name="T">T</typeparamref>)</c> if not found.</returns>
     /// <exception cref="InvalidCastException">The underlying <see cref="RealmValue"/> could not be cast to <typeparamref name="T"/>.</exception>
-    public static T? GetSetting<T>(this RealmAccess realm, string key)
+    public static T? GetSetting<T>(this RealmAccess realm, string key, T? fallback = default)
     {
         Locator.Current.GetSafely<ILogger>().Debug("Getting setting value for {Key}", key);
 
         return realm.Run(r =>
         {
             var setting = r.Find<Setting>(key);
-            return setting is null ? default : setting.Value.As<T>();
+            return setting is null ? fallback : setting.Value.As<T>();
         });
     }
 

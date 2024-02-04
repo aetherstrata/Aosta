@@ -23,6 +23,8 @@ using Realms;
 
 using Splat;
 
+using Setting = Aosta.Ava.Settings.Setting;
+
 namespace Aosta.Ava.ViewModels;
 
 public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
@@ -44,9 +46,6 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
 
     [Reactive]
     public bool IsFilterPaneOpen { get; set; }
-
-    [Reactive]
-    public bool IncludeNsfw { get; set; }
 
     public ObservableCollection<AnimeSearchResultViewModel> SearchResults { get; } = [];
 
@@ -70,7 +69,9 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
         {
             try
             {
-                var queryParams = new AnimeSearchQueryParameters().SetQuery(s).SetSfw(!IncludeNsfw);
+                var queryParams = new AnimeSearchQueryParameters()
+                    .SetQuery(s)
+                    .SetSfw(!_realm.GetSetting(Setting.INCLUDE_NSFW, false));
 
                 var result = await _client.SearchAnimeAsync(queryParams, ct);
                 var resultIds = result.Data.Select(x => x.MalId);

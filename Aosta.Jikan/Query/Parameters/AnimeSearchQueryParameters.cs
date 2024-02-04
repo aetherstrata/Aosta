@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 
+using Aosta.Common.Extensions;
 using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Jikan.Query.Parameters;
@@ -33,7 +34,9 @@ public partial class AnimeSearchQueryParameters : JikanQueryParameterSet
 
     public AnimeSearchQueryParameters SetSfw(bool sfw)
     {
-        Add(QueryParameter.SAFE_FOR_WORK, sfw);
+        //TODO: Seems like jikan changed how they handle sfw.
+        //INFO: https://github.com/jikan-me/jikan-rest/issues/486
+        Add(QueryParameter.SAFE_FOR_WORK, sfw.ToStringLower());
         return this;
     }
 

@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Settings;
 using Aosta.Ava.ViewModels.Card;
+using Aosta.Data;
 using Aosta.Jikan;
+using Aosta.Jikan.Query.Parameters;
 
 using ReactiveUI;
 
@@ -30,9 +32,16 @@ public class HomePageViewModel : ReactiveObject, IRoutableViewModel
         Observable.Start(async () =>
         {
             var jikan = Locator.Current.GetSafely<IJikan>();
+            var realm = Locator.Current.GetSafely<RealmAccess>();
 
-            var topTask = jikan.GetTopAnimeAsync();
-            var currentTask = jikan.GetCurrentSeasonAsync();
+            var topQueryParams = new TopAnimeQueryParameters()
+                .SetSafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false));
+
+            var seasonQueryParams = new SeasonQueryParameters()
+                .SetSafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false));
+
+            var topTask = jikan.GetTopAnimeAsync(topQueryParams);
+            var currentTask = jikan.GetCurrentSeasonAsync(seasonQueryParams);
 
             var top = await Task.WhenAll(topTask, currentTask);
 

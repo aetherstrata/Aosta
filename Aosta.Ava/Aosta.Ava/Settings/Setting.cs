@@ -3,7 +3,7 @@
 
 namespace Aosta.Ava.Settings;
 
-public static class Settings
+public static class Setting
 {
     public const string INCLUDE_NSFW = "IncludeNsfw";
     public const string INCLUDE_UNAPPROVED = "IncludeUnapproved";

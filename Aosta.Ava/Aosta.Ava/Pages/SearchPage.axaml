@@ -76,15 +76,8 @@
                 IsVisible="{Binding IsFilterPaneOpen}">
             <StackPanel Spacing="10"
                         Margin="10, 10, 10, 0">
-                <DockPanel>
-                    <TextBlock DockPanel.Dock="Left"
-                               VerticalAlignment="Center"
-                               Text="Include NSFW works"/>
-                    <ToggleSwitch DockPanel.Dock="Right"
-                                  VerticalAlignment="Center"
-                                  HorizontalAlignment="Right"
-                                  IsChecked="{Binding IncludeNsfw}"/>
-                </DockPanel>
+
+                <!-- Should add some search specific settings here? -->
             </StackPanel>
         </Border>
     </Grid>
