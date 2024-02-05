@@ -1,11 +1,13 @@
 {
   "Button.LoadMore": "Load more",
+  "AnimeDetails.EpisodesList.Header": "Episodes",
+  "AnimeDetails.Synopsis.Header": "Synopsis",
   "AnimeList.Header.NoAnime" : "The list is empty",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
   "App.Version": "Version {0}",
   "HomePage.SeasonalAnime.Header" : "Currently airing",
   "HomePage.TopAnime.Header" : "Top anime",
-  "Label.NotAvailable" : "Not available",
+
   "SearchPage.SearchBox.Watermark" : "Search anime",
   "SettingsPage.ApplicationSettings.Header": "Application settings",
   "SettingsPage.ContentSettings.Header": "Content settings",
@@ -16,5 +18,27 @@
   "SettingsPage.Title": "Settings",
   "Theme.Dark": "Dark",
   "Theme.System": "System",
-  "Theme.Light": "Light"
+  "Theme.Light": "Light",
+
+  "Label.LocalizationLookupError": "Localization not found for {0}",
+  "Label.NotAvailable.Long" : "Not available",
+  "Label.NotAvailable.Short" : "N/A",
+  "Label.Season": "Season",
+  "Label.Score": "Score",
+  "Label.ContentType": "Type",
+
+  "Jikan.AnimeType.TvAnime": "TV",
+  "Jikan.AnimeType.TvSpecial": "TV Special",
+  "Jikan.AnimeType.OVA" : "OVA",
+  "Jikan.AnimeType.Movie": "Movie",
+  "Jikan.AnimeType.Special": "Special",
+  "Jikan.AnimeType.ONA": "ONA",
+  "Jikan.AnimeType.Music": "Music",
+  "Jikan.AnimeType.PromoVideo": "Promotional Video",
+  "Jikan.AnimeType.Commercial": "Commercial Message",
+
+  "Jikan.Season.Spring": "Spring",
+  "Jikan.Season.Summer": "Summer",
+  "Jikan.Season.Fall": "Fall",
+  "Jikan.Season.Winter": "Winter"
 }

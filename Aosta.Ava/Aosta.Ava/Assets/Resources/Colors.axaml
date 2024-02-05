@@ -46,9 +46,11 @@
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
             <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource Gray100}"/>
+            <SolidColorBrush x:Key="FloatingBackgroundBrush" Color="{StaticResource BaseColor80L}"/>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
             <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource Gray950}"/>
+            <SolidColorBrush x:Key="FloatingBackgroundBrush" Color="{StaticResource BaseColor20L}"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

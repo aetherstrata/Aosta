@@ -34,27 +34,24 @@ public class HomePageViewModel : ReactiveObject, IRoutableViewModel
             var jikan = Locator.Current.GetSafely<IJikan>();
             var realm = Locator.Current.GetSafely<RealmAccess>();
 
-            var topQueryParams = TopAnimeQueryParameters.Create()
-                .SafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false));
+            var topTask = jikan.GetTopAnimeAsync(TopAnimeQueryParameters.Create()
+                .SafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false)));
 
-            var seasonQueryParams = SeasonQueryParameters.Create()
-                .SafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false));
+            var currentTask = jikan.GetCurrentSeasonAsync(SeasonQueryParameters.Create()
+                .SafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false)));
 
-            var topTask = jikan.GetTopAnimeAsync(topQueryParams);
-            var currentTask = jikan.GetCurrentSeasonAsync(seasonQueryParams);
+            var results = await Task.WhenAll(topTask, currentTask);
 
-            var top = await Task.WhenAll(topTask, currentTask);
-
-            foreach (var anime in top[0].Data)
+            foreach (var anime in results[0].Data)
             {
                 var vm = new JikanAnimeCardViewModel(HostScreen, anime);
 
                 TopAnimes.Add(vm);
             }
 
-            foreach (var anime in top[1].Data)
+            foreach (var anime in results[1].Data)
             {
-                var vm = new JikanAnimeCardViewModel(hostScreen, anime);
+                var vm = new JikanAnimeCardViewModel(HostScreen, anime);
 
                 CurrentAnimes.Add(vm);
             }

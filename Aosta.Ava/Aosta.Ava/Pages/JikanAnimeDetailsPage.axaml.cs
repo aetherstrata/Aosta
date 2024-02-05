@@ -29,8 +29,6 @@ public partial class JikanAnimeDetailsPage : ReactiveUserControl<JikanAnimeDetai
         deferral.Complete();
     }
 
-    private void onMoreEpisodesTapped(object? sender, TappedEventArgs e) => refreshEpisodesList();
-
     private void refreshEpisodesList()
     {
         this.Log().Debug<JikanAnimeDetailsPage>("Triggered episodes list refresh event");

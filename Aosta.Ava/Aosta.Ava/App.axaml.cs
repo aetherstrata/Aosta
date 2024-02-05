@@ -48,7 +48,7 @@ public partial class App : Application
     {
         _logger = Locator.Current.GetSafely<ILogger>();
 
-        configureLogging();
+        configureLogging(_logger);
 
         Locator.CurrentMutable
             .RegisterAnd(() => new JikanConfiguration()
@@ -84,8 +84,11 @@ public partial class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
-    private void configureLogging()
+    private static void configureLogging(ILogger logger)
     {
+        //Set logger as static default instance
+        Log.Logger = logger;
+
         //Set Realm logger
         Logger.LogLevel = LogLevel.Debug;
         Logger.Default = Logger.Function((level, message) =>
@@ -106,13 +109,20 @@ public partial class App : Application
             };
 
             // ReSharper disable once TemplateIsNotCompileTimeConstantProblem
-            _logger.Write(serilogLevel, message);
+            logger.Write(serilogLevel, message);
         });
 
         //Set ReactiveUI logger
-        Locator.CurrentMutable.UseSerilogFullLogger(_logger);
+        Locator.CurrentMutable.UseSerilogFullLogger(logger);
 
-        Avalonia.Logging.Logger.Sink = new SerilogSink(_logger);
+        //Set Avalonia logger
+        Avalonia.Logging.Logger.Sink = new SerilogSink(logger);
+
+        //Log unhandled exceptions
+        AppDomain.CurrentDomain.UnhandledException += static (sender, args) =>
+        {
+            Log.Fatal((Exception)args.ExceptionObject, "An unhandled exception was thrown by {Sender}", sender.GetType());
+        };
     }
 
     /// Get a copy of the Serilog logger configuration

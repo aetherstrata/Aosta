@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
+using Aosta.Data.Database.Mapper;
 using Aosta.Jikan;
 using Aosta.Jikan.Models.Response;
 
@@ -16,6 +17,7 @@ using Avalonia.ReactiveUI;
 using DynamicData;
 
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 using Splat;
 
@@ -32,41 +34,50 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
     private readonly IJikan _jikan = Locator.Current.GetSafely<IJikan>();
     private readonly AnimeResponse _response;
 
-    private int _page;
-
     public JikanAnimeDetailsViewModel(IScreen hostScreen, AnimeResponse response)
     {
         _response = response;
 
         UrlPathSegment = $"jikan-details-{response.MalId}";
         HostScreen = hostScreen;
-        GoBack = HostScreen.Router.NavigateBack;
 
         UpdateEpisodesList = ReactiveCommand.CreateFromTask(updateEpisodesList, outputScheduler: AvaloniaScheduler.Instance);
 
         _ = updateEpisodesList();
     }
 
+    public string? Banner => _response.Images?.JPG?.ImageUrl;
+
+    public string Score => _response.Score?.ToString("0.00") ?? LocalizedString.NA;
+
+    public LocalizedString Season => _response.Season?.Localize() ?? LocalizedString.NOT_AVAILABLE;
+
+    public string Synopsis => _response.Synopsis ?? LocalizedString.NOT_AVAILABLE;
+
+    public string Title => _response.Titles.GetDefault() ?? LocalizedString.NA;
+
+    public LocalizedString Type => _response.Type?.Localize() ?? LocalizedString.NA;
+
+    public string? Year => _response.Year.ToString();
+
+    public ObservableCollection<AnimeEpisodeResponse> Episodes { get; } = [];
+
+    public ReactiveCommand<Unit,Unit> UpdateEpisodesList { get; }
+
+    [Reactive]
+    public bool IsLoadEpisodesButtonVisible { get; set; }
+
+    private int _page;
     private async Task updateEpisodesList(CancellationToken ct = default)
     {
         _page++;
 
-        this.Log().Debug<JikanAnimeDetailsViewModel>("Getting page {Page} for anime {Id}", _page, _response.MalId);
+        this.Log().Debug<JikanAnimeDetailsViewModel>("Getting episodes page {Page} for anime {Id}", _page, _response.MalId);
 
         var result = await _jikan.GetAnimeEpisodesAsync(_response.MalId, _page, ct);
 
         Episodes.AddRange(result.Data);
+
+        if (result.Pagination.HasNextPage) IsLoadEpisodesButtonVisible = true;
     }
-
-    public string Title => _response.Titles.GetDefault() ?? "N/A";
-
-    public string Synopsis => _response.Synopsis ?? Localizer.Instance["Label.NotAvailable"];
-
-    public string? Banner => _response.Images?.JPG?.ImageUrl;
-
-    public ObservableCollection<AnimeEpisodeResponse> Episodes { get; } = [];
-
-    public ReactiveCommand<Unit, IRoutableViewModel> GoBack { get; }
-
-    public ReactiveCommand<Unit,Unit> UpdateEpisodesList { get; }
 }

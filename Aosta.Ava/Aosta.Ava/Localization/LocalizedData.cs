@@ -37,8 +37,6 @@ public sealed class LocalizedData<T>() : ReactiveObject, ILocalized, IEquatable<
         Localizer.Instance.PropertyChanged += (_, _) => Localized = Localizer.Instance[Key];
     }
 
-    public LocalizedString GetLocalizedString() => new(Key);
-
     public override string ToString() => Localized;
 
     public bool Equals(LocalizedData<T>? other)
