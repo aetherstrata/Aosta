@@ -48,6 +48,8 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
 
     public string? Banner => _response.Images?.JPG?.ImageUrl;
 
+    public string? LargeBanner => _response.Images?.JPG?.LargeImageUrl;
+
     public string Score => _response.Score?.ToString("0.00") ?? LocalizedString.NA;
 
     public LocalizedString Season => _response.Season?.Localize() ?? LocalizedString.NOT_AVAILABLE;

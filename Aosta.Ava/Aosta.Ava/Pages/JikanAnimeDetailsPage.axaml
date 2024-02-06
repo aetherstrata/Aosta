@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
              xmlns:viewModels="clr-namespace:Aosta.Ava.ViewModels"
              xmlns:local="clr-namespace:Aosta.Ava.Controls"
              xmlns:localization="clr-namespace:Aosta.Ava.Localization"
@@ -16,81 +17,90 @@
         <ScrollViewer Grid.Row="1"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Hidden">
-            <StackPanel Margin="10, 0">
-                <Border Background="{DynamicResource FloatingBackgroundBrush}"
-                        Margin="15"
-                        Padding="0, 15"
-                        CornerRadius="15">
-                    <Grid ColumnDefinitions="*,*,*"
-                          RowDefinitions="Auto,Auto">
-                        <TextBlock Grid.Row="0" Grid.Column="0"
-                                   Text="{localization:Localize Key=Label.Score}"
-                                   FontWeight="Bold"
-                                   FontSize="18"/>
-                        <TextBlock Grid.Row="0" Grid.Column="1"
-                                   Text="{localization:Localize Key=Label.Season}"
-                                   FontWeight="Bold"
-                                   FontSize="18"/>
-                        <TextBlock Grid.Row="0" Grid.Column="2"
-                                   Text="{localization:Localize Key=Label.ContentType}"
-                                   FontWeight="Bold"
-                                   FontSize="18"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0"
-                                   Text="{Binding Score}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1">
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} | {1}">
-                                    <Binding Path="Season.Localized"/>
-                                    <Binding Path="Year"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Type.Localized}"/>
-                        <Grid.Styles>
-                            <Style Selector="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                            </Style>
-                        </Grid.Styles>
-                    </Grid>
-                </Border>
-                <TextBlock Text="{localization:Localize Key=AnimeDetails.Synopsis.Header}"
-                           FontSize="18"
-                           FontWeight="Bold" />
-                <SelectableTextBlock Text="{Binding Synopsis}"
-                                     SelectionBrush="{DynamicResource FloatingBackgroundBrush}"
-                                     TextWrapping="WrapWithOverflow"/>
-                <TextBlock Text="{localization:Localize Key=AnimeDetails.EpisodesList.Header}"
-                           FontSize="18"
-                           FontWeight="Bold" />
-                <RefreshContainer PullDirection="BottomToTop"
-                                  RefreshRequested="onEpisodesPullRefresh">
-                    <ListBox ItemsSource="{Binding Episodes}">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal"
-                                           ItemWidth="450"/>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0}. {1}">
-                                            <Binding Path="MalId" />
-                                            <Binding Path="Title" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </RefreshContainer>
-                <Button Margin="0, 10"
-                        IsVisible="{Binding IsLoadEpisodesButtonVisible}"
-                        HorizontalAlignment="Center"
-                        Command="{Binding UpdateEpisodesList}"
-                        Content="{localization:Localize Key=Button.LoadMore}"/>
-            </StackPanel>
+            <Grid RowDefinitions="Auto">
+                <Image async:ImageLoader.Source="{Binding LargeBanner}"
+                       VerticalAlignment="Top"
+                       Height="200"
+                       Stretch="UniformToFill">
+                    <Image.OpacityMask>
+                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Offset="0"  Color="Black"/>
+                                <GradientStop Offset="1"  Color="Transparent"/>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Image.OpacityMask>
+                </Image>
+                <StackPanel Grid.Row="0" Margin="10, 100">
+                    <Border Background="{DynamicResource FloatingBackgroundBrush}"
+                            Margin="15"
+                            Padding="0, 15"
+                            CornerRadius="15">
+                        <Grid ColumnDefinitions="2*,3*,2*"
+                              RowDefinitions="Auto,Auto">
+                            <TextBlock Grid.Row="0" Grid.Column="0"
+                                       Text="{localization:Localize Key=Label.Score}"
+                                       FontWeight="Bold"
+                                       FontSize="18" />
+                            <TextBlock Grid.Row="0" Grid.Column="1"
+                                       Text="{localization:Localize Key=Label.Season}"
+                                       FontWeight="Bold"
+                                       FontSize="18" />
+                            <TextBlock Grid.Row="0" Grid.Column="2"
+                                       Text="{localization:Localize Key=Label.ContentType}"
+                                       FontWeight="Bold"
+                                       FontSize="18" />
+                            <TextBlock Grid.Row="1" Grid.Column="0"
+                                       Text="{Binding Score}" />
+                            <TextBlock Grid.Row="1" Grid.Column="1">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} | {1}">
+                                        <Binding Path="Season.Localized" />
+                                        <Binding Path="Year" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Type.Localized}" />
+                            <Grid.Styles>
+                                <Style Selector="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </Grid.Styles>
+                        </Grid>
+                    </Border>
+                    <TextBlock Text="{localization:Localize Key=AnimeDetails.Synopsis.Header}"
+                               FontSize="18"
+                               FontWeight="Bold" />
+                    <SelectableTextBlock Text="{Binding Synopsis}"
+                                         SelectionBrush="{DynamicResource FloatingBackgroundBrush}"
+                                         TextWrapping="WrapWithOverflow" />
+                    <TextBlock Text="{localization:Localize Key=AnimeDetails.EpisodesList.Header}"
+                               FontSize="18"
+                               FontWeight="Bold" />
+                    <RefreshContainer PullDirection="BottomToTop"
+                                      RefreshRequested="onEpisodesPullRefresh">
+                        <ListBox ItemsSource="{Binding Episodes}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}. {1}">
+                                                <Binding Path="MalId" />
+                                                <Binding Path="Title" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </RefreshContainer>
+                    <Button Margin="0, 10"
+                            IsVisible="{Binding IsLoadEpisodesButtonVisible}"
+                            HorizontalAlignment="Center"
+                            Command="{Binding UpdateEpisodesList}"
+                            Content="{localization:Localize Key=Button.LoadMore}" />
+                </StackPanel>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </UserControl>

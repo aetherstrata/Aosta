@@ -1,12 +1,17 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Data;
 
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+
+using Realms;
 
 using Splat;
 
@@ -57,7 +62,7 @@ public class SettingsViewModel : ReactiveObject, IRoutableViewModel
         get => _includeUnapproved;
         set
         {
-            if (value == _includeNsfw) return;
+            if (value == _includeUnapproved) return;
 
             this.RaisePropertyChanging();
             _realm.SetSetting(Setting.INCLUDE_UNAPPROVED, value);

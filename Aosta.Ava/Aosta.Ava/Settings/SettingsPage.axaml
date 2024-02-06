@@ -26,14 +26,14 @@
                           BorderThickness="0">
                     <StackPanel Spacing="10"
                                 Margin="20,0">
-                        <controls:SettingsEntry Entry="{localization:Localize Key=SettingsPage.AppTheme.Entry}">
-                            <controls:SettingsEntry.Action>
+                        <controls:SettingsEntry Description="{localization:Localize Key=SettingsPage.AppTheme.Entry}">
+                            <controls:SettingsEntry.Footer>
                                 <ComboBox ItemsSource="{Binding ThemeManager.AppThemes}"
-                                          SelectedItem="{Binding ThemeManager.CurrentAppTheme}" />
-                            </controls:SettingsEntry.Action>
+                                          SelectedItem="{Binding ThemeManager.CurrentTheme}"/>
+                            </controls:SettingsEntry.Footer>
                         </controls:SettingsEntry>
-                        <controls:SettingsEntry Entry="{localization:Localize Key=SettingsPage.Language.Entry}">
-                            <controls:SettingsEntry.Action>
+                        <controls:SettingsEntry Description="{localization:Localize Key=SettingsPage.Language.Entry}">
+                            <controls:SettingsEntry.Footer>
                                 <ComboBox ItemsSource="{Binding LanguageManager.Languages}"
                                           SelectedItem="{Binding LanguageManager.CurrentLanguage}">
                                     <ComboBox.ItemTemplate>
@@ -42,7 +42,7 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                            </controls:SettingsEntry.Action>
+                            </controls:SettingsEntry.Footer>
                         </controls:SettingsEntry>
                     </StackPanel>
                     <Expander.HeaderTemplate>
@@ -57,15 +57,15 @@
                           BorderThickness="0">
                     <StackPanel Spacing="10"
                                 Margin="20,0">
-                        <controls:SettingsEntry Entry="{localization:Localize Key=SettingsPage.IncludeNsfw.Entry}">
-                            <controls:SettingsEntry.Action>
+                        <controls:SettingsEntry Description="{localization:Localize Key=SettingsPage.IncludeNsfw.Entry}">
+                            <controls:SettingsEntry.Footer>
                                 <ToggleSwitch IsChecked="{Binding IncludeNsfw}"/>
-                            </controls:SettingsEntry.Action>
+                            </controls:SettingsEntry.Footer>
                         </controls:SettingsEntry>
-                        <controls:SettingsEntry Entry="{localization:Localize Key=SettingsPage.IncludeUnapproved.Entry}">
-                            <controls:SettingsEntry.Action>
+                        <controls:SettingsEntry Description="{localization:Localize Key=SettingsPage.IncludeUnapproved.Entry}">
+                            <controls:SettingsEntry.Footer>
                                 <ToggleSwitch IsChecked="{Binding IncludeUnapproved}" />
-                            </controls:SettingsEntry.Action>
+                            </controls:SettingsEntry.Footer>
                         </controls:SettingsEntry>
                     </StackPanel>
                     <Expander.HeaderTemplate>

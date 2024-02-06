@@ -10,21 +10,21 @@ namespace Aosta.Ava.Controls;
 // ReSharper disable InconsistentNaming //Avalonia convention
 public class SettingsEntry : TemplatedControl
 {
-    public static readonly StyledProperty<string> EntryProperty =
-        AvaloniaProperty.Register<SettingsEntry, string>(nameof(Entry),"Setting entry");
+    public static readonly StyledProperty<string> DescriptionProperty =
+        AvaloniaProperty.Register<SettingsEntry, string>(nameof(Description),"Setting entry");
 
-    public string Entry
+    public string Description
     {
-        get => GetValue(EntryProperty);
-        set => SetValue(EntryProperty, value);
+        get => GetValue(DescriptionProperty);
+        set => SetValue(DescriptionProperty, value);
     }
 
-    public static readonly StyledProperty<Control> ActionProperty =
-        AvaloniaProperty.Register<SettingsEntry, Control>(nameof(Action), new ToggleSwitch());
+    public static readonly StyledProperty<Control> FooterProperty =
+        AvaloniaProperty.Register<SettingsEntry, Control>(nameof(Footer), new ToggleSwitch());
 
-    public Control Action
+    public Control Footer
     {
-        get => GetValue(ActionProperty);
-        set => SetValue(ActionProperty, value);
+        get => GetValue(FooterProperty);
+        set => SetValue(FooterProperty, value);
     }
 }

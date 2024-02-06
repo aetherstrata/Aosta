@@ -11,7 +11,8 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid ColumnDefinitions="10,Auto,5,*,5,Auto,10"
-                      Background="{TemplateBinding Background}">
+                      Background="{TemplateBinding Background}"
+                      VerticalAlignment="Top">
                     <Button Grid.Column="1"
                             Margin="0,5"
                             IsVisible="{TemplateBinding IsBackEnabled}"

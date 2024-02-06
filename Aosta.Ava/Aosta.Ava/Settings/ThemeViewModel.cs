@@ -1,6 +1,7 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using Aosta.Ava.Localization;
@@ -24,8 +25,7 @@ internal class ThemeViewModel : ReactiveObject
         _currentTheme = stored.Localize();
     }
 
-    [Reactive]
-    public ObservableCollection<LocalizedData<ThemeKey>> AppThemes { get; set; } =
+    public IList<LocalizedData<ThemeKey>> AppThemes { get; set; } =
     [
         ThemeKey.DEFAULT.Localize(),
         ThemeKey.DARK.Localize(),
@@ -34,7 +34,7 @@ internal class ThemeViewModel : ReactiveObject
 
     private LocalizedData<ThemeKey> _currentTheme;
 
-    public LocalizedData<ThemeKey> CurrentAppTheme
+    public LocalizedData<ThemeKey> CurrentTheme
     {
         get => _currentTheme;
         set

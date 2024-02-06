@@ -133,7 +133,7 @@ public static class RealmExtensions
             }
         });
 
-        Locator.Current.GetSafely<ILogger>().Debug("Setting setting value for {Key}", key);
+        Locator.Current.GetSafely<ILogger>().Debug("Saved setting value for {Key} => {NewValue}", key, value);
 
         return realm;
     }
