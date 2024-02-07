@@ -1,5 +1,4 @@
 {
-  "Button.LoadMore": "Carica altro",
   "AnimeDetails.EpisodesList.Header": "Episodi",
   "AnimeDetails.Synopsis.Header": "Sinossi",
   "AnimeList.Header.NoAnime" : "La lista è vuota",
@@ -20,6 +19,7 @@
   "Theme.System": "Sistema",
   "Theme.Light": "Chiaro",
 
+  "Label.LoadMore": "Carica altro",
   "Label.LocalizationLookupError": "Localizzazione non trovata per {0}",
   "Label.NotAvailable.Long" : "Non disponibile",
   "Label.NotAvailable.Short" : "N/D",

@@ -34,7 +34,6 @@ public sealed class LocalizedString : ReactiveObject, ILocalized
             if (e.PropertyName == "Item")
             {
                 Localized = Localizer.Instance[key];
-                Log.Verbose("Updated localized string for {Key} => {NewValue}", key, Localized);
             }
         };
     }
@@ -48,7 +47,6 @@ public sealed class LocalizedString : ReactiveObject, ILocalized
             if (e.PropertyName == "Item")
             {
                 Localized = string.Format(Localizer.Instance[key], arg0);
-                Log.Verbose("Updated localized string for {Key} => {NewValue}", key, Localized);
             }
         };
     }
@@ -62,7 +60,6 @@ public sealed class LocalizedString : ReactiveObject, ILocalized
             if (e.PropertyName == "Item")
             {
                 Localized = string.Format(Localizer.Instance[key], arg0, arg1);
-                Log.Verbose("Updated localized string for {Key} => {NewValue}", key, Localized);
             }
         };
     }
@@ -76,7 +73,6 @@ public sealed class LocalizedString : ReactiveObject, ILocalized
             if (e.PropertyName == "Item")
             {
                 Localized = string.Format(Localizer.Instance[key], arg0, arg1, arg2);
-                Log.Verbose("Updated localized string for {Key} => {NewValue}", key, Localized);
             }
         };
     }
@@ -90,7 +86,6 @@ public sealed class LocalizedString : ReactiveObject, ILocalized
             if (e.PropertyName == "Item")
             {
                 Localized = string.Format(Localizer.Instance[key], args);
-                Log.Verbose("Updated localized string for {Key} => {NewValue}", key, Localized);
             }
         };
     }

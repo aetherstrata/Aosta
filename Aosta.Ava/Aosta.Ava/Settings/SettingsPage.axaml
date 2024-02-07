@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:localization="clr-namespace:Aosta.Ava.Localization"
+             xmlns:localize="clr-namespace:Aosta.Ava.Localization"
              xmlns:controls="clr-namespace:Aosta.Ava.Controls"
              xmlns:settings="clr-namespace:Aosta.Ava.Settings"
              mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
@@ -14,7 +14,7 @@
                        Margin="20,10, 0, 0"
                        FontSize="36"
                        FontWeight="Bold"
-                       Text="{localization:Localize Key=SettingsPage.Title}" />
+                       Text="{localize:Localize SettingsPage.Title}" />
             <TextBlock Grid.Row="0"
                        Margin="0, 5,5, 0"
                        HorizontalAlignment="Right"
@@ -22,17 +22,17 @@
             <StackPanel Grid.Row="1"
                         Margin="5,5"
                         Spacing="5">
-                <Expander Header="{localization:Localize Key=SettingsPage.ApplicationSettings.Header}"
+                <Expander Header="{localize:Localize SettingsPage.ApplicationSettings.Header}"
                           BorderThickness="0">
                     <StackPanel Spacing="10"
                                 Margin="20,0">
-                        <controls:SettingsEntry Description="{localization:Localize Key=SettingsPage.AppTheme.Entry}">
+                        <controls:SettingsEntry Description="{localize:Localize SettingsPage.AppTheme.Entry}">
                             <controls:SettingsEntry.Footer>
                                 <ComboBox ItemsSource="{Binding ThemeManager.AppThemes}"
                                           SelectedItem="{Binding ThemeManager.CurrentTheme}"/>
                             </controls:SettingsEntry.Footer>
                         </controls:SettingsEntry>
-                        <controls:SettingsEntry Description="{localization:Localize Key=SettingsPage.Language.Entry}">
+                        <controls:SettingsEntry Description="{localize:Localize SettingsPage.Language.Entry}">
                             <controls:SettingsEntry.Footer>
                                 <ComboBox ItemsSource="{Binding LanguageManager.Languages}"
                                           SelectedItem="{Binding LanguageManager.CurrentLanguage}">
@@ -53,16 +53,16 @@
                     </Expander.HeaderTemplate>
                 </Expander>
 
-                <Expander Header="{localization:Localize Key=SettingsPage.ContentSettings.Header}"
+                <Expander Header="{localize:Localize SettingsPage.ContentSettings.Header}"
                           BorderThickness="0">
                     <StackPanel Spacing="10"
                                 Margin="20,0">
-                        <controls:SettingsEntry Description="{localization:Localize Key=SettingsPage.IncludeNsfw.Entry}">
+                        <controls:SettingsEntry Description="{localize:Localize SettingsPage.IncludeNsfw.Entry}">
                             <controls:SettingsEntry.Footer>
                                 <ToggleSwitch IsChecked="{Binding IncludeNsfw}"/>
                             </controls:SettingsEntry.Footer>
                         </controls:SettingsEntry>
-                        <controls:SettingsEntry Description="{localization:Localize Key=SettingsPage.IncludeUnapproved.Entry}">
+                        <controls:SettingsEntry Description="{localize:Localize SettingsPage.IncludeUnapproved.Entry}">
                             <controls:SettingsEntry.Footer>
                                 <ToggleSwitch IsChecked="{Binding IncludeUnapproved}" />
                             </controls:SettingsEntry.Footer>

@@ -1,8 +1,10 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Reactive;
 
+using Aosta.Ava.Localization;
 using Aosta.Ava.ViewModels.Contracts;
 using Aosta.Jikan.Models.Response;
 
@@ -10,13 +12,21 @@ using ReactiveUI;
 
 namespace Aosta.Ava.ViewModels.Card;
 
-public class JikanAnimeCardViewModel(IScreen host, AnimeResponse response) : ReactiveObject, IOnlineCard
+public class JikanAnimeCardViewModel : ReactiveObject, IOnlineCard
 {
-    public string BannerUrl { get; } = response.Images?.JPG?.ImageUrl ?? IOnlineCard.PORTRAIT_PLACEHOLDER;
+    public JikanAnimeCardViewModel(IScreen host, AnimeResponse response)
+    {
+        var detailsPage = new Lazy<JikanAnimeDetailsViewModel>(() => new JikanAnimeDetailsViewModel(host, response));
 
-    public ReactiveCommand<Unit, IRoutableViewModel> GoToDetails { get; } =
-        ReactiveCommand.CreateFromObservable(() =>
-            host.Router.Navigate.Execute(new JikanAnimeDetailsViewModel(host, response)));
+        BannerUrl = response.Images?.JPG?.ImageUrl ?? IOnlineCard.PORTRAIT_PLACEHOLDER;
+        GoToDetails = ReactiveCommand.CreateFromObservable(
+            () => host.Router.Navigate.Execute(detailsPage.Value));
+        Score = response.Score?.ToString("0.00") ?? LocalizedString.NA;
+    }
 
-    public string Score { get; } = response.Score?.ToString("0.00") ?? "N/A";
+    public string BannerUrl { get; }
+
+    public ReactiveCommand<Unit, IRoutableViewModel> GoToDetails { get; }
+
+    public string Score { get; }
 }

@@ -5,7 +5,8 @@
              xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
              xmlns:viewModels="clr-namespace:Aosta.Ava.ViewModels"
              xmlns:local="clr-namespace:Aosta.Ava.Controls"
-             xmlns:localization="clr-namespace:Aosta.Ava.Localization"
+             xmlns:localize="clr-namespace:Aosta.Ava.Localization"
+             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.JikanAnimeDetailsPage"
              x:DataType="viewModels:JikanAnimeDetailsViewModel">
@@ -39,15 +40,15 @@
                         <Grid ColumnDefinitions="2*,3*,2*"
                               RowDefinitions="Auto,Auto">
                             <TextBlock Grid.Row="0" Grid.Column="0"
-                                       Text="{localization:Localize Key=Label.Score}"
+                                       Text="{localize:Localize Label.Score}"
                                        FontWeight="Bold"
                                        FontSize="18" />
                             <TextBlock Grid.Row="0" Grid.Column="1"
-                                       Text="{localization:Localize Key=Label.Season}"
+                                       Text="{localize:Localize Label.Season}"
                                        FontWeight="Bold"
                                        FontSize="18" />
                             <TextBlock Grid.Row="0" Grid.Column="2"
-                                       Text="{localization:Localize Key=Label.ContentType}"
+                                       Text="{localize:Localize Label.ContentType}"
                                        FontWeight="Bold"
                                        FontSize="18" />
                             <TextBlock Grid.Row="1" Grid.Column="0"
@@ -68,13 +69,13 @@
                             </Grid.Styles>
                         </Grid>
                     </Border>
-                    <TextBlock Text="{localization:Localize Key=AnimeDetails.Synopsis.Header}"
+                    <TextBlock Text="{localize:Localize AnimeDetails.Synopsis.Header}"
                                FontSize="18"
                                FontWeight="Bold" />
                     <SelectableTextBlock Text="{Binding Synopsis}"
                                          SelectionBrush="{DynamicResource FloatingBackgroundBrush}"
                                          TextWrapping="WrapWithOverflow" />
-                    <TextBlock Text="{localization:Localize Key=AnimeDetails.EpisodesList.Header}"
+                    <TextBlock Text="{localize:Localize AnimeDetails.EpisodesList.Header}"
                                FontSize="18"
                                FontWeight="Bold" />
                     <RefreshContainer PullDirection="BottomToTop"
@@ -98,7 +99,7 @@
                             IsVisible="{Binding IsLoadEpisodesButtonVisible}"
                             HorizontalAlignment="Center"
                             Command="{Binding UpdateEpisodesList}"
-                            Content="{localization:Localize Key=Button.LoadMore}" />
+                            Content="{localize:Localize Label.LoadMore}" />
                 </StackPanel>
             </Grid>
         </ScrollViewer>

@@ -4,6 +4,8 @@ using System.Reactive.Linq;
 
 using Aosta.Ava.Extensions;
 
+using Avalonia.ReactiveUI;
+
 using ReactiveUI;
 
 namespace Aosta.Ava.ViewModels;
@@ -11,7 +13,7 @@ namespace Aosta.Ava.ViewModels;
 public class MainViewModel : ReactiveObject, IScreen
 {
     /// <inheritdoc />
-    public RoutingState Router { get; } = new();
+    public RoutingState Router { get; } = new(AvaloniaScheduler.Instance);
 
     public ReactiveCommand<Unit, IRoutableViewModel> GoHome { get; }
     public ReactiveCommand<Unit, IRoutableViewModel> GoList { get; }

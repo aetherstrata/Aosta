@@ -77,6 +77,9 @@ internal sealed class Localizer : INotifyPropertyChanged, ILocalizer
     {
         get
         {
+            if (key == null)
+                return $"{{ {Language} : NULL }}";
+
             if (_localized.TryGetValue(key, out string? res))
                 return res.Replace("\\n", "\n");
 

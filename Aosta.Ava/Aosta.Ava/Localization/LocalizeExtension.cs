@@ -2,23 +2,25 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using Avalonia.Data;
+using Avalonia.Data.Core;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Markup.Xaml.MarkupExtensions.CompiledBindings;
 
 namespace Aosta.Ava.Localization;
 
-internal class LocalizeExtension : MarkupExtension
+internal class LocalizeExtension(string key) : MarkupExtension
 {
-    public string Key { get; set; } = string.Empty;
-
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        var binding = new ReflectionBindingExtension($"[{Key}]")
-        {
-            Mode = BindingMode.OneWay,
-            Source = Localizer.Instance
-        };
+        var path = new CompiledBindingPathBuilder()
+            .SetRawSource(key)
+            .Property(
+                new ClrPropertyInfo("Item", static o => Localizer.Instance[(string)o], null, typeof(string)),
+                PropertyInfoAccessorFactory.CreateInpcPropertyAccessor)
+            .Build();
+
+        var binding = new CompiledBindingExtension(path);
 
         return binding.ProvideValue(serviceProvider);
     }
