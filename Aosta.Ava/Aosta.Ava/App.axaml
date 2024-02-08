@@ -27,7 +27,7 @@
     </Application.Resources>
 
     <Application.Styles>
-        <styling:FluentAvaloniaTheme/>
+        <styling:FluentAvaloniaTheme CustomAccentColor="{StaticResource BaseColor}"/>
         <StyleInclude Source="/Assets/Styles/DefaultStyles.axaml"/>
         <StyleInclude Source="/Assets/Styles/TemplatedControls.axaml"/>
     </Application.Styles>

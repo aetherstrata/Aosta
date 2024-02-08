@@ -46,7 +46,7 @@ public sealed class AnimeListPageViewModel : ReactiveObject, IRoutableViewModel,
             .Select(c => c == 0
                 ? Localizer.Instance["AnimeList.Header.NoAnime"]
                 : string.Format(Localizer.Instance["AnimeList.Header.AnimeCount"], c))
-            .ToProperty(this, nameof(AnimeCount));
+            .ToProperty(this, nameof(AnimeCount), scheduler: AvaloniaScheduler.Instance);
 
         _listObserver = connection
             .Sort(Anime.TITLE_COMPARATOR)

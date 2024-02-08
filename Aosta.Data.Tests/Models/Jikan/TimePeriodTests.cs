@@ -15,7 +15,7 @@ public class TimePeriodTests
         {
             From = new DateTime(2000, 10, 24, 0, 0, 0, kind: DateTimeKind.Utc),
             To = new DateTime(2001, 1, 8, 0, 0, 0, kind: DateTimeKind.Utc)
-        }.ToRealmModel();
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.From.Should().HaveYear(2000).And.HaveMonth(10).And.HaveDay(24);
@@ -25,7 +25,7 @@ public class TimePeriodTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newPeriod = new TimePeriodResponse().ToRealmModel();
+        var newPeriod = new TimePeriodResponse().ToModel();
 
         using var _ = new AssertionScope();
         newPeriod.From.Should().BeNull();

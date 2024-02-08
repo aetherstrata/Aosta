@@ -17,7 +17,7 @@ public class BroadcastTests
             Time = "07:00",
             Timezone = "Atlantic/Reykjavik",
             String = "Mondays at 7:00 (GMT)"
-        }.ToRealmModel();
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.Day.Should().Be(DaysOfWeek.Mondays);
@@ -34,7 +34,7 @@ public class BroadcastTests
             Time = "13:00",
             Timezone = "Europe/Moscow",
             String = "Sundays at 13:00 (MSK)"
-        }.ToRealmModel();
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.Day.Should().Be(DaysOfWeek.Sundays);
@@ -51,7 +51,7 @@ public class BroadcastTests
             Time = "01:00",
             Timezone = "Asia/Tokyo",
             String = "Saturdays at 01:00 (JST)"
-        }.ToRealmModel();
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.Day.Should().Be(DaysOfWeek.Saturdays);
@@ -68,7 +68,7 @@ public class BroadcastTests
             Time = "07:00",
             Timezone = null,
             String = null
-        }.ToRealmModel();
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.Day.Should().Be(DaysOfWeek.Mondays);
@@ -79,7 +79,7 @@ public class BroadcastTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newBroadcast = new AnimeBroadcastResponse().ToRealmModel();
+        var newBroadcast = new AnimeBroadcastResponse().ToModel();
 
         using var _ = new AssertionScope();
         newBroadcast.Day.Should().BeNull();

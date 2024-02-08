@@ -14,7 +14,7 @@ public class ImageSetTests
         {
             JPG = new ImageResponse { ImageUrl = "jpg" },
             WebP = new ImageResponse { ImageUrl = "webp" }
-        }.ToRealmModel();
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.WebP.ImageUrl.Should().Be("webp");
@@ -24,7 +24,7 @@ public class ImageSetTests
     [Test]
     public void SetDefaultValuesTest()
     {
-        var newSet = new ImagesSetResponse().ToRealmModel();
+        var newSet = new ImagesSetResponse().ToModel();
 
         using var _ = new AssertionScope();
         newSet.WebP.Should().BeNull();

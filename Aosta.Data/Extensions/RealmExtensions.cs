@@ -20,6 +20,29 @@ public static class RealmExtensions
         return realm.All<T>().First();
     }
 
+    public static IQueryable<TEntity> Is<TEntity>(this IQueryable<TEntity> source, string propertyName, QueryArgument value)
+        where TEntity : IRealmObject
+    {
+        string query = $"{propertyName} == $0";
+        return source.Filter(query, value);
+    }
+
+    public static IQueryable<TEntity> Is<TEntity>(
+        this IQueryable<TEntity> source,
+        Expression<Func<TEntity, object>> lambda,
+        QueryArgument value)
+        where TEntity : IRealmObject
+    {
+        string property = lambda.GetPropertyName();
+
+        if (string.IsNullOrEmpty(property))
+        {
+            throw new ArgumentException("This is not a valid member expression", nameof(lambda));
+        }
+
+        return source.Is(property, value);
+    }
+
     /// <summary>
     /// Filter a projection and keep only the elements that are contained in the argument list
     /// </summary>
@@ -39,25 +62,23 @@ public static class RealmExtensions
         return source.Filter(query);
     }
 
+    /// <summary>
+    /// Filter a projection and keep only the elements that are contained in the argument list
+    /// </summary>
+    /// <param name="source">The projection to filter.</param>
+    /// <param name="lambda">The property to filter on.</param>
+    /// <param name="objList">The allowed values.</param>
+    /// <typeparam name="TEntity">The type of the entities.</typeparam>
+    /// <typeparam name="TArgument">The type of the arguments.</typeparam>
+    /// <returns>The updated projection.</returns>
+    /// <exception cref="ArgumentException">the provided property expression is invalid</exception>
     public static IQueryable<TEntity> In<TEntity, TArgument>(
         this IQueryable<TEntity> source,
         Expression<Func<TEntity, TArgument>> lambda,
         IEnumerable<TArgument> objList)
         where TEntity : IRealmObject
     {
-        var member = lambda.GetMemberExpression();
-        var path = new StringBuilder();
-
-        while (member != null)
-        {
-            if (path.Length > 0) path.Prepend('.');
-
-            path.Prepend(member.Member.Name);
-
-            member = member.Expression?.GetMemberExpression();
-        }
-
-        string property = path.ToString();
+        string property = lambda.GetPropertyName();
 
         if (string.IsNullOrEmpty(property))
         {

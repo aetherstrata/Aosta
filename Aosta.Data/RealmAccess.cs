@@ -106,7 +106,8 @@ public sealed class RealmAccess : IEquatable<RealmAccess>
     /// Write changes to realm asynchronously, guaranteeing order of execution.
     /// </summary>
     /// <param name="action">The work to run.</param>
-    public Task WriteAsync(Action<Realm> action)
+    /// <param name="ct">The cancellation token.</param>
+    public Task WriteAsync(Action<Realm> action, CancellationToken ct = default)
     {
         // CountdownEvent will fail if already at zero.
         if (!_pendingAsyncWrites.TryAddCount())
@@ -118,12 +119,13 @@ public sealed class RealmAccess : IEquatable<RealmAccess>
         {
             using (var realm = GetRealm())
                 // ReSharper disable once AccessToDisposedClosure (WriteAsync should be marked as [InstantHandle]).
-                await realm.WriteAsync(() => action(realm)).ConfigureAwait(false);
+                await realm.WriteAsync(() => action(realm), ct)
+                    .ConfigureAwait(false);
 
             _log?.Debug("Performed an async write to the database. Emitting signal...");
 
             _pendingAsyncWrites.Signal();
-        });
+        }, ct);
     }
 
     /// <summary>

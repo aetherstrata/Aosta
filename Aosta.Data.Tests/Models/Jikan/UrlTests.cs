@@ -16,7 +16,7 @@ public class UrlTests
             Type = "type",
             Url = "url",
             Name = "name"
-        }.ToRealmModel();
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.MalId.Should().Be(1);
@@ -28,7 +28,7 @@ public class UrlTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newUrl = new MalUrlResponse().ToRealmModel();
+        var newUrl = new MalUrlResponse().ToModel();
 
         using var _ = new AssertionScope();
         newUrl.MalId.Should().Be(0);

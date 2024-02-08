@@ -14,7 +14,7 @@ public class TitleTests
         {
             Type = "type",
             Title = "title"
-        }.ToRealmModel();
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.Type.Should().Be("type");

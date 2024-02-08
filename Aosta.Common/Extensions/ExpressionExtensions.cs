@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq.Expressions;
+using System.Text;
 
 namespace Aosta.Common.Extensions;
 
@@ -20,5 +21,22 @@ public static class ExpressionExtensions
             },
             _ => null
         };
+    }
+
+    public static string GetPropertyName(this LambdaExpression expression)
+    {
+        var member = expression.GetMemberExpression();
+        var path = new StringBuilder();
+
+        while (member != null)
+        {
+            if (path.Length > 0) path.Prepend('.');
+
+            path.Prepend(member.Member.Name);
+
+            member = member.Expression?.GetMemberExpression();
+        }
+
+        return path.ToString();
     }
 }

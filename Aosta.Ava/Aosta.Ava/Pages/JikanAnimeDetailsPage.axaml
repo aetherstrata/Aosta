@@ -19,21 +19,22 @@
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Hidden">
             <Grid RowDefinitions="Auto">
-                <Image async:ImageLoader.Source="{Binding LargeBanner}"
+                <Image Grid.Row="0"
+                       async:ImageLoader.Source="{Binding LargeBanner}"
                        VerticalAlignment="Top"
                        Height="200"
                        Stretch="UniformToFill">
                     <Image.OpacityMask>
                         <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
                             <LinearGradientBrush.GradientStops>
-                                <GradientStop Offset="0"  Color="Black"/>
-                                <GradientStop Offset="1"  Color="Transparent"/>
+                                <GradientStop Offset="0.3" Color="Black" />
+                                <GradientStop Offset="1" Color="Transparent" />
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
                     </Image.OpacityMask>
                 </Image>
-                <StackPanel Grid.Row="0" Margin="10, 100">
-                    <Border Background="{DynamicResource FloatingBackgroundBrush}"
+                <StackPanel Grid.Row="0" Margin="10, 100, 10 ,10">
+                    <Border Background="{DynamicResource AccentButtonBackground}"
                             Margin="15"
                             Padding="0, 15"
                             CornerRadius="15">
@@ -64,6 +65,7 @@
                             <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Type.Localized}" />
                             <Grid.Styles>
                                 <Style Selector="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}"/>
                                     <Setter Property="HorizontalAlignment" Value="Center" />
                                 </Style>
                             </Grid.Styles>
@@ -73,6 +75,7 @@
                                FontSize="18"
                                FontWeight="Bold" />
                     <SelectableTextBlock Text="{Binding Synopsis}"
+                                         Margin="0,0,0,15"
                                          SelectionBrush="{DynamicResource FloatingBackgroundBrush}"
                                          TextWrapping="WrapWithOverflow" />
                     <TextBlock Text="{localize:Localize AnimeDetails.EpisodesList.Header}"
@@ -103,5 +106,22 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
+        <Button Grid.Row="1"
+                Name="AddButton"
+                ToolTip.Placement="TopEdgeAlignedRight"
+                ToolTip.Tip="{localize:Localize AnimeDetails.ToolTip.AddToRealm}"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                CornerRadius="40"
+                Command="{Binding AddToRealm}"
+                Width="80"
+                Height="80"
+                Margin="0,0,20,20"
+                IsDefault="True"
+                Classes="accent">
+            <controls:FontIcon Glyph="&#xE109;"
+                               FontSize="35"
+                               FontFamily="{StaticResource SymbolThemeFontFamily}" />
+        </Button>
     </Grid>
 </UserControl>

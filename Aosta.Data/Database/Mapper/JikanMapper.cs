@@ -23,7 +23,12 @@ public static partial class JikanMapper
 
     public static partial JikanEpisode ToModel(this AnimeEpisodeResponse source);
 
-    public static Anime ToRealmModel(this JikanAnime source)
+    /// <summary>
+    /// Create a new <see cref="Anime"/> object with this Jikan model
+    /// </summary>
+    /// <param name="source">The Jikan model</param>
+    /// <returns>A new <see cref="Anime"/> constructed with the given response</returns>
+    public static Anime NewRecord(this JikanAnime source)
     {
         return new Anime
         {
@@ -32,7 +37,7 @@ public static partial class JikanMapper
         };
     }
 
-    internal static AnimeBroadcast ToRealmModel(this AnimeBroadcastResponse source)
+    internal static AnimeBroadcast ToModel(this AnimeBroadcastResponse source)
     {
         var target = new AnimeBroadcast();
         if (source.Time != null)
@@ -47,12 +52,12 @@ public static partial class JikanMapper
         return target;
     }
 
-    internal static partial ImagesSet ToRealmModel(this ImagesSetResponse source);
-    internal static partial Image ToRealmModel(this ImageResponse source);
-    internal static partial TimePeriod ToRealmModel(this TimePeriodResponse source);
-    internal static partial MalUrl ToRealmModel(this MalUrlResponse source);
-    internal static partial TitleEntry ToRealmModel(this TitleEntryResponse source);
-    internal static partial YouTubeVideo ToRealmModel(this AnimeTrailerResponse source);
+    internal static partial ImagesSet ToModel(this ImagesSetResponse source);
+    internal static partial Image ToModel(this ImageResponse source);
+    internal static partial TimePeriod ToModel(this TimePeriodResponse source);
+    internal static partial MalUrl ToModel(this MalUrlResponse source);
+    internal static partial TitleEntry ToModel(this TitleEntryResponse source);
+    internal static partial YouTubeVideo ToModel(this AnimeTrailerResponse source);
 
     private static ContentType toLocalType(this AnimeType type) => type switch
     {

@@ -17,7 +17,7 @@ public class ImageTests
             MediumImageUrl = "https://url.com/mediumImage.jpg",
             LargeImageUrl = "https://url.com/largeImage.jpg",
             MaximumImageUrl = "https://url.com/MaximumImage.jpg"
-        }.ToRealmModel();
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.ImageUrl.Should().Be("https://url.com/image.jpg");
@@ -30,7 +30,7 @@ public class ImageTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newImage = new ImageResponse().ToRealmModel();
+        var newImage = new ImageResponse().ToModel();
 
         using var _ = new AssertionScope();
         newImage.ImageUrl.Should().BeNull();

@@ -1,6 +1,7 @@
 {
   "AnimeDetails.EpisodesList.Header": "Episodi",
   "AnimeDetails.Synopsis.Header": "Sinossi",
+  "AnimeDetails.ToolTip.AddToRealm": "Aggiungi questo anime alla tua lista",
   "AnimeList.Header.NoAnime" : "La lista è vuota",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
   "App.Version": "Versione {0}",

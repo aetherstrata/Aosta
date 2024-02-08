@@ -16,7 +16,7 @@ public class TrailerTests
             EmbedUrl = "Embed Url",
             YoutubeId = "== ID ==",
             Image = new ImageResponse()
-        }.ToRealmModel();
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.Url.Should().Be("Url");
@@ -28,7 +28,7 @@ public class TrailerTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newTrailer = new AnimeTrailerResponse().ToRealmModel();
+        var newTrailer = new AnimeTrailerResponse().ToModel();
 
         using var _ = new AssertionScope();
         newTrailer.Url.Should().BeNull();

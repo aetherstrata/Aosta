@@ -40,7 +40,7 @@ public class AnimeSearchResultViewModel : ReactiveObject
             {
                 var jikanMetadata = response.ToModel();
 
-                r.Add(jikanMetadata.ToRealmModel());
+                r.Add(jikanMetadata.NewRecord());
             });
 
             CanBeAdded = false;

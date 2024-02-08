@@ -1,14 +1,20 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
+using Aosta.Data;
 using Aosta.Data.Database.Mapper;
+using Aosta.Data.Database.Models;
+using Aosta.Data.Extensions;
 using Aosta.Jikan;
 using Aosta.Jikan.Models.Response;
 
@@ -18,6 +24,10 @@ using DynamicData;
 
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+
+using Realms;
+
+using Serilog;
 
 using Splat;
 
@@ -32,49 +42,65 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
     public IScreen HostScreen { get; }
 
     private readonly IJikan _jikan = Locator.Current.GetSafely<IJikan>();
+    private readonly Realm _realm;
     private readonly AnimeResponse _response;
 
-    public JikanAnimeDetailsViewModel(IScreen hostScreen, AnimeResponse response)
+    internal JikanAnimeDetailsViewModel(IScreen hostScreen, AnimeResponse response)
     {
+        _realm = Locator.Current.GetSafely<RealmAccess>().GetRealm();
         _response = response;
 
         UrlPathSegment = $"jikan-details-{response.MalId}";
         HostScreen = hostScreen;
 
-        UpdateEpisodesList = ReactiveCommand.CreateFromTask(updateEpisodesList, outputScheduler: AvaloniaScheduler.Instance);
+        AddToRealm = ReactiveCommand.CreateFromTask(addToRealm);
 
-        _ = updateEpisodesList();
+        _ = UpdateEpisodesList();
     }
 
-    public string? Banner => _response.Images?.JPG?.ImageUrl;
+    internal string? Banner => _response.Images?.JPG?.ImageUrl;
 
-    public string? LargeBanner => _response.Images?.JPG?.LargeImageUrl;
+    internal string? LargeBanner => _response.Images?.JPG?.LargeImageUrl;
 
-    public string Score => _response.Score?.ToString("0.00") ?? LocalizedString.NA;
+    internal string Score => _response.Score?.ToString("0.00") ?? LocalizedString.NA;
 
-    public LocalizedString Season => _response.Season?.Localize() ?? LocalizedString.NOT_AVAILABLE;
+    internal LocalizedString Season => _response.Season?.Localize() ?? LocalizedString.NOT_AVAILABLE;
 
-    public string Synopsis => _response.Synopsis ?? LocalizedString.NOT_AVAILABLE;
+    internal string Synopsis => _response.Synopsis ?? LocalizedString.NOT_AVAILABLE;
 
-    public string Title => _response.Titles.GetDefault() ?? LocalizedString.NA;
+    internal string Title => _response.Titles.GetDefault() ?? LocalizedString.NA;
 
-    public LocalizedString Type => _response.Type?.Localize() ?? LocalizedString.NA;
+    internal LocalizedString Type => _response.Type?.Localize() ?? LocalizedString.NA;
 
-    public string? Year => _response.Year.ToString();
+    internal string? Year => _response.Year.ToString();
 
-    public ObservableCollection<AnimeEpisodeResponse> Episodes { get; } = [];
-
-    public ReactiveCommand<Unit,Unit> UpdateEpisodesList { get; }
+    internal ObservableCollection<AnimeEpisodeResponse> Episodes { get; } = [];
 
     [Reactive]
-    public bool IsLoadEpisodesButtonVisible { get; set; }
+    internal bool IsLoadEpisodesButtonVisible { get; set; }
+
+    internal ReactiveCommand<Unit,Unit> AddToRealm { get; }
+
+    internal bool CanBeAdded()
+    {
+        return !_realm.All<Anime>()
+            .Is(static x => x.Jikan!.ID, _response.MalId)
+            .Any();
+    }
+
+    private Task addToRealm(CancellationToken ct = default)
+    {
+        this.Log().Info("Writing anime {Title} [{Id}] to Realm", _response.Titles.GetDefault() ?? "N/A", _response.MalId);
+        return Locator.Current.GetSafely<RealmAccess>().WriteAsync(r => r.Add(_response.ToModel().NewRecord()), ct);
+    }
 
     private int _page;
-    private async Task updateEpisodesList(CancellationToken ct = default)
+    internal async Task UpdateEpisodesList(CancellationToken ct = default)
     {
         _page++;
 
-        this.Log().Debug<JikanAnimeDetailsViewModel>("Getting episodes page {Page} for anime {Id}", _page, _response.MalId);
+        this.Log().Debug<JikanAnimeDetailsViewModel>("Getting episodes page {Page} for anime {Id}", _page,
+            _response.MalId);
 
         var result = await _jikan.GetAnimeEpisodesAsync(_response.MalId, _page, ct);
 

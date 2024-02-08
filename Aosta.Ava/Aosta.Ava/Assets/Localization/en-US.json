@@ -3,6 +3,7 @@
 
   "AnimeDetails.EpisodesList.Header": "Episodes",
   "AnimeDetails.Synopsis.Header": "Synopsis",
+  "AnimeDetails.ToolTip.AddToRealm": "Add this anime to your watchlist",
   "AnimeList.Header.NoAnime" : "The list is empty",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
 
