@@ -13,7 +13,6 @@
     <Grid RowDefinitions="Auto,*">
         <local:TitleBar Grid.Row="0"
                         IsBackEnabled="True"
-                        BackCommand="{Binding HostScreen.Router.NavigateBack}"
                         Title="{Binding Title}"/>
         <ScrollViewer Grid.Row="1"
                       HorizontalScrollBarVisibility="Disabled"

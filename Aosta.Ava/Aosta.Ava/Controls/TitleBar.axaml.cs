@@ -4,6 +4,8 @@
 using System.Linq;
 using System.Windows.Input;
 
+using Aosta.Ava.ViewModels;
+
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
@@ -25,7 +27,7 @@ public class TitleBar : TemplatedControl
     }
 
     public static readonly StyledProperty<bool> IsBackEnabledProperty =
-        AvaloniaProperty.Register<TitleBar, bool>(nameof(IsBackEnabled));
+        AvaloniaProperty.Register<TitleBar, bool>(nameof(IsBackEnabled), true);
 
     public bool IsBackEnabled
     {
@@ -43,7 +45,7 @@ public class TitleBar : TemplatedControl
     }
 
     public static readonly StyledProperty<ICommand> BackCommandProperty =
-        AvaloniaProperty.Register<TitleBar, ICommand>(nameof(BackCommand));
+        AvaloniaProperty.Register<TitleBar, ICommand>(nameof(BackCommand), ((MainViewModel)Application.Current!.DataContext).GoBack);
 
     public ICommand BackCommand
     {

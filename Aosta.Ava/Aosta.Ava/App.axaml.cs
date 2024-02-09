@@ -64,18 +64,20 @@ public partial class App : Application
         RequestedThemeVariant = themeKey.Theme;
         _logger.Information("Loaded theme {Variant}", themeKey.Key);
 
+        DataContext = new MainViewModel();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainViewModel()
+                DataContext = DataContext
             };
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
             singleViewPlatform.MainView = new MainView
             {
-                DataContext = new MainViewModel()
+                DataContext = DataContext
             };
         }
 
