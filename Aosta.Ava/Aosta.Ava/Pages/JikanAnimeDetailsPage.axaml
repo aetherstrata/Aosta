@@ -14,7 +14,7 @@
         <local:TitleBar Grid.Row="0"
                         IsBackEnabled="True"
                         BackCommand="{Binding HostScreen.Router.NavigateBack}"
-                        Title="{Binding Title}" />
+                        Title="{Binding Title}"/>
         <ScrollViewer Grid.Row="1"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Hidden">
@@ -107,13 +107,12 @@
             </Grid>
         </ScrollViewer>
         <Button Grid.Row="1"
-                Name="AddButton"
+                Loaded="OnButtonLoaded"
                 ToolTip.Placement="TopEdgeAlignedRight"
                 ToolTip.Tip="{localize:Localize AnimeDetails.ToolTip.AddToRealm}"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right"
                 CornerRadius="40"
-                Command="{Binding AddToRealm}"
                 Width="80"
                 Height="80"
                 Margin="0,0,20,20"

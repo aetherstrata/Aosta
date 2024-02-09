@@ -3,11 +3,7 @@
 
 using System;
 
-using Aosta.Ava.Extensions;
 using Aosta.Ava.ViewModels;
-using Aosta.Data;
-using Aosta.Data.Database.Models;
-using Aosta.Data.Extensions;
 
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -24,13 +20,6 @@ public partial class JikanAnimeDetailsPage : ReactiveUserControl<JikanAnimeDetai
         InitializeComponent();
     }
 
-    protected override void OnLoaded(RoutedEventArgs e)
-    {
-        base.OnLoaded(e);
-
-        if (ViewModel != null) AddButton.IsEnabled = ViewModel.CanBeAdded();
-    }
-
     private void onEpisodesPullRefresh(object? sender, RefreshRequestedEventArgs e)
     {
         var deferral = e.GetDeferral();
@@ -39,6 +28,18 @@ public partial class JikanAnimeDetailsPage : ReactiveUserControl<JikanAnimeDetai
         ViewModel?.UpdateEpisodesList();
 
         deferral.Complete();
+    }
+
+    private void OnButtonLoaded(object? sender, RoutedEventArgs e)
+    {
+        var button = sender as Button ?? throw new ArgumentNullException(nameof(sender), "NULL Button");
+
+        button.IsEnabled = ViewModel.CanBeAdded();
+        button.Tapped += (_, _) =>
+        {
+            _ = ViewModel.AddToRealm();
+            button.IsEnabled = false;
+        };
     }
 }
 

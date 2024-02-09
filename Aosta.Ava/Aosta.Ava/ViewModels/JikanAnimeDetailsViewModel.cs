@@ -53,8 +53,6 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
         UrlPathSegment = $"jikan-details-{response.MalId}";
         HostScreen = hostScreen;
 
-        AddToRealm = ReactiveCommand.CreateFromTask(addToRealm);
-
         _ = UpdateEpisodesList();
     }
 
@@ -79,8 +77,6 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
     [Reactive]
     internal bool IsLoadEpisodesButtonVisible { get; set; }
 
-    internal ReactiveCommand<Unit,Unit> AddToRealm { get; }
-
     internal bool CanBeAdded()
     {
         return !_realm.All<Anime>()
@@ -88,7 +84,7 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
             .Any();
     }
 
-    private Task addToRealm(CancellationToken ct = default)
+    internal Task AddToRealm(CancellationToken ct = default)
     {
         this.Log().Info("Writing anime {Title} [{Id}] to Realm", _response.Titles.GetDefault() ?? "N/A", _response.MalId);
         return Locator.Current.GetSafely<RealmAccess>().WriteAsync(r => r.Add(_response.ToModel().NewRecord()), ct);
