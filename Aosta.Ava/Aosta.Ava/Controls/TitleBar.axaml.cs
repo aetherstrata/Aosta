@@ -1,10 +1,14 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using System.Windows.Input;
 
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Templates;
+using Avalonia.Media;
 
 namespace Aosta.Ava.Controls;
 
@@ -55,5 +59,19 @@ public class TitleBar : TemplatedControl
         get => GetValue(MenuCommandProperty);
         set => SetValue(MenuCommandProperty, value);
     }
-}
 
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    {
+        base.OnApplyTemplate(e);
+
+        var textBlock = this.GetTemplateChildren()
+            .OfType<TextBlock>()
+            .First(static x => x.Name == "PART_TitleText");
+
+        Tapped += (_, _) =>
+        {
+            // ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
+            textBlock.TextWrapping ^= TextWrapping.WrapWithOverflow;
+        };
+    }
+}

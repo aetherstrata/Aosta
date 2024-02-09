@@ -34,23 +34,25 @@
     <Color x:Key="Analogous3">#0077FF</Color>
     <Color x:Key="Analogous4">#0044FF</Color>
 
-    <Color x:Key="Gray100">#E1E1E1</Color>
-    <Color x:Key="Gray200">#C8C8C8</Color>
-    <Color x:Key="Gray300">#ACACAC</Color>
-    <Color x:Key="Gray400">#919191</Color>
-    <Color x:Key="Gray500">#6E6E6E</Color>
-    <Color x:Key="Gray600">#404040</Color>
+    <Color x:Key="Gray100">#F5F5F5</Color>
+    <Color x:Key="Gray200">#EEEEEE</Color>
+    <Color x:Key="Gray300">#E0E0E0</Color>
+    <Color x:Key="Gray400">#BDBDBD</Color>
+    <Color x:Key="Gray500">#9E9E9E</Color>
+    <Color x:Key="Gray600">#757575</Color>
+    <Color x:Key="Gray700">#616161</Color>
+    <Color x:Key="Gray800">#424242</Color>
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
             <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource Gray100}"/>
-            <SolidColorBrush x:Key="FloatingBackgroundBrush" Color="{StaticResource BaseColor80L}"/>
+            <SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="{StaticResource Gray100}"/>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
             <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource Gray950}"/>
-            <SolidColorBrush x:Key="FloatingBackgroundBrush" Color="{StaticResource BaseColor20L}"/>
+            <SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="{StaticResource Gray900}"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
