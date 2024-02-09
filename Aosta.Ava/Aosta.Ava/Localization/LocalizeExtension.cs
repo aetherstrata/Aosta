@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+
+using Avalonia.Data;
 using Avalonia.Data.Core;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
@@ -14,13 +16,17 @@ internal class LocalizeExtension(string key) : MarkupExtension
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
         var path = new CompiledBindingPathBuilder()
-            .SetRawSource(key)
+            .SetRawSource(Localizer.Instance)
             .Property(
-                new ClrPropertyInfo("Item", static o => Localizer.Instance[(string)o], null, typeof(string)),
+                new ClrPropertyInfo("Item", _ => Localizer.Instance[key], null, typeof(string)),
                 PropertyInfoAccessorFactory.CreateInpcPropertyAccessor)
             .Build();
 
-        var binding = new CompiledBindingExtension(path);
+        var binding = new CompiledBindingExtension
+        {
+            Mode = BindingMode.OneWay,
+            Path = path,
+        };
 
         return binding.ProvideValue(serviceProvider);
     }
