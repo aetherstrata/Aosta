@@ -38,7 +38,7 @@ public class MainViewModel : ReactiveObject, IScreen
             isDifferentFrom<AnimeListPageViewModel>());
 
         GoSearch = ReactiveCommand.CreateFromObservable(
-            () => Router.Navigate.Execute(new SearchPageViewModel(this)),
+            () => Router.NavigateAndReset.Execute(new SearchPageViewModel(this)),
             isDifferentFrom<SearchPageViewModel>());
 
         GoBack = ReactiveCommand.CreateFromObservable(
@@ -50,7 +50,7 @@ public class MainViewModel : ReactiveObject, IScreen
 
     private IObservable<bool> isDifferentFrom<T>() where T : IRoutableViewModel
     {
-        return this.WhenAnyObservable(vm => vm.Router.CurrentViewModel)
-            .Select(x => x is not T);
+        return this.WhenAnyObservable(static vm => vm.Router.CurrentViewModel)
+            .Select(static x => x is not T);
     }
 }
