@@ -6,9 +6,9 @@ using FastEnumUtility;
 
 namespace Aosta.Jikan;
 
-public static class Guard
+internal static class Guard
 {
-	public static void IsSingleFlag<T>(T e, string paramName) where T : struct, Enum
+	internal static void IsSingleFlag<T>(T e, string paramName) where T : struct, Enum
 	{
 		if (!e.HasSingleFlag())
 		{
@@ -16,7 +16,7 @@ public static class Guard
 		}
 	}
 
-	public static void IsDefaultEndpoint(string? endpoint, string methodName)
+	internal static void IsDefaultEndpoint(string? endpoint, string methodName)
 	{
 		if (JikanConfiguration.DEFAULT_ENDPOINT.Equals(endpoint))
 		{
@@ -24,7 +24,7 @@ public static class Guard
 		}
 	}
 
-	public static void IsNotNullOrWhiteSpace(string? arg, string argumentName)
+	internal static void IsNotNullOrWhiteSpace(string? arg, string argumentName)
 	{
 		if (string.IsNullOrWhiteSpace(arg))
 		{
@@ -32,7 +32,7 @@ public static class Guard
 		}
 	}
 
-	public static void IsNotNull(object arg, string argumentName)
+	internal static void IsNotNull(object arg, string argumentName)
 	{
 		if (arg == null)
 		{
@@ -40,7 +40,7 @@ public static class Guard
 		}
 	}
 
-	public static void IsLongerThan(string arg, int min, string argumentName)
+	internal static void IsLongerThan(string arg, int min, string argumentName)
 	{
 		if (string.IsNullOrWhiteSpace(arg) || arg.Length <= min)
 		{
@@ -48,7 +48,7 @@ public static class Guard
 		}
 	}
 
-	public static void IsGreaterThanZero<T>(T arg, string argumentName) where T : INumber<T>
+	internal static void IsGreaterThanZero<T>(T arg, string argumentName) where T : INumber<T>
 	{
 		if (arg <= T.Zero )
 		{
@@ -56,7 +56,15 @@ public static class Guard
 		}
 	}
 
-	public static void IsLessOrEqualThan<T>(T arg, T max, string argumentName) where T : INumber<T>
+    internal static void IsGreaterOrEqualToZero<T>(T arg, string argumentName) where T : INumber<T>
+    {
+        if (arg < T.Zero )
+        {
+            throw new JikanParameterValidationException("Argument must be greater or equal to 0.", argumentName);
+        }
+    }
+
+	internal static void IsLessOrEqualThan<T>(T arg, T max, string argumentName) where T : INumber<T>
 	{
 		if (arg > max)
 		{
@@ -64,7 +72,7 @@ public static class Guard
 		}
 	}
 
-	public static void IsValid<T>(Func<T, bool> isValidFunc, T arg, string argumentName, string message = "Argument is not valid.")
+	internal static void IsValid<T>(Func<T, bool> isValidFunc, T arg, string argumentName, string message = "Argument is not valid.")
 	{
 		if (!isValidFunc(arg))
 		{
@@ -72,7 +80,7 @@ public static class Guard
 		}
 	}
 
-	public static void IsValidEnum<TEnum>(TEnum arg, string argumentName) where TEnum : struct, Enum
+	internal static void IsValidEnum<TEnum>(TEnum arg, string argumentName) where TEnum : struct, Enum
 	{
 		if (!FastEnum.IsDefined(arg))
 		{
@@ -80,7 +88,7 @@ public static class Guard
 		}
 	}
 
-	public static void IsLetter(char character, string argumentName)
+	internal static void IsLetter(char character, string argumentName)
 	{
 		if (!char.IsLetter(character))
 		{

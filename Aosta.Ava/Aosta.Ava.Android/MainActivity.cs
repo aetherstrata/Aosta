@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 
 using Android.App;
@@ -28,16 +29,18 @@ public class MainActivity : AvaloniaMainActivity<App>
 {
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
+        // The default current directory on android is '/'.
+        // On some devices '/' maps to the app data directory. On others it maps to the root of the internal storage.
+        // In order to have a consistent current directory on all devices the full path of the app data directory is set as the current directory.
+        Environment.CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+        CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+
         return base.CustomizeAppBuilder(builder)
-            .UseAndroid()
             .UseReactiveUI()
             .LogToTrace()
             .AfterSetup(_ =>
             {
-                // The default current directory on android is '/'.
-                // On some devices '/' maps to the app data directory. On others it maps to the root of the internal storage.
-                // In order to have a consistent current directory on all devices the full path of the app data directory is set as the current directory.
-                Environment.CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 ILogger logger = App.SetupLogger(Path.Combine(Environment.CurrentDirectory, "logs"))
                                     .WriteTo.Logcat("dev.aest.aosta", "{Message:lj} <{ThreadId}><{ThreadName}>{NewLine}{Exception}", LogEventLevel.Debug)
                                     .CreateLogger();

@@ -8,6 +8,11 @@ namespace Aosta.Jikan.Query.Enums;
 /// </summary>
 public enum AnimeTypeFilter
 {
+    /// <summary>
+    /// Do not filter results
+    /// </summary>
+    All,
+
 	/// <summary>
 	/// TV series.
 	/// </summary>
@@ -23,9 +28,9 @@ public enum AnimeTypeFilter
 	OVA,
 
 	/// <summary>
-	/// Feature-lenght movie.
+	/// Feature-length movie.
 	/// </summary>
-	[EnumMember(Value = "Movie")]
+	[EnumMember(Value = "movie")]
 	[Label("movie")]
 	Movie,
 
@@ -48,5 +53,26 @@ public enum AnimeTypeFilter
 	/// </summary>
 	[EnumMember(Value = "music")]
 	[Label("Music")]
-	Music
+	Music,
+
+    /// <summary>
+    /// Commercial message.
+    /// </summary>
+    [EnumMember(Value = "cm")]
+    [Label("Commercial Message")]
+    CommercialMessage,
+
+    /// <summary>
+    /// Promotional video.
+    /// </summary>
+    [EnumMember(Value = "pv")]
+    [Label("Promotional Video")]
+    PromotionalVideo,
+
+    /// <summary>
+    /// TV Special.
+    /// </summary>
+    [EnumMember(Value = "tv_special")]
+    [Label("TV Special")]
+    TVSpecial
 }

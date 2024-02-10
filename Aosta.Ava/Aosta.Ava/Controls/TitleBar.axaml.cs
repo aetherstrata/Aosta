@@ -20,14 +20,23 @@ public class TitleBar : TemplatedControl
     public static readonly StyledProperty<string> TitleProperty =
         AvaloniaProperty.Register<TitleBar, string>(nameof(Title), "Title Text");
 
+    public static readonly StyledProperty<bool> IsBackEnabledProperty =
+        AvaloniaProperty.Register<TitleBar, bool>(nameof(IsBackEnabled), true);
+
+    public static readonly StyledProperty<bool> IsMenuEnabledProperty =
+        AvaloniaProperty.Register<TitleBar, bool>(nameof(IsMenuEnabled));
+
+    public static readonly StyledProperty<ICommand> BackCommandProperty =
+        AvaloniaProperty.Register<TitleBar, ICommand>(nameof(BackCommand), ((MainViewModel)Application.Current!.DataContext!).GoBack);
+
+    public static readonly StyledProperty<ICommand> MenuCommandProperty =
+        AvaloniaProperty.Register<TitleBar, ICommand>(nameof(MenuCommand));
+
     public string Title
     {
         get => GetValue(TitleProperty);
         set => SetValue(TitleProperty, value);
     }
-
-    public static readonly StyledProperty<bool> IsBackEnabledProperty =
-        AvaloniaProperty.Register<TitleBar, bool>(nameof(IsBackEnabled), true);
 
     public bool IsBackEnabled
     {
@@ -35,26 +44,17 @@ public class TitleBar : TemplatedControl
         set => SetValue(IsBackEnabledProperty, value);
     }
 
-    public static readonly StyledProperty<bool> IsMenuEnabledProperty =
-        AvaloniaProperty.Register<TitleBar, bool>(nameof(IsMenuEnabled));
-
     public bool IsMenuEnabled
     {
         get => GetValue(IsMenuEnabledProperty);
         set => SetValue(IsMenuEnabledProperty, value);
     }
 
-    public static readonly StyledProperty<ICommand> BackCommandProperty =
-        AvaloniaProperty.Register<TitleBar, ICommand>(nameof(BackCommand), ((MainViewModel)Application.Current!.DataContext).GoBack);
-
     public ICommand BackCommand
     {
         get => GetValue(BackCommandProperty);
         set => SetValue(BackCommandProperty, value);
     }
-
-    public static readonly StyledProperty<ICommand> MenuCommandProperty =
-        AvaloniaProperty.Register<TitleBar, ICommand>(nameof(MenuCommand));
 
     public ICommand MenuCommand
     {

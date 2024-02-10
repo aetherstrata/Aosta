@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
 using Aosta.Data;
-using Aosta.Data.Database.Mapper;
+using Aosta.Data.Mapper;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
@@ -20,7 +20,7 @@ public class AnimeSearchResultViewModel : ReactiveObject
 {
     private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
 
-    public AnimeSearchResultViewModel(AnimeResponse response, bool found)
+    public AnimeSearchResultViewModel(IScreen host, AnimeResponse response, bool found)
     {
         _missing = !found;
 
@@ -49,6 +49,8 @@ public class AnimeSearchResultViewModel : ReactiveObject
 
             return realmTask;
         });
+
+        GoToDetails = ReactiveCommand.CreateFromObservable(() => host.Router.Navigate.Execute(new JikanAnimeDetailsViewModel(host, response)));
     }
 
     private bool _missing;
@@ -66,4 +68,6 @@ public class AnimeSearchResultViewModel : ReactiveObject
     public double? Score { get; }
 
     public ReactiveCommand<Unit, Unit> AddCommand { get; }
+
+    public ReactiveCommand<Unit, IRoutableViewModel> GoToDetails { get; }
 }

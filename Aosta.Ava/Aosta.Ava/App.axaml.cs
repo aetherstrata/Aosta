@@ -15,6 +15,7 @@ using Aosta.Common.Extensions;
 using Aosta.Jikan;
 
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
@@ -64,21 +65,33 @@ public partial class App : Application
         RequestedThemeVariant = themeKey.Theme;
         _logger.Information("Loaded theme {Variant}", themeKey.Key);
 
-        DataContext = new MainViewModel();
-
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            var ctx = new MainViewModel();
+
             desktop.MainWindow = new MainWindow
             {
-                DataContext = DataContext
+                DataContext = ctx
             };
+
+            if (!Design.IsDesignMode)
+            {
+                DataContext = ctx;
+            }
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
+            var ctx = new MainViewModel();
+
             singleViewPlatform.MainView = new MainView
             {
-                DataContext = DataContext
+                DataContext = ctx
             };
+
+            if (!Design.IsDesignMode)
+            {
+                DataContext = ctx;
+            }
         }
 
         _logger.Debug("Framework initialization completed");

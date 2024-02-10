@@ -1,10 +1,11 @@
-using Aosta.Data.Database.Enums;
-using Aosta.Data.Database.Models;
-using Aosta.Data.Database.Models.Local;
+using Aosta.Data.Enums;
 using Aosta.Data.Extensions;
+using Aosta.Data.Models.Local;
 using Aosta.Data.Tests.Realm;
 
 using FluentAssertions.Execution;
+
+using Anime = Aosta.Data.Models.Anime;
 
 namespace Aosta.Data.Tests.Models;
 

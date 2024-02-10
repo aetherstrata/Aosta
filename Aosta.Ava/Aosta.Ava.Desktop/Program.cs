@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 
 using Aosta.Data;
@@ -20,6 +21,8 @@ internal static class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+
         BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
     }

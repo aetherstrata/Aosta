@@ -22,6 +22,8 @@ using Realms;
 
 using Splat;
 
+using Anime = Aosta.Data.Models.Anime;
+
 namespace Aosta.Ava.ViewModels;
 
 public sealed class AnimeListPageViewModel : ReactiveObject, IRoutableViewModel, IDisposable

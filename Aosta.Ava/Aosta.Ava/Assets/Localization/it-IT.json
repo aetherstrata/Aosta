@@ -1,14 +1,22 @@
 {
+  "App.Version": "Versione {0}",
+
   "AnimeDetails.EpisodesList.Header": "Episodi",
   "AnimeDetails.Synopsis.Header": "Sinossi",
   "AnimeDetails.ToolTip.AddToRealm": "Aggiungi questo anime alla tua lista",
   "AnimeList.Header.NoAnime" : "La lista è vuota",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
-  "App.Version": "Versione {0}",
+
   "HomePage.SeasonalAnime.Header" : "Anime in corso",
   "HomePage.TopAnime.Header" : "Top anime",
 
-  "SearchPage.SearchBox.Watermark" : "Cerca anime",
+  "SearchPage.Settings.Header": "Imposta i filtri",
+  "SearchPage.Settings.AgeRatingFilter": "Audience",
+  "SearchPage.Settings.AiringStatusFilter": "Messa in onda",
+  "SearchPage.Settings.AnimeTypeFilter" : "Tipo",
+  "SearchPage.Settings.ScoreRange": "Intervallo di voti",
+  "SearchPage.SearchBox.Watermark" : "Cerca contenuti online",
+
   "SettingsPage.ApplicationSettings.Header": "Impostazioni applicazione",
   "SettingsPage.ContentSettings.Header": "Impostazioni contenuti",
   "SettingsPage.AppTheme.Entry": "Tema applicazione",
@@ -20,26 +28,39 @@
   "Theme.System": "Sistema",
   "Theme.Light": "Chiaro",
 
+  "Label.All": "Tutti",
+  "Label.ContentType": "Tipo",
   "Label.LoadMore": "Carica altro",
   "Label.LocalizationLookupError": "Localizzazione non trovata per {0}",
   "Label.NotAvailable.Long" : "Non disponibile",
   "Label.NotAvailable.Short" : "N/D",
   "Label.Season": "Stagione",
   "Label.Score": "Voto",
-  "Label.ContentType": "Tipo",
+  "Label.Year": "Anno",
 
-  "Jikan.AnimeType.TvAnime": "TV",
-  "Jikan.AnimeType.TvSpecial": "Speciale TV",
-  "Jikan.AnimeType.OVA" : "OVA",
-  "Jikan.AnimeType.Movie": "Film",
-  "Jikan.AnimeType.Special": "Speciale",
-  "Jikan.AnimeType.ONA": "ONA",
-  "Jikan.AnimeType.Music": "Musica",
-  "Jikan.AnimeType.PromoVideo": "Video promozionale",
-  "Jikan.AnimeType.Commercial": "Messaggio pubblicitario",
+  "Enum.AnimeAgeRatingFilter.G": "Adatto a tutti",
+  "Enum.AnimeAgeRatingFilter.PG": "Bambini",
+  "Enum.AnimeAgeRatingFilter.PG13": "Ragazzi (13+)",
+  "Enum.AnimeAgeRatingFilter.R17": "Adulti",
+  "Enum.AnimeAgeRatingFilter.R": "Contenuti espliciti",
+  "Enum.AnimeAgeRatingFilter.RX": "Hentai",
 
-  "Jikan.Season.Spring": "Primavera",
-  "Jikan.Season.Summer": "Estate",
-  "Jikan.Season.Fall": "Autunno",
-  "Jikan.Season.Winter": "Inverno"
+  "Enum.AiringStatus.Airing": "In onda",
+  "Enum.AiringStatus.Complete": "Completato",
+  "Enum.AiringStatus.Upcoming": "In arrivo",
+
+  "Enum.AnimeType.TvAnime": "TV",
+  "Enum.AnimeType.TvSpecial": "Speciale TV",
+  "Enum.AnimeType.OVA" : "OVA",
+  "Enum.AnimeType.Movie": "Film",
+  "Enum.AnimeType.Special": "Speciale",
+  "Enum.AnimeType.ONA": "ONA",
+  "Enum.AnimeType.Music": "Musica",
+  "Enum.AnimeType.PromoVideo": "Video promozionale",
+  "Enum.AnimeType.Commercial": "Messaggio pubblicitario",
+
+  "Enum.Season.Spring": "Primavera",
+  "Enum.Season.Summer": "Estate",
+  "Enum.Season.Fall": "Autunno",
+  "Enum.Season.Winter": "Inverno"
 }

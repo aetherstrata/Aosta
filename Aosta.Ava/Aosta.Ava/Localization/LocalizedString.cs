@@ -6,8 +6,6 @@ using ReactiveUI.Fody.Helpers;
 
 using Serilog;
 
-using Splat;
-
 namespace Aosta.Ava.Localization;
 
 public sealed class LocalizedString : ReactiveObject, ILocalized
@@ -16,6 +14,7 @@ public sealed class LocalizedString : ReactiveObject, ILocalized
     [Reactive]
     public string Localized { get; private set; }
 
+    public static readonly LocalizedString ALL = new("Label.All");
     public static readonly LocalizedString NOT_AVAILABLE = new("Label.NotAvailable.Long");
     public static readonly LocalizedString NA = new("Label.NotAvailable.Short");
 

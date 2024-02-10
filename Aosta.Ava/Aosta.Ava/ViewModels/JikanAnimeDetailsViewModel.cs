@@ -1,24 +1,20 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
+using Aosta.Ava.ViewModels.Details;
 using Aosta.Data;
-using Aosta.Data.Database.Mapper;
-using Aosta.Data.Database.Models;
 using Aosta.Data.Extensions;
+using Aosta.Data.Mapper;
+using Aosta.Data.Models;
 using Aosta.Jikan;
 using Aosta.Jikan.Models.Response;
-
-using Avalonia.ReactiveUI;
 
 using DynamicData;
 
@@ -26,8 +22,6 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 using Realms;
-
-using Serilog;
 
 using Splat;
 
@@ -52,25 +46,18 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
 
         UrlPathSegment = $"jikan-details-{response.MalId}";
         HostScreen = hostScreen;
+        DetailsPill = InfoPill.Create(response);
 
         _ = UpdateEpisodesList();
     }
 
-    internal string? Banner => _response.Images?.JPG?.ImageUrl;
+    public IContentInfoPill DetailsPill { get; }
 
     internal string? LargeBanner => _response.Images?.JPG?.LargeImageUrl;
-
-    internal string Score => _response.Score?.ToString("0.00") ?? LocalizedString.NA;
-
-    internal LocalizedString Season => _response.Season?.Localize() ?? LocalizedString.NOT_AVAILABLE;
 
     internal string Synopsis => _response.Synopsis ?? LocalizedString.NOT_AVAILABLE;
 
     internal string Title => _response.Titles.GetDefault() ?? LocalizedString.NA;
-
-    internal LocalizedString Type => _response.Type?.Localize() ?? LocalizedString.NA;
-
-    internal string? Year => _response.Year.ToString();
 
     internal ObservableCollection<AnimeEpisodeResponse> Episodes { get; } = [];
 
@@ -86,7 +73,10 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
 
     internal Task AddToRealm(CancellationToken ct = default)
     {
-        this.Log().Info("Writing anime {Title} [{Id}] to Realm", _response.Titles.GetDefault() ?? "N/A", _response.MalId);
+        this.Log().Info("Writing anime {Title} [{Id}] to Realm",
+            _response.Titles.GetDefault() ?? "N/A",
+            _response.MalId);
+
         return Locator.Current.GetSafely<RealmAccess>().WriteAsync(r => r.Add(_response.ToModel().NewRecord()), ct);
     }
 
@@ -95,8 +85,8 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
     {
         _page++;
 
-        this.Log().Debug<JikanAnimeDetailsViewModel>("Getting episodes page {Page} for anime {Id}", _page,
-            _response.MalId);
+        this.Log().Debug<JikanAnimeDetailsViewModel>("Getting episodes page {Page} for anime {Id}",
+            _page, _response.MalId);
 
         var result = await _jikan.GetAnimeEpisodesAsync(_response.MalId, _page, ct);
 

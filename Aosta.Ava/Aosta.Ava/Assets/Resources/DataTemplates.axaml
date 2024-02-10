@@ -2,9 +2,83 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
                     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-                    xmlns:card="clr-namespace:Aosta.Ava.ViewModels.Card">
+                    xmlns:card="clr-namespace:Aosta.Ava.ViewModels.Card"
+                    xmlns:localize="clr-namespace:Aosta.Ava.Localization"
+                    xmlns:details="clr-namespace:Aosta.Ava.ViewModels.Details">
     <!-- Add Resources Here -->
-    <DataTemplate x:Key="JikanAnimeCard" x:DataType="card:JikanAnimeCardViewModel">
+
+
+    <DataTemplate x:Key="Localizable" DataType="localize:ILocalized">
+        <TextBlock Text="{Binding Localized}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="SeasonInfoPill" DataType="details:AnimeSeasonInfoPill">
+        <Border Background="{DynamicResource AccentButtonBackground}"
+                Margin="15"
+                Padding="0, 15"
+                CornerRadius="15">
+            <Grid ColumnDefinitions="2*,3*,2*"
+                  RowDefinitions="Auto,Auto">
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="{localize:Localize Label.Score}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <TextBlock Grid.Row="0" Grid.Column="1"
+                           Text="{localize:Localize Label.Season}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <TextBlock Grid.Row="0" Grid.Column="2"
+                           Text="{localize:Localize Label.ContentType}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Score}" />
+                <TextBlock Grid.Row="1" Grid.Column="1">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} | {1}">
+                            <Binding Path="Season.Localized" />
+                            <Binding Path="Year" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Type.Localized}" />
+                <Grid.Styles>
+                    <Style Selector="TextBlock">
+                        <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                    </Style>
+                </Grid.Styles>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="InfoPill" DataType="details:InfoPill">
+        <Border Background="{DynamicResource AccentButtonBackground}"
+                Margin="15"
+                Padding="0, 15"
+                CornerRadius="15">
+            <Grid ColumnDefinitions="2*,3*,2*"
+                  RowDefinitions="Auto,Auto">
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="{localize:Localize Label.Score}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <TextBlock Grid.Row="0" Grid.Column="2"
+                           Text="{localize:Localize Label.ContentType}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Score}" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Type.Localized}" />
+                <Grid.Styles>
+                    <Style Selector="TextBlock">
+                        <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}"/>
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                    </Style>
+                </Grid.Styles>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="JikanAnimeCard" DataType="card:JikanAnimeCardViewModel">
         <Button Padding="5"
                 Background="CornflowerBlue"
                 BorderThickness="0"
@@ -38,7 +112,7 @@
         </Button>
     </DataTemplate>
 
-    <DataTemplate x:Key="RealmAnimeCard" x:DataType="card:AnimeListCardViewModel">
+    <DataTemplate x:Key="RealmAnimeCard" DataType="card:AnimeListCardViewModel">
         <Button Padding="5"
                 Background="CornflowerBlue"
                 BorderThickness="0"

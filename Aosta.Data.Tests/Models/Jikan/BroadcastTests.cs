@@ -1,4 +1,4 @@
-using Aosta.Data.Database.Mapper;
+using Aosta.Data.Mapper;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Response;
 using FluentAssertions.Execution;

@@ -32,13 +32,12 @@ public class HomePageViewModel : ReactiveObject, IRoutableViewModel
         Observable.Start(async () =>
         {
             var jikan = Locator.Current.GetSafely<IJikan>();
-            var realm = Locator.Current.GetSafely<RealmAccess>();
 
             var topTask = jikan.GetTopAnimeAsync(TopAnimeQueryParameters.Create()
-                .SafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false)));
+                .SafeForWork(!Setting.IncludeNsfw));
 
             var currentTask = jikan.GetCurrentSeasonAsync(SeasonQueryParameters.Create()
-                .SafeForWork(!realm.GetSetting(Setting.INCLUDE_NSFW, false)));
+                .SafeForWork(!Setting.IncludeNsfw));
 
             var results = await Task.WhenAll(topTask, currentTask);
 

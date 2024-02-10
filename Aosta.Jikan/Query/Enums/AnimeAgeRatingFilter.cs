@@ -8,6 +8,11 @@ namespace Aosta.Jikan.Query.Enums;
 /// </summary>
 public enum AnimeAgeRatingFilter
 {
+    /// <summary>
+    /// Do not filter the results.
+    /// </summary>
+    All,
+
 	/// <summary>
 	/// All ages.
 	/// </summary>

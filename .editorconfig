@@ -32,9 +32,6 @@ dotnet_naming_style.camelcase.capitalization = camel_case
 dotnet_naming_style.all_lower.capitalization = all_lower
 dotnet_naming_style.all_lower.word_separator = _
 
-dotnet_naming_style.static_prefix_pascalcase.capitalization = pascal_case
-dotnet_naming_style.static_prefix_pascalcase.required_prefix = s_
-
 dotnet_naming_style.underscore_camelcase.capitalization = camel_case
 dotnet_naming_style.underscore_camelcase.required_prefix = _
 
@@ -76,13 +73,13 @@ dotnet_naming_rule.private_const_all_lower.severity = warning
 dotnet_naming_rule.private_const_all_lower.symbols = private_constants
 dotnet_naming_rule.private_const_all_lower.style = all_lower
 
-#s_PascalCase for private static readonly
-dotnet_naming_symbols.private_static.applicable_accessibilities = private
-dotnet_naming_symbols.private_static.required_modifiers = static
-dotnet_naming_symbols.private_static.applicable_kinds = field
+#all_lower for private static readonly
+dotnet_naming_symbols.private_static_readonly.applicable_accessibilities = private
+dotnet_naming_symbols.private_static_readonly.required_modifiers = static,readonly
+dotnet_naming_symbols.private_static_readonly.applicable_kinds = field
 dotnet_naming_rule.private_static_readonly_prefix_pascalcase.severity = warning
-dotnet_naming_rule.private_static_readonly_prefix_pascalcase.symbols = private_static
-dotnet_naming_rule.private_static_readonly_prefix_pascalcase.style = static_prefix_pascalcase
+dotnet_naming_rule.private_static_readonly_prefix_pascalcase.symbols = private_static_readonly
+dotnet_naming_rule.private_static_readonly_prefix_pascalcase.style = all_lower
 
 #camelCase for local constants
 dotnet_naming_symbols.local_constants.applicable_kinds = local
@@ -91,7 +88,7 @@ dotnet_naming_rule.local_const_camel_case.severity = warning
 dotnet_naming_rule.local_const_camel_case.symbols = local_constants
 dotnet_naming_rule.local_const_camel_case.style = camelcase
 
-#ALL_UPPER for non private constants/static readonlys
+#ALL_UPPER for non private constants/static readonly
 dotnet_naming_style.all_upper.capitalization = all_upper
 dotnet_naming_style.all_upper.word_separator = _
 

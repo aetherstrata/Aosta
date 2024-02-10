@@ -4,13 +4,13 @@
 using System.Reactive;
 
 using Aosta.Ava.Extensions;
-using Aosta.Ava.ViewModels.Contracts;
 using Aosta.Data;
-using Aosta.Data.Database.Models;
 
 using ReactiveUI;
 
 using Splat;
+
+using Anime = Aosta.Data.Models.Anime;
 
 namespace Aosta.Ava.ViewModels.Card;
 

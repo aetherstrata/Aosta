@@ -1,6 +1,7 @@
-using Aosta.Data.Database.Mapper;
 using Aosta.Jikan.Models.Response;
 using FluentAssertions.Execution;
+
+using JikanMapper = Aosta.Data.Mapper.JikanMapper;
 
 namespace Aosta.Data.Tests.Models.Jikan;
 
@@ -10,14 +11,14 @@ public class ImageTests
     [Test]
     public void ConversionTest()
     {
-        var converted = new ImageResponse
+        var converted = JikanMapper.ToModel(new ImageResponse
         {
             ImageUrl = "https://url.com/image.jpg",
             SmallImageUrl = "https://url.com/smallImage.jpg",
             MediumImageUrl = "https://url.com/mediumImage.jpg",
             LargeImageUrl = "https://url.com/largeImage.jpg",
             MaximumImageUrl = "https://url.com/MaximumImage.jpg"
-        }.ToModel();
+        });
 
         using var _ = new AssertionScope();
         converted.ImageUrl.Should().Be("https://url.com/image.jpg");
@@ -30,7 +31,7 @@ public class ImageTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newImage = new ImageResponse().ToModel();
+        var newImage = JikanMapper.ToModel(new ImageResponse());
 
         using var _ = new AssertionScope();
         newImage.ImageUrl.Should().BeNull();

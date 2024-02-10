@@ -8,6 +8,11 @@ namespace Aosta.Jikan.Query.Enums;
 public enum AiringStatusFilter
 {
     /// <summary>
+    /// Do not filter results
+    /// </summary>
+    All,
+
+    /// <summary>
     /// Airing status.
     /// </summary>
     [EnumMember(Value = "airing")]

@@ -3,6 +3,8 @@
 
 using Aosta.Data.Database.Models;
 
+using Anime = Aosta.Data.Models.Anime;
+
 namespace Aosta.Data.Tests.Realm;
 
 [TestFixture]

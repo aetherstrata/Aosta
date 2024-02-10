@@ -49,10 +49,12 @@
         <ResourceDictionary x:Key="Light">
             <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource Gray100}"/>
             <SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="{StaticResource Gray100}"/>
+            <SolidColorBrush x:Key="FloatingPaneBackgroundBrush" Color="{StaticResource BaseColor90L}"/>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
             <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource Gray950}"/>
             <SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="{StaticResource Gray900}"/>
+            <SolidColorBrush x:Key="FloatingPaneBackgroundBrush" Color="{StaticResource BaseColor10L}"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

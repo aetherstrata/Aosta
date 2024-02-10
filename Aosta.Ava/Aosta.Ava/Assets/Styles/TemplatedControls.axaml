@@ -2,5 +2,5 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <StyleInclude Source="/Controls/TitleBar.axaml"/>
-    <StyleInclude Source="/Controls/SettingSwitch.axaml"/>
+    <StyleInclude Source="/Controls/SettingsEntry.axaml"/>
 </Styles>

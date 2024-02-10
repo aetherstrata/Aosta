@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
@@ -6,15 +7,18 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
+using Aosta.Ava.Localization;
 using Aosta.Data;
 using Aosta.Data.Database.Models;
 using Aosta.Data.Extensions;
 using Aosta.Jikan;
+using Aosta.Jikan.Query.Enums;
 using Aosta.Jikan.Query.Parameters;
 
 using Avalonia.ReactiveUI;
 
 using DynamicData;
+using DynamicData.Kernel;
 
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -23,6 +27,7 @@ using Realms;
 
 using Splat;
 
+using Anime = Aosta.Data.Models.Anime;
 using Setting = Aosta.Ava.Settings.Setting;
 
 namespace Aosta.Ava.ViewModels;
@@ -44,10 +49,31 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
     [Reactive]
     public string SearchText { get; set; } = string.Empty;
 
-    [Reactive]
-    public bool IsFilterPaneOpen { get; set; }
-
     public ObservableCollection<AnimeSearchResultViewModel> SearchResults { get; } = [];
+
+    public LocalizedData<AnimeTypeFilter>[] AnimeTypes { get; } =
+        Enum.GetValues<AnimeTypeFilter>().Select(x => x.LocalizeWithData()).AsArray();
+
+    [Reactive]
+    public LocalizedData<AnimeTypeFilter> AnimeTypeFilter { get; set; } = Jikan.Query.Enums.AnimeTypeFilter.All.LocalizeWithData();
+
+    [Reactive]
+    public double MinScore { get; set; } = 0;
+
+    [Reactive]
+    public double MaxScore { get; set; } = 10;
+
+    public LocalizedData<AiringStatusFilter>[] StatusList { get; } =
+        Enum.GetValues<AiringStatusFilter>().Select(x => x.LocalizeWithData()).AsArray();
+
+    [Reactive]
+    public LocalizedData<AiringStatusFilter> StatusFilter { get; set; } = AiringStatusFilter.All.LocalizeWithData();
+
+    public LocalizedData<AnimeAgeRatingFilter>[] AgeRatingList { get; } =
+        Enum.GetValues<AnimeAgeRatingFilter>().Select(x => x.LocalizeWithData()).AsArray();
+
+    [Reactive]
+    public LocalizedData<AnimeAgeRatingFilter> RatingFilter { get; set; } = AnimeAgeRatingFilter.All.LocalizeWithData();
 
     public SearchPageViewModel(IScreen screen)
     {
@@ -71,7 +97,13 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
             {
                 var queryParams = AnimeSearchQueryParameters.Create()
                     .Query(s)
-                    .SafeForWork(!_realm.GetSetting(Setting.INCLUDE_NSFW, false));
+                    .Type(AnimeTypeFilter.Data)
+                    .Status(StatusFilter.Data)
+                    .Rating(RatingFilter.Data)
+                    .MinScore(MinScore)
+                    .MaxScore(MaxScore)
+                    .SafeForWork(!Setting.IncludeNsfw)
+                    .Unapproved(Setting.IncludeUnapproved);
 
                 var result = await _client.SearchAnimeAsync(queryParams, ct);
                 var resultIds = result.Data.Select(static x => x.MalId);
@@ -85,7 +117,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
                         .ToHashSet());
 
                 var viewModels = result.Data
-                    .Select(response => new AnimeSearchResultViewModel(response, found.Contains(response.MalId)));
+                    .Select(response => new AnimeSearchResultViewModel(HostScreen, response, found.Contains(response.MalId)));
 
                 SearchResults.Clear();
                 SearchResults.AddRange(viewModels);
@@ -97,10 +129,5 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
         }
 
         IsBusy = false;
-    }
-
-    public void ToggleFilterMenu()
-    {
-        IsFilterPaneOpen = !IsFilterPaneOpen;
     }
 }

@@ -10,34 +10,33 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Aosta.Ava.Localization;
 
-public sealed class LocalizedData<T>() : ReactiveObject, ILocalized, IEquatable<LocalizedData<T>>
+public sealed class LocalizedData<T> : ReactiveObject, ILocalized, IEquatable<LocalizedData<T>>
 {
     /// <summary>
     /// The object associated with this localization.
     /// </summary>
     [NotNull]
-    public required T Data { get; init; }
+    public T Data { get; }
 
     /// <summary>
     /// The localization key used to update this object's translation at runtime.
     /// </summary>
-    public required string Key { get; init; }
+    public string Key { get; }
 
     /// <inheritdoc />
     [Reactive]
     public string Localized { get; private set; }
 
-    [SetsRequiredMembers]
-    public LocalizedData(T data, string key) : this()
+    public LocalizedData(T data, string key)
     {
+        ArgumentNullException.ThrowIfNull(data);
+
         Data = data;
         Key = key;
         Localized = Localizer.Instance[Key];
 
         Localizer.Instance.PropertyChanged += (_, _) => Localized = Localizer.Instance[Key];
     }
-
-    public override string ToString() => Localized;
 
     public bool Equals(LocalizedData<T>? other)
     {

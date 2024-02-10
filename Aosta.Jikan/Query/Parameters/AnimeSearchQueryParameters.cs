@@ -51,7 +51,8 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet, IFactory<Anime
 
     public AnimeSearchQueryParameters Type(AnimeTypeFilter type)
     {
-        Guard.IsValidEnum(type, nameof(System.Type));
+        if (type == AnimeTypeFilter.All) return this;
+        Guard.IsValidEnum(type, nameof(type));
         Add(QueryParameter.TYPE, type);
         return this;
     }
@@ -66,7 +67,7 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet, IFactory<Anime
 
     public AnimeSearchQueryParameters MinScore(double minScore)
     {
-        Guard.IsGreaterThanZero(minScore, nameof(minScore));
+        Guard.IsGreaterOrEqualToZero(minScore, nameof(minScore));
         Guard.IsLessOrEqualThan(minScore, 10, nameof(minScore));
         Add(QueryParameter.MIN_SCORE, minScore);
         return this;
@@ -82,6 +83,7 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet, IFactory<Anime
 
     public AnimeSearchQueryParameters Status(AiringStatusFilter status)
     {
+        if (status == AiringStatusFilter.All) return this;
         Guard.IsValidEnum(status, nameof(status));
         Add(QueryParameter.STATUS, status);
         return this;
@@ -89,6 +91,7 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet, IFactory<Anime
 
     public AnimeSearchQueryParameters Rating(AnimeAgeRatingFilter rating)
     {
+        if (rating == AnimeAgeRatingFilter.All) return this;
         Guard.IsValidEnum(rating, nameof(rating));
         Add(QueryParameter.RATING, rating);
         return this;

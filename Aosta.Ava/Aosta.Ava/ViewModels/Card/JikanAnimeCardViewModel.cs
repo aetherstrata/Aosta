@@ -5,7 +5,6 @@ using System;
 using System.Reactive;
 
 using Aosta.Ava.Localization;
-using Aosta.Ava.ViewModels.Contracts;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
@@ -19,8 +18,7 @@ public class JikanAnimeCardViewModel : ReactiveObject, IOnlineCard
         var detailsPage = new Lazy<JikanAnimeDetailsViewModel>(() => new JikanAnimeDetailsViewModel(host, response));
 
         BannerUrl = response.Images?.JPG?.ImageUrl ?? IOnlineCard.PORTRAIT_PLACEHOLDER;
-        GoToDetails = ReactiveCommand.CreateFromObservable(
-            () => host.Router.Navigate.Execute(detailsPage.Value));
+        GoToDetails = ReactiveCommand.CreateFromObservable(() => host.Router.Navigate.Execute(detailsPage.Value));
         Score = response.Score?.ToString("0.00") ?? LocalizedString.NA;
     }
 
