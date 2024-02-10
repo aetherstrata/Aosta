@@ -3,6 +3,8 @@ using Aosta.Ava.ViewModels;
 using Avalonia.Input;
 using Avalonia.ReactiveUI;
 
+using Serilog;
+
 namespace Aosta.Ava.Pages;
 
 public partial class SearchPage : ReactiveUserControl<SearchPageViewModel>
