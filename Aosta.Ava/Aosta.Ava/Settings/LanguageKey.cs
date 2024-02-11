@@ -9,6 +9,7 @@ using System.Linq;
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Data;
+using Aosta.Data.Extensions;
 
 using Splat;
 
@@ -18,7 +19,7 @@ public sealed record LanguageKey : ISetting<LanguageKey>
 {
     private const string setting_key = "AppLang";
 
-    private static readonly FrozenDictionary<string, LanguageKey> s_Lookup =
+    private static readonly FrozenDictionary<string, LanguageKey> lookup =
         Enum.GetValues<InterfaceLanguage>()
             .Select(lang => new LanguageKey(lang))
             .ToFrozenDictionary(x => x.Key);
@@ -44,7 +45,7 @@ public sealed record LanguageKey : ISetting<LanguageKey>
     /// Get all available language options.
     /// </summary>
     /// <returns>The immutable array of the keys.</returns>
-    public static ImmutableArray<LanguageKey> All() => s_Lookup.Values;
+    public static ImmutableArray<LanguageKey> All() => lookup.Values;
 
     private LanguageKey(InterfaceLanguage lang)
     {
@@ -52,13 +53,13 @@ public sealed record LanguageKey : ISetting<LanguageKey>
         Language = lang;
     }
 
-    public static LanguageKey? Load()
+    public static LanguageKey Load()
     {
         var realm = Locator.Current.GetSafely<RealmAccess>();
 
-        string? setting = realm.GetSetting<string>(setting_key);
+        string setting = realm.GetSetting<string>(setting_key, DEFAULT.Key);
 
-        return setting is null ? null : s_Lookup[setting];
+        return lookup[setting];
     }
 
     public void Save()

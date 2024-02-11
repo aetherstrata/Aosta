@@ -4,6 +4,7 @@
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Data;
+using Aosta.Data.Extensions;
 
 using Avalonia.Styling;
 
@@ -20,8 +21,6 @@ public sealed record ThemeKey : ISetting<ThemeKey>, ILocalizable<ThemeKey>
     /// </summary>
     public string Key { get; }
 
-    string ILocalizable<ThemeKey>.Key => Key;
-
     /// <summary>
     /// The Avalonia theme variant of this application theme.
     /// </summary>
@@ -33,24 +32,25 @@ public sealed record ThemeKey : ISetting<ThemeKey>, ILocalizable<ThemeKey>
         Theme = theme;
     }
 
-    public LocalizedData<ThemeKey> Localize() => new(this, Key);
+    ThemeKey ILocalizable<ThemeKey>.Data => this;
+
+    public LocalizedData<ThemeKey> Localize() => new(this);
 
     /// <summary>
-    /// Read the current value from Realm.
+    /// Read the current theme from Realm.
     /// </summary>
     /// <returns>The current theme stored on Realm.</returns>
-    public static ThemeKey? Load()
+    public static ThemeKey Load()
     {
         var realm = Locator.Current.GetSafely<RealmAccess>();
 
-        string? setting = realm.GetSetting<string>(setting_key);
+        string setting = realm.GetSetting<string>(setting_key, default_key);
 
         return setting switch
         {
             dark_key => DARK,
-            default_key => DEFAULT,
             light_key => LIGHT,
-            _ => null
+            _ => DEFAULT
         };
     }
 

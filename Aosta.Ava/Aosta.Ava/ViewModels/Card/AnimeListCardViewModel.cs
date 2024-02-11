@@ -3,12 +3,9 @@
 
 using System.Reactive;
 
-using Aosta.Ava.Extensions;
-using Aosta.Data;
+using Aosta.Ava.Localization;
 
 using ReactiveUI;
-
-using Splat;
 
 using Anime = Aosta.Data.Models.Anime;
 
@@ -17,18 +14,17 @@ namespace Aosta.Ava.ViewModels.Card;
 public class AnimeListCardViewModel : ReactiveObject, IOnlineCard
 {
     private readonly Anime _data;
-    private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
 
     public AnimeListCardViewModel(IScreen host, Anime data)
     {
         _data = data;
 
-        GoToDetails = ReactiveCommand.Create(() => _realm.Write(r => r.Remove(_data)));
+        GoToDetails = ReactiveCommand.CreateFromObservable(() => host.Router.Navigate.Execute(new LocalAnimeDetailsViewModel(host, _data)));
     }
 
-    public string Title => _data.DefaultTitle;
+    public string Title => _data.DefaultTitle ?? LocalizedString.NOT_AVAILABLE;
 
     public string BannerUrl => _data.Jikan?.Images?.JPG?.ImageUrl ?? IOnlineCard.PORTRAIT_PLACEHOLDER;
 
-    public ReactiveCommand<Unit,Unit> GoToDetails { get; }
+    public ReactiveCommand<Unit,IRoutableViewModel> GoToDetails { get; }
 }

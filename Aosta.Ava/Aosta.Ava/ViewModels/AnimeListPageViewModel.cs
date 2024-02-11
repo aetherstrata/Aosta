@@ -9,7 +9,6 @@ using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Ava.ViewModels.Card;
 using Aosta.Data;
-using Aosta.Data.Database.Models;
 
 using Avalonia.ReactiveUI;
 

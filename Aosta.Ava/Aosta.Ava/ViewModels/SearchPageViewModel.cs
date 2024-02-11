@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
@@ -9,7 +8,6 @@ using System.Threading.Tasks;
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Data;
-using Aosta.Data.Database.Models;
 using Aosta.Data.Extensions;
 using Aosta.Jikan;
 using Aosta.Jikan.Query.Enums;

@@ -5,6 +5,7 @@ using System;
 
 using Aosta.Ava.Extensions;
 using Aosta.Data;
+using Aosta.Data.Extensions;
 
 using Splat;
 

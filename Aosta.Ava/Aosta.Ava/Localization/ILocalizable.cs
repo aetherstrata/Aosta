@@ -7,5 +7,7 @@ public interface ILocalizable<T>
 {
     string Key { get; }
 
+    T Data { get; }
+
     LocalizedData<T> Localize();
 }

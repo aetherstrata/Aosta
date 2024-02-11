@@ -38,6 +38,10 @@ public sealed class LocalizedData<T> : ReactiveObject, ILocalized, IEquatable<Lo
         Localizer.Instance.PropertyChanged += (_, _) => Localized = Localizer.Instance[Key];
     }
 
+    public LocalizedData(ILocalizable<T> localizable) : this(localizable.Data, localizable.Key)
+    {
+    }
+
     public bool Equals(LocalizedData<T>? other)
     {
         if (ReferenceEquals(null, other)) return false;

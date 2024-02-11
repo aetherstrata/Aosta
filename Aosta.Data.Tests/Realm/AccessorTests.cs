@@ -1,12 +1,8 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using Aosta.Data.Database.Models;
 using Aosta.Data.Extensions;
-using Aosta.Data.Models.Embedded;
 using Aosta.Data.Models.Jikan;
-
-using Realms;
 
 using Anime = Aosta.Data.Models.Anime;
 

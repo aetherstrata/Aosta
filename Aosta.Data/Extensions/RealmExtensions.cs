@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
-using System.Text;
 
 using Aosta.Common.Extensions;
+using Aosta.Data.Database.Models;
 
 using Realms;
 
@@ -142,5 +142,65 @@ public static class RealmExtensions
         {
             transaction?.Dispose();
         }
+    }
+
+    /// <summary>
+    /// Get the setting value of the given key.
+    /// </summary>
+    /// <param name="realm">The realm accessor to perform the operation on.</param>
+    /// <param name="key">The setting key.</param>
+    /// <param name="fallback">The default value.</param>
+    /// <typeparam name="T">The type of the setting.</typeparam>
+    /// <returns>The setting value or <c>default(<typeparamref name="T">T</typeparamref>)</c> if not found.</returns>
+    /// <exception cref="InvalidCastException">The underlying <see cref="RealmValue"/> could not be cast to <typeparamref name="T"/>.</exception>
+    public static T GetSetting<T>(this RealmAccess realm, string key, T fallback)
+    {
+        realm.Log?.Debug("Getting setting value for {Key}", key);
+
+        return realm.Run(r =>
+        {
+            var setting = r.Find<Setting>(key);
+            return setting is null ? fallback : setting.Value.As<T>();
+        });
+    }
+
+    /// <summary>
+    /// Get the setting value of a given key.
+    /// </summary>
+    /// <param name="realm">The realm to perform the operation on.</param>
+    /// <param name="key">The setting key.</param>
+    /// <param name="fallback">The default value.</param>
+    /// <param name="field">The field to write the setting value onto.</param>
+    /// <typeparam name="T">The type of the setting.</typeparam>
+    /// <returns>The realm accessor for method chaining.</returns>
+    /// <exception cref="InvalidCastException">The <see cref="RealmValue"/> could not be cast to the given type.</exception>
+    public static RealmAccess GetSetting<T>(this RealmAccess realm, string key, T fallback, out T field)
+    {
+        field = realm.GetSetting(key, fallback);
+
+        return realm;
+    }
+
+    /// <summary>
+    /// Get the setting value of a given key.
+    /// </summary>
+    /// <param name="realm">The realm to perform the operation on.</param>
+    /// <param name="key">The setting key.</param>
+    /// <param name="value">The value to set.</param>
+    /// <returns>the realm accessor for method chaining.</returns>
+    public static RealmAccess SetSetting(this RealmAccess realm, string key, RealmValue value)
+    {
+        realm.Run(r =>
+        {
+            var setting = r.Find<Setting>(key);
+
+            if (setting is null) r.Write(() => r.Add(new Setting(key, value)));
+
+            else r.Write(() => setting.Value = value);
+        });
+
+        realm.Log?.Debug("Saved setting value for {Key} => {NewValue}", key, value);
+
+        return realm;
     }
 }

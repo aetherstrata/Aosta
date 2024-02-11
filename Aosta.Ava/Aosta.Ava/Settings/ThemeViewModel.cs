@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 using Aosta.Ava.Localization;
 using Aosta.Common.Extensions;
@@ -10,7 +9,6 @@ using Aosta.Common.Extensions;
 using Avalonia;
 
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 using Splat;
 

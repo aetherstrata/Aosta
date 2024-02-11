@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Settings;
 using Aosta.Ava.ViewModels.Card;
-using Aosta.Data;
 using Aosta.Jikan;
 using Aosta.Jikan.Query.Parameters;
 

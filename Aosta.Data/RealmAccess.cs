@@ -20,14 +20,15 @@ namespace Aosta.Data;
 /// </remarks>
 public sealed class RealmAccess : IEquatable<RealmAccess>
 {
-    private readonly ILogger? _log;
     private readonly RealmConfigurationBase _config;
+
+    internal ILogger? Log { get; }
 
     public RealmAccess(string realmPath, ILogger? log = null)
     {
-        _log = log;
+        Log = log;
 
-        _log?.Information("Initializing Realm at {Path}", realmPath);
+        Log?.Information("Initializing Realm at {Path}", realmPath);
 
         _config = new RealmConfiguration(realmPath)
         {
@@ -54,7 +55,7 @@ public sealed class RealmAccess : IEquatable<RealmAccess>
 
         T res = action(realm);
 
-        _log?.Debug("Performed an action on the database. Returning its output");
+        Log?.Debug("Performed an action on the database. Returning its output");
 
         return res;
     }
@@ -69,7 +70,7 @@ public sealed class RealmAccess : IEquatable<RealmAccess>
 
         action(realm);
 
-        _log?.Debug("Performed an action on the database");
+        Log?.Debug("Performed an action on the database");
     }
 
     /// <summary>
@@ -82,7 +83,7 @@ public sealed class RealmAccess : IEquatable<RealmAccess>
 
         realm.Write(action);
 
-        _log?.Debug("Performed a write operation on the database");
+        Log?.Debug("Performed a write operation on the database");
     }
 
     /// <summary>
@@ -95,7 +96,7 @@ public sealed class RealmAccess : IEquatable<RealmAccess>
 
         T res = realm.Write(func);
 
-        _log?.Debug("Performed a write operation on the database. Returning its output");
+        Log?.Debug("Performed a write operation on the database. Returning its output");
 
         return res;
     }
@@ -122,7 +123,7 @@ public sealed class RealmAccess : IEquatable<RealmAccess>
                 await realm.WriteAsync(() => action(realm), ct)
                     .ConfigureAwait(false);
 
-            _log?.Debug("Performed an async write to the database. Emitting signal...");
+            Log?.Debug("Performed an async write to the database. Emitting signal...");
 
             _pendingAsyncWrites.Signal();
         }, ct);
