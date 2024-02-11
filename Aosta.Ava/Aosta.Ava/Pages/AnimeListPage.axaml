@@ -23,7 +23,6 @@
         <ListBox Grid.Row="1"
                  Grid.Column="0"
                  Grid.ColumnSpan="2"
-                 Name="AnimeListBox"
                  ItemsSource="{Binding AnimeList}"
                  ItemTemplate="{StaticResource RealmAnimeCard}">
             <ListBox.ItemsPanel>
