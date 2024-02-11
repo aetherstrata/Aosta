@@ -57,7 +57,7 @@ public sealed record LanguageKey : ISetting<LanguageKey>
     {
         var realm = Locator.Current.GetSafely<RealmAccess>();
 
-        string setting = realm.GetSetting<string>(setting_key, DEFAULT.Key);
+        string setting = realm.GetSetting(setting_key, DEFAULT.Key);
 
         return lookup[setting];
     }

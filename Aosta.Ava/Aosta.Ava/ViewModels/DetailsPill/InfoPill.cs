@@ -14,10 +14,34 @@ using ReactiveUI.Fody.Helpers;
 
 using Anime = Aosta.Data.Models.Anime;
 
-namespace Aosta.Ava.ViewModels.Details;
+namespace Aosta.Ava.ViewModels.DetailsPill;
 
 public class InfoPill : ReactiveObject, IContentInfoPill
 {
+    public static IContentInfoPill Create(AnimeResponse response)
+    {
+        return response.Type switch
+        {
+            AnimeType.TV => new AnimePill(response),
+            AnimeType.Movie => new InfoPill(response),
+            null => throw new ArgumentNullException(nameof(response),
+                "Anime response did not have a valid content type"),
+            _ => new EpisodesPill(response),
+        };
+    }
+
+    public static IContentInfoPill Create(Anime model)
+    {
+        return model.Type switch
+        {
+            ContentType.TV => new AnimePill(model),
+            ContentType.Movie => new InfoPill(model),
+            null => throw new ArgumentNullException(nameof(model),
+                "Anime response did not have a valid content type"),
+            _ => new EpisodesPill(model),
+        };
+    }
+
     [Reactive]
     public string Score { get; set; }
 
@@ -26,14 +50,14 @@ public class InfoPill : ReactiveObject, IContentInfoPill
 
     public LocalizedString Type { get; set; }
 
-    protected InfoPill(AnimeResponse response)
+    public InfoPill(AnimeResponse response)
     {
         Score = response.Score?.ToString("0.00") ?? LocalizedString.NA;
         Year = response.Year?.ToString() ?? LocalizedString.NA;
         Type = response.Type.Localize();
     }
 
-    protected InfoPill(Anime model)
+    public InfoPill(Anime model)
     {
         Score = model.UserScore?.ToString() ?? (model.Jikan?.Score != null
             ? $"{model.Jikan?.Score?.ToString("0.00")} ({Localizer.Instance["Label.Online"]})"
@@ -41,24 +65,5 @@ public class InfoPill : ReactiveObject, IContentInfoPill
         Year = model.Year?.ToString() ?? LocalizedString.NA;
         Type = model.Type.Localize();
     }
-
-    public static IContentInfoPill Create(AnimeResponse response)
-    {
-        return response.Type switch
-        {
-            AnimeType.TV => new AnimeSeasonInfoPill(response),
-            null => throw new ArgumentOutOfRangeException(nameof(response), response, "Anime response did not have a valid content type"),
-            _  => new InfoPill(response),
-        };
-    }
-
-    public static IContentInfoPill Create(Anime model)
-    {
-        return model.Type switch
-        {
-            ContentType.TV => new AnimeSeasonInfoPill(model),
-            null => throw new ArgumentOutOfRangeException(nameof(model), model, "Anime response did not have a valid content type"),
-            _  => new InfoPill(model),
-        };
-    }
 }
+

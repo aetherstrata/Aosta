@@ -24,7 +24,7 @@ public class SettingsViewModel : ReactiveObject, IRoutableViewModel
 
     internal LanguageViewModel LanguageManager { get; } = new();
 
-    public LocalizedString AppVersion { get; set; } = new("App.Version", App.Version);
+    public LocalizedString AppVersion { get; set; } = new("App.Version", App.VERSION);
 
     private bool _includeNsfw = Setting.IncludeNsfw;
     public bool IncludeNsfw

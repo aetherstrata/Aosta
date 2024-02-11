@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Aosta.Ava.Controls"
+             xmlns:vm="clr-namespace:Aosta.Ava.ViewModels"
+             xmlns:localize="clr-namespace:Aosta.Ava.Localization"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Aosta.Ava.Pages.JikanEpisodeDetailsPage"
+             x:DataType="vm:JikanEpisodeDetailsViewModel">
+    <Grid RowDefinitions="Auto,*">
+        <controls:TitleBar Grid.Row="0"
+                           IsBackEnabled="True"
+                           Title="{Binding PageTitle}" />
+        <ScrollViewer Grid.Row="1"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Hidden">
+            <StackPanel Spacing="5">
+                <TextBlock Text="{Binding Title}"
+                           FontSize="24"
+                           FontWeight="Bold"/>
+                <TextBlock Text="{localize:Localize Label.Synopsis}"
+                           IsVisible="{Binding HasSynopsis}"
+                           FontSize="18"
+                           FontWeight="Bold"/>
+                <TextBlock Text="{Binding Synopsis}"
+                           IsVisible="{Binding HasSynopsis}"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

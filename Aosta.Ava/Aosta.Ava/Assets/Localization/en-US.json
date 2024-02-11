@@ -1,8 +1,6 @@
 {
   "App.Version": "Version {0}",
 
-  "AnimeDetails.EpisodesList.Header": "Episodes",
-  "AnimeDetails.Synopsis.Header": "Synopsis",
   "AnimeDetails.ToolTip.AddToRealm": "Add this anime to your watchlist",
   "AnimeList.Header.NoAnime" : "The list is empty",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
@@ -31,12 +29,16 @@
 
   "Label.All": "All",
   "Label.ContentType": "Type",
+  "Label.Episode.Number": "Episode #{0}",
+  "Label.Episodes": "Episodes",
   "Label.LoadMore": "Load more",
   "Label.LocalizationLookupError": "Localization not found for {0}",
   "Label.NotAvailable.Long" : "Not available",
   "Label.NotAvailable.Short" : "N/A",
-  "Label.Season": "Season",
+  "Label.Online": "Online",
   "Label.Score": "Score",
+  "Label.Season": "Season",
+  "Label.Synopsis": "Synopsis",
   "Label.Year": "Year",
 
   "Enum.AiringStatus.Airing": "Airing",
@@ -50,7 +52,7 @@
   "Enum.AnimeAgeRatingFilter.R": "Mature",
   "Enum.AnimeAgeRatingFilter.RX": "Hentai",
 
-  "Enum.AnimeType.TvAnime": "TV",
+  "Enum.AnimeType.TV": "TV",
   "Enum.AnimeType.TvSpecial": "TV Special",
   "Enum.AnimeType.OVA" : "OVA",
   "Enum.AnimeType.Movie": "Movie",

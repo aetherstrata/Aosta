@@ -20,7 +20,8 @@
 
     <Application.DataTemplates>
         <StaticResource ResourceKey="Localizable"/>
-        <StaticResource ResourceKey="SeasonInfoPill"/>
+        <StaticResource ResourceKey="AnimeInfoPill"/>
+        <StaticResource ResourceKey="EpisodeCountInfoPill"/>
         <StaticResource ResourceKey="InfoPill"/>
         <local:ViewLocator />
     </Application.DataTemplates>

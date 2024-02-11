@@ -31,10 +31,8 @@ internal class JsonNullableEnumMemberConverter<TEnum> : JsonConverter<TEnum?> wh
             throw new SerializationException(
                 $"The value \"{stringValue}\" could not be deserialized to a member of {typeof(TEnum)}");
         }
-        if (type == JsonTokenType.Null)
-        {
-            return null;
-        }
+
+        if (type == JsonTokenType.Null) return null;
 
         throw new SerializationException(
             $"Tried to deserialize a {type} JSON field to {typeof(TEnum)} using {nameof(JsonEnumMemberConverter<TEnum>)}");

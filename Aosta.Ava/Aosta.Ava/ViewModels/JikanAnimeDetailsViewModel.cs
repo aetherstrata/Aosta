@@ -3,17 +3,19 @@
 
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
-using Aosta.Ava.ViewModels.Details;
+using Aosta.Ava.ViewModels.DetailsPill;
 using Aosta.Data;
 using Aosta.Data.Extensions;
 using Aosta.Data.Mapper;
 using Aosta.Data.Models;
 using Aosta.Jikan;
+using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Response;
 
 using DynamicData;
@@ -48,7 +50,10 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
         HostScreen = hostScreen;
         DetailsPill = InfoPill.Create(response);
 
-        _ = UpdateEpisodesList();
+        if (HasEpisodes)
+        {
+            Observable.Start(() => UpdateEpisodesList());
+        }
     }
 
     public IContentInfoPill DetailsPill { get; }
@@ -59,7 +64,9 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
 
     internal string Title => _response.Titles.GetDefault() ?? LocalizedString.NA;
 
-    internal ObservableCollection<AnimeEpisodeResponse> Episodes { get; } = [];
+    internal bool HasEpisodes => _response.Type != AnimeType.Movie && _response.Episodes > 0;
+
+    internal ObservableCollection<JikanEpisodeEntry> Episodes { get; } = [];
 
     [Reactive]
     internal bool IsLoadEpisodesButtonVisible { get; set; }
@@ -81,17 +88,23 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
     }
 
     private int _page;
-    internal async Task UpdateEpisodesList(CancellationToken ct = default)
+    internal Task UpdateEpisodesList(CancellationToken ct = default)
     {
-        _page++;
+        Interlocked.Increment(ref _page);
 
-        this.Log().Debug<JikanAnimeDetailsViewModel>("Getting episodes page {Page} for anime {Id}",
-            _page, _response.MalId);
+        this.Log().Debug<JikanAnimeDetailsViewModel>("Getting episodes page {Page} for anime {Name} [{Id}]",
+            _page, _response.Titles.GetDefault()!, _response.MalId);
 
-        var result = await _jikan.GetAnimeEpisodesAsync(_response.MalId, _page, ct);
+        return _jikan.GetAnimeEpisodesAsync(_response.MalId, _page, ct).ContinueWith(task =>
+        {
+            var entries = task.Result.Data.Select(x => new JikanEpisodeEntry(HostScreen, x, _response.MalId));
 
-        Episodes.AddRange(result.Data);
+            Episodes.AddRange(entries);
 
-        if (result.Pagination.HasNextPage) IsLoadEpisodesButtonVisible = true;
+            if (task.Result.Pagination.HasNextPage)
+            {
+                IsLoadEpisodesButtonVisible = true;
+            }
+        }, ct);
     }
 }

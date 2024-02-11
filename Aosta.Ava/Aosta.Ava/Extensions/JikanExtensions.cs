@@ -5,6 +5,7 @@ using System;
 
 using Aosta.Ava.Localization;
 using Aosta.Jikan.Enums;
+using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Ava.Extensions;
@@ -13,8 +14,8 @@ public static class JikanExtensions
 {
     public static LocalizedString Localize(this AnimeType e) => e switch
     {
-        AnimeType.TV => new LocalizedString("Enum.AnimeType.TvAnime"),
-        AnimeType.TVSpecial => new LocalizedString("Enum.AnimeType.TvSpecial"),
+        AnimeType.TV => new LocalizedString("Enum.AnimeType.TV"),
+        AnimeType.TVSpecial => new LocalizedString("Enum.AnimeType.TVSpecial"),
         AnimeType.OVA => new LocalizedString("Enum.AnimeType.OVA"),
         AnimeType.Movie => new LocalizedString("Enum.AnimeType.Movie"),
         AnimeType.Special => new LocalizedString("Enum.AnimeType.Special"),
@@ -49,8 +50,8 @@ public static class JikanExtensions
     public static LocalizedData<AnimeTypeFilter> LocalizeWithData(this AnimeTypeFilter filter) => filter switch
     {
         AnimeTypeFilter.All => new LocalizedData<AnimeTypeFilter>(filter, "Label.All"),
-        AnimeTypeFilter.TV => new LocalizedData<AnimeTypeFilter>(filter, "Enum.AnimeType.TvAnime"),
-        AnimeTypeFilter.TVSpecial => new LocalizedData<AnimeTypeFilter>(filter, "Enum.AnimeType.TvSpecial"),
+        AnimeTypeFilter.TV => new LocalizedData<AnimeTypeFilter>(filter, "Enum.AnimeType.TV"),
+        AnimeTypeFilter.TVSpecial => new LocalizedData<AnimeTypeFilter>(filter, "Enum.AnimeType.TVSpecial"),
         AnimeTypeFilter.OVA => new LocalizedData<AnimeTypeFilter>(filter, "Enum.AnimeType.OVA"),
         AnimeTypeFilter.Movie => new LocalizedData<AnimeTypeFilter>(filter, "Enum.AnimeType.Movie"),
         AnimeTypeFilter.Special => new LocalizedData<AnimeTypeFilter>(filter, "Enum.AnimeType.Special"),
@@ -83,4 +84,9 @@ public static class JikanExtensions
         AnimeAgeRatingFilter.RX => new LocalizedData<AnimeAgeRatingFilter>(filter, "Enum.AnimeAgeRatingFilter.RX"),
         _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, null)
     };
+
+    public static LocalizedString LocalizeEpisodeNumber(this AnimeEpisodeResponse response)
+    {
+        return new LocalizedString("Label.Episode.Number", response.MalId);
+    }
 }

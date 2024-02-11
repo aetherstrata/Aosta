@@ -7,18 +7,18 @@ using Aosta.Jikan.Models.Response;
 
 using Anime = Aosta.Data.Models.Anime;
 
-namespace Aosta.Ava.ViewModels.Details;
+namespace Aosta.Ava.ViewModels.DetailsPill;
 
-public class AnimeSeasonInfoPill : InfoPill
+public class AnimePill : EpisodesPill
 {
     public LocalizedString Season { get; set; }
 
-    public AnimeSeasonInfoPill(AnimeResponse response) : base(response)
+    public AnimePill(AnimeResponse response) : base(response)
     {
         Season = response.Season.Localize();
     }
 
-    public AnimeSeasonInfoPill(Anime model) : base(model)
+    public AnimePill(Anime model) : base(model)
     {
         Season = model.Season.Localize();
     }

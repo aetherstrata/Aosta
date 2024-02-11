@@ -38,7 +38,7 @@ public partial class App : Application
 {
     private ILogger _logger = null!;
 
-    public const string Version = "0.0.1";
+    public const string VERSION = "0.0.1";
 
     public override void Initialize()
     {
@@ -57,11 +57,11 @@ public partial class App : Application
                 .Build())
             .RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
 
-        var language = LanguageKey.Load().OrDefault(LanguageKey.DEFAULT).Language;
+        var language = LanguageKey.Load().Language;
         Localizer.Instance.Language = language;
         _logger.Information("Loaded language {LanguageCode}", language.GetLanguageCode());
 
-        var themeKey = ThemeKey.Load().OrDefault(ThemeKey.DEFAULT);
+        var themeKey = ThemeKey.Load();
         RequestedThemeVariant = themeKey.Theme;
         _logger.Information("Loaded theme {Variant}", themeKey.Key);
 

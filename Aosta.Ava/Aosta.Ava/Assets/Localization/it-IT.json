@@ -1,8 +1,6 @@
 {
   "App.Version": "Versione {0}",
 
-  "AnimeDetails.EpisodesList.Header": "Episodi",
-  "AnimeDetails.Synopsis.Header": "Sinossi",
   "AnimeDetails.ToolTip.AddToRealm": "Aggiungi questo anime alla tua lista",
   "AnimeList.Header.NoAnime" : "La lista è vuota",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
@@ -30,12 +28,16 @@
 
   "Label.All": "Tutti",
   "Label.ContentType": "Tipo",
+  "Label.Episode.Number": "Episodio n.{0}",
+  "Label.Episodes": "Episodi",
   "Label.LoadMore": "Carica altro",
   "Label.LocalizationLookupError": "Localizzazione non trovata per {0}",
   "Label.NotAvailable.Long" : "Non disponibile",
   "Label.NotAvailable.Short" : "N/D",
-  "Label.Season": "Stagione",
+  "Label.Online": "Online",
   "Label.Score": "Voto",
+  "Label.Season": "Stagione",
+  "Label.Synopsis": "Sinossi",
   "Label.Year": "Anno",
 
   "Enum.AnimeAgeRatingFilter.G": "Adatto a tutti",
@@ -49,7 +51,7 @@
   "Enum.AiringStatus.Complete": "Completato",
   "Enum.AiringStatus.Upcoming": "In arrivo",
 
-  "Enum.AnimeType.TvAnime": "TV",
+  "Enum.AnimeType.TV": "TV",
   "Enum.AnimeType.TvSpecial": "Speciale TV",
   "Enum.AnimeType.OVA" : "OVA",
   "Enum.AnimeType.Movie": "Film",
