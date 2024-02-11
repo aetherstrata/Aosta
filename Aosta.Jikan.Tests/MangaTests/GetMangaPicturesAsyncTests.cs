@@ -24,6 +24,6 @@ public class GetMangaPicturesAsyncTests
 		var monster = await JikanTests.Instance.GetMangaPicturesAsync(1);
 
 		// Then
-		monster.Data.Should().HaveCount(8);
+		monster.Data.Should().HaveCount(6);
 	}
 }

@@ -101,7 +101,7 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet, IFactory<Anime
     {
         Guard.IsNotNull(genres, nameof(genres));
         if (genres.Count == 0) return this;
-        Guard.IsValid(static list => list.Any(static id => id <= 0),
+        Guard.IsValid(static list => list.All(static id => id > 0),
             genres, nameof(genres),
             "All genre IDs must be greater than 0.");
         Add(QueryParameter.GENRES, string.Join(",", genres.Select(static id => id.ToString())));
@@ -112,7 +112,7 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet, IFactory<Anime
     {
         Guard.IsNotNull(excludedGenres, nameof(excludedGenres));
         if (excludedGenres.Count == 0) return this;
-        Guard.IsValid(static list => list.Any(static id => id <= 0),
+        Guard.IsValid(static list => list.All(static id => id > 0),
             excludedGenres, nameof(excludedGenres),
             "All genre IDs must be greater than 0.");
         Add(QueryParameter.EXCLUDED_GENRES, string.Join(",", excludedGenres.Select(static id => id.ToString())));
@@ -137,7 +137,7 @@ public class AnimeSearchQueryParameters : JikanQueryParameterSet, IFactory<Anime
     {
         Guard.IsNotNull(producers, nameof(producers));
         if (producers.Count == 0) return this;
-        Guard.IsValid(static list => list.Any(static id => id <= 0),
+        Guard.IsValid(static list => list.All(static id => id > 0),
             producers, nameof(producers),
             "All producer IDs must be greater than 0.");
         Add(QueryParameter.PRODUCERS, string.Join(",", producers.Select(static id => id.ToString())));

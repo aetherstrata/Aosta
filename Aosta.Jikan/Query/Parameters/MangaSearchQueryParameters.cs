@@ -37,8 +37,6 @@ public class MangaSearchQueryParameters : JikanQueryParameterSet, IFactory<Manga
 
     public MangaSearchQueryParameters SafeForWork(bool sfw)
     {
-        //TODO: Seems like jikan changed how they handle sfw.
-        //INFO: https://github.com/jikan-me/jikan-rest/issues/486
         Add(QueryParameter.SAFE_FOR_WORK, sfw.ToStringLower());
         return this;
     }
@@ -115,9 +113,9 @@ public class MangaSearchQueryParameters : JikanQueryParameterSet, IFactory<Manga
     {
         Guard.IsNotNull(genreIds, nameof(genreIds));
         if (genreIds.Count == 0) return this; // Do not add the parameter if there are no ids in the collection
-        Guard.IsValid(static list => list.Any(static id => id <= 0),
+        Guard.IsValid(static list => list.All(static id => id is > 0 and < 100),
             genreIds, nameof(genreIds),
-            "All genre IDs must be greater than 0.");
+            "All genre IDs must be valid.");
         Add(QueryParameter.GENRES, string.Join(",", genreIds.Select(static id => id.ToString())));
         return this;
     }
@@ -126,9 +124,9 @@ public class MangaSearchQueryParameters : JikanQueryParameterSet, IFactory<Manga
     {
         Guard.IsNotNull(genreIds, nameof(genreIds));
         if (genreIds.Count == 0) return this; // Do not add the parameter if there are no ids in the collection
-        Guard.IsValid(static list => list.Any(static id => id <= 0),
+        Guard.IsValid(static list => list.All(static id => id is > 0 and < 100),
             genreIds, nameof(genreIds),
-            "All genre IDs must be greater than 0.");
+            "All genre IDs must be valid.");
         Add(QueryParameter.EXCLUDED_GENRES, string.Join(",", genreIds.Select(static id => id.ToString())));
         return this;
     }

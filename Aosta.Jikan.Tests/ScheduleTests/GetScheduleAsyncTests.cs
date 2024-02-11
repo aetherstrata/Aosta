@@ -66,12 +66,12 @@ public class GetScheduleAsyncTests
 		var currentSeason = await JikanTests.Instance.GetScheduleAsync(ScheduledDayFilter.Monday);
 
 		// Then
-		var mondayScheduleTitles = currentSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
+		var mondayScheduleTitles = currentSeason.Data.Select(x => x.Titles.GetDefault());
 		using (new AssertionScope())
 		{
 			currentSeason.Pagination.HasNextPage.Should().BeFalse();
 			currentSeason.Pagination.LastVisiblePage.Should().Be(1);
-			mondayScheduleTitles.Should().Contain("Golden Kamuy 4th Season");
+			mondayScheduleTitles.Should().Contain("Tsuki ga Michibiku Isekai Douchuu 2nd Season");
 		}
 	}
 
@@ -82,13 +82,12 @@ public class GetScheduleAsyncTests
 		var currentSeason = await JikanTests.Instance.GetScheduleAsync(ScheduledDayFilter.Friday);
 
 		// Then
-		var fridayScheduleTitles = currentSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title);
-		using (new AssertionScope())
-		{
-			fridayScheduleTitles.Should().Contain("Doraemon (2005)");
-			fridayScheduleTitles.Should().Contain("Pokemon (2019)");
-		}
-	}
+		var fridayScheduleTitles = currentSeason.Data.Select(x => x.Titles.GetDefault());
+
+        using var _ = new AssertionScope();
+        fridayScheduleTitles.Should().Contain("Doraemon (2005)");
+        fridayScheduleTitles.Should().Contain("Pokemon (2023)");
+    }
 
 	[Test]
 	[TestCase((ScheduledDayFilter)int.MaxValue)]

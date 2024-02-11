@@ -19,9 +19,9 @@ public class GetCurrentSeasonAsyncTests
 		currentSeason.Pagination.CurrentPage.Should().Be(1);
 		currentSeason.Pagination.Items.Count.Should().Be(25);
 		currentSeason.Pagination.Items.Total.Should().BeGreaterThan(30);
-		currentSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title).Should().Contain("Bleach: Sennen Kessen-hen");
+		currentSeason.Data.Select(x => x.Titles.GetDefault()).Should().Contain("Metallic Rouge");
 	}
-		
+
 	[Test]
 	[TestCase(int.MinValue)]
 	[TestCase(-1)]
@@ -34,7 +34,7 @@ public class GetCurrentSeasonAsyncTests
 		// Then
 		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
 	}
-		
+
 	[Test]
 	public async Task WithTooBigPage_ShouldParseAndReturnNothing()
 	{
@@ -44,7 +44,7 @@ public class GetCurrentSeasonAsyncTests
 		// Then
 		upcomingSeason.Data.Should().BeEmpty();
 	}
-		
+
 	[Test]
 	public async Task WithCorrectPage_ShouldParseCurrentSeason()
 	{
@@ -58,6 +58,6 @@ public class GetCurrentSeasonAsyncTests
 		currentSeason.Pagination.CurrentPage.Should().Be(1);
 		currentSeason.Pagination.Items.Count.Should().Be(25);
 		currentSeason.Pagination.Items.Total.Should().BeGreaterThan(3);
-		currentSeason.Data.Select(x => x.Titles.First(x => x.Type.Equals("Default")).Title).Should().Contain("Bleach: Sennen Kessen-hen");
+		currentSeason.Data.Select(x => x.Titles.GetDefault()).Should().Contain("Metallic Rouge");
 	}
 }

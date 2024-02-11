@@ -14,7 +14,9 @@ public class InvalidEnumException<T> : ArgumentException where T : struct, Enum
         Enum = parameter;
     }
 
-    public static InvalidEnumException<T> EnumMember(T e, string argumentName) => new(e, ErrorMessages.FailedEnumMemberLookup(e), argumentName);
+    public static InvalidEnumException<T> EnumMember(T e, string argumentName) =>
+        new(e, ErrorMessages.FailedEnumMemberLookup(e), argumentName);
 
-    public static InvalidEnumException<T> EnumToString(T e, string argumentName) => new(e, ErrorMessages.FailedEnumToStringConversion(e), argumentName);
+    public static InvalidEnumException<T> EnumToString(T e, string argumentName) =>
+        new(e, ErrorMessages.FailedEnumToStringConversion(e), argumentName);
 }

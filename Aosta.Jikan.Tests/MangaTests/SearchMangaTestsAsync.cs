@@ -12,16 +12,16 @@ public class SearchMangaAsyncTests
 	[TestCase(int.MinValue)]
 	[TestCase(-1)]
 	[TestCase(0)]
-	public async Task InvalidPage_ShouldThrowValidationException(int page)
+	public void InvalidPage_ShouldThrowValidationException(int page)
 	{
 		// Given
-		var config = MangaSearchQueryParameters.Create().Page(page);
+		var config = MangaSearchQueryParameters.Create();
 
 		// When
-		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(config));
+		var func = config.Invoking(x => x.Page(page));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
+		func.Should().ThrowExactly<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -30,16 +30,16 @@ public class SearchMangaAsyncTests
 	[TestCase(0)]
 	[TestCase(26)]
 	[TestCase(int.MaxValue)]
-	public async Task InvalidPageSize_ShouldThrowValidationException(int pageSize)
+	public void InvalidPageSize_ShouldThrowValidationException(int pageSize)
 	{
 		// Given
-		var config = MangaSearchQueryParameters.Create().Limit(pageSize);
+		var config = MangaSearchQueryParameters.Create();
 
 		// When
-		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(config));
+		var func = config.Invoking(x => x.Limit(pageSize));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
+		func.Should().ThrowExactly<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -160,18 +160,17 @@ public class SearchMangaAsyncTests
 	[TestCase(int.MinValue)]
 	[TestCase(-1)]
 	[TestCase(0)]
-	public async Task YotsubaQueryInvalidPage_ShouldThrowValidationException(int page)
+	public void YotsubaQueryInvalidPage_ShouldThrowValidationException(int page)
 	{
 		// Given
-		var searchConfig = MangaSearchQueryParameters.Create()
-			.Query("yotsuba")
-			.Page(page);
+		var searchConfig = MangaSearchQueryParameters.Create().Query("yotsuba");
+
 
 		// When
-		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(searchConfig));
+		var func = searchConfig.Invoking(x => x.Page(page));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
+		func.Should().ThrowExactly<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -187,7 +186,7 @@ public class SearchMangaAsyncTests
 
 		// Then
 		using var _ = new AssertionScope();
-		returnedAnime.Data.Select(x => x.Title).Should().Contain("Misty Girl");
+		returnedAnime.Data.Select(x => x.Title).Should().Contain("School Girl");
 		returnedAnime.Pagination.LastVisiblePage.Should().BeGreaterThan(15);
 	}
 
@@ -247,7 +246,7 @@ public class SearchMangaAsyncTests
 		var searchConfig = MangaSearchQueryParameters.Create()
 			.Query("metal")
 			.Type(MangaTypeFilter.Manga)
-			.Genres(new long[] {11});
+			.Genres([2, 30]);
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -283,7 +282,7 @@ public class SearchMangaAsyncTests
 	{
 		// Given
 		var searchConfig = MangaSearchQueryParameters.Create()
-			.Query("one")
+			.Query("one piece")
 			.Order(MangaSearchOrderBy.MalId)
 			.SortDirection(SortDirection.Ascending);
 
@@ -324,7 +323,7 @@ public class SearchMangaAsyncTests
 	[TestCase(null, null, MangaSearchOrderBy.Chapters, (SortDirection)int.MinValue, null)]
 	[TestCase(null, null, null, null, int.MaxValue)]
 	[TestCase(null, null, null, null, int.MinValue)]
-	public async Task EmptyQueryWithConfigWithInvalidEnums_ShouldThrowValidationException(
+	public void EmptyQueryWithConfigWithInvalidEnums_ShouldThrowValidationException(
 		PublishingStatusFilter? airingStatus,
 		MangaTypeFilter? mangaType,
 		MangaSearchOrderBy? orderBy,
@@ -333,18 +332,18 @@ public class SearchMangaAsyncTests
 	)
 	{
 		// Given
-		var searchConfig = MangaSearchQueryParameters.Create()
-			.Status(airingStatus.GetValueOrDefault())
-			.Type(mangaType.GetValueOrDefault())
-			.Order(orderBy.GetValueOrDefault())
-			.SortDirection(sortDirection.GetValueOrDefault())
-			.Genres(genreId.HasValue ? [genreId.Value] : Array.Empty<long>());
+		var searchConfig = MangaSearchQueryParameters.Create();
 
 		// When
-		var func = JikanTests.Instance.Awaiting(x => x.SearchMangaAsync(searchConfig));
+		var func = searchConfig.Invoking(x => x
+            .Status(airingStatus.GetValueOrDefault())
+            .Type(mangaType.GetValueOrDefault())
+            .Order(orderBy.GetValueOrDefault())
+            .SortDirection(sortDirection.GetValueOrDefault())
+            .Genres(genreId.HasValue ? [genreId.Value] : Array.Empty<long>()));
 
 		// Then
-		await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
+		func.Should().ThrowExactly<JikanParameterValidationException>();
 	}
 
 	[Test]
@@ -352,7 +351,7 @@ public class SearchMangaAsyncTests
 	{
 		// Given
 		var searchConfig = MangaSearchQueryParameters.Create()
-			.Genres(new long[] { 1 });
+			.Genres([1]);
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -370,7 +369,7 @@ public class SearchMangaAsyncTests
 		// Given
 		var searchConfig = MangaSearchQueryParameters.Create()
 			.Page(1)
-			.Genres(new long[] { 1 });
+			.Genres([1]);
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -387,8 +386,8 @@ public class SearchMangaAsyncTests
 	{
 		// Given
 		var searchConfig = MangaSearchQueryParameters.Create()
-			.Page(2)
-			.Genres(new long[] { 1 });
+			.Page(1)
+			.Genres([1]);
 
 		// When
 		var returnedManga = await JikanTests.Instance.SearchMangaAsync(searchConfig);
@@ -397,7 +396,7 @@ public class SearchMangaAsyncTests
 		var titles = returnedManga.Data.Select(x => x.Title);
 		using var _ = new AssertionScope();
 		titles.Should().Contain("Yuu☆Yuu☆Hakusho");
-		titles.Should().Contain("Air Gear");
+		titles.Should().Contain("Hunter x Hunter");
 	}
 
 	[Test]

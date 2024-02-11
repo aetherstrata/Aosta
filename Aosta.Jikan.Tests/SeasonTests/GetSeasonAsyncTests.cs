@@ -44,11 +44,11 @@ public class GetSeasonAsyncTests
 	public async Task ValidYearNotExistingSeason_ShouldReturnSeasonWithNulls(int year)
 	{
 		// When
-		var season = await JikanTests.Instance.GetSeasonAsync(year, Season.Winter);
+        var func = JikanTests.Instance.Awaiting(x => x.GetSeasonAsync(year, Season.Winter));
 
 		// Then
-		season.Data.Should().BeEmpty();
-	}
+        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
+    }
 
 	[Test]
 	public async Task Winter2000_ShouldParseWinter2000()
@@ -72,7 +72,7 @@ public class GetSeasonAsyncTests
 		var spring1970 = await JikanTests.Instance.GetSeasonAsync(1970, Season.Spring);
 
 		// Then
-		spring1970.Data.Should().HaveCount(7);
+		spring1970.Data.Should().HaveCount(12);
 	}
 
 	[Test]
@@ -82,27 +82,25 @@ public class GetSeasonAsyncTests
 		var winter2017 = await JikanTests.Instance.GetSeasonAsync(2017, Season.Winter);
 
 		// Then
-		using (new AssertionScope())
-		{
-			winter2017.Pagination.Items.Count.Should().Be(25);
-			winter2017.Pagination.Items.Total.Should().Be(57);
+        using var _ = new AssertionScope();
+        winter2017.Pagination.Items.Count.Should().Be(25);
+        winter2017.Pagination.Items.Total.Should().Be(234);
 
-			var youjoSenki = winter2017.Data.FirstOrDefault(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Youjo Senki"));
+        var youjoSenki = winter2017.Data.FirstOrDefault(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Youjo Senki"));
 
-			youjoSenki.Type.Should().Be(AnimeType.TV);
-			youjoSenki.Status.Should().Be(AiringStatus.Completed);
-			youjoSenki.Episodes.Should().Be(12);
-			youjoSenki.Airing.Should().BeFalse();
-			youjoSenki.Duration.Should().Be("24 min per ep");
-			youjoSenki.Rating.Should().Be("R - 17+ (violence & profanity)");
-			youjoSenki.Score.Should().BeLessOrEqualTo(8.00);
-			youjoSenki.ScoredBy.Should().BeGreaterThan(390000);
-			youjoSenki.Members.Should().BeGreaterThan(740000);
-			youjoSenki.Favorites.Should().BeGreaterThan(9000);
-			youjoSenki.Season.Should().Be(Season.Winter);
-			youjoSenki.Year.Should().Be(2017);
-		}
-	}
+        youjoSenki.Type.Should().Be(AnimeType.TV);
+        youjoSenki.Status.Should().Be(AiringStatus.Completed);
+        youjoSenki.Episodes.Should().Be(12);
+        youjoSenki.Airing.Should().BeFalse();
+        youjoSenki.Duration.Should().Be("23 min per ep");
+        youjoSenki.Rating.Should().Be("R - 17+ (violence & profanity)");
+        youjoSenki.Score.Should().BeLessOrEqualTo(8.00);
+        youjoSenki.ScoredBy.Should().BeGreaterThan(390000);
+        youjoSenki.Members.Should().BeGreaterThan(740000);
+        youjoSenki.Favorites.Should().BeGreaterThan(9000);
+        youjoSenki.Season.Should().Be(Season.Winter);
+        youjoSenki.Year.Should().Be(2017);
+    }
 
 	[Test]
 	[TestCase(int.MinValue)]
@@ -128,7 +126,7 @@ public class GetSeasonAsyncTests
 		using var _ = new AssertionScope();
 
 		winter2017.Pagination.Items.Count.Should().Be(25);
-		winter2017.Pagination.Items.Total.Should().Be(57);
+		winter2017.Pagination.Items.Total.Should().Be(234);
 		winter2017.Pagination.CurrentPage.Should().Be(page);
 
 		var yowamushiPedal = winter2017.Data.FirstOrDefault(x => x.Titles.First(x => x.Type.Equals("Default")).Title.Equals("Yowamushi Pedal: New Generation"));

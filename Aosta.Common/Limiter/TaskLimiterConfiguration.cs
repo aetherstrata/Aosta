@@ -2,13 +2,16 @@ namespace Aosta.Common.Limiter;
 
 /// <summary> <see cref="TaskLimiter"/> configuration class </summary>
 /// <seealso cref="CompositeTaskLimiter"/>
-public sealed class TaskLimiterConfiguration : IEquatable<TaskLimiterConfiguration>, IComparable<TaskLimiterConfiguration>, IComparable
+public sealed class TaskLimiterConfiguration(int count, TimeSpan timeSpan) :
+    IEquatable<TaskLimiterConfiguration>,
+    IComparable<TaskLimiterConfiguration>,
+    IComparable
 {
     /// <summary> Maximum number of task executions per unit of time </summary>
-    public int Count { get; }
+    public int Count { get; } = count;
 
     /// <summary> Unit of time </summary>
-    public TimeSpan TimeSpan { get; }
+    public TimeSpan TimeSpan { get; } = timeSpan;
 
     /// <summary> Maximum execution rate of the configuration </summary>
     /// <remarks> Rate is expressed in times per second </remarks>
@@ -24,12 +27,6 @@ public sealed class TaskLimiterConfiguration : IEquatable<TaskLimiterConfigurati
         new TaskLimiterConfiguration(3, TimeSpan.FromMilliseconds(1000)), // Rate limit for request bursts (3/s)
         new TaskLimiterConfiguration(4, TimeSpan.FromMilliseconds(4000))
     ];
-
-    public TaskLimiterConfiguration(int count, TimeSpan timeSpan)
-    {
-        Count = count;
-        TimeSpan = timeSpan;
-    }
 
     #region Equality methods
 

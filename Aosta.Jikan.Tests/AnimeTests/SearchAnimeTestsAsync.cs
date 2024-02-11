@@ -299,17 +299,16 @@ public class SearchAnimeTestsAsync
     [TestCase(int.MinValue)]
     [TestCase(-1)]
     [TestCase(0)]
-    public async Task GirlQueryActionCompletedAnimeInvalidPage_ShouldThrowValidationException(int page)
+    public void GirlQueryActionCompletedAnimeInvalidPage_ShouldThrowValidationException(int page)
     {
         var searchConfig = AnimeSearchQueryParameters.Create()
-            .Page(page)
             .Query("girl")
             .Status(AiringStatusFilter.Complete)
             .Genres([1]);
 
-        var func = JikanTests.Instance.Awaiting(x => x.SearchAnimeAsync(searchConfig));
+        var func = searchConfig.Invoking(x => x.Page(page));
 
-        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
+        func.Should().ThrowExactly<JikanParameterValidationException>();
     }
 
     [Test]

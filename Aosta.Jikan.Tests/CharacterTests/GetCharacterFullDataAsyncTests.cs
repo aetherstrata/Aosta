@@ -18,7 +18,7 @@ public class GetCharacterFullDataAsyncTests
         // Then
         await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
     }
-        
+
     [Test]
     public async Task IchigoKurosakiId_ShouldParseIchigoKurosaki()
     {
@@ -29,10 +29,10 @@ public class GetCharacterFullDataAsyncTests
         using var _ = new AssertionScope();
         ichigo.Data.Name.Should().Be("Ichigo Kurosaki");
         ichigo.Data.NameKanji.Should().Be("黒崎 一護");
-        ichigo.Data.Animeography.Should().HaveCount(11);
+        ichigo.Data.Animeography.Should().HaveCount(13);
         ichigo.Data.Animeography.Select(x => x.Anime.Title).Should().Contain("Bleach");
-        ichigo.Data.Mangaography.Should().HaveCount(9);
-        ichigo.Data.VoiceActors.Should().HaveCount(14);
+        ichigo.Data.Mangaography.Should().HaveCount(12);
+        ichigo.Data.VoiceActors.Should().HaveCount(17);
         ichigo.Data.VoiceActors.Should().Contain(x => x.Person.Name.Equals("Morita, Masakazu"));
     }
 }

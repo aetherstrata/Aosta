@@ -31,7 +31,7 @@ public class GetProducerFullDataAsyncTests
         results.Data.TotalCount.Should().BeGreaterThan(250);
         results.Data.Established.Should().HaveYear(1979);
         results.Data.External.Should().HaveCountGreaterOrEqualTo(5);
-        results.Data.External.Should().Contain(x => x.Name.Equals("pierrot.jp") && x.Url.Equals("http://pierrot.jp/\r"));
+        results.Data.External.Should().Contain(x => x.Name.Equals("pierrot.jp") && x.Url.Equals("http://pierrot.jp/"));
     }
 
     [Test]

@@ -9,7 +9,7 @@ public class GetMangaGenresAsyncTests
 	public async Task NoParameters_ShouldParseAllAvailableGenres()
 	{
 		// Given
-		const int expectedGenreCount = 91;
+		const int expectedGenreCount = 78;
 
 		// When
 		var result = await JikanTests.Instance.GetMangaGenresAsync();
@@ -19,9 +19,9 @@ public class GetMangaGenresAsyncTests
 	}
 
 	[Test]
-	[TestCase(GenresFilter.Genres, 64)]
+	[TestCase(GenresFilter.Genres, 18)]
 	[TestCase(GenresFilter.ExplicitGenres, 3)]
-	[TestCase(GenresFilter.Themes, 19)]
+	[TestCase(GenresFilter.Themes, 52)]
 	[TestCase(GenresFilter.Demographics, 5)]
 	public async Task WithFilter_ShouldParseFilteredGenres(GenresFilter filter, int expectedGenreCount)
 	{

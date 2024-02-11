@@ -28,6 +28,6 @@ public class GetProducerExternalLinksAsyncTests
         // Then
         using var _ = new AssertionScope();
         results.Data.Should().HaveCountGreaterOrEqualTo(5);
-        results.Data.Should().Contain(x => x.Name.Equals("pierrot.jp") && x.Url.Equals("http://pierrot.jp/\r"));
+        results.Data.Should().Contain(x => x.Name.Equals("pierrot.jp") && x.Url.Equals("http://pierrot.jp/"));
     }
 }

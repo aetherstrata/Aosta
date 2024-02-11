@@ -124,16 +124,16 @@ public class SearchPersonAsyncTests
     [TestCase('[')]
     [TestCase('\n')]
     [TestCase('_')]
-    public async Task InvalidLetter_ShouldThrowValidationException(char notLetter)
+    public void InvalidLetter_ShouldThrowValidationException(char notLetter)
     {
         // Given
-        var config = PersonSearchQueryParameters.Create().Letter(notLetter);
+        var config = PersonSearchQueryParameters.Create();
 
         // When
-        var func = JikanTests.Instance.Awaiting(x => x.SearchPersonAsync(config));
+        var func = config.Invoking(x => x.Letter(notLetter));
 
         // Then
-        await func.Should().ThrowExactlyAsync<JikanParameterValidationException>();
+        func.Should().ThrowExactly<JikanParameterValidationException>();
     }
 
     [Test]

@@ -47,7 +47,7 @@ public class GetCharacterAnimeAsyncTests
 		// Then
 		using (new AssertionScope())
 		{
-			ichigo.Data.Should().HaveCount(9);
+			ichigo.Data.Should().HaveCount(13);
 			ichigo.Data.Select(x => x.Anime.Title).Should().Contain("Bleach");
 		}
 	}

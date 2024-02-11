@@ -6,7 +6,7 @@ namespace Aosta.Jikan.Query;
 
 public partial class JikanQueryParameterSet
 {
-    private readonly Dictionary<string, IQueryParameter> _inner = new();
+    private readonly HashSet<IQueryParameter> _inner = new(QueryParameter.NameComparer);
 
     [GeneratedRegex(@"^\d{4}(-\d{2}){0,2}$", RegexOptions.CultureInvariant, 1)]
     protected static partial Regex DateRegex();
@@ -17,58 +17,58 @@ public partial class JikanQueryParameterSet
 
     internal void Add<T>(string name, T value) where T : struct, Enum
     {
-        _inner[name] = new EnumQueryParameter<T>()
+        add(new EnumQueryParameter<T>
         {
             Name = name,
             Value = value
-        };
+        });
     }
 
     internal void Add(string name, double value)
     {
-        _inner[name] = new JikanQueryParameter<double>()
+        add(new JikanQueryParameter<double>()
         {
             Name = name,
             Value = value
-        };
+        });
     }
 
     internal void Add(string name, long value)
     {
-        _inner[name] = new JikanQueryParameter<long>()
+        add(new JikanQueryParameter<long>()
         {
             Name = name,
             Value = value
-        };
+        });
     }
 
     internal void Add(string name, int value)
     {
-        _inner[name] = new JikanQueryParameter<int>()
+        add(new JikanQueryParameter<int>()
         {
             Name = name,
             Value = value
-        };
+        });
     }
 
     internal void Add(string name, string value)
     {
-        _inner[name] = new JikanQueryParameter<string>()
+        add(new JikanQueryParameter<string>()
         {
             Name = name,
             Value = value
-        };
+        });
     }
 
     internal void Add(string name, char value) => Add(name, value.ToString());
 
     internal void Add(string name, bool value)
     {
-        _inner[name] = new BoolQueryParameter
+        add(new BoolQueryParameter
         {
             Name = name,
             Value = value
-        };
+        });
     }
 
     internal void Add(string name) => Add(name, true);
@@ -77,16 +77,20 @@ public partial class JikanQueryParameterSet
     {
         foreach (var val in other._inner)
         {
-            if (!_inner.TryAdd(val.Key, val.Value))
-            {
-                throw new JikanDuplicateParameterException($"Parameter {val.Key} was set already");
-            }
+            add(val);
         }
+    }
+
+    private void add(IQueryParameter parameter)
+    {
+        if (_inner.Add(parameter)) return;
+
+        throw new JikanDuplicateParameterException($"Parameter {parameter.GetName()} was set already");
     }
 
     public override string ToString()
     {
-        string parameterString = string.Join("&", _inner.Values
+        string parameterString = string.Join("&", _inner
             .Select(x => x.ToString())
             .Where(s => !string.IsNullOrEmpty(s)));
 

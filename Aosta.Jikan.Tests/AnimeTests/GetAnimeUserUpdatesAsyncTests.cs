@@ -62,9 +62,16 @@ public class GetAnimeUserUpdatesAsyncTests
 
 		using var _ = new AssertionScope();
 		bebop.Data.Should().HaveCount(75);
-		firstUpdate.EpisodesTotal.Should().HaveValue().And.Be(26);
 		firstUpdate.User.Should().NotBeNull();
 		firstUpdate.User.Username.Should().NotBeNullOrWhiteSpace();
 		firstUpdate.User.Url.Should().NotBeNullOrWhiteSpace();
+        if (firstUpdate.Status != "Plan to Watch")
+        {
+		    firstUpdate.EpisodesTotal.Should().HaveValue().And.Be(26);
+        }
+        else
+        {
+            firstUpdate.EpisodesTotal.Should().BeNull();
+        }
 	}
 }

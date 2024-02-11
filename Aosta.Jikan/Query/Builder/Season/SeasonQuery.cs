@@ -14,7 +14,7 @@ internal static class SeasonQuery
 
     internal static IQuery Create(int year, Jikan.Enums.Season season)
     {
-        Guard.IsValid(x => x is >= 1900 and < 2050, year, nameof(year));
+        Guard.IsValid(x => x is >= 1950 and < 2050, year, nameof(year));
         Guard.IsValidEnum(season, nameof(season));
         return JikanQuery.Create(getEndpoint(year, season));
     }

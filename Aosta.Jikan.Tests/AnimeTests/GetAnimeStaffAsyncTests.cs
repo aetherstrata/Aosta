@@ -6,7 +6,9 @@ namespace Aosta.Jikan.Tests.AnimeTests;
 
 public class GetAnimeStaffAsyncTests
 {
-	[Test]
+    private const string watanabe_name = "Watanabe, Shinichirou";
+
+    [Test]
 	[TestCase(long.MinValue)]
 	[TestCase(-1)]
 	[TestCase(0)]
@@ -22,20 +24,20 @@ public class GetAnimeStaffAsyncTests
 	{
 		var bebop = await JikanTests.Instance.GetAnimeStaffAsync(1);
 
-		bebop.Data.Should().Contain(x => x.Person.Name.Equals("Watanabe, Shinichiro"));
+		bebop.Data.Should().Contain(x => x.Person.Name.Equals(watanabe_name));
 	}
 
 	[Test]
 	public async Task BebopId_ShouldParseShinichiroWatanabeDetails()
 	{
 		var bebop = await JikanTests.Instance.GetAnimeStaffAsync(1);
-		var shinichiroWatanabe = bebop.Data.First(x => x.Person.Name.Equals("Watanabe, Shinichiro"));
+		var shinichiroWatanabe = bebop.Data.First(x => x.Person.Name.Equals(watanabe_name));
 
 		using var _ = new AssertionScope();
 		shinichiroWatanabe.Position.Should().HaveCount(4);
 		shinichiroWatanabe.Position.Should().Contain("Director");
 		shinichiroWatanabe.Position.Should().Contain("Script");
-		shinichiroWatanabe.Person.Name.Should().Be("Watanabe, Shinichiro");
+		shinichiroWatanabe.Person.Name.Should().Be(watanabe_name);
 		shinichiroWatanabe.Person.MalId.Should().Be(2009);
 	}
 
@@ -43,7 +45,7 @@ public class GetAnimeStaffAsyncTests
 	public async Task BebopId_ShouldParseShinichiroWatanabePictures()
 	{
 		var bebop = await JikanTests.Instance.GetAnimeStaffAsync(1);
-		var shinichiroWatanabe = bebop.Data.First(x => x.Person.Name.Equals("Watanabe, Shinichiro"));
+		var shinichiroWatanabe = bebop.Data.First(x => x.Person.Name.Equals(watanabe_name));
 
 		shinichiroWatanabe.Person.Images.JPG.ImageUrl.Should().NotBeNullOrEmpty();
 	}
