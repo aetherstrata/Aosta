@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography.X509Certificates;
+using System.Text.Json.Serialization;
 
 namespace Aosta.Jikan.Models.Response;
 
@@ -11,7 +13,7 @@ public class AnimeEpisodeResponse
 	/// ID associated with MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("mal_id")]
-	public long MalId { get; init; }
+	public required long MalId { get; init; }
 
 	/// <summary>
 	/// URL to the episode.
@@ -23,7 +25,7 @@ public class AnimeEpisodeResponse
 	/// Title of the episode.
 	/// </summary>
 	[JsonPropertyName("title")]
-	public string? Title { get; init; }
+	public required string Title { get; init; }
 
 	/// <summary>
 	/// Title of the anime in Japanese.
@@ -47,19 +49,27 @@ public class AnimeEpisodeResponse
 	/// Date when episode aired at first.
 	/// </summary>
 	[JsonPropertyName("aired")]
-	public DateTimeOffset? Aired { get; init; }
+	public required DateTimeOffset Aired { get; init; }
 
 	/// <summary>
 	/// Is the episode filler.
 	/// </summary>
 	[JsonPropertyName("filler")]
-	public bool? Filler { get; init; }
+	public required bool Filler { get; init; }
 
 	/// <summary>
 	/// Is the episode recap.
 	/// </summary>
 	[JsonPropertyName("recap")]
-	public bool? Recap { get; init; }
+	public required bool Recap { get; init; }
+
+    /// <summary>
+    /// The score of the episode
+    /// </summary>
+    /// <remarks>It's value can be between 0 and 5</remarks>
+    [JsonPropertyName("score")]
+    [Range(0d, 5d)]
+    public double? Score { get; init; }
 
 	/// <summary>
 	/// Episode's synopsis.

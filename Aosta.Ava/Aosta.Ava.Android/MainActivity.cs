@@ -23,8 +23,10 @@ namespace Aosta.Ava.Android;
     Label = "AOSTA",
     Theme = "@style/MyTheme.NoActionBar",
     Icon = "@drawable/icon",
+    RoundIcon = "@drawable/icon",
     MainLauncher = true,
-    ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.UiMode)]
+    ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.UiMode,
+    HardwareAccelerated = true)]
 public class MainActivity : AvaloniaMainActivity<App>
 {
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)

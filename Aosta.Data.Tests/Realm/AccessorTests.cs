@@ -2,9 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using Aosta.Data.Extensions;
+using Aosta.Data.Models;
 using Aosta.Data.Models.Jikan;
-
-using Anime = Aosta.Data.Models.Anime;
 
 namespace Aosta.Data.Tests.Realm;
 

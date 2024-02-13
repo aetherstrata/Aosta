@@ -8,7 +8,9 @@
   "HomePage.SeasonalAnime.Header" : "Currently airing",
   "HomePage.TopAnime.Header" : "Top anime",
 
-  "SearchPage.Settings.Header": "Filter settings",
+  "SearchPage.Settings.Header": "Settings",
+  "SearchPage.Settings.Direction": "Sort direction",
+  "SearchPage.Settings.OrderBy": "Order by",
   "SearchPage.Settings.AgeRatingFilter": "Age rating",
   "SearchPage.Settings.AiringStatusFilter": "Airing status",
   "SearchPage.Settings.AnimeTypeFilter" : "Content type",
@@ -29,6 +31,7 @@
 
   "Label.All": "All",
   "Label.ContentType": "Type",
+  "Label.Date": "Date",
   "Label.Episode.Number": "Episode #{0}",
   "Label.Episodes": "Episodes",
   "Label.LoadMore": "Load more",
@@ -41,8 +44,12 @@
   "Label.Synopsis": "Synopsis",
   "Label.Year": "Year",
 
+  "Enum.SortDirection.Asc":"Ascending",
+  "Enum.SortDirection.Desc":"Descending",
+
   "Enum.AiringStatus.Airing": "Airing",
-  "Enum.AiringStatus.Complete": "Complete",
+  "Enum.AiringStatus.Cancelled": "Cancelled",
+  "Enum.AiringStatus.Finished": "Finished",
   "Enum.AiringStatus.Upcoming": "Upcoming",
 
   "Enum.AnimeAgeRatingFilter.G": "All ages",
@@ -51,6 +58,21 @@
   "Enum.AnimeAgeRatingFilter.R17": "Adults only",
   "Enum.AnimeAgeRatingFilter.R": "Mature",
   "Enum.AnimeAgeRatingFilter.RX": "Hentai",
+
+  "Enum.AnimeSearchOrderBy.NoSorting": "No sorting",
+  "Enum.AnimeSearchOrderBy.Title": "Title",
+  "Enum.AnimeSearchOrderBy.Score": "Score",
+  "Enum.AnimeSearchOrderBy.Type": "Tipo",
+  "Enum.AnimeSearchOrderBy.ScoredBy": "Voters",
+  "Enum.AnimeSearchOrderBy.Members": "Members",
+  "Enum.AnimeSearchOrderBy.Favorites": "Favorites",
+  "Enum.AnimeSearchOrderBy.Id": "Id",
+  "Enum.AnimeSearchOrderBy.Episodes": "Episodes",
+  "Enum.AnimeSearchOrderBy.Rating": "Age rating",
+  "Enum.AnimeSearchOrderBy.StartDate": "Start date",
+  "Enum.AnimeSearchOrderBy.EndDate": "End date",
+  "Enum.AnimeSearchOrderBy.Rank": "Rank",
+  "Enum.AnimeSearchOrderBy.Popularity": "Popularity",
 
   "Enum.AnimeType.TV": "TV",
   "Enum.AnimeType.TvSpecial": "TV Special",
@@ -65,5 +87,18 @@
   "Enum.Season.Spring": "Spring",
   "Enum.Season.Summer": "Summer",
   "Enum.Season.Fall": "Fall",
-  "Enum.Season.Winter": "Winter"
+  "Enum.Season.Winter": "Winter",
+
+  "Date.Compact.January": "{0} Jan {1}",
+  "Date.Compact.February": "{0} Feb {1}",
+  "Date.Compact.March": "{0} Mar {1}",
+  "Date.Compact.April": "{0} Apr {1}",
+  "Date.Compact.May": "{0} May {1}",
+  "Date.Compact.June": "{0} June {1}",
+  "Date.Compact.July": "{0} July {1}",
+  "Date.Compact.August": "{0} Aug {1}",
+  "Date.Compact.September": "{0} Sep {1}",
+  "Date.Compact.October": "{0} Oct {1}",
+  "Date.Compact.November": "{0} Nov {1}",
+  "Date.Compact.December": "{0} Dec {1}"
 }

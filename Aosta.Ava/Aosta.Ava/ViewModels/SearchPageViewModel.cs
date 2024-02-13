@@ -9,6 +9,7 @@ using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Data;
 using Aosta.Data.Extensions;
+using Aosta.Data.Models;
 using Aosta.Jikan;
 using Aosta.Jikan.Query.Enums;
 using Aosta.Jikan.Query.Parameters;
@@ -18,6 +19,8 @@ using Avalonia.ReactiveUI;
 using DynamicData;
 using DynamicData.Kernel;
 
+using HarfBuzzSharp;
+
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -25,7 +28,6 @@ using Realms;
 
 using Splat;
 
-using Anime = Aosta.Data.Models.Anime;
 using Setting = Aosta.Ava.Settings.Setting;
 
 namespace Aosta.Ava.ViewModels;
@@ -73,6 +75,18 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
     [Reactive]
     public LocalizedData<AnimeAgeRatingFilter> RatingFilter { get; set; } = AnimeAgeRatingFilter.All.LocalizeWithData();
 
+    public LocalizedData<AnimeSearchOrderBy>[] OrderingList { get; } =
+        Enum.GetValues<AnimeSearchOrderBy>().Select(x => x.LocalizeWithData()).AsArray();
+
+    [Reactive]
+    public LocalizedData<AnimeSearchOrderBy> OrderBy { get; set; } = AnimeSearchOrderBy.NoSorting.LocalizeWithData();
+
+    public LocalizedData<SortDirection>[] Directions { get; } =
+        Enum.GetValues<SortDirection>().Select(x => x.LocalizeWithData()).AsArray();
+
+    [Reactive]
+    public LocalizedData<SortDirection> Direction { get; set; } = SortDirection.Descending.LocalizeWithData();
+
     public SearchPageViewModel(IScreen screen)
     {
         HostScreen = screen;
@@ -101,6 +115,8 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
                     .MinScore(MinScore)
                     .MaxScore(MaxScore)
                     .SafeForWork(!Setting.IncludeNsfw)
+                    .Sort(OrderBy.Data)
+                    .SortDirection(Direction.Data)
                     .Unapproved(Setting.IncludeUnapproved);
 
                 var result = await _client.SearchAnimeAsync(queryParams, ct);

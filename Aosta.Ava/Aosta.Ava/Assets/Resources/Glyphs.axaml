@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Add Resources Here -->
+    <x:String x:Key="CalendarGlyph">&#xF801D;</x:String>
     <x:String x:Key="ChevronLeftGlyph">&#xE76B;</x:String>
     <x:String x:Key="FilterGlyph">&#xE16E;</x:String>
     <x:String x:Key="MoreVerticalGlyph">&#xF809E;</x:String>

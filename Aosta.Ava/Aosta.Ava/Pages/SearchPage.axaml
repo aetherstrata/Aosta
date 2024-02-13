@@ -109,6 +109,18 @@
                 <TextBlock Text="{localize:Localize SearchPage.Settings.Header}"
                            FontWeight="Bold"
                            FontSize="24"/>
+                <local:SettingsEntry Description="{localize:Localize SearchPage.Settings.OrderBy}">
+                    <local:SettingsEntry.Footer>
+                        <ComboBox ItemsSource="{Binding OrderingList}"
+                                  SelectedItem="{Binding OrderBy}"/>
+                    </local:SettingsEntry.Footer>
+                </local:SettingsEntry>
+                <local:SettingsEntry Description="{localize:Localize SearchPage.Settings.Direction}">
+                    <local:SettingsEntry.Footer>
+                        <ComboBox ItemsSource="{Binding Directions}"
+                                  SelectedItem="{Binding Direction}"/>
+                    </local:SettingsEntry.Footer>
+                </local:SettingsEntry>
                 <local:SettingsEntry Description="{localize:Localize SearchPage.Settings.AnimeTypeFilter}">
                     <local:SettingsEntry.Footer>
                         <ComboBox ItemsSource="{Binding AnimeTypes}"

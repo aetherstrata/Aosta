@@ -32,10 +32,4 @@
       <Folder Include="Assets\Fonts\" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Update="Settings\SettingsPage.axaml.cs">
-        <DependentUpon>SettingsPage.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-    </ItemGroup>
 </Project>

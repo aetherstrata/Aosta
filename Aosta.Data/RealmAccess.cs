@@ -20,6 +20,7 @@ namespace Aosta.Data;
 /// </remarks>
 public sealed class RealmAccess : IEquatable<RealmAccess>
 {
+    //Most of the realm access code is taken from ppy/osu of which does extensive use for their game
     private readonly RealmConfigurationBase _config;
 
     internal ILogger? Log { get; }
@@ -41,8 +42,6 @@ public sealed class RealmAccess : IEquatable<RealmAccess>
 #endif
         };
     }
-
-    //Most of the realm access code is taken from ppy/osu of which does extensive use for their game
 
     /// <summary>
     /// Run work on realm with a return value.

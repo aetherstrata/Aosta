@@ -31,11 +31,11 @@ public partial class Anime : IRealmObject, IHasPrimaryKey<Guid>
 
     public string? Synopsis => Local?.Synopsis ?? Jikan?.Synopsis;
 
-    public ContentType? Type => Local?.Type ?? Jikan?.Type;
+    public ContentType Type => Local?.Type ?? Jikan?.Type ?? ContentType.NotAvailable;
 
     public string? Source => Local?.Source ?? Jikan?.Source;
 
-    public AiringStatus? AiringStatus => Local?.AiringStatus ?? Jikan?.Status;
+    public AiringStatus AiringStatus => Local?.AiringStatus ?? Jikan?.Status ?? AiringStatus.NotAvailable;
 
     public Season? Season => Local?.Season ?? Jikan?.Season;
 

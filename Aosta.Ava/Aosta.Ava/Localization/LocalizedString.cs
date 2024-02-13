@@ -1,6 +1,11 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Linq;
+
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -22,6 +27,11 @@ public sealed class LocalizedString : ReactiveObject, ILocalized
     {
         Log.Error("Could not get localization for {Object}", sender?.ToString());
         return new LocalizedString("Label.LocalizationLookupError", sender?.ToString());
+    }
+
+    public static LocalizedString CompactDate(DateTimeOffset dt)
+    {
+        return new LocalizedString(compact_date_keys[dt.Month], dt.Day, dt.Year);
     }
 
     public LocalizedString(string key)
@@ -93,4 +103,25 @@ public sealed class LocalizedString : ReactiveObject, ILocalized
     {
         return localized.Localized;
     }
+
+    private static readonly string[] month_name =
+    [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
+
+    private static readonly FrozenDictionary<int, string> compact_date_keys = Enumerable
+        .Range(1, 12)
+        .Select(month => new KeyValuePair<int, string>(month, $"Date.Compact.{month_name[month-1]}"))
+        .ToFrozenDictionary();
 }

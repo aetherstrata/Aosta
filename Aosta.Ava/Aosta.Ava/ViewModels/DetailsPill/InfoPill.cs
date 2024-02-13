@@ -6,38 +6,35 @@ using System;
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Data.Enums;
+using Aosta.Data.Models;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-using Anime = Aosta.Data.Models.Anime;
-
 namespace Aosta.Ava.ViewModels.DetailsPill;
 
-public class InfoPill : ReactiveObject, IContentInfoPill
+public abstract class InfoPill : ReactiveObject, IContentInfoPill
 {
-    public static IContentInfoPill Create(AnimeResponse response)
+    public static InfoPill Create(AnimeResponse response)
     {
         return response.Type switch
         {
             AnimeType.TV => new AnimePill(response),
-            AnimeType.Movie => new InfoPill(response),
+            AnimeType.Movie => new MoviePill(response),
             null => throw new ArgumentNullException(nameof(response),
                 "Anime response did not have a valid content type"),
             _ => new EpisodesPill(response),
         };
     }
 
-    public static IContentInfoPill Create(Anime model)
+    public static InfoPill Create(Anime model)
     {
         return model.Type switch
         {
             ContentType.TV => new AnimePill(model),
-            ContentType.Movie => new InfoPill(model),
-            null => throw new ArgumentNullException(nameof(model),
-                "Anime response did not have a valid content type"),
+            ContentType.Movie => new MoviePill(model),
             _ => new EpisodesPill(model),
         };
     }
@@ -45,24 +42,21 @@ public class InfoPill : ReactiveObject, IContentInfoPill
     [Reactive]
     public string Score { get; set; }
 
-    [Reactive]
-    public string Year { get; set; }
+    public LocalizedString Status { get; set; }
 
     public LocalizedString Type { get; set; }
 
-    public InfoPill(AnimeResponse response)
+    protected InfoPill(AnimeResponse response)
     {
         Score = response.Score?.ToString("0.00") ?? LocalizedString.NA;
-        Year = response.Year?.ToString() ?? LocalizedString.NA;
+        Status = response.Status.Localize();
         Type = response.Type.Localize();
     }
 
-    public InfoPill(Anime model)
+    protected InfoPill(Anime model)
     {
-        Score = model.UserScore?.ToString() ?? (model.Jikan?.Score != null
-            ? $"{model.Jikan?.Score?.ToString("0.00")} ({Localizer.Instance["Label.Online"]})"
-            : LocalizedString.NA);
-        Year = model.Year?.ToString() ?? LocalizedString.NA;
+        Score = model.UserScore?.ToString() ?? LocalizedString.NA;
+        Status = model.AiringStatus.Localize();
         Type = model.Type.Localize();
     }
 }

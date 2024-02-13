@@ -3,9 +3,10 @@
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
+using Aosta.Data.Models;
 using Aosta.Jikan.Models.Response;
 
-using Anime = Aosta.Data.Models.Anime;
+using ReactiveUI.Fody.Helpers;
 
 namespace Aosta.Ava.ViewModels.DetailsPill;
 
@@ -13,13 +14,18 @@ public class AnimePill : EpisodesPill
 {
     public LocalizedString Season { get; set; }
 
+    [Reactive]
+    public string Year { get; set; }
+
     public AnimePill(AnimeResponse response) : base(response)
     {
         Season = response.Season.Localize();
+        Year = response.Year.ToString() ?? LocalizedString.NA;
     }
 
     public AnimePill(Anime model) : base(model)
     {
         Season = model.Season.Localize();
+        Year = model.Year.ToString() ?? LocalizedString.NA;
     }
 }

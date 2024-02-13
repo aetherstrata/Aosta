@@ -9,6 +9,7 @@ using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Ava.ViewModels.Card;
 using Aosta.Data;
+using Aosta.Data.Models;
 
 using Avalonia.ReactiveUI;
 
@@ -20,8 +21,6 @@ using ReactiveUI;
 using Realms;
 
 using Splat;
-
-using Anime = Aosta.Data.Models.Anime;
 
 namespace Aosta.Ava.ViewModels;
 

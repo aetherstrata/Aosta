@@ -32,7 +32,7 @@
                         </LinearGradientBrush>
                     </Image.OpacityMask>
                 </Image>
-                <StackPanel Grid.Row="0" Margin="10, 100, 10 ,10">
+                <StackPanel Grid.Row="0" Margin="10, 10, 10 ,10">
                     <ContentControl Content="{Binding DetailsPill}"/>
                     <TextBlock Text="{localize:Localize Label.Synopsis}"
                                FontSize="18"

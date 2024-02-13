@@ -22,7 +22,7 @@
         <StaticResource ResourceKey="Localizable"/>
         <StaticResource ResourceKey="AnimeInfoPill"/>
         <StaticResource ResourceKey="EpisodeCountInfoPill"/>
-        <StaticResource ResourceKey="InfoPill"/>
+        <StaticResource ResourceKey="MovieInfoPill"/>
         <local:ViewLocator />
     </Application.DataTemplates>
 

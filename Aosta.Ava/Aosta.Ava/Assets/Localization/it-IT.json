@@ -8,7 +8,9 @@
   "HomePage.SeasonalAnime.Header" : "Anime in corso",
   "HomePage.TopAnime.Header" : "Top anime",
 
-  "SearchPage.Settings.Header": "Imposta i filtri",
+  "SearchPage.Settings.Header": "Impostazioni",
+  "SearchPage.Settings.Direction": "Direzione ordinamento",
+  "SearchPage.Settings.OrderBy": "Ordina per",
   "SearchPage.Settings.AgeRatingFilter": "Audience",
   "SearchPage.Settings.AiringStatusFilter": "Messa in onda",
   "SearchPage.Settings.AnimeTypeFilter" : "Tipo",
@@ -28,6 +30,7 @@
 
   "Label.All": "Tutti",
   "Label.ContentType": "Tipo",
+  "Label.Date": "Data",
   "Label.Episode.Number": "Episodio n.{0}",
   "Label.Episodes": "Episodi",
   "Label.LoadMore": "Carica altro",
@@ -40,6 +43,9 @@
   "Label.Synopsis": "Sinossi",
   "Label.Year": "Anno",
 
+  "Enum.SortDirection.Asc":"Crescente",
+  "Enum.SortDirection.Desc":"Decrescente",
+
   "Enum.AnimeAgeRatingFilter.G": "Adatto a tutti",
   "Enum.AnimeAgeRatingFilter.PG": "Bambini",
   "Enum.AnimeAgeRatingFilter.PG13": "Ragazzi (13+)",
@@ -48,8 +54,24 @@
   "Enum.AnimeAgeRatingFilter.RX": "Hentai",
 
   "Enum.AiringStatus.Airing": "In onda",
-  "Enum.AiringStatus.Complete": "Completato",
+  "Enum.AiringStatus.Cancelled": "Cancellato",
+  "Enum.AiringStatus.Finished": "Finito",
   "Enum.AiringStatus.Upcoming": "In arrivo",
+
+  "Enum.AnimeSearchOrderBy.NoSorting": "Nessun ordine",
+  "Enum.AnimeSearchOrderBy.Title": "Titolo",
+  "Enum.AnimeSearchOrderBy.Score": "Voto",
+  "Enum.AnimeSearchOrderBy.Type": "Tipo",
+  "Enum.AnimeSearchOrderBy.ScoredBy": "Votanti",
+  "Enum.AnimeSearchOrderBy.Members": "Membri",
+  "Enum.AnimeSearchOrderBy.Favorites": "Preferiti",
+  "Enum.AnimeSearchOrderBy.Id": "Id",
+  "Enum.AnimeSearchOrderBy.Episodes": "Episodi",
+  "Enum.AnimeSearchOrderBy.Rating": "Audience",
+  "Enum.AnimeSearchOrderBy.StartDate": "Data inizio",
+  "Enum.AnimeSearchOrderBy.EndDate": "Data fine",
+  "Enum.AnimeSearchOrderBy.Rank": "Rank",
+  "Enum.AnimeSearchOrderBy.Popularity": "Popolarità",
 
   "Enum.AnimeType.TV": "TV",
   "Enum.AnimeType.TvSpecial": "Speciale TV",
@@ -64,5 +86,18 @@
   "Enum.Season.Spring": "Primavera",
   "Enum.Season.Summer": "Estate",
   "Enum.Season.Fall": "Autunno",
-  "Enum.Season.Winter": "Inverno"
+  "Enum.Season.Winter": "Inverno",
+
+  "Date.Compact.January": "{0} / 01 / {1}",
+  "Date.Compact.February": "{0} / 02 / {1}",
+  "Date.Compact.March": "{0} / 03 / {1}",
+  "Date.Compact.April": "{0} / 04 / {1}",
+  "Date.Compact.May": "{0} / 05 / {1}",
+  "Date.Compact.June": "{0} /06 / {1}",
+  "Date.Compact.July": "{0} / 07 / {1}",
+  "Date.Compact.August": "{0} / 08 / {1}",
+  "Date.Compact.September": "{0} / 09 / {1}",
+  "Date.Compact.October": "{0} / 10 / {1}",
+  "Date.Compact.November": "{0} / 11 / {1}",
+  "Date.Compact.December": "{0} / 12 / {1}"
 }

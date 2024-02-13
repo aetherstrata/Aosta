@@ -1,6 +1,6 @@
-using Serilog;
+using Aosta.Data.Models;
 
-using Anime = Aosta.Data.Models.Anime;
+using Serilog;
 
 namespace Aosta.Data.Tests.Realm;
 

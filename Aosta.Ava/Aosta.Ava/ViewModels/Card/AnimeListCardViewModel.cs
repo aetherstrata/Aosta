@@ -4,10 +4,9 @@
 using System.Reactive;
 
 using Aosta.Ava.Localization;
+using Aosta.Data.Models;
 
 using ReactiveUI;
-
-using Anime = Aosta.Data.Models.Anime;
 
 namespace Aosta.Ava.ViewModels.Card;
 
