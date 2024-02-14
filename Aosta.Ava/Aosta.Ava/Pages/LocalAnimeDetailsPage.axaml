@@ -6,19 +6,20 @@
              xmlns:local="clr-namespace:Aosta.Ava.Controls"
              xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
              xmlns:localize="clr-namespace:Aosta.Ava.Localization"
+             xmlns:card="clr-namespace:Aosta.Ava.ViewModels.Card"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.LocalAnimeDetailsPage"
              x:DataType="vm:LocalAnimeDetailsViewModel">
- <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*">
         <local:TitleBar Grid.Row="0"
                         IsBackEnabled="True"
-                        Title="{Binding Title}"/>
+                        Title="{Binding DefaultTitle}" />
         <ScrollViewer Grid.Row="1"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Hidden">
             <Grid RowDefinitions="Auto">
                 <Image Grid.Row="0"
-                       async:ImageLoader.Source="{Binding LargeBanner}"
+                       async:ImageLoader.Source="{Binding Anime.Images.JPG.LargeImageUrl, FallbackValue={x:Static card:IOnlineCard.PORTRAIT_PLACEHOLDER}}"
                        VerticalAlignment="Top"
                        Height="{StaticResource AnimeBannerHeight}"
                        Stretch="UniformToFill">
@@ -32,19 +33,19 @@
                     </Image.OpacityMask>
                 </Image>
                 <StackPanel Grid.Row="0" Margin="10, 10, 10 ,10">
-                    <ContentControl Content="{Binding DetailsPill}"/>
+                    <ContentControl Content="{Binding DetailsPill}" />
                     <TextBlock Text="{localize:Localize Label.Synopsis}"
                                FontSize="18"
                                FontWeight="Bold" />
-                    <SelectableTextBlock Text="{Binding Synopsis}"
-                                         Margin="0,0,0,15"
-                                         SelectionBrush="{DynamicResource FloatingBackgroundBrush}"
-                                         TextWrapping="WrapWithOverflow" />
-                    <TextBlock Text="{localize:Localize AnimeDetails.EpisodesList.Header}"
+                    <SelectableTextBlock
+                        Text="{Binding Anime.Synopsis, FallbackValue={localize:Localize Label.NotAvailable.Long}}"
+                        Margin="0,0,0,15"
+                        SelectionBrush="{DynamicResource FloatingBackgroundBrush}"
+                        TextWrapping="WrapWithOverflow" />
+                    <TextBlock Text="{localize:Localize Label.Episodes}"
                                FontSize="18"
                                FontWeight="Bold" />
-                    <TextBlock Text="TODO"
-                               FontWeight="Bold"/>
+
                 </StackPanel>
             </Grid>
         </ScrollViewer>

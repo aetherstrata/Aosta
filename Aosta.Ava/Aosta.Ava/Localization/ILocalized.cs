@@ -5,6 +5,9 @@ namespace Aosta.Ava.Localization;
 
 public interface ILocalized
 {
+    /// The key used to retrieve the localization.
+    public string LocalizationKey { get; }
+
     /// The localized string.
     public string Localized { get; }
 }

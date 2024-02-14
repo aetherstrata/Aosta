@@ -1,5 +1,6 @@
 using Aosta.Data.Database;
 using Aosta.Data.Enums;
+using Aosta.Data.Extensions;
 using Aosta.Data.Models.Embedded;
 
 using Realms;
@@ -15,6 +16,9 @@ public partial class Anime : IRealmObject, IHasPrimaryKey<Guid>
     /// The unique ID of this content in the Realm
     [PrimaryKey]
     public Guid PrimaryKey { get; private set; } = Guid.NewGuid();
+
+    /// Time of creation of this object in the database
+    public DateTimeOffset InsertedAt { get; private set; } = DateTimeOffset.Now;
 
     /// The episodes of this content
     public IList<Episode> Episodes { get; } = null!;
@@ -156,12 +160,6 @@ public partial class Anime : IRealmObject, IHasPrimaryKey<Guid>
 
     #endregion
 
-    // Get the default title of this content
-    public string GetDefaultTitle()
-    {
-        return Titles.First(x => x.Type == "Default").Title;
-    }
-
     #region Backing properties
 
     [Indexed]
@@ -194,9 +192,13 @@ public partial class Anime : IRealmObject, IHasPrimaryKey<Guid>
             if (ReferenceEquals(null, y)) return 1;
             if (ReferenceEquals(null, x)) return -1;
 
-            int titleCompare = string.Compare(x.GetDefaultTitle(), y.GetDefaultTitle(), StringComparison.Ordinal);
+            int titleCompare = string.Compare(x.Titles.GetDefault().Title,
+                                          y.Titles.GetDefault().Title,
+                                              StringComparison.Ordinal);
 
-            return titleCompare != 0 ? titleCompare : x.ID.GetValueOrDefault().CompareTo(y.ID.GetValueOrDefault());
+            return titleCompare != 0
+                ? titleCompare
+                : x.InsertedAt.CompareTo(y.InsertedAt);
         }
     }
 }

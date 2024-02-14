@@ -90,6 +90,14 @@ internal sealed class Localizer : INotifyPropertyChanged, ILocalizer
         }
     }
 
+    /// <summary>
+    /// Unregister all handlers from the language change notifications
+    /// </summary>
+    public void ClearHandlers()
+    {
+        PropertyChanged = null;
+    }
+
     private void invalidate()
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(indexer_name));

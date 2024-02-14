@@ -12,26 +12,26 @@ public static class ModelExtensions
 {
     public static LocalizedString Localize(this AiringStatus status) => status switch
     {
-        AiringStatus.NotAvailable => new LocalizedString("Label.NotAvailable.Long"),
-        AiringStatus.Cancelled => new LocalizedString("Enum.AiringStatus.Cancelled"),
-        AiringStatus.FinishedAiring => new LocalizedString("Enum.AiringStatus.Finished"),
-        AiringStatus.NotYetAired => new LocalizedString("Enum.AiringStatus.Upcoming"),
-        AiringStatus.CurrentlyAiring => new LocalizedString("Enum.AiringStatus.Airing"),
+        AiringStatus.NotAvailable => "Label.NotAvailable.Long".Localize(),
+        AiringStatus.Cancelled => "Enum.AiringStatus.Cancelled".Localize(),
+        AiringStatus.FinishedAiring => "Enum.AiringStatus.Finished".Localize(),
+        AiringStatus.NotYetAired => "Enum.AiringStatus.Upcoming".Localize(),
+        AiringStatus.CurrentlyAiring => "Enum.AiringStatus.Airing".Localize(),
         _ => throw new ArgumentOutOfRangeException(nameof(status), status, error_message(nameof(AiringStatus)))
     };
 
     public static LocalizedString Localize(this ContentType type) => type switch
     {
-        ContentType.NotAvailable => new LocalizedString("Label.NotAvailable.Long"),
-        ContentType.CommercialMessage => new LocalizedString("Enum.AnimeType.CM"),
-        ContentType.Movie => new LocalizedString("Enum.AnimeType.Movie"),
-        ContentType.Music => new LocalizedString("Enum.AnimeType.Music"),
-        ContentType.ONA => new LocalizedString("Enum.AnimeType.ONA"),
-        ContentType.OVA => new LocalizedString("Enum.AnimeType.OVA"),
-        ContentType.PromotionalVideo => new LocalizedString("Enum.AnimeType.PV"),
-        ContentType.Special => new LocalizedString("Enum.AnimeType.Special"),
-        ContentType.TV => new LocalizedString("Enum.AnimeType.TV"),
-        ContentType.TVSpecial => new LocalizedString("Enum.AnimeType.TVSpecial"),
+        ContentType.NotAvailable => "Label.NotAvailable.Long".Localize(),
+        ContentType.CommercialMessage => "Enum.AnimeType.CM".Localize(),
+        ContentType.Movie => "Enum.AnimeType.Movie".Localize(),
+        ContentType.Music => "Enum.AnimeType.Music".Localize(),
+        ContentType.ONA => "Enum.AnimeType.ONA".Localize(),
+        ContentType.OVA => "Enum.AnimeType.OVA".Localize(),
+        ContentType.PromotionalVideo => "Enum.AnimeType.PV".Localize(),
+        ContentType.Special => "Enum.AnimeType.Special".Localize(),
+        ContentType.TV => "Enum.AnimeType.TV".Localize(),
+        ContentType.TVSpecial => "Enum.AnimeType.TVSpecial".Localize(),
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, error_message(nameof(ContentType)))
     };
 
@@ -43,10 +43,10 @@ public static class ModelExtensions
 
     public static LocalizedString Localize(this Season e) => e switch
     {
-        Season.Winter => new LocalizedString("Enum.Season.Winter"),
-        Season.Spring => new LocalizedString("Enum.Season.Spring"),
-        Season.Summer => new LocalizedString("Enum.Season.Summer"),
-        Season.Fall => new LocalizedString("Enum.Season.Fall"),
+        Season.Winter => "Enum.Season.Winter".Localize(),
+        Season.Spring => "Enum.Season.Spring".Localize(),
+        Season.Summer => "Enum.Season.Summer".Localize(),
+        Season.Fall => "Enum.Season.Fall".Localize(),
         _ => throw new ArgumentOutOfRangeException(nameof(e), e, error_message(nameof(Season)))
     };
 

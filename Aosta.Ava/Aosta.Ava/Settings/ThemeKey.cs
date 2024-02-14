@@ -19,7 +19,7 @@ public sealed record ThemeKey : ISetting<ThemeKey>, ILocalizable<ThemeKey>
     /// <summary>
     /// The localization key for this theme name.
     /// </summary>
-    public string Key { get; }
+    public string LocalizationKey { get; }
 
     /// <summary>
     /// The Avalonia theme variant of this application theme.
@@ -28,7 +28,7 @@ public sealed record ThemeKey : ISetting<ThemeKey>, ILocalizable<ThemeKey>
 
     private ThemeKey(string key, ThemeVariant theme)
     {
-        Key = key;
+        LocalizationKey = key;
         Theme = theme;
     }
 
@@ -61,7 +61,7 @@ public sealed record ThemeKey : ISetting<ThemeKey>, ILocalizable<ThemeKey>
     {
         var realm = Locator.Current.GetSafely<RealmAccess>();
 
-        realm.SetSetting(setting_key, Key);
+        realm.SetSetting(setting_key, LocalizationKey);
     }
 
     private const string default_key = "Theme.System";
@@ -72,5 +72,5 @@ public sealed record ThemeKey : ISetting<ThemeKey>, ILocalizable<ThemeKey>
     public static readonly ThemeKey DARK = new(dark_key, ThemeVariant.Dark);
     public static readonly ThemeKey LIGHT = new(light_key, ThemeVariant.Light);
 
-    public static implicit operator string(ThemeKey key) => key.Key;
+    public static implicit operator string(ThemeKey key) => key.LocalizationKey;
 }

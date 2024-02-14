@@ -1,6 +1,7 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 
 using ReactiveUI;
@@ -24,7 +25,7 @@ public class SettingsViewModel : ReactiveObject, IRoutableViewModel
 
     internal LanguageViewModel LanguageManager { get; } = new();
 
-    public LocalizedString AppVersion { get; set; } = new("App.Version", App.VERSION);
+    public ILocalized AppVersion { get; set; } = ("App.Version", App.VERSION).Localize();
 
     private bool _includeNsfw = Setting.IncludeNsfw;
     public bool IncludeNsfw

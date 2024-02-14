@@ -14,23 +14,23 @@ public static class JikanExtensions
 {
     public static LocalizedString Localize(this AiringStatus e) => e switch
     {
-        AiringStatus.Airing => new LocalizedString("Enum.AiringStatus.Airing"),
-        AiringStatus.Completed => new LocalizedString("Enum.AiringStatus.Finished"),
-        AiringStatus.Upcoming => new LocalizedString("Enum.AiringStatus.Upcoming"),
+        AiringStatus.Airing => "Enum.AiringStatus.Airing".Localize(),
+        AiringStatus.Completed => "Enum.AiringStatus.Finished".Localize(),
+        AiringStatus.Upcoming => "Enum.AiringStatus.Upcoming".Localize(),
         _ => throw new ArgumentOutOfRangeException(nameof(e), e, nameof(AiringStatus))
     };
 
     public static LocalizedString Localize(this AnimeType e) => e switch
     {
-        AnimeType.TV => new LocalizedString("Enum.AnimeType.TV"),
-        AnimeType.TVSpecial => new LocalizedString("Enum.AnimeType.TVSpecial"),
-        AnimeType.OVA => new LocalizedString("Enum.AnimeType.OVA"),
-        AnimeType.Movie => new LocalizedString("Enum.AnimeType.Movie"),
-        AnimeType.Special => new LocalizedString("Enum.AnimeType.Special"),
-        AnimeType.ONA => new LocalizedString("Enum.AnimeType.ONA"),
-        AnimeType.Music => new LocalizedString("Enum.AnimeType.Music"),
-        AnimeType.PromotionalVideo => new LocalizedString("Enum.AnimeType.PromoVideo"),
-        AnimeType.CommercialMessage => new LocalizedString("Enum.AnimeType.Commercial"),
+        AnimeType.TV => "Enum.AnimeType.TV".Localize(),
+        AnimeType.TVSpecial => "Enum.AnimeType.TVSpecial".Localize(),
+        AnimeType.OVA => "Enum.AnimeType.OVA".Localize(),
+        AnimeType.Movie => "Enum.AnimeType.Movie".Localize(),
+        AnimeType.Special => "Enum.AnimeType.Special".Localize(),
+        AnimeType.ONA => "Enum.AnimeType.ONA".Localize(),
+        AnimeType.Music => "Enum.AnimeType.Music".Localize(),
+        AnimeType.PromotionalVideo => "Enum.AnimeType.PromoVideo".Localize(),
+        AnimeType.CommercialMessage => "Enum.AnimeType.Commercial".Localize(),
         _ => throw new ArgumentOutOfRangeException(nameof(e), e, error_message(nameof(AnimeType)))
     };
 
@@ -42,10 +42,10 @@ public static class JikanExtensions
 
     public static LocalizedString Localize(this Season e) => e switch
     {
-        Season.Spring => new LocalizedString("Enum.Season.Spring"),
-        Season.Summer => new LocalizedString("Enum.Season.Summer"),
-        Season.Fall => new LocalizedString("Enum.Season.Fall"),
-        Season.Winter => new LocalizedString("Enum.Season.Winter"),
+        Season.Spring => "Enum.Season.Spring".Localize(),
+        Season.Summer => "Enum.Season.Summer".Localize(),
+        Season.Fall => "Enum.Season.Fall".Localize(),
+        Season.Winter => "Enum.Season.Winter".Localize(),
         _ => throw new ArgumentOutOfRangeException(nameof(e), e, error_message(nameof(Season)))
     };
 
@@ -119,7 +119,7 @@ public static class JikanExtensions
 
     public static LocalizedString LocalizeEpisodeNumber(this AnimeEpisodeResponse response)
     {
-        return new LocalizedString("Label.Episode.Number", response.MalId);
+        return ("Label.Episode.Number", response.MalId).Localize();
     }
 
     private static string error_message(string paramName) => $"The passed {paramName} was invalid";

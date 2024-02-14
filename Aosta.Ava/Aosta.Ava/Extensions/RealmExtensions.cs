@@ -16,7 +16,7 @@ namespace Aosta.Ava.Extensions;
 
 public static class RealmExtensions
 {
-    private static readonly ILogger s_Logger = Locator.Current.GetSafely<ILogger>();
+    private static readonly ILogger logger = Locator.Current.GetSafely<ILogger>();
 
     /// <summary>
     /// Convert the Realm projection into an observable list and subscribe to the collection changes.
@@ -32,13 +32,13 @@ public static class RealmExtensions
 
         token = query.SubscribeForNotifications((sender, changes) =>
         {
-            s_Logger.Debug("Projection for {Type} changed, adding changes to observable cache", typeof(T).Name);
+            logger.Debug("Projection for {Type} changed, adding changes to observable cache", typeof(T).Name);
 
             // This happens when the collection is queried for the first time.
             if (changes is null)
             {
                 cache.AddRange(sender);
-                s_Logger.Debug("Initialized the {Type} observable cache with {Count} elements",
+                logger.Debug("Initialized the {Type} observable cache with {Count} elements",
                     typeof(T).Name, sender.Count);
             }
             else
@@ -57,7 +57,7 @@ public static class RealmExtensions
                         update.Insert(i, sender[i]);
                     }
 
-                    s_Logger.Debug("Processed {ChangesCount} changes for {Type} observable cache: [Removed: {Removed}, Added: {Added}, Moved: {Moved}]",
+                    logger.Debug("Processed {ChangesCount} changes for {Type} observable cache: [Removed: {Removed}, Added: {Added}, Moved: {Moved}]",
                         changes.DeletedIndices.Length + changes.InsertedIndices.Length,
                         typeof(T).Name,
                         changes.DeletedIndices.Length - changes.Moves.Length,

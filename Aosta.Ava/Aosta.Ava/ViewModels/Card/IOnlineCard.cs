@@ -10,5 +10,5 @@ public interface IOnlineCard
     /// </summary>
     public string BannerUrl { get; }
 
-    protected const string PORTRAIT_PLACEHOLDER = "avares://Aosta.Ava/Assets/Images/portrait-placeholder.png";
+    public const string PORTRAIT_PLACEHOLDER = "avares://Aosta.Ava/Assets/Images/portrait-placeholder.png";
 }

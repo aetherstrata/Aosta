@@ -41,7 +41,7 @@ internal class ThemeViewModel : ReactiveObject
             {
                 value.Data.Save();
                 Application.Current!.RequestedThemeVariant = value.Data.Theme;
-                this.Log().Info("Application theme set to {Variant}", value.Data.Key);
+                this.Log().Info("Application theme set to {Variant}", value.Data.LocalizationKey);
             }
 
             this.RaiseAndSetIfChanged(ref _currentTheme, value);

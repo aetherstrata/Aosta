@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 using ReactiveUI;
@@ -10,7 +11,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Aosta.Ava.Localization;
 
-public sealed class LocalizedData<T> : ReactiveObject, ILocalized, IEquatable<LocalizedData<T>>
+public sealed class LocalizedData<T> : ReactiveObject, ILocalized, IDisposable, IEquatable<LocalizedData<T>>
 {
     /// <summary>
     /// The object associated with this localization.
@@ -21,7 +22,7 @@ public sealed class LocalizedData<T> : ReactiveObject, ILocalized, IEquatable<Lo
     /// <summary>
     /// The localization key used to update this object's translation at runtime.
     /// </summary>
-    public string Key { get; }
+    public string LocalizationKey { get; }
 
     /// <inheritdoc />
     [Reactive]
@@ -32,13 +33,13 @@ public sealed class LocalizedData<T> : ReactiveObject, ILocalized, IEquatable<Lo
         ArgumentNullException.ThrowIfNull(data);
 
         Data = data;
-        Key = key;
-        Localized = Localizer.Instance[Key];
+        LocalizationKey = key;
+        Localized = Localizer.Instance[LocalizationKey];
 
-        Localizer.Instance.PropertyChanged += (_, _) => Localized = Localizer.Instance[Key];
+        Localizer.Instance.PropertyChanged += onLanguageChange;
     }
 
-    public LocalizedData(ILocalizable<T> localizable) : this(localizable.Data, localizable.Key)
+    public LocalizedData(ILocalizable<T> localizable) : this(localizable.Data, localizable.LocalizationKey)
     {
     }
 
@@ -57,5 +58,18 @@ public sealed class LocalizedData<T> : ReactiveObject, ILocalized, IEquatable<Lo
     public override int GetHashCode()
     {
         return EqualityComparer<T>.Default.GetHashCode(Data);
+    }
+
+    public void Dispose()
+    {
+        Localizer.Instance.PropertyChanged -= onLanguageChange;
+    }
+
+    private void onLanguageChange(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == "Item")
+        {
+            Localized = Localizer.Instance[LocalizationKey];
+        }
     }
 }

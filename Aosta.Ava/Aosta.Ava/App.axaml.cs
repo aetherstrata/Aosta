@@ -62,7 +62,7 @@ public partial class App : Application
 
         var themeKey = ThemeKey.Load();
         RequestedThemeVariant = themeKey.Theme;
-        _logger.Information("Loaded theme {Variant}", themeKey.Key);
+        _logger.Information("Loaded theme {Variant}", themeKey.LocalizationKey);
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

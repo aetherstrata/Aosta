@@ -31,7 +31,7 @@ public class AnimeTests
 
         using var _ = new AssertionScope();
         realm.Run(r => r.All<Anime>().Count()).Should().Be(1);
-        realm.Run(r => r.First<Anime>().GetDefaultTitle()).Should().Be("Awesome Title");
+        realm.Run(r => r.First<Anime>().Titles.GetDefault().Title).Should().Be("Awesome Title");
     }
 
     [Test]

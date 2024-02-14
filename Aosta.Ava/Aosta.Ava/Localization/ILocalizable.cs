@@ -5,9 +5,16 @@ namespace Aosta.Ava.Localization;
 
 public interface ILocalizable<T>
 {
-    string Key { get; }
+    string LocalizationKey { get; }
 
     T Data { get; }
 
     LocalizedData<T> Localize();
+}
+
+public interface ILocalizable
+{
+    string LocalizationKey { get; }
+
+    LocalizedString Localize();
 }
