@@ -3,38 +3,43 @@ using System.Globalization;
 using Aosta.Data.Models.Embedded;
 using Aosta.Data.Enums;
 using Aosta.Data.Models;
-using Aosta.Data.Models.Jikan;
-using Aosta.Data.Models.Local;
 using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Response;
 
 using Riok.Mapperly.Abstractions;
+
+using AiringStatus = Aosta.Data.Enums.AiringStatus;
 
 namespace Aosta.Data.Mapper;
 
 [Mapper]
 public static partial class JikanMapper
 {
-    [MapProperty(nameof(AnimeResponse.MalId), nameof(JikanAnime.ID))]
-    public static partial JikanAnime ToModel(this AnimeResponse source);
+    [MapProperty(nameof(AnimeResponse.MalId), nameof(Anime.ID))]
+    [MapProperty(nameof(AnimeResponse.Status), nameof(Anime.AiringStatus))]
+    public static partial Anime ToModel(this AnimeResponse source);
 
-    [MapProperty(nameof(AnimeResponse.MalId), nameof(JikanAnime.ID))]
-    public static partial JikanAnime ToModel(this AnimeResponseFull source);
+    [MapProperty(nameof(AnimeResponse.MalId), nameof(Anime.ID))]
+    [MapProperty(nameof(AnimeResponse.Status), nameof(Anime.AiringStatus))]
+    public static partial Anime ToModel(this AnimeResponseFull source);
 
-    public static partial JikanEpisode ToModel(this AnimeEpisodeResponse source);
-
-    /// <summary>
-    /// Create a new <see cref="Anime"/> object with this Jikan model
-    /// </summary>
-    /// <param name="source">The Jikan model</param>
-    /// <returns>A new <see cref="Anime"/> constructed with the given response</returns>
-    public static Anime NewRecord(this JikanAnime source)
+    public static Episode ToModel(this AnimeEpisodeResponse response)
     {
-        return new Anime
+        var target = response.toModel();
+
+        target.Titles.Add(new TitleEntry(TitleEntry.DEFAULT_KEY, response.Title));
+
+        if (response.TitleJapanese is not null)
         {
-            Jikan = source,
-            Local = new LocalAnime()
-        };
+            target.Titles.Add(new TitleEntry(TitleEntry.JAPANESE_KEY, response.TitleJapanese));
+        }
+
+        if (response.TitleRomanji is not null)
+        {
+            target.Titles.Add(new TitleEntry(TitleEntry.ROMANJI_KEY, response.TitleRomanji));
+        }
+
+        return target;
     }
 
     internal static AnimeBroadcast ToModel(this AnimeBroadcastResponse source)
@@ -59,6 +64,19 @@ public static partial class JikanMapper
     internal static partial TitleEntry ToModel(this TitleEntryResponse source);
     internal static partial YouTubeVideo ToModel(this AnimeTrailerResponse source);
 
+    private static partial Episode toModel(this AnimeEpisodeResponse source);
+
+    private static AudienceRating toLocalType(this string str) => str switch
+    {
+        "G - All Ages" => AudienceRating.Everyone,
+        "PG - Children" => AudienceRating.Children,
+        "PG-13 - Teens 13 or older" => AudienceRating.Teens,
+        "R - 17+ (violence & profanity)" => AudienceRating.ViolenceProfanity,
+        "R+ - Mild Nudity" => AudienceRating.MildNudity,
+        "Rx - Hentai" => AudienceRating.Hentai,
+        _ => throw new ArgumentOutOfRangeException(nameof(str), str, $"The string did not have a valid conversion to {nameof(AudienceRating)}!")
+    };
+
     private static ContentType toLocalType(this AnimeType type) => type switch
     {
         AnimeType.TV => ContentType.TV,
@@ -70,6 +88,14 @@ public static partial class JikanMapper
         AnimeType.Music => ContentType.Music,
         AnimeType.PromotionalVideo => ContentType.PromotionalVideo,
         AnimeType.CommercialMessage => ContentType.CommercialMessage,
-        _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        _ => throw new ArgumentOutOfRangeException(nameof(type), type, $"{nameof(AnimeType)} did not have a valid value!")
+    };
+
+    private static AiringStatus toLocalType(this Aosta.Jikan.Enums.AiringStatus status) => status switch
+    {
+        Jikan.Enums.AiringStatus.Airing => AiringStatus.CurrentlyAiring,
+        Jikan.Enums.AiringStatus.Completed => AiringStatus.FinishedAiring,
+        Jikan.Enums.AiringStatus.Upcoming => AiringStatus.NotYetAired,
+        _ => throw new ArgumentOutOfRangeException(nameof(status), status, $"{nameof(Aosta.Jikan.Enums.AiringStatus)} did not have a valid value!")
     };
 }

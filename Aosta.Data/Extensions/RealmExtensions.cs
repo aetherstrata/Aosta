@@ -29,7 +29,7 @@ public static class RealmExtensions
 
     public static IQueryable<TEntity> Is<TEntity>(
         this IQueryable<TEntity> source,
-        Expression<Func<TEntity, object>> lambda,
+        Expression<Func<TEntity, object?>> lambda,
         QueryArgument value)
         where TEntity : IRealmObject
     {
@@ -74,7 +74,7 @@ public static class RealmExtensions
     /// <exception cref="ArgumentException">the provided property expression is invalid</exception>
     public static IQueryable<TEntity> In<TEntity, TArgument>(
         this IQueryable<TEntity> source,
-        Expression<Func<TEntity, TArgument>> lambda,
+        Expression<Func<TEntity, object?>> lambda,
         IEnumerable<TArgument> objList)
         where TEntity : IRealmObject
     {

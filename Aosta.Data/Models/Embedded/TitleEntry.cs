@@ -10,6 +10,10 @@ namespace Aosta.Data.Models.Embedded;
 [Preserve(AllMembers = true)]
 public partial class TitleEntry : IEmbeddedObject
 {
+    internal const string DEFAULT_KEY = "Default";
+    internal const string JAPANESE_KEY = "Japanese";
+    internal const string ROMANJI_KEY = "Romanji";
+
     /// <summary>
     /// Type of title (usually the language).
     /// </summary>

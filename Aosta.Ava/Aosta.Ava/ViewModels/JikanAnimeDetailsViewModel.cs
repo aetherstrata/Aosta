@@ -74,7 +74,7 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
     internal bool CanBeAdded()
     {
         return !_realm.All<Anime>()
-            .Is(static x => x.Jikan!.ID, _response.MalId)
+            .Is(static x => x.ID, _response.MalId)
             .Any();
     }
 
@@ -84,7 +84,13 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
             _response.Titles.GetDefault() ?? "N/A",
             _response.MalId);
 
-        return Locator.Current.GetSafely<RealmAccess>().WriteAsync(r => r.Add(_response.ToModel().NewRecord()), ct);
+        return Locator.Current.GetSafely<RealmAccess>().WriteAsync(r =>
+        {
+            var model = _response.ToModel();
+            model.Episodes.AddRange(Episodes.Select(x => x.Response.ToModel()));
+            r.Add(model);
+
+        }, ct);
     }
 
     private int _page;

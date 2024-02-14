@@ -24,9 +24,9 @@ public class MoviePill : InfoPill
 
     public MoviePill(Anime model) : base(model)
     {
-        if (model.Jikan?.Aired?.From.HasValue ?? false)
+        if (model.Aired?.From.HasValue ?? false)
         {
-            Date = LocalizedString.CompactDate(model.Jikan.Aired.From.Value);
+            Date = LocalizedString.CompactDate(model.Aired.From.Value);
         }
     }
 }

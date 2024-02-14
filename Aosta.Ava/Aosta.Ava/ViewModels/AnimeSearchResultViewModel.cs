@@ -38,9 +38,7 @@ public class AnimeSearchResultViewModel : ReactiveObject
 
             var realmTask = _realm.WriteAsync(r =>
             {
-                var jikanMetadata = response.ToModel();
-
-                r.Add(jikanMetadata.NewRecord());
+                r.Add(response.ToModel());
             });
 
             CanBeAdded = false;

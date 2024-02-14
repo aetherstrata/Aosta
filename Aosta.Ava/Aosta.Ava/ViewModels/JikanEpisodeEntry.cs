@@ -12,20 +12,20 @@ namespace Aosta.Ava.ViewModels;
 
 public class JikanEpisodeEntry
 {
-    private readonly AnimeEpisodeResponse _response;
+    internal AnimeEpisodeResponse Response { get; }
 
     public JikanEpisodeEntry(IScreen host, AnimeEpisodeResponse response, long animeId)
     {
-        _response = response;
+        Response = response;
 
         GoToDetails = ReactiveCommand.CreateFromObservable(() =>
-            host.Router.Navigate.Execute(new JikanEpisodeDetailsViewModel(host, _response, animeId)));
+            host.Router.Navigate.Execute(new JikanEpisodeDetailsViewModel(host, Response, animeId)));
     }
 
     internal ReactiveCommand<Unit, IRoutableViewModel> GoToDetails { get; }
 
-    public long Number => _response.MalId;
-    public string Title => _response.Title ?? LocalizedString.NOT_AVAILABLE;
-    public bool? Filler => _response.Filler;
-    public bool? Recap => _response.Recap;
+    public long Number => Response.MalId;
+    public string Title => Response.Title ?? LocalizedString.NOT_AVAILABLE;
+    public bool? Filler => Response.Filler;
+    public bool? Recap => Response.Recap;
 }

@@ -1,7 +1,6 @@
+using Aosta.Data.Mapper;
 using Aosta.Jikan.Models.Response;
 using FluentAssertions.Execution;
-
-using JikanMapper = Aosta.Data.Mapper.JikanMapper;
 
 namespace Aosta.Data.Tests.Models.Jikan;
 
@@ -11,13 +10,13 @@ public class TrailerTests
     [Test]
     public void ConversionTest()
     {
-        var converted = JikanMapper.ToModel(new AnimeTrailerResponse
+        var converted = new AnimeTrailerResponse
         {
             Url = "Url",
             EmbedUrl = "Embed Url",
             YoutubeId = "== ID ==",
             Image = new ImageResponse()
-        });
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.Url.Should().Be("Url");
@@ -29,7 +28,7 @@ public class TrailerTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newTrailer = JikanMapper.ToModel(new AnimeTrailerResponse());
+        var newTrailer = new AnimeTrailerResponse().ToModel();
 
         using var _ = new AssertionScope();
         newTrailer.Url.Should().BeNull();

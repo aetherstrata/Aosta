@@ -1,7 +1,9 @@
 using Aosta.Data.Enums;
 using Aosta.Data.Extensions;
+using Aosta.Data.Mapper;
 using Aosta.Data.Models;
-using Aosta.Data.Models.Local;
+using Aosta.Data.Models.Embedded;
+using Aosta.Data.Tests.Models.Jikan;
 using Aosta.Data.Tests.Realm;
 
 using FluentAssertions.Execution;
@@ -18,7 +20,6 @@ public class AnimeTests
 
         using var _ = new AssertionScope();
         realm.Run(r => r.All<Anime>().Count()).Should().Be(1);
-        realm.Run(r => r.First<Anime>().DefaultTitle).Should().BeNull();
     }
 
     [Test]
@@ -26,14 +27,11 @@ public class AnimeTests
     {
         var realm = RealmSetup.NewInstance().AddAnime();
 
-        realm.Write(r => r.First<Anime>().Local = new LocalAnime()
-        {
-            Title = "Awesome Title"
-        });
+        realm.Write(r => r.First<Anime>().Titles.Add(new TitleEntry("Default", "Awesome Title")));
 
         using var _ = new AssertionScope();
         realm.Run(r => r.All<Anime>().Count()).Should().Be(1);
-        realm.Run(r => r.First<Anime>().DefaultTitle).Should().Be("Awesome Title");
+        realm.Run(r => r.First<Anime>().GetDefaultTitle()).Should().Be("Awesome Title");
     }
 
     [Test]
@@ -41,10 +39,7 @@ public class AnimeTests
     {
         var realm = RealmSetup.NewInstance().AddAnime();
 
-        realm.Write(r => r.First<Anime>().Local = new LocalAnime()
-        {
-            Type = ContentType.Movie
-        });
+        realm.Write(r => r.First<Anime>().Type = ContentType.Movie);
 
         using var _ = new AssertionScope();
         realm.Run(r => r.All<Anime>().Count()).Should().Be(1);

@@ -3,7 +3,6 @@
 
 using Aosta.Ava.Localization;
 using Aosta.Ava.ViewModels.DetailsPill;
-using Aosta.Data.Extensions;
 using Aosta.Data.Models;
 
 using ReactiveUI;
@@ -32,9 +31,9 @@ public class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
 
     public IContentInfoPill DetailsPill { get; }
 
-    internal string? LargeBanner => _anime.Jikan?.Images?.JPG?.LargeImageUrl;
+    internal string? LargeBanner => _anime.Images?.JPG?.LargeImageUrl;
 
     internal string Synopsis => _anime.Synopsis ?? LocalizedString.NOT_AVAILABLE;
 
-    internal string Title => _anime.Local?.Title ?? _anime.Jikan?.Titles.GetDefault() ?? LocalizedString.NA;
+    internal string Title => _anime.GetDefaultTitle();
 }

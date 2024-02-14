@@ -11,7 +11,6 @@ using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Ava.Settings;
 using Aosta.Ava.ViewModels;
-using Aosta.Common.Extensions;
 using Aosta.Jikan;
 
 using Avalonia;

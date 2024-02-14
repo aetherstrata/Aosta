@@ -1,7 +1,6 @@
+using Aosta.Data.Mapper;
 using Aosta.Jikan.Models.Response;
 using FluentAssertions.Execution;
-
-using JikanMapper = Aosta.Data.Mapper.JikanMapper;
 
 namespace Aosta.Data.Tests.Models.Jikan;
 
@@ -11,13 +10,13 @@ public class UrlTests
     [Test]
     public void ConversionTest()
     {
-        var converted = JikanMapper.ToModel(new MalUrlResponse
+        var converted = new MalUrlResponse
         {
             MalId = 1,
             Type = "type",
             Url = "url",
             Name = "name"
-        });
+        }.ToModel();
 
         using var _ = new AssertionScope();
         converted.MalId.Should().Be(1);
@@ -29,7 +28,7 @@ public class UrlTests
     [Test]
     public void DefaultValuesTest()
     {
-        var newUrl = JikanMapper.ToModel(new MalUrlResponse());
+        var newUrl = new MalUrlResponse().ToModel();
 
         using var _ = new AssertionScope();
         newUrl.MalId.Should().Be(0);

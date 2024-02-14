@@ -88,16 +88,16 @@
   "Enum.Season.Fall": "Autunno",
   "Enum.Season.Winter": "Inverno",
 
-  "Date.Compact.January": "{0} / 01 / {1}",
-  "Date.Compact.February": "{0} / 02 / {1}",
-  "Date.Compact.March": "{0} / 03 / {1}",
-  "Date.Compact.April": "{0} / 04 / {1}",
-  "Date.Compact.May": "{0} / 05 / {1}",
-  "Date.Compact.June": "{0} /06 / {1}",
-  "Date.Compact.July": "{0} / 07 / {1}",
-  "Date.Compact.August": "{0} / 08 / {1}",
-  "Date.Compact.September": "{0} / 09 / {1}",
-  "Date.Compact.October": "{0} / 10 / {1}",
-  "Date.Compact.November": "{0} / 11 / {1}",
-  "Date.Compact.December": "{0} / 12 / {1}"
+  "Date.Compact.January": "{0}/01/{1}",
+  "Date.Compact.February": "{0}/02/{1}",
+  "Date.Compact.March": "{0}/03/{1}",
+  "Date.Compact.April": "{0}/04/{1}",
+  "Date.Compact.May": "{0}/05/{1}",
+  "Date.Compact.June": "{0}/06/{1}",
+  "Date.Compact.July": "{0}/07/{1}",
+  "Date.Compact.August": "{0}/08/{1}",
+  "Date.Compact.September": "{0}/09/{1}",
+  "Date.Compact.October": "{0}/10/{1}",
+  "Date.Compact.November": "{0}/11/{1}",
+  "Date.Compact.December": "{0}/12/{1}"
 }

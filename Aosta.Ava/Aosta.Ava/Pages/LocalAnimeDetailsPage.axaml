@@ -20,7 +20,7 @@
                 <Image Grid.Row="0"
                        async:ImageLoader.Source="{Binding LargeBanner}"
                        VerticalAlignment="Top"
-                       Height="200"
+                       Height="{StaticResource AnimeBannerHeight}"
                        Stretch="UniformToFill">
                     <Image.OpacityMask>
                         <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
@@ -31,7 +31,7 @@
                         </LinearGradientBrush>
                     </Image.OpacityMask>
                 </Image>
-                <StackPanel Grid.Row="0" Margin="10, 100, 10 ,10">
+                <StackPanel Grid.Row="0" Margin="10, 10, 10 ,10">
                     <ContentControl Content="{Binding DetailsPill}"/>
                     <TextBlock Text="{localize:Localize Label.Synopsis}"
                                FontSize="18"

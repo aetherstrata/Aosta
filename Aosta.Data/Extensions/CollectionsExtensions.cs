@@ -7,8 +7,18 @@ namespace Aosta.Data.Extensions;
 
 public static class CollectionExtensions
 {
-    public static string? GetDefault(this ICollection<TitleEntry> entries)
+    public static string GetDefault(this ICollection<TitleEntry> entries)
     {
-        return entries.FirstOrDefault(entry => entry.Type == "Default")?.Title;
+        return entries.First(entry => entry.Type == TitleEntry.DEFAULT_KEY).Title;
+    }
+
+    public static string? GetJapanese(this ICollection<TitleEntry> entries)
+    {
+        return entries.FirstOrDefault(entry => entry.Type == TitleEntry.JAPANESE_KEY)?.Title;
+    }
+
+    public static string? GetRomanji(this ICollection<TitleEntry> entries)
+    {
+        return entries.FirstOrDefault(entry => entry.Type == TitleEntry.ROMANJI_KEY)?.Title;
     }
 }

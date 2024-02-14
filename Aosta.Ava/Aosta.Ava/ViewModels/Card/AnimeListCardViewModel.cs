@@ -21,9 +21,9 @@ public class AnimeListCardViewModel : ReactiveObject, IOnlineCard
         GoToDetails = ReactiveCommand.CreateFromObservable(() => host.Router.Navigate.Execute(new LocalAnimeDetailsViewModel(host, _data)));
     }
 
-    public string Title => _data.DefaultTitle ?? LocalizedString.NOT_AVAILABLE;
+    public string Title => _data.GetDefaultTitle() ?? LocalizedString.NOT_AVAILABLE;
 
-    public string BannerUrl => _data.Jikan?.Images?.JPG?.ImageUrl ?? IOnlineCard.PORTRAIT_PLACEHOLDER;
+    public string BannerUrl => _data.Images?.JPG?.ImageUrl ?? IOnlineCard.PORTRAIT_PLACEHOLDER;
 
     public ReactiveCommand<Unit,IRoutableViewModel> GoToDetails { get; }
 }

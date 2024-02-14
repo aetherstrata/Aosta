@@ -19,8 +19,6 @@ using Avalonia.ReactiveUI;
 using DynamicData;
 using DynamicData.Kernel;
 
-using HarfBuzzSharp;
-
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -125,9 +123,9 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
                 // Check if the MAL IDs returned from Jikan appear in Realm
                 var found = _realm.Run(r =>
                     r.All<Anime>()
-                        .In(x => x.Jikan!.ID, resultIds)
+                        .In(x => x.ID, resultIds)
                         .AsRealmCollection()
-                        .Select(x => x.Jikan!.ID)
+                        .Select(x => x.ID)
                         .ToHashSet());
 
                 var viewModels = result.Data

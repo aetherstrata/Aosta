@@ -13,20 +13,20 @@ namespace Aosta.Ava.Settings;
 
 public static class Setting
 {
-    private static readonly Lazy<RealmAccess> lazy_realm = new(() => Locator.Current.GetSafely<RealmAccess>());
+    private static readonly RealmAccess lazy_realm = Locator.Current.GetSafely<RealmAccess>();
 
     private const string include_nsfw = "IncludeNsfw";
     private const string include_unapproved = "IncludeUnapproved";
 
     public static bool IncludeNsfw
     {
-        get => !lazy_realm.Value.GetSetting(include_nsfw, false);
-        set => lazy_realm.Value.SetSetting(include_nsfw, value);
+        get => lazy_realm.GetSetting(include_nsfw, false);
+        set => lazy_realm.SetSetting(include_nsfw, value);
     }
 
     public static bool IncludeUnapproved
     {
-        get => !lazy_realm.Value.GetSetting(include_unapproved, false);
-        set => lazy_realm.Value.SetSetting(include_unapproved, value);
+        get => lazy_realm.GetSetting(include_unapproved, false);
+        set => lazy_realm.SetSetting(include_unapproved, value);
     }
 }

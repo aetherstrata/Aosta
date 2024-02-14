@@ -3,7 +3,6 @@
 
 using Aosta.Data.Extensions;
 using Aosta.Data.Models;
-using Aosta.Data.Models.Jikan;
 
 namespace Aosta.Data.Tests.Realm;
 
@@ -31,51 +30,42 @@ public class AccessorTests
     }
 
     [Test]
-    [TestCase(0, new long[]{ })]
-    [TestCase(0, new long[]{ 5, 34, 56, 76 })]
-    [TestCase(1, new long[]{ 54 })]
-    [TestCase(1, new long[]{ 57 })]
-    [TestCase(1, new long[]{ 1, 45, 54, 67, 88 })]
-    [TestCase(1, new long[]{ 1, 45, 57, 67, 88 })]
-    [TestCase(2, new long[]{ 54, 57 })]
-    [TestCase(2, new long[]{ 32, 54, 57, 67 })]
+    [TestCase(0, new long[] { })]
+    [TestCase(0, new long[] { 5, 34, 56, 76 })]
+    [TestCase(1, new long[] { 54 })]
+    [TestCase(1, new long[] { 57 })]
+    [TestCase(1, new long[] { 1, 45, 54, 67, 88 })]
+    [TestCase(1, new long[] { 1, 45, 57, 67, 88 })]
+    [TestCase(2, new long[] { 54, 57 })]
+    [TestCase(2, new long[] { 32, 54, 57, 67 })]
     public void valueInListQuery_returnsCorrectData(int expected, long[] ids)
     {
         _realm.AddAnime(new Anime
         {
-            Jikan = new JikanAnime
-            {
-                ID = 54
-            }
+            ID = 54
         });
 
         _realm.AddAnime(new Anime
         {
-            Jikan = new JikanAnime
-            {
-                ID = 57
-            }
+            ID = 57
         });
 
-        _realm.Run(r => r.All<Anime>().In(x => x.Jikan!.ID, ids).Count()).Should().Be(expected);
+        _realm.Run(r => r.All<Anime>().In(x => x.ID, ids).Count()).Should().Be(expected);
     }
 
     [Test]
-    [TestCase(new[]{ long.MinValue, -1, 0, 1, long.MaxValue })]
-    [TestCase(new[]{ long.MinValue })]
-    [TestCase(new[]{ long.MaxValue })]
-    [TestCase(new long[]{ 0 })]
+    [TestCase(new[] { long.MinValue, -1, 0, 1, long.MaxValue })]
+    [TestCase(new[] { long.MinValue })]
+    [TestCase(new[] { long.MaxValue })]
+    [TestCase(new long[] { 0 })]
     public void valueNotInListQuery_returnsEmptyResults(long[] ids)
     {
         _realm.AddAnime(new Anime
         {
-            Jikan = new JikanAnime
-            {
-                ID = 54
-            }
+            ID = 54
         });
 
-        _realm.Run(r => r.All<Anime>().In(x => x.Jikan!.ID, ids).Count()).Should().Be(0);
+        _realm.Run(r => r.All<Anime>().In(x => x.ID, ids).Count()).Should().Be(0);
     }
 
     [Test]
@@ -85,24 +75,18 @@ public class AccessorTests
     {
         _realm.AddAnime(new Anime
         {
-            Jikan = new JikanAnime
-            {
-                ID = 54
-            }
+            ID = 54
         });
 
         _realm.AddAnime(new Anime
         {
-            Jikan = new JikanAnime
-            {
-                ID = 57
-            }
+            ID = 57
         });
 
         _realm.Run(r =>
         {
-            var q = r.All<Anime>().Is(x => x.Jikan!.ID, id);
-            return (q.Count(), q.First().Jikan!.ID);
+            var q = r.All<Anime>().Is(x => x.ID, id);
+            return (q.Count(), q.First().ID);
         }).Should().Be((1, id));
     }
 }

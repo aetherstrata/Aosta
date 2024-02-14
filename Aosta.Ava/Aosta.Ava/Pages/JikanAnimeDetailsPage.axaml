@@ -21,7 +21,7 @@
                 <Image Grid.Row="0"
                        async:ImageLoader.Source="{Binding LargeBanner}"
                        VerticalAlignment="Top"
-                       Height="200"
+                       Height="{StaticResource AnimeBannerHeight}"
                        Stretch="UniformToFill">
                     <Image.OpacityMask>
                         <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
