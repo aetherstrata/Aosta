@@ -7,7 +7,7 @@ using Avalonia.ReactiveUI;
 
 namespace Aosta.Ava.Pages;
 
-public partial class JikanEpisodeDetailsPage : ReactiveUserControl<JikanEpisodeDetailsViewModel>
+public partial class JikanEpisodeDetailsPage : ReactivePageBase<JikanEpisodeDetailsViewModel>
 {
     public JikanEpisodeDetailsPage()
     {

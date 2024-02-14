@@ -59,5 +59,20 @@ public abstract class InfoPill : ReactiveObject, IContentInfoPill
         Status = model.AiringStatus.Localize();
         Type = model.Type.Localize();
     }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            Status.Dispose();
+            Type.Dispose();
+        }
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 }
 

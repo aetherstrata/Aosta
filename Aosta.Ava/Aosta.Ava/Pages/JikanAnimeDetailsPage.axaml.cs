@@ -13,7 +13,7 @@ using Splat;
 
 namespace Aosta.Ava.Pages;
 
-public partial class JikanAnimeDetailsPage : ReactiveUserControl<JikanAnimeDetailsViewModel>, IEnableLogger
+public partial class JikanAnimeDetailsPage : ReactivePageBase<JikanAnimeDetailsViewModel>, IEnableLogger
 {
     public JikanAnimeDetailsPage()
     {

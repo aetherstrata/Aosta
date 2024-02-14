@@ -1,17 +1,16 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+
 using Aosta.Ava.Localization;
 using Aosta.Data.Models;
 using Aosta.Jikan.Models.Response;
-
-using ReactiveUI.Fody.Helpers;
 
 namespace Aosta.Ava.ViewModels.DetailsPill;
 
 public class MoviePill : InfoPill
 {
-    [Reactive]
     public LocalizedString? Date { get; set; }
 
     public MoviePill(AnimeResponse response) : base(response)
@@ -28,5 +27,15 @@ public class MoviePill : InfoPill
         {
             Date = LocalizedString.CompactDate(model.Aired.From.Value);
         }
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            Date?.Dispose();
+        }
+
+        base.Dispose(disposing);
     }
 }

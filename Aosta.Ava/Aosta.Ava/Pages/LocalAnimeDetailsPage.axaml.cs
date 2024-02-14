@@ -7,7 +7,7 @@ using Avalonia.ReactiveUI;
 
 namespace Aosta.Ava.Pages;
 
-public partial class LocalAnimeDetailsPage : ReactiveUserControl<LocalAnimeDetailsViewModel>
+public partial class LocalAnimeDetailsPage : ReactivePageBase<LocalAnimeDetailsViewModel>
 {
     public LocalAnimeDetailsPage()
     {

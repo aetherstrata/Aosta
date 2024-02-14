@@ -37,7 +37,7 @@
                     <TextBlock Text="{localize:Localize Label.Synopsis}"
                                FontSize="18"
                                FontWeight="Bold" />
-                    <SelectableTextBlock Text="{Binding Synopsis}"
+                    <SelectableTextBlock Text="{Binding Response.Synopsis, FallbackValue={localize:Localize Label.NotAvailable.Long}}"
                                          Margin="0,0,0,15"
                                          SelectionBrush="{DynamicResource FloatingBackgroundBrush}"
                                          TextWrapping="WrapWithOverflow" />

@@ -1,6 +1,8 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Data.Models;
@@ -27,5 +29,15 @@ public class AnimePill : EpisodesPill
     {
         Season = model.Season.Localize();
         Year = model.Year.ToString() ?? LocalizedString.NA;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            Season.Dispose();
+        }
+
+        base.Dispose(disposing);
     }
 }

@@ -10,9 +10,11 @@ using System.Linq;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
+using Splat;
+
 namespace Aosta.Ava.Localization;
 
-public abstract class LocalizedString(string key) : ReactiveObject, ILocalized, IDisposable
+public abstract class LocalizedString(string key) : ReactiveObject, ILocalized, IDisposable, IEnableLogger
 {
     public static readonly LocalizedString ALL           = Create("Label.All");
     public static readonly LocalizedString NOT_AVAILABLE = Create("Label.NotAvailable.Long");
@@ -47,6 +49,11 @@ public abstract class LocalizedString(string key) : ReactiveObject, ILocalized, 
     {
         Dispose(true);
         GC.SuppressFinalize(this);
+    }
+
+    private void logChange()
+    {
+        this.Log().Debug("Localization for {Key} changed: {NewValue}", LocalizationKey, Localized);
     }
 
     private static readonly string[] month_name =
@@ -97,6 +104,7 @@ public abstract class LocalizedString(string key) : ReactiveObject, ILocalized, 
             if (e.PropertyName == "Item")
             {
                 Localized = Localizer.Instance[LocalizationKey];
+                logChange();
             }
         }
     }
@@ -130,6 +138,7 @@ public abstract class LocalizedString(string key) : ReactiveObject, ILocalized, 
             if (e.PropertyName == "Item")
             {
                 Localized = string.Format(Localizer.Instance[LocalizationKey], _arg);
+                logChange();
             }
         }
     }
@@ -165,6 +174,7 @@ public abstract class LocalizedString(string key) : ReactiveObject, ILocalized, 
             if (e.PropertyName == "Item")
             {
                 Localized = string.Format(Localizer.Instance[LocalizationKey], _arg0, _arg1);
+                logChange();
             }
         }
     }
@@ -202,6 +212,7 @@ public abstract class LocalizedString(string key) : ReactiveObject, ILocalized, 
             if (e.PropertyName == "Item")
             {
                 Localized = string.Format(Localizer.Instance[LocalizationKey], _arg0, _arg1, _arg2);
+                logChange();
             }
         }
     }
@@ -235,6 +246,7 @@ public abstract class LocalizedString(string key) : ReactiveObject, ILocalized, 
             if (e.PropertyName == "Item")
             {
                 Localized = string.Format(Localizer.Instance[LocalizationKey], _args);
+                logChange();
             }
         }
     }

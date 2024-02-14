@@ -1,6 +1,7 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
@@ -29,22 +30,23 @@ using Splat;
 
 namespace Aosta.Ava.ViewModels;
 
-public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
+public sealed class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel, IDisposable
 {
+    private readonly IJikan _jikan = Locator.Current.GetSafely<IJikan>();
+    private readonly Realm _realm;
+
     /// <inheritdoc />
     public string? UrlPathSegment { get; }
 
     /// <inheritdoc />
     public IScreen HostScreen { get; }
 
-    private readonly IJikan _jikan = Locator.Current.GetSafely<IJikan>();
-    private readonly Realm _realm;
-    private readonly AnimeResponse _response;
+    public AnimeResponse Response { get; }
 
     internal JikanAnimeDetailsViewModel(IScreen hostScreen, AnimeResponse response)
     {
         _realm = Locator.Current.GetSafely<RealmAccess>().GetRealm();
-        _response = response;
+        Response = response;
 
         UrlPathSegment = $"jikan-details-{response.MalId}";
         HostScreen = hostScreen;
@@ -58,13 +60,11 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
 
     public IContentInfoPill DetailsPill { get; }
 
-    internal string? LargeBanner => _response.Images?.JPG?.LargeImageUrl;
+    internal string? LargeBanner => Response.Images?.JPG?.LargeImageUrl;
 
-    internal string Synopsis => _response.Synopsis ?? LocalizedString.NOT_AVAILABLE;
+    internal string Title => Response.Titles.GetDefault() ?? LocalizedString.NA;
 
-    internal string Title => _response.Titles.GetDefault() ?? LocalizedString.NA;
-
-    internal bool HasEpisodes => _response.Type != AnimeType.Movie && _response.Episodes > 0;
+    internal bool HasEpisodes => Response.Type != AnimeType.Movie && Response.Episodes > 0;
 
     internal ObservableCollection<JikanEpisodeEntry> Episodes { get; } = [];
 
@@ -74,19 +74,19 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
     internal bool CanBeAdded()
     {
         return !_realm.All<Anime>()
-            .Is(static x => x.ID, _response.MalId)
+            .Is(static x => x.ID, Response.MalId)
             .Any();
     }
 
     internal Task AddToRealm(CancellationToken ct = default)
     {
         this.Log().Info("Writing anime {Title} [{Id}] to Realm",
-            _response.Titles.GetDefault() ?? "N/A",
-            _response.MalId);
+            Response.Titles.GetDefault() ?? "N/A",
+            Response.MalId);
 
         return Locator.Current.GetSafely<RealmAccess>().WriteAsync(r =>
         {
-            var model = _response.ToModel();
+            var model = Response.ToModel();
             model.Episodes.AddRange(Episodes.Select(x => x.Response.ToModel()));
             r.Add(model);
 
@@ -99,11 +99,11 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
         Interlocked.Increment(ref _page);
 
         this.Log().Debug<JikanAnimeDetailsViewModel>("Getting episodes page {Page} for anime {Name} [{Id}]",
-            _page, _response.Titles.GetDefault()!, _response.MalId);
+            _page, Response.Titles.GetDefault()!, Response.MalId);
 
-        return _jikan.GetAnimeEpisodesAsync(_response.MalId, _page, ct).ContinueWith(task =>
+        return _jikan.GetAnimeEpisodesAsync(Response.MalId, _page, ct).ContinueWith(task =>
         {
-            var entries = task.Result.Data.Select(x => new JikanEpisodeEntry(HostScreen, x, _response.MalId));
+            var entries = task.Result.Data.Select(x => new JikanEpisodeEntry(HostScreen, x, Response.MalId));
 
             Episodes.AddRange(entries);
 
@@ -112,5 +112,11 @@ public class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
                 IsLoadEpisodesButtonVisible = true;
             }
         }, ct);
+    }
+
+    public void Dispose()
+    {
+        _realm.Dispose();
+        DetailsPill.Dispose();
     }
 }

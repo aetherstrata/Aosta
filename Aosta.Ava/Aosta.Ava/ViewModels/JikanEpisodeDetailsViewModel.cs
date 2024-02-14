@@ -29,7 +29,7 @@ public class JikanEpisodeDetailsViewModel : ReactiveObject, IRoutableViewModel
 
     internal bool HasSynopsis => !string.IsNullOrEmpty(_response.Synopsis);
 
-    internal string PageTitle => _response.LocalizeEpisodeNumber();
+    internal LocalizedString PageTitle => _response.LocalizeEpisodeNumber();
 
     internal string Title => _response.Title ?? $"{_response.MalId} - {LocalizedString.NOT_AVAILABLE}";
 
