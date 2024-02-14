@@ -36,7 +36,7 @@
                     <fluent:FontIcon Glyph="{StaticResource CalendarGlyph}"
                                      Margin="5,0"
                                      FontFamily="{StaticResource SymbolThemeFontFamily}" />
-                    <ContentPresenter Content="{Binding Status}" />
+                    <ContentControl Content="{Binding Status}" />
                 </StackPanel>
             </Border>
             <Border Background="{DynamicResource AccentButtonBackground}"
@@ -67,7 +67,7 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
-                    <ContentPresenter Grid.Row="1" Grid.Column="4" Content="{Binding Type}" />
+                    <ContentControl Grid.Row="1" Grid.Column="4" Content="{Binding Type}" />
                     <Grid.Styles>
                         <Style Selector="TextBlock">
                             <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
@@ -101,7 +101,7 @@
                     <fluent:FontIcon Glyph="{StaticResource CalendarGlyph}"
                                      Margin="5,0"
                                      FontFamily="{StaticResource SymbolThemeFontFamily}" />
-                    <ContentPresenter Content="{Binding Status}" />
+                    <ContentControl Content="{Binding Status}" />
                 </StackPanel>
             </Border>
             <Border Background="{DynamicResource AccentButtonBackground}"
@@ -120,7 +120,7 @@
                                FontWeight="Bold"
                                FontSize="18" />
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Episodes}" />
-                    <ContentPresenter Grid.Row="1" Grid.Column="2" Content="{Binding Type}" />
+                    <ContentControl Grid.Row="1" Grid.Column="2" Content="{Binding Type}" />
                     <Grid.Styles>
                         <Style Selector="TextBlock">
                             <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
@@ -154,7 +154,7 @@
                     <fluent:FontIcon Glyph="{StaticResource CalendarGlyph}"
                                      Margin="5,0"
                                      FontFamily="{StaticResource SymbolThemeFontFamily}" />
-                    <ContentPresenter Content="{Binding Status}" />
+                    <ContentControl Content="{Binding Status}" />
                 </StackPanel>
             </Border>
             <Border Background="{DynamicResource AccentButtonBackground}"
@@ -173,9 +173,9 @@
                                Text="{localize:Localize Label.ContentType}"
                                FontWeight="Bold"
                                FontSize="18" />
-                    <ContentPresenter Grid.Row="1" Grid.Column="0" Content="{Binding Date}"
+                    <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding Date}"
                                       IsVisible="{Binding Date, Converter={converters:NullValueBoolConverter}}" />
-                    <ContentPresenter Grid.Row="1" Grid.Column="2" Content="{Binding Type}" />
+                    <ContentControl Grid.Row="1" Grid.Column="2" Content="{Binding Type}" />
                     <Grid.Styles>
                         <Style Selector="TextBlock">
                             <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
