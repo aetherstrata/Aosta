@@ -12,7 +12,7 @@ public class AnimeEpisodeResponse
 	/// ID associated with MyAnimeList.
 	/// </summary>
 	[JsonPropertyName("mal_id")]
-	public required long MalId { get; init; }
+	public required int MalId { get; init; }
 
 	/// <summary>
 	/// URL to the episode.

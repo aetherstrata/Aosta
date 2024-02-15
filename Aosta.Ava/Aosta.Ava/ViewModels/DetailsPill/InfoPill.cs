@@ -39,24 +39,15 @@ public abstract class InfoPill : ReactiveObject, IContentInfoPill
         };
     }
 
-    [Reactive]
-    public string Score { get; set; }
-
-    public LocalizedString Status { get; set; }
-
     public LocalizedString Type { get; set; }
 
     protected InfoPill(AnimeResponse response)
     {
-        Score = response.Score?.ToString("0.00") ?? LocalizedString.NA;
-        Status = response.Status.Localize();
         Type = response.Type.Localize();
     }
 
     protected InfoPill(Anime model)
     {
-        Score = model.UserScore?.ToString() ?? LocalizedString.NA;
-        Status = model.AiringStatus.Localize();
         Type = model.Type.Localize();
     }
 
@@ -64,7 +55,6 @@ public abstract class InfoPill : ReactiveObject, IContentInfoPill
     {
         if (disposing)
         {
-            Status.Dispose();
             Type.Dispose();
         }
     }

@@ -1,15 +1,24 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
+using Aosta.Jikan;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+
+using Splat;
 
 namespace Aosta.Ava.ViewModels;
 
-public class JikanEpisodeDetailsViewModel : ReactiveObject, IRoutableViewModel
+public sealed class JikanEpisodeDetailsViewModel : ReactiveObject, IRoutableViewModel, IDisposable
 {
     /// <inheritdoc />
     public string? UrlPathSegment { get; }
@@ -17,21 +26,54 @@ public class JikanEpisodeDetailsViewModel : ReactiveObject, IRoutableViewModel
     /// <inheritdoc />
     public IScreen HostScreen { get; }
 
-    private readonly AnimeEpisodeResponse _response;
+    private readonly long _animeId;
+    public AnimeEpisodeResponse Response { get; }
 
     public JikanEpisodeDetailsViewModel(IScreen host, AnimeEpisodeResponse response, long animeId)
     {
-        _response = response;
-
         HostScreen = host;
-        UrlPathSegment = $"jikan-ep-{animeId}-{_response.MalId}";
+        UrlPathSegment = $"jikan-ep-{animeId}-{response.MalId}";
+
+        _animeId = animeId;
+        Response = response;
+        PageTitle = response.LocalizeEpisodeNumber();
+
+        Observable.StartAsync(getData);
     }
 
-    internal bool HasSynopsis => !string.IsNullOrEmpty(_response.Synopsis);
+    internal string Score => Response.Score?.ToString("0.00") ?? LocalizedString.NA;
 
-    internal LocalizedString PageTitle => _response.LocalizeEpisodeNumber();
+    internal LocalizedString PageTitle { get; }
 
-    internal string Title => _response.Title ?? $"{_response.MalId} - {LocalizedString.NOT_AVAILABLE}";
+    internal string Title => Response.Title ?? $"{Response.MalId} - {LocalizedString.NOT_AVAILABLE}";
 
-    internal string? Synopsis => _response.Synopsis;
+    [Reactive]
+    internal LocalizedString? Duration { get; private set; }
+
+    [Reactive]
+    internal bool HasSynopsis { get; private set; }
+
+    [Reactive]
+    internal string Synopsis { get; set; }
+
+    private async Task getData(CancellationToken ct = default)
+    {
+        var jikan = Locator.Current.GetSafely<IJikan>();
+
+        var result = await jikan.GetAnimeEpisodeAsync(_animeId, Response.MalId, ct);
+
+        HasSynopsis = !string.IsNullOrEmpty(result.Data.Synopsis);
+        Synopsis = result.Data.Synopsis ?? LocalizedString.NOT_AVAILABLE;
+        Duration = result.Data.Duration switch
+        {
+            null => LocalizedString.NOT_AVAILABLE,
+            not null => LocalizedString.Duration(TimeSpan.FromSeconds(result.Data.Duration.Value))
+        };
+    }
+
+    public void Dispose()
+    {
+        Duration?.Dispose();
+        PageTitle.Dispose();
+    }
 }

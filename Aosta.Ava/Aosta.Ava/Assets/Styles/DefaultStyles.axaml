@@ -8,9 +8,17 @@
         <Setter Property="Padding" Value="2"/>
     </Style>
 
+    <Style Selector="ListBoxItem">
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
     <!-- For the love of God, DO NOT SHOW THE SELECTION INDICATOR -->
     <Style Selector="ListBoxItem:selected /template/ Rectangle#SelectionIndicator">
         <Setter Property="IsVisible" Value="False"/>
+    </Style>
+
+    <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
     </Style>
 
     <Style Selector="controls|SettingsExpanderItem">

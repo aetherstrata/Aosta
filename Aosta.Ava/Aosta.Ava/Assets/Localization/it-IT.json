@@ -33,11 +33,13 @@
   "Label.Date": "Data",
   "Label.Episode.Number": "Episodio n.{0}",
   "Label.Episodes": "Episodi",
+  "Label.Filler": "Filler",
   "Label.LoadMore": "Carica altro",
   "Label.LocalizationLookupError": "Localizzazione non trovata per {0}",
   "Label.NotAvailable.Long" : "Non disponibile",
   "Label.NotAvailable.Short" : "N/D",
   "Label.Online": "Online",
+  "Label.Recap": "Recap",
   "Label.Score": "Voto",
   "Label.Season": "Stagione",
   "Label.Synopsis": "Sinossi",
@@ -88,6 +90,12 @@
   "Enum.Season.Fall": "Autunno",
   "Enum.Season.Winter": "Inverno",
 
+  "Enum.WatchingStatus.PlanToWatch": "Pianificato",
+  "Enum.WatchingStatus.Dropped": "Droppato",
+  "Enum.WatchingStatus.Completed": "Completato",
+  "Enum.WatchingStatus.OnHold": "In pausa",
+  "Enum.WatchingStatus.Watching": "In visione",
+
   "Date.Compact.January": "{0}/01/{1}",
   "Date.Compact.February": "{0}/02/{1}",
   "Date.Compact.March": "{0}/03/{1}",
@@ -99,5 +107,9 @@
   "Date.Compact.September": "{0}/09/{1}",
   "Date.Compact.October": "{0}/10/{1}",
   "Date.Compact.November": "{0}/11/{1}",
-  "Date.Compact.December": "{0}/12/{1}"
+  "Date.Compact.December": "{0}/12/{1}",
+
+  "Duration.Compact.Hours": "{0}o {1}m {2}s",
+  "Duration.Compact.Minutes": "{0}m {1}s",
+  "Duration.Compact.Seconds": "{0}s"
 }

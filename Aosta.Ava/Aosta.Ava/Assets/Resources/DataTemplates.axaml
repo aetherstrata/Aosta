@@ -15,176 +15,100 @@
     </DataTemplate>
 
     <DataTemplate x:Key="AnimeInfoPill" DataType="detailsPill:AnimePill">
-        <StackPanel Spacing="10">
-            <Border Background="{DynamicResource PureColorBackgroundBrush}"
-                    HorizontalAlignment="Left"
-                    Padding="5"
-                    CornerRadius="5">
-                <StackPanel Orientation="Horizontal">
-                    <fluent:FontIcon Glyph="{StaticResource StarGlyph}"
-                                     Margin="5,0"
-                                     FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                     Foreground="Gold" />
-                    <TextBlock Text="{Binding Score}" />
-                </StackPanel>
-            </Border>
-            <Border Background="{DynamicResource PureColorBackgroundBrush}"
-                    HorizontalAlignment="Left"
-                    Padding="5"
-                    CornerRadius="5">
-                <StackPanel Orientation="Horizontal">
-                    <fluent:FontIcon Glyph="{StaticResource CalendarGlyph}"
-                                     Margin="5,0"
-                                     FontFamily="{StaticResource SymbolThemeFontFamily}" />
-                    <ContentControl Content="{Binding Status}" />
-                </StackPanel>
-            </Border>
-            <Border Background="{DynamicResource AccentButtonBackground}"
-                    HorizontalAlignment="Right"
-                    Margin="15, 0"
-                    Padding="15"
-                    CornerRadius="15">
-                <Grid ColumnDefinitions="3*, 20, 3*, 20,2*"
-                      RowDefinitions="Auto,Auto">
-                    <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="{localize:Localize Label.Episodes}"
-                               FontWeight="Bold"
-                               FontSize="18" />
-                    <TextBlock Grid.Row="0" Grid.Column="2"
-                               Text="{localize:Localize Label.Season}"
-                               FontWeight="Bold"
-                               FontSize="18" />
-                    <TextBlock Grid.Row="0" Grid.Column="4"
-                               Text="{localize:Localize Label.ContentType}"
-                               FontWeight="Bold"
-                               FontSize="18" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Episodes}" />
-                    <TextBlock Grid.Row="1" Grid.Column="2">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0} | {1}">
-                                <Binding Path="Season.Localized" />
-                                <Binding Path="Year" />
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <ContentControl Grid.Row="1" Grid.Column="4" Content="{Binding Type}" />
-                    <Grid.Styles>
-                        <Style Selector="TextBlock">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
-                            <Setter Property="HorizontalAlignment" Value="Center" />
-                        </Style>
-                    </Grid.Styles>
-                </Grid>
-            </Border>
-        </StackPanel>
+        <Border Background="{DynamicResource AccentButtonBackground}"
+                HorizontalAlignment="Right"
+                Padding="15"
+                CornerRadius="15">
+            <Grid ColumnDefinitions="3*, 20, 3*, 20,2*"
+                  RowDefinitions="Auto,Auto">
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="{localize:Localize Label.Episodes}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <TextBlock Grid.Row="0" Grid.Column="2"
+                           Text="{localize:Localize Label.Season}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <TextBlock Grid.Row="0" Grid.Column="4"
+                           Text="{localize:Localize Label.ContentType}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Episodes}" />
+                <TextBlock Grid.Row="1" Grid.Column="2">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} | {1}">
+                            <Binding Path="Season.Localized" />
+                            <Binding Path="Year" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <ContentControl Grid.Row="1" Grid.Column="4" Content="{Binding Type}" />
+                <Grid.Styles>
+                    <Style Selector="TextBlock">
+                        <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                    </Style>
+                </Grid.Styles>
+            </Grid>
+        </Border>
     </DataTemplate>
 
     <DataTemplate x:Key="EpisodeCountInfoPill" DataType="detailsPill:EpisodesPill">
-        <StackPanel Spacing="10">
-            <Border Background="{DynamicResource PureColorBackgroundBrush}"
-                    HorizontalAlignment="Left"
-                    Padding="5"
-                    CornerRadius="5">
-                <StackPanel Orientation="Horizontal">
-                    <fluent:FontIcon Glyph="{StaticResource StarGlyph}"
-                                     Margin="5,0"
-                                     FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                     Foreground="Gold" />
-                    <TextBlock Text="{Binding Score}" />
-                </StackPanel>
-            </Border>
-            <Border Background="{DynamicResource PureColorBackgroundBrush}"
-                    HorizontalAlignment="Left"
-                    Padding="5"
-                    CornerRadius="5">
-                <StackPanel Orientation="Horizontal">
-                    <fluent:FontIcon Glyph="{StaticResource CalendarGlyph}"
-                                     Margin="5,0"
-                                     FontFamily="{StaticResource SymbolThemeFontFamily}" />
-                    <ContentControl Content="{Binding Status}" />
-                </StackPanel>
-            </Border>
-            <Border Background="{DynamicResource AccentButtonBackground}"
-                    HorizontalAlignment="Right"
-                    Margin="15, 0"
-                    Padding="15"
-                    CornerRadius="15">
-                <Grid ColumnDefinitions="3*, 20,2*"
-                      RowDefinitions="Auto,Auto">
-                    <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="{localize:Localize Label.Episodes}"
-                               FontWeight="Bold"
-                               FontSize="18" />
-                    <TextBlock Grid.Row="0" Grid.Column="2"
-                               Text="{localize:Localize Label.ContentType}"
-                               FontWeight="Bold"
-                               FontSize="18" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Episodes}" />
-                    <ContentControl Grid.Row="1" Grid.Column="2" Content="{Binding Type}" />
-                    <Grid.Styles>
-                        <Style Selector="TextBlock">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
-                            <Setter Property="HorizontalAlignment" Value="Center" />
-                        </Style>
-                    </Grid.Styles>
-                </Grid>
-            </Border>
-        </StackPanel>
+
+        <Border Background="{DynamicResource AccentButtonBackground}"
+                HorizontalAlignment="Right"
+                Padding="15"
+                CornerRadius="15">
+            <Grid ColumnDefinitions="3*, 20,2*"
+                  RowDefinitions="Auto,Auto">
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="{localize:Localize Label.Episodes}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <TextBlock Grid.Row="0" Grid.Column="2"
+                           Text="{localize:Localize Label.ContentType}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Episodes}" />
+                <ContentControl Grid.Row="1" Grid.Column="2" Content="{Binding Type}" />
+                <Grid.Styles>
+                    <Style Selector="TextBlock">
+                        <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                    </Style>
+                </Grid.Styles>
+            </Grid>
+        </Border>
     </DataTemplate>
 
     <DataTemplate x:Key="MovieInfoPill" DataType="detailsPill:MoviePill">
-        <StackPanel Spacing="10">
-            <Border Background="{DynamicResource PureColorBackgroundBrush}"
-                    HorizontalAlignment="Left"
-                    Padding="5"
-                    CornerRadius="5">
-                <StackPanel Orientation="Horizontal">
-                    <fluent:FontIcon Glyph="{StaticResource StarGlyph}"
-                                     Margin="5,0"
-                                     FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                     Foreground="Gold" />
-                    <TextBlock Text="{Binding Score}" />
-                </StackPanel>
-            </Border>
-            <Border Background="{DynamicResource PureColorBackgroundBrush}"
-                    HorizontalAlignment="Left"
-                    Padding="5"
-                    CornerRadius="5">
-                <StackPanel Orientation="Horizontal">
-                    <fluent:FontIcon Glyph="{StaticResource CalendarGlyph}"
-                                     Margin="5,0"
-                                     FontFamily="{StaticResource SymbolThemeFontFamily}" />
-                    <ContentControl Content="{Binding Status}" />
-                </StackPanel>
-            </Border>
-            <Border Background="{DynamicResource AccentButtonBackground}"
-                    HorizontalAlignment="Right"
-                    Margin="15, 0"
-                    Padding="15"
-                    CornerRadius="15">
-                <Grid ColumnDefinitions="3*, 20,2*"
-                      RowDefinitions="Auto,Auto">
-                    <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="{localize:Localize Label.Date}"
-                               IsVisible="{Binding Date, Converter={converters:NullValueBoolConverter}}"
-                               FontWeight="Bold"
-                               FontSize="18" />
-                    <TextBlock Grid.Row="0" Grid.Column="2"
-                               Text="{localize:Localize Label.ContentType}"
-                               FontWeight="Bold"
-                               FontSize="18" />
-                    <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding Date}"
-                                      IsVisible="{Binding Date, Converter={converters:NullValueBoolConverter}}" />
-                    <ContentControl Grid.Row="1" Grid.Column="2" Content="{Binding Type}" />
-                    <Grid.Styles>
-                        <Style Selector="TextBlock">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
-                            <Setter Property="HorizontalAlignment" Value="Center" />
-                        </Style>
-                    </Grid.Styles>
-                </Grid>
-            </Border>
-        </StackPanel>
+
+        <Border Background="{DynamicResource AccentButtonBackground}"
+                HorizontalAlignment="Right"
+                Padding="15"
+                CornerRadius="15">
+            <Grid ColumnDefinitions="3*, 20,2*"
+                  RowDefinitions="Auto,Auto">
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="{localize:Localize Label.Date}"
+                           IsVisible="{Binding Date, Converter={converters:NullValueBoolConverter}}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <TextBlock Grid.Row="0" Grid.Column="2"
+                           Text="{localize:Localize Label.ContentType}"
+                           FontWeight="Bold"
+                           FontSize="18" />
+                <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding Date}"
+                                IsVisible="{Binding Date, Converter={converters:NullValueBoolConverter}}" />
+                <ContentControl Grid.Row="1" Grid.Column="2" Content="{Binding Type}" />
+                <Grid.Styles>
+                    <Style Selector="TextBlock">
+                        <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                    </Style>
+                </Grid.Styles>
+            </Grid>
+        </Border>
     </DataTemplate>
 
     <DataTemplate x:Key="JikanAnimeCard" DataType="card:JikanAnimeCardViewModel">

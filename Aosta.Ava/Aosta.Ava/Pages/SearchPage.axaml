@@ -80,13 +80,9 @@
             <ListBox.Styles>
                 <Style Selector="ListBoxItem">
                     <Setter Property="Margin" Value="0, 3"/>
-                    <Setter Property="Padding" Value="0"/>
                 </Style>
                 <Style Selector="ListBoxItem:nth-last-child(1)">
                     <Setter Property="Margin" Value="0,3,0,10"/>
-                </Style>
-                <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
-                    <Setter Property="Background" Value="Transparent"/>
                 </Style>
             </ListBox.Styles>
         </ListBox>

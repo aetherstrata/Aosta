@@ -14,6 +14,9 @@ public partial class Episode : IEmbeddedObject
     /// ID associated with MyAnimeList.
     public long MalId { get; private set; }
 
+    /// Notes on this episodes
+    public IList<EpisodeNote> Notes { get; } = null!;
+
     /// User's score on the episode.
     public double? Score { get; set; }
 
@@ -32,6 +35,9 @@ public partial class Episode : IEmbeddedObject
     /// Date when episode aired at first.
     public DateTimeOffset? Aired { get; set; }
 
+    /// Date when episode was watched
+    public DateTimeOffset? Watched { get; set; }
+
     /// Is the episode filler.
     public bool Filler { get; set; }
 
@@ -42,5 +48,5 @@ public partial class Episode : IEmbeddedObject
     public string? Synopsis { get; set; }
 
     /// URL to forum discussion
-    public string? ForumUrl{ get; set; }
+    public string? ForumUrl { get; set; }
 }

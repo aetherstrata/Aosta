@@ -1,6 +1,7 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 
 using Aosta.Ava.Extensions;
@@ -12,13 +13,11 @@ using Aosta.Data.Models;
 
 using ReactiveUI;
 
-using Realms;
-
 using Splat;
 
 namespace Aosta.Ava.ViewModels;
 
-public class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
+public sealed class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel, IDisposable
 {
     private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
 
@@ -37,6 +36,7 @@ public class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
         HostScreen = host;
         UrlPathSegment = $"anime-details-{anime.ID}";
 
+        Status = Anime.WatchingStatus.Localize();
         DetailsPill = InfoPill.Create(anime);
     }
 
@@ -50,5 +50,15 @@ public class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel
             _realm.WriteAsync(r => Anime.Titles.GetDefault().Title = value);
             this.RaisePropertyChanged();
         }
+    }
+
+    public string Score => Anime.UserScore?.ToString() ?? LocalizedString.NA;
+
+    public LocalizedString Status { get; }
+
+    public void Dispose()
+    {
+        DetailsPill.Dispose();
+        Status.Dispose();
     }
 }

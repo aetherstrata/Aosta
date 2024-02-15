@@ -24,8 +24,6 @@ using DynamicData;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-using Realms;
-
 using Splat;
 
 namespace Aosta.Ava.ViewModels;
@@ -33,7 +31,7 @@ namespace Aosta.Ava.ViewModels;
 public sealed class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel, IDisposable
 {
     private readonly IJikan _jikan = Locator.Current.GetSafely<IJikan>();
-    private readonly Realm _realm;
+    private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
 
     /// <inheritdoc />
     public string? UrlPathSegment { get; }
@@ -45,11 +43,11 @@ public sealed class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
 
     internal JikanAnimeDetailsViewModel(IScreen hostScreen, AnimeResponse response)
     {
-        _realm = Locator.Current.GetSafely<RealmAccess>().GetRealm();
-        Response = response;
-
         UrlPathSegment = $"jikan-details-{response.MalId}";
         HostScreen = hostScreen;
+
+        Response = response;
+        Status = response.Status.Localize();
         DetailsPill = InfoPill.Create(response);
 
         if (HasEpisodes)
@@ -71,11 +69,16 @@ public sealed class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
     [Reactive]
     internal bool IsLoadEpisodesButtonVisible { get; set; }
 
+    public string Score => Response.Score?.ToString("0.00") ?? LocalizedString.NA;
+
+    public LocalizedString Status { get; }
+
     internal bool CanBeAdded()
     {
-        return !_realm.All<Anime>()
+        return !_realm.Run(r => r
+            .All<Anime>()
             .Is(static x => x.ID, Response.MalId)
-            .Any();
+            .Any());
     }
 
     internal Task AddToRealm(CancellationToken ct = default)
@@ -89,11 +92,11 @@ public sealed class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
             var model = Response.ToModel();
             model.Episodes.AddRange(Episodes.Select(x => x.Response.ToModel()));
             r.Add(model);
-
         }, ct);
     }
 
     private int _page;
+
     internal Task UpdateEpisodesList(CancellationToken ct = default)
     {
         Interlocked.Increment(ref _page);
@@ -116,7 +119,7 @@ public sealed class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
 
     public void Dispose()
     {
-        _realm.Dispose();
+        Status.Dispose();
         DetailsPill.Dispose();
     }
 }

@@ -34,11 +34,13 @@
   "Label.Date": "Date",
   "Label.Episode.Number": "Episode #{0}",
   "Label.Episodes": "Episodes",
+  "Label.Filler": "Filler",
   "Label.LoadMore": "Load more",
   "Label.LocalizationLookupError": "Localization not found for {0}",
   "Label.NotAvailable.Long" : "Not available",
   "Label.NotAvailable.Short" : "N/A",
   "Label.Online": "Online",
+  "Label.Recap": "Recap",
   "Label.Score": "Score",
   "Label.Season": "Season",
   "Label.Synopsis": "Synopsis",
@@ -89,6 +91,12 @@
   "Enum.Season.Fall": "Fall",
   "Enum.Season.Winter": "Winter",
 
+  "Enum.WatchingStatus.PlanToWatch": "Planned",
+  "Enum.WatchingStatus.Dropped": "Dropped",
+  "Enum.WatchingStatus.Completed": "Completed",
+  "Enum.WatchingStatus.OnHold": "On Hold",
+  "Enum.WatchingStatus.Watching": "Watching",
+
   "Date.Compact.January": "{0} Jan {1}",
   "Date.Compact.February": "{0} Feb {1}",
   "Date.Compact.March": "{0} Mar {1}",
@@ -100,5 +108,9 @@
   "Date.Compact.September": "{0} Sep {1}",
   "Date.Compact.October": "{0} Oct {1}",
   "Date.Compact.November": "{0} Nov {1}",
-  "Date.Compact.December": "{0} Dec {1}"
+  "Date.Compact.December": "{0} Dec {1}",
+
+  "Duration.Compact.Hours": "{0}h {1}m {2}s",
+  "Duration.Compact.Minutes": "{0}m {1}s",
+  "Duration.Compact.Seconds": "{0}s"
 }

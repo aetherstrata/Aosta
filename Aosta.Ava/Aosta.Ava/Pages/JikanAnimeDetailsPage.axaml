@@ -13,7 +13,7 @@
     <Grid RowDefinitions="Auto,*">
         <local:TitleBar Grid.Row="0"
                         IsBackEnabled="True"
-                        Title="{Binding Title}"/>
+                        Title="{Binding Title}" />
         <ScrollViewer Grid.Row="1"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Hidden">
@@ -33,14 +33,40 @@
                     </Image.OpacityMask>
                 </Image>
                 <StackPanel Grid.Row="0" Margin="10, 10, 10 ,10">
-                    <ContentControl Content="{Binding DetailsPill}"/>
+                    <StackPanel Spacing="10">
+                        <Border Background="{DynamicResource PureColorBackgroundBrush}"
+                                HorizontalAlignment="Left"
+                                Padding="5"
+                                CornerRadius="5">
+                            <StackPanel Orientation="Horizontal">
+                                <controls:FontIcon Glyph="{StaticResource StarGlyph}"
+                                                   Margin="5,0"
+                                                   FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                                   Foreground="Gold" />
+                                <TextBlock Text="{Binding Score}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Background="{DynamicResource PureColorBackgroundBrush}"
+                                HorizontalAlignment="Left"
+                                Padding="5"
+                                CornerRadius="5">
+                            <StackPanel Orientation="Horizontal">
+                                <controls:FontIcon Glyph="{StaticResource CalendarGlyph}"
+                                                   Margin="5,0"
+                                                   FontFamily="{StaticResource SymbolThemeFontFamily}" />
+                                <ContentControl Content="{Binding Status}" />
+                            </StackPanel>
+                        </Border>
+                        <ContentControl Content="{Binding DetailsPill}" />
+                    </StackPanel>
                     <TextBlock Text="{localize:Localize Label.Synopsis}"
                                FontSize="18"
                                FontWeight="Bold" />
-                    <SelectableTextBlock Text="{Binding Response.Synopsis, FallbackValue={localize:Localize Label.NotAvailable.Long}}"
-                                         Margin="0,0,0,15"
-                                         SelectionBrush="{DynamicResource FloatingBackgroundBrush}"
-                                         TextWrapping="WrapWithOverflow" />
+                    <SelectableTextBlock
+                        Text="{Binding Response.Synopsis, FallbackValue={localize:Localize Label.NotAvailable.Long}}"
+                        Margin="0,0,0,15"
+                        SelectionBrush="{DynamicResource FloatingBackgroundBrush}"
+                        TextWrapping="WrapWithOverflow" />
                     <TextBlock Text="{localize:Localize Label.Episodes}"
                                IsVisible="{Binding HasEpisodes}"
                                FontSize="18"
@@ -50,11 +76,6 @@
                                       IsVisible="{Binding HasEpisodes}">
                         <ListBox ItemsSource="{Binding Episodes}"
                                  ItemTemplate="{StaticResource JikanEpisodeEntry}">
-                            <ListBox.Styles>
-                                <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                </Style>
-                            </ListBox.Styles>
                         </ListBox>
                     </RefreshContainer>
                     <Button Margin="0, 10"
