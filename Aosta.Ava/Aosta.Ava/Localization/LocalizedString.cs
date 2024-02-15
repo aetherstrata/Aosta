@@ -28,7 +28,17 @@ public abstract class LocalizedString(string key) : ReactiveObject, ILocalized, 
 
     public static LocalizedString CompactDate(DateTimeOffset dt)
     {
-        return new TwoArgs(compact_date_keys[dt.Month], dt.Day, dt.Year);
+        return Create(compact_date_keys[dt.Month], dt.Day, dt.Year);
+    }
+
+    public static LocalizedString Duration(TimeSpan span)
+    {
+        return span switch
+        {
+            { Hours: > 0 }   => Create("Duration.Compact.Hours", span.Hours, span.Minutes, span.Seconds),
+            { Minutes: > 0 } => Create("Duration.Compact.Minutes", span.Minutes, span.Seconds),
+            _                => Create("Duration.Compact.Seconds", span.Seconds)
+        };
     }
 
     public static LocalizedString Create(string key) => new ZeroArgs(key);

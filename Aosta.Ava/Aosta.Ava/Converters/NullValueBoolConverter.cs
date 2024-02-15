@@ -26,8 +26,5 @@ public class NullValueBoolConverter : MarkupExtension, IValueConverter
         return value;
     }
 
-    public override object ProvideValue(IServiceProvider serviceProvider)
-    {
-        return this;
-    }
+    public override object ProvideValue(IServiceProvider serviceProvider) => this;
 }
