@@ -158,7 +158,7 @@
         </Button>
     </DataTemplate>
 
-    <DataTemplate x:Key="JikanEpisodeEntry" DataType="vm:JikanEpisodeEntry">
+    <DataTemplate x:Key="JikanEpisodeEntry" DataType="vm:OnlineEpisodeEntry">
         <Button Command="{Binding GoToDetails}"
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
@@ -169,7 +169,7 @@
                            HorizontalAlignment="Left">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0}. {1}">
-                            <Binding Path="Number" />
+                            <Binding Path="Response.MalId" />
                             <Binding Path="Title" />
                         </MultiBinding>
                     </TextBlock.Text>
@@ -180,10 +180,41 @@
                             HorizontalAlignment="Right">
                     <TextBlock Text="F"
                                Foreground="Crimson"
-                               IsVisible="{Binding Filler}" />
+                               IsVisible="{Binding Response.Filler}" />
                     <TextBlock Text="R"
                                Foreground="Crimson"
-                               IsVisible="{Binding Recap}" />
+                               IsVisible="{Binding Response.Recap}" />
+                </StackPanel>
+            </Grid>
+        </Button>
+    </DataTemplate>
+
+    <DataTemplate x:Key="LocalEpisodeEntry" DataType="vm:LocalEpisodeEntry">
+        <Button Command="{Binding GoToDetails}"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                Padding="5"
+                Margin="0">
+            <Grid RowDefinitions="Auto">
+                <TextBlock Grid.Row="0"
+                           HorizontalAlignment="Left">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}. {1}">
+                            <Binding Path="Episode.Number" />
+                            <Binding Path="Title" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <StackPanel Grid.Row="0"
+                            Spacing="5"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <TextBlock Text="F"
+                               Foreground="Crimson"
+                               IsVisible="{Binding Episode.Filler}" />
+                    <TextBlock Text="R"
+                               Foreground="Crimson"
+                               IsVisible="{Binding Episode.Recap}" />
                 </StackPanel>
             </Grid>
         </Button>

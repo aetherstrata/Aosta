@@ -28,7 +28,7 @@ using Splat;
 
 namespace Aosta.Ava.ViewModels;
 
-public sealed class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel, IDisposable
+public sealed class OnlineAnimeDetailsViewModel : ReactiveObject, IRoutableViewModel, IDisposable
 {
     private readonly IJikan _jikan = Locator.Current.GetSafely<IJikan>();
     private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
@@ -41,7 +41,7 @@ public sealed class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
 
     public AnimeResponse Response { get; }
 
-    internal JikanAnimeDetailsViewModel(IScreen hostScreen, AnimeResponse response)
+    internal OnlineAnimeDetailsViewModel(IScreen hostScreen, AnimeResponse response)
     {
         UrlPathSegment = $"jikan-details-{response.MalId}";
         HostScreen = hostScreen;
@@ -64,7 +64,7 @@ public sealed class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
 
     internal bool HasEpisodes => Response.Type != AnimeType.Movie && Response.Episodes > 0;
 
-    internal ObservableCollection<JikanEpisodeEntry> Episodes { get; } = [];
+    internal ObservableCollection<OnlineEpisodeEntry> Episodes { get; } = [];
 
     [Reactive]
     internal bool IsLoadEpisodesButtonVisible { get; set; }
@@ -101,12 +101,12 @@ public sealed class JikanAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
     {
         Interlocked.Increment(ref _page);
 
-        this.Log().Debug<JikanAnimeDetailsViewModel>("Getting episodes page {Page} for anime {Name} [{Id}]",
+        this.Log().Debug<OnlineAnimeDetailsViewModel>("Getting episodes page {Page} for anime {Name} [{Id}]",
             _page, Response.Titles.GetDefault()!, Response.MalId);
 
         return _jikan.GetAnimeEpisodesAsync(Response.MalId, _page, ct).ContinueWith(task =>
         {
-            var entries = task.Result.Data.Select(x => new JikanEpisodeEntry(HostScreen, x, Response.MalId));
+            var entries = task.Result.Data.Select(x => new OnlineEpisodeEntry(HostScreen, x, Response.MalId));
 
             Episodes.AddRange(entries);
 

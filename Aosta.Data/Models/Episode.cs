@@ -11,8 +11,8 @@ namespace Aosta.Data.Models;
 [Preserve(AllMembers = true)]
 public partial class Episode : IEmbeddedObject
 {
-    /// ID associated with MyAnimeList.
-    public long MalId { get; private set; }
+    /// Episode number
+    public int Number { get; set; }
 
     /// Notes on this episodes
     public IList<EpisodeNote> Notes { get; } = null!;

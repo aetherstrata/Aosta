@@ -48,7 +48,7 @@ public class AnimeSearchResultViewModel : ReactiveObject
             return realmTask;
         });
 
-        GoToDetails = ReactiveCommand.CreateFromObservable(() => host.Router.Navigate.Execute(new JikanAnimeDetailsViewModel(host, response)));
+        GoToDetails = ReactiveCommand.CreateFromObservable(() => host.Router.Navigate.Execute(new OnlineAnimeDetailsViewModel(host, response)));
     }
 
     private bool _missing;

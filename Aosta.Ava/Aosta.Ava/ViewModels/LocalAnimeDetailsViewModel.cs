@@ -2,7 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
@@ -10,6 +12,8 @@ using Aosta.Ava.ViewModels.DetailsPill;
 using Aosta.Data;
 using Aosta.Data.Extensions;
 using Aosta.Data.Models;
+
+using DynamicData;
 
 using ReactiveUI;
 
@@ -38,6 +42,8 @@ public sealed class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
 
         Status = Anime.WatchingStatus.Localize();
         DetailsPill = InfoPill.Create(anime);
+
+        Episodes.AddRange(Anime.Episodes.Select(x => new LocalEpisodeEntry(HostScreen, x, Anime)));
     }
 
     public IContentInfoPill DetailsPill { get; }
@@ -51,6 +57,8 @@ public sealed class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
             this.RaisePropertyChanged();
         }
     }
+
+    public ObservableCollection<LocalEpisodeEntry> Episodes { get; } = [];
 
     public string Score => Anime.UserScore?.ToString() ?? LocalizedString.NA;
 

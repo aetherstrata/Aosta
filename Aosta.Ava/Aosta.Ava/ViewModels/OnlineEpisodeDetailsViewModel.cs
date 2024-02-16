@@ -18,7 +18,7 @@ using Splat;
 
 namespace Aosta.Ava.ViewModels;
 
-public sealed class JikanEpisodeDetailsViewModel : ReactiveObject, IRoutableViewModel, IDisposable
+public sealed class OnlineEpisodeDetailsViewModel : ReactiveObject, IRoutableViewModel, IDisposable
 {
     /// <inheritdoc />
     public string? UrlPathSegment { get; }
@@ -29,14 +29,14 @@ public sealed class JikanEpisodeDetailsViewModel : ReactiveObject, IRoutableView
     private readonly long _animeId;
     public AnimeEpisodeResponse Response { get; }
 
-    public JikanEpisodeDetailsViewModel(IScreen host, AnimeEpisodeResponse response, long animeId)
+    public OnlineEpisodeDetailsViewModel(IScreen host, AnimeEpisodeResponse response, long animeId)
     {
         HostScreen = host;
         UrlPathSegment = $"jikan-ep-{animeId}-{response.MalId}";
 
         _animeId = animeId;
         Response = response;
-        PageTitle = response.LocalizeEpisodeNumber();
+        PageTitle = ("Label.Episode.Number", response.MalId).Localize();
 
         Observable.StartAsync(getData);
     }
@@ -51,10 +51,7 @@ public sealed class JikanEpisodeDetailsViewModel : ReactiveObject, IRoutableView
     internal LocalizedString? Duration { get; private set; }
 
     [Reactive]
-    internal bool HasSynopsis { get; private set; }
-
-    [Reactive]
-    internal string Synopsis { get; set; }
+    internal string? Synopsis { get; set; }
 
     private async Task getData(CancellationToken ct = default)
     {
@@ -62,7 +59,6 @@ public sealed class JikanEpisodeDetailsViewModel : ReactiveObject, IRoutableView
 
         var result = await jikan.GetAnimeEpisodeAsync(_animeId, Response.MalId, ct);
 
-        HasSynopsis = !string.IsNullOrEmpty(result.Data.Synopsis);
         Synopsis = result.Data.Synopsis ?? LocalizedString.NOT_AVAILABLE;
         Duration = result.Data.Duration switch
         {

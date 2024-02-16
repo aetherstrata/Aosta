@@ -22,10 +22,15 @@
         <entry key="Aosta.Ava/Aosta.Ava/MainWindow.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/AnimeDetailsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/AnimeListPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
+        <entry key="Aosta.Ava/Aosta.Ava/Pages/EpisodeNotesPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/HomePage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/JikanAnimeDetailsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/JikanEpisodeDetailsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/LocalAnimeDetailsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
+        <entry key="Aosta.Ava/Aosta.Ava/Pages/LocalEpisodeDetails.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
+        <entry key="Aosta.Ava/Aosta.Ava/Pages/LocalEpisodeDetailsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
+        <entry key="Aosta.Ava/Aosta.Ava/Pages/OnlineAnimeDetailsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
+        <entry key="Aosta.Ava/Aosta.Ava/Pages/OnlineEpisodeDetailsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/SearchPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Pages/SettingsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />
         <entry key="Aosta.Ava/Aosta.Ava/Settings/SettingsPage.axaml" value="Aosta.Ava/Aosta.Ava.Desktop/Aosta.Ava.Desktop.csproj" />

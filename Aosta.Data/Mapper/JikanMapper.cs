@@ -64,6 +64,9 @@ public static partial class JikanMapper
     internal static partial TitleEntry ToModel(this TitleEntryResponse source);
     internal static partial YouTubeVideo ToModel(this AnimeTrailerResponse source);
 
+    [MapperIgnoreTarget(nameof(Episode.Score))]
+    [MapProperty(nameof(AnimeEpisodeResponse.MalId), nameof(Episode.Number))]
+    [MapProperty(nameof(AnimeEpisodeResponse.Score), nameof(Episode.OnlineScore))]
     private static partial Episode toModel(this AnimeEpisodeResponse source);
 
     private static AudienceRating toLocalType(this string str) => str switch

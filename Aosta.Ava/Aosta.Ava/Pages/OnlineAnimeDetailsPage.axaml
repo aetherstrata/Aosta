@@ -8,8 +8,8 @@
              xmlns:localize="clr-namespace:Aosta.Ava.Localization"
              xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Aosta.Ava.Pages.JikanAnimeDetailsPage"
-             x:DataType="viewModels:JikanAnimeDetailsViewModel">
+             x:Class="Aosta.Ava.Pages.OnlineAnimeDetailsPage"
+             x:DataType="viewModels:OnlineAnimeDetailsViewModel">
     <Grid RowDefinitions="Auto,*">
         <local:TitleBar Grid.Row="0"
                         IsBackEnabled="True"

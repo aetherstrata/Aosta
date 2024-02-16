@@ -7,9 +7,9 @@ using Avalonia.ReactiveUI;
 
 namespace Aosta.Ava.Pages;
 
-public partial class JikanEpisodeDetailsPage : ReactivePageBase<JikanEpisodeDetailsViewModel>
+public partial class OnlineEpisodeDetailsPage : ReactivePageBase<OnlineEpisodeDetailsViewModel>
 {
-    public JikanEpisodeDetailsPage()
+    public OnlineEpisodeDetailsPage()
     {
         InitializeComponent();
     }

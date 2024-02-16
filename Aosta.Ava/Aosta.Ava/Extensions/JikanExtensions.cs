@@ -117,10 +117,5 @@ public static class JikanExtensions
         _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, error_message(nameof(AnimeAgeRatingFilter)))
     };
 
-    public static LocalizedString LocalizeEpisodeNumber(this AnimeEpisodeResponse response)
-    {
-        return ("Label.Episode.Number", response.MalId).Localize();
-    }
-
     private static string error_message(string paramName) => $"The passed {paramName} was invalid";
 }

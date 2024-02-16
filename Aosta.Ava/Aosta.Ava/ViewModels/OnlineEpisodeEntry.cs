@@ -10,22 +10,19 @@ using ReactiveUI;
 
 namespace Aosta.Ava.ViewModels;
 
-public class JikanEpisodeEntry
+public class OnlineEpisodeEntry
 {
     internal AnimeEpisodeResponse Response { get; }
 
-    public JikanEpisodeEntry(IScreen host, AnimeEpisodeResponse response, long animeId)
+    public OnlineEpisodeEntry(IScreen host, AnimeEpisodeResponse response, long animeId)
     {
         Response = response;
 
         GoToDetails = ReactiveCommand.CreateFromObservable(() =>
-            host.Router.Navigate.Execute(new JikanEpisodeDetailsViewModel(host, Response, animeId)));
+            host.Router.Navigate.Execute(new OnlineEpisodeDetailsViewModel(host, Response, animeId)));
     }
 
     internal ReactiveCommand<Unit, IRoutableViewModel> GoToDetails { get; }
 
-    public long Number => Response.MalId;
     public string Title => Response.Title ?? LocalizedString.NOT_AVAILABLE;
-    public bool? Filler => Response.Filler;
-    public bool? Recap => Response.Recap;
 }

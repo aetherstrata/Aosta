@@ -3,12 +3,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Aosta.Ava.Controls"
-             xmlns:vm="clr-namespace:Aosta.Ava.ViewModels"
              xmlns:localize="clr-namespace:Aosta.Ava.Localization"
-             xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+             xmlns:viewModels="clr-namespace:Aosta.Ava.ViewModels"
+             xmlns:converters="clr-namespace:Aosta.Ava.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Aosta.Ava.Pages.JikanEpisodeDetailsPage"
-             x:DataType="vm:JikanEpisodeDetailsViewModel">
+             x:Class="Aosta.Ava.Pages.LocalEpisodeDetailsPage"
+             x:DataType="viewModels:LocalEpisodeDetailsViewModel">
     <Grid RowDefinitions="Auto,*">
         <local:TitleBar Grid.Row="0"
                            IsBackEnabled="True"
@@ -19,22 +20,23 @@
             <StackPanel Spacing="5"
                         Margin="10">
                 <TextBlock Text="{Binding Title}"
+                           TextWrapping="WrapWithOverflow"
                            HorizontalAlignment="Center"
                            FontSize="24"
                            FontWeight="Bold" />
                 <Grid RowDefinitions="Auto">
                     <TextBlock Text="{localize:Localize Label.Synopsis}"
                                HorizontalAlignment="Left"
-                               IsVisible="{Binding HasSynopsis}"
+                               IsVisible="{Binding Episode.Synopsis, Converter={converters:NullValueBoolConverter}}"
                                FontSize="18"
                                FontWeight="Bold" />
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Spacing="5">
-                        <Border IsVisible="{Binding Response.Filler}">
+                        <Border IsVisible="{Binding Episode.Filler}">
                             <TextBlock Text="{localize:Localize Label.Filler}" />
                         </Border>
-                        <Border IsVisible="{Binding Response.Recap}">
+                        <Border IsVisible="{Binding Episode.Recap}">
                             <TextBlock Text="{localize:Localize Label.Recap}" />
                         </Border>
                         <StackPanel.Styles>
@@ -50,13 +52,12 @@
                         </StackPanel.Styles>
                     </StackPanel>
                 </Grid>
-                <TextBlock Text="{Binding Synopsis}"
-                           IsVisible="{Binding HasSynopsis}"
+                <TextBlock Text="{Binding Episode.Synopsis}"
+                           IsVisible="{Binding Episode.Synopsis, Converter={converters:NullValueBoolConverter}}"
                            TextWrapping="WrapWithOverflow" />
                 <ContentControl Content="{Binding Duration}"/>
-                <fluent:HyperlinkButton Content="MyAnimeList"
-                                        NavigateUri="{Binding Response.Url}"/>
+                <controls:HyperlinkButton Content="MyAnimeList"
+                                          NavigateUri="{Binding Episode.Url}"/>
             </StackPanel>
         </ScrollViewer>
-    </Grid>
-</UserControl>
+    </Grid></UserControl>

@@ -16,7 +16,7 @@ public class JikanAnimeCardViewModel : ReactiveObject, IOnlineCard
     public JikanAnimeCardViewModel(IScreen host, AnimeResponse response)
     {
         BannerUrl = response.Images?.JPG?.ImageUrl ?? IOnlineCard.PORTRAIT_PLACEHOLDER;
-        GoToDetails = ReactiveCommand.CreateFromObservable(() => host.Router.Navigate.Execute(new JikanAnimeDetailsViewModel(host, response)));
+        GoToDetails = ReactiveCommand.CreateFromObservable(() => host.Router.Navigate.Execute(new OnlineAnimeDetailsViewModel(host, response)));
         Score = response.Score?.ToString("0.00") ?? LocalizedString.NA;
     }
 

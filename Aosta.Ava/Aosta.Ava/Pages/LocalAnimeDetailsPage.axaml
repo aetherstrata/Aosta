@@ -71,7 +71,9 @@
                     <TextBlock Text="{localize:Localize Label.Episodes}"
                                FontSize="18"
                                FontWeight="Bold" />
-
+                    <ListBox ItemsSource="{Binding Episodes}"
+                             ItemTemplate="{StaticResource LocalEpisodeEntry}">
+                    </ListBox>
                 </StackPanel>
             </Grid>
         </ScrollViewer>

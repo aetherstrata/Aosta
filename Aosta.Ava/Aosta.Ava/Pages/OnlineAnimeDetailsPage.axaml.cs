@@ -13,9 +13,9 @@ using Splat;
 
 namespace Aosta.Ava.Pages;
 
-public partial class JikanAnimeDetailsPage : ReactivePageBase<JikanAnimeDetailsViewModel>, IEnableLogger
+public partial class OnlineAnimeDetailsPage : ReactivePageBase<OnlineAnimeDetailsViewModel>, IEnableLogger
 {
-    public JikanAnimeDetailsPage()
+    public OnlineAnimeDetailsPage()
     {
         InitializeComponent();
     }
@@ -24,7 +24,7 @@ public partial class JikanAnimeDetailsPage : ReactivePageBase<JikanAnimeDetailsV
     {
         var deferral = e.GetDeferral();
 
-        this.Log().Debug<JikanAnimeDetailsPage>("Triggered episodes list refresh event");
+        this.Log().Debug<OnlineAnimeDetailsPage>("Triggered episodes list refresh event");
         ViewModel?.UpdateEpisodesList();
 
         deferral.Complete();
