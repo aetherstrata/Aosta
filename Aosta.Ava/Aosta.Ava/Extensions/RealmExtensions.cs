@@ -69,14 +69,14 @@ public static class RealmExtensions
                     {
                         update.Insert(i, sender[i]);
                     }
-
-                    logger.Debug("Processed {ChangesCount} changes for {Type} observable cache: [Removed: {Removed}, Added: {Added}, Moved: {Moved}]",
-                        changes.DeletedIndices.Length + changes.InsertedIndices.Length,
-                        typeof(T).Name,
-                        changes.DeletedIndices.Length - changes.Moves.Length,
-                        changes.InsertedIndices.Length - changes.Moves.Length,
-                        changes.Moves.Length);
                 });
+
+                logger.Debug("Processed {ChangesCount} changes for {Type} observable cache: [Removed: {Removed}, Added: {Added}, Moved: {Moved}]",
+                    changes.DeletedIndices.Length + changes.InsertedIndices.Length,
+                    typeof(T).Name,
+                    changes.DeletedIndices.Length - changes.Moves.Length,
+                    changes.InsertedIndices.Length - changes.Moves.Length,
+                    changes.Moves.Length);
             }
         });
 
