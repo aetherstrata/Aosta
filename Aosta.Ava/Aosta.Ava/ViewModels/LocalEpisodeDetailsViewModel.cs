@@ -18,7 +18,7 @@ using Splat;
 
 namespace Aosta.Ava.ViewModels;
 
-public class LocalEpisodeDetailsViewModel : ReactiveObject, IRoutableViewModel
+public sealed class LocalEpisodeDetailsViewModel : ReactiveObject, IRoutableViewModel, IDisposable
 {
     private readonly RealmAccess _realm = Locator.Current.GetSafely<RealmAccess>();
 
@@ -50,20 +50,33 @@ public class LocalEpisodeDetailsViewModel : ReactiveObject, IRoutableViewModel
                     Episode.OnlineScore = response.Data.Score;
                     Episode.Duration = response.Data.Duration;
                 });
+                localizeDuration();
             });
         }
 
         PageTitle = ("Label.Episode.Number", Episode.Number).Localize();
+        localizeDuration();
+    }
+
+    private void localizeDuration()
+    {
+        Duration?.Dispose();
         Duration = Episode.Duration.HasValue
             ? LocalizedString.Duration(TimeSpan.FromSeconds(Episode.Duration.Value))
             : LocalizedString.NOT_AVAILABLE;
+        this.RaisePropertyChanged(nameof(Duration));
     }
 
-    internal ILocalized PageTitle { get; }
+    internal LocalizedString PageTitle { get; }
 
     internal string Title => Episode.Titles.GetDefault().Title ?? $"{Episode.Number} - {LocalizedString.NOT_AVAILABLE}";
 
-    internal ILocalized Duration { get; }
+    internal LocalizedString Duration { get; set; }
+
+    internal Task OpenMalUrl()
+    {
+        return Locator.Current.GetSafely<ILauncher>().LaunchUriAsync(new Uri(Episode.Url!));
+    }
 
     internal void MarkAsWatched()
     {
@@ -71,5 +84,11 @@ public class LocalEpisodeDetailsViewModel : ReactiveObject, IRoutableViewModel
         {
             Episode.Watched = DateTimeOffset.Now;
         });
+    }
+
+    public void Dispose()
+    {
+        PageTitle.Dispose();
+        Duration.Dispose();
     }
 }

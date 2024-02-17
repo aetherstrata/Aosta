@@ -40,6 +40,7 @@ internal static class Program
 
                 Locator.CurrentMutable
                     .RegisterConstantAnd(logger)
+                    .RegisterConstantAnd<ILauncher>(new BclLauncher())
                     .RegisterConstant(new RealmAccess(Path.Combine(AppContext.BaseDirectory, "aosta.realm"), logger));
             });
 }

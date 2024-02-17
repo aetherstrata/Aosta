@@ -49,6 +49,7 @@ public class MainActivity : AvaloniaMainActivity<App>
 
                 Locator.CurrentMutable
                     .RegisterConstantAnd(logger)
+                    .RegisterConstantAnd<ILauncher>(new AndroidLauncher(this))
                     .Register(() => new RealmAccess(Path.Combine(Environment.CurrentDirectory, "aosta.realm"), logger));
             });
     }
