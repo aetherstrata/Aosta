@@ -25,19 +25,33 @@ public static class RealmExtensions
     /// <param name="query">The Realm projection.</param>
     /// <param name="token">The returned subscription token.</param>
     /// <typeparam name="T">The type of the entities.</typeparam>
-    /// <returns>The <see cref="IChangeSet{TObject}"/> to observe on.</returns>
+    /// <returns>The <see cref="IChangeSet{TObject}">IChangeSet</see> to observe on.</returns>
     public static IObservable<IChangeSet<T>> Connect<T>(this IQueryable<T> query, out IDisposable token)
         where T : IRealmObjectBase
     {
         return Connect(query.AsRealmCollection(), out token);
     }
 
+    /// <summary>
+    /// Convert the Realm list into an observable list and subscribe to the collection changes.
+    /// </summary>
+    /// <param name="list">The Realm list.</param>
+    /// <param name="token">The returned subscription token.</param>
+    /// <typeparam name="T">The type of the entities.</typeparam>
+    /// <returns>The <see cref="IChangeSet{TObject}">IChangeSet</see> to observe on.</returns>
     public static IObservable<IChangeSet<T>> Connect<T>(this IList<T> list, out IDisposable token)
         where T : IRealmObjectBase
     {
         return Connect(list.AsRealmCollection(), out token);
     }
 
+    /// <summary>
+    /// Convert the Realm collection into an observable list and subscribe to the collection changes.
+    /// </summary>
+    /// <param name="collection">The Realm collection.</param>
+    /// <param name="token">The returned subscription token.</param>
+    /// <typeparam name="T">The type of the entities.</typeparam>
+    /// <returns>The <see cref="IChangeSet{TObject}">IChangeSet</see> to observe on.</returns>
     public static IObservable<IChangeSet<T>> Connect<T>(this IRealmCollection<T> collection, out IDisposable token)
         where T : IRealmObjectBase
     {
@@ -56,20 +70,7 @@ public static class RealmExtensions
             }
             else
             {
-                cache.Edit(update =>
-                {
-                    // Handle deleted elements
-                    foreach (int i in changes.DeletedIndices)
-                    {
-                        update.RemoveAt(i);
-                    }
-
-                    // Handle inserted elements
-                    foreach (int i in changes.InsertedIndices)
-                    {
-                        update.Insert(i, sender[i]);
-                    }
-                });
+                cache.Edit(update => updateCache(changes, update, sender));
 
                 logger.Debug("Processed {ChangesCount} changes for {Type} observable cache: [Removed: {Removed}, Added: {Added}, Moved: {Moved}]",
                     changes.DeletedIndices.Length + changes.InsertedIndices.Length,
@@ -81,5 +82,21 @@ public static class RealmExtensions
         });
 
         return cache.Connect();
+    }
+
+    private static void updateCache<T>(ChangeSet changes, IExtendedList<T> update, IRealmCollection<T> sender)
+        where T : IRealmObjectBase
+    {
+        // Handle deleted elements
+        foreach (int i in changes.DeletedIndices)
+        {
+            update.RemoveAt(i);
+        }
+
+        // Handle inserted elements
+        foreach (int i in changes.InsertedIndices)
+        {
+            update.Insert(i, sender[i]);
+        }
     }
 }
