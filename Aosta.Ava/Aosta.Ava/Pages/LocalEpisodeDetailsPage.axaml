@@ -12,9 +12,10 @@
              x:DataType="viewModels:LocalEpisodeDetailsViewModel">
     <Grid RowDefinitions="Auto,*">
         <local:TitleBar Grid.Row="0"
-                           IsBackEnabled="True"
-                           Title="{Binding PageTitle.Localized}" />
+                        IsBackEnabled="True"
+                        Title="{Binding PageTitle.Localized}" />
         <ScrollViewer Grid.Row="1"
+                      Name="MainView"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Hidden">
             <StackPanel Spacing="5"
@@ -41,13 +42,13 @@
                         </Border>
                         <StackPanel.Styles>
                             <Style Selector="TextBlock">
-                                <Setter Property="FontWeight" Value="Bold"/>
-                                <Setter Property="Foreground" Value="Gold"/>
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="Foreground" Value="Gold" />
                             </Style>
                             <Style Selector="Border">
-                                <Setter Property="CornerRadius" Value="5"/>
-                                <Setter Property="Padding" Value="10, 5"/>
-                                <Setter Property="Background" Value="Red"/>
+                                <Setter Property="CornerRadius" Value="5" />
+                                <Setter Property="Padding" Value="10, 5" />
+                                <Setter Property="Background" Value="Red" />
                             </Style>
                         </StackPanel.Styles>
                     </StackPanel>
@@ -55,19 +56,102 @@
                 <TextBlock Text="{Binding Episode.Synopsis}"
                            IsVisible="{Binding Episode.Synopsis, Converter={converters:NullValueBoolConverter}}"
                            TextWrapping="WrapWithOverflow" />
-                <ContentControl Content="{Binding Duration}"/>
+                <ContentControl Content="{Binding Duration}" />
                 <Button Theme="{StaticResource TransparentButton}"
                         Command="{Binding OpenMalUrl}">
                     <TextBlock Text="MyAnimeList"
                                Foreground="CornflowerBlue"
-                               TextDecorations="Underline"/>
+                               TextDecorations="Underline" />
                 </Button>
+                <StackPanel Orientation="Horizontal"
+                            Spacing="10">
+                    <TextBlock Text="{localize:Localize EpisodeDetails.Notes.Header}"
+                               FontSize="18"
+                               FontWeight="Bold" />
+                    <Button Name="AddNoteButton"
+                            IsEnabled="{Binding Episode.Watched, Converter={converters:NullValueBoolConverter}}"
+                            Foreground="{DynamicResource ComboBoxLightDismissOverlayBackground}">
+                        <controls:FontIcon Glyph="{StaticResource PlusGlyph}"
+                                           FontFamily="{StaticResource SymbolThemeFontFamily}" />
+                    </Button>
+                    <Button Name="DismissNoteButton"
+                            IsVisible="False">
+                        <controls:FontIcon Glyph="{StaticResource DismissGlyph}"
+                                           FontFamily="{StaticResource SymbolThemeFontFamily}" />
+                    </Button>
+                </StackPanel>
+                <Border Name="NotePopup"
+                        IsVisible="False"
+                        Padding="10"
+                        CornerRadius="10"
+                        Background="{DynamicResource FloatingPaneBackgroundBrush}">
+                    <StackPanel Spacing="5">
+                        <Grid ColumnDefinitions="70, *">
+                            <TextBlock Grid.Column="0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Text="{Binding NewNoteTimeValue, Converter={converters:TimeStringConverter}}" />
+                            <Slider Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    Margin="0,0,10,0"
+                                    TickFrequency="1"
+                                    Minimum="0"
+                                    Maximum="{Binding Episode.Duration}"
+                                    Value="{Binding NewNoteTimeValue}"
+                                    IsVisible="{Binding Episode.Duration, Converter={converters:NullValueBoolConverter}}" />
+                        </Grid>
+                        <TextBox Watermark="{localize:Localize EpisodeDetails.Notes.TitleWatermark}"
+                                 Text="{Binding NewNoteTitle}"
+                                 MaxLines="1"
+                                 AcceptsReturn="False"
+                                 AcceptsTab="False" />
+                        <TextBox Watermark="{localize:Localize EpisodeDetails.Notes.NoteWatermark}"
+                                 Text="{Binding NewNoteText}"
+                                 Height="80"
+                                 MaxLines="10"
+                                 AcceptsTab="False"
+                                 TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+                <ListBox ItemsSource="{Binding EpisodeNotes}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="5"
+                                    CornerRadius="5"
+                                    Background="{DynamicResource FloatingPaneBackgroundBrush}">
+                                <Grid RowDefinitions="Auto,Auto"
+                                      ColumnDefinitions="*,Auto">
+                                    <Button Grid.Row="1"
+                                            Grid.Column="1"
+                                            Command="{Binding $parent[ListBox].((viewModels:LocalEpisodeDetailsViewModel)DataContext).DeleteNote}"
+                                            CommandParameter="{Binding}"
+                                            Background="Red">
+                                        <controls:FontIcon Glyph="{StaticResource DeleteGlyph}"
+                                                           FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                                    </Button>
+                                    <TextBlock Grid.Row="0"
+                                               Grid.Column="0"
+                                               Text="{Binding PointInTime, Converter={converters:TimeStringConverter}}"/>
+                                    <TextBlock Grid.Row="0"
+                                               Grid.Column="0"
+                                               Grid.ColumnSpan="2"
+                                               Text="{Binding Title}"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="1"
+                                               Grid.Column="0"
+                                               Text="{Binding Note}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
         </ScrollViewer>
         <Button Grid.Row="1"
                 ToolTip.Placement="TopEdgeAlignedRight"
                 ToolTip.Tip="{localize:Localize EpisodeDetails.ToolTip.MarkAsWatched}"
-                Loaded="Control_OnLoaded"
+                Name="MarkWatchedButton"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right"
                 CornerRadius="40"
@@ -78,6 +162,7 @@
                 Classes="accent">
             <controls:FontIcon Glyph="{StaticResource CheckmarkGlyph}"
                                FontSize="35"
-                               FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                               FontFamily="{StaticResource SymbolThemeFontFamily}" />
         </Button>
-    </Grid></UserControl>
+    </Grid>
+</UserControl>

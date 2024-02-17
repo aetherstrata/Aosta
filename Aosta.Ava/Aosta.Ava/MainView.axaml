@@ -21,9 +21,8 @@
                              Background="{DynamicResource MainBackgroundBrush}" />
 
         <Border Grid.Row="1">
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Center">
-                <controls:CommandBar>
+
+                <controls:CommandBar HorizontalAlignment="Center">
                     <controls:CommandBar.PrimaryCommands>
                         <controls:CommandBarButton Command="{Binding GoList}"
                                                    IconSource="List" />
@@ -42,7 +41,7 @@
                         </Style>
                     </controls:CommandBar.Styles>
                 </controls:CommandBar>
-            </StackPanel>
+
         </Border>
     </Grid>
 

@@ -13,9 +13,24 @@ public partial class EpisodeNote : IEmbeddedObject
         set => pointInTime = value.Ticks;
     }
 
+    public string Title { get; set; }
+
     public string Note { get; set; }
 
     [Indexed]
     [MapTo(nameof(PointInTime))]
     private long pointInTime { get; set; }
+
+    public static IComparer<EpisodeNote> PointInTimeComparer { get; } = new TimeComparer();
+
+    private sealed class TimeComparer : IComparer<EpisodeNote>
+    {
+        public int Compare(EpisodeNote? x, EpisodeNote? y)
+        {
+            if (ReferenceEquals(x, y)) return 0;
+            if (ReferenceEquals(null, y)) return 1;
+            if (ReferenceEquals(null, x)) return -1;
+            return x.pointInTime.CompareTo(y.pointInTime);
+        }
+    }
 }

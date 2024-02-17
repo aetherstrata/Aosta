@@ -8,6 +8,10 @@
         <Setter Property="Padding" Value="2"/>
     </Style>
 
+    <Style Selector="TextBox">
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
     <Style Selector="ListBoxItem">
         <Setter Property="Padding" Value="0"/>
     </Style>

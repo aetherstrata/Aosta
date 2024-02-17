@@ -1,4 +1,5 @@
 using Aosta.Data.Database;
+using Aosta.Data.Extensions;
 using Aosta.Data.Models.Embedded;
 
 using Realms;
@@ -26,6 +27,9 @@ public partial class Episode : IEmbeddedObject
     /// URL to the episode.
     public string? Url { get; set; }
 
+    /// The default title of the episode.
+    public string DefaultTitle => Titles.GetDefault().Title;
+
     /// Titles of the episode.
     public IList<TitleEntry> Titles { get; } = null!;
 
@@ -49,4 +53,17 @@ public partial class Episode : IEmbeddedObject
 
     /// URL to forum discussion
     public string? ForumUrl { get; set; }
+
+    public static IComparer<Episode> NumberComparer { get; } = new NumberRelationalComparer();
+
+    private sealed class NumberRelationalComparer : IComparer<Episode>
+    {
+        public int Compare(Episode? x, Episode? y)
+        {
+            if (ReferenceEquals(x, y)) return 0;
+            if (ReferenceEquals(null, y)) return 1;
+            if (ReferenceEquals(null, x)) return -1;
+            return x.Number.CompareTo(y.Number);
+        }
+    }
 }

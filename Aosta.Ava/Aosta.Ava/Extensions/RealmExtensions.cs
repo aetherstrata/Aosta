@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using DynamicData;
@@ -26,11 +27,23 @@ public static class RealmExtensions
     /// <typeparam name="T">The type of the entities.</typeparam>
     /// <returns>The <see cref="IChangeSet{TObject}"/> to observe on.</returns>
     public static IObservable<IChangeSet<T>> Connect<T>(this IQueryable<T> query, out IDisposable token)
-        where T : IRealmObject
+        where T : IRealmObjectBase
+    {
+        return Connect(query.AsRealmCollection(), out token);
+    }
+
+    public static IObservable<IChangeSet<T>> Connect<T>(this IList<T> list, out IDisposable token)
+        where T : IRealmObjectBase
+    {
+        return Connect(list.AsRealmCollection(), out token);
+    }
+
+    public static IObservable<IChangeSet<T>> Connect<T>(this IRealmCollection<T> collection, out IDisposable token)
+        where T : IRealmObjectBase
     {
         var cache = new SourceList<T>();
 
-        token = query.SubscribeForNotifications((sender, changes) =>
+        token = collection.SubscribeForNotifications((sender, changes) =>
         {
             logger.Debug("Projection for {Type} changed, adding changes to observable cache", typeof(T).Name);
 

@@ -1,9 +1,14 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+
 using Aosta.Ava.ViewModels;
 
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Data;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 
 namespace Aosta.Ava.Pages;
@@ -15,16 +20,43 @@ public partial class LocalEpisodeDetailsPage : ReactivePageBase<LocalEpisodeDeta
         InitializeComponent();
     }
 
-    private void Control_OnLoaded(object? sender, RoutedEventArgs e)
+    protected override void OnLoaded(RoutedEventArgs e)
     {
-        var button = (Button)sender!;
+        base.OnLoaded(e);
 
-        button.IsVisible = !ViewModel!.Episode.Watched.HasValue;
+        MarkWatchedButton.IsVisible = !ViewModel!.Episode.Watched.HasValue;
 
-        button.Tapped += (_, _) =>
+        MarkWatchedButton.Tapped += (_, _) =>
         {
             ViewModel.MarkAsWatched();
-            button.IsVisible = false;
+            MarkWatchedButton.IsVisible = false;
         };
+
+        AddNoteButton.Tapped += (_, _) =>
+        {
+            if (NotePopup.IsVisible)
+            {
+                ViewModel.AddNote();
+                closeTab();
+            }
+            else
+            {
+                DismissNoteButton.IsVisible = true;
+                AddNoteButton.Classes.Add("accent");
+                NotePopup.IsVisible = true;
+            }
+        };
+
+        DismissNoteButton.Tapped += (_, _) =>
+        {
+            closeTab();
+        };
+    }
+
+    private void closeTab()
+    {
+        AddNoteButton.Classes.Remove("accent");
+        NotePopup.IsVisible = false;
+        DismissNoteButton.IsVisible = false;
     }
 }

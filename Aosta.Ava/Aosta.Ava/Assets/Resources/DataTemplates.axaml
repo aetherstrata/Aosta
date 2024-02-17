@@ -188,41 +188,4 @@
             </Grid>
         </Button>
     </DataTemplate>
-
-    <DataTemplate x:Key="LocalEpisodeEntry" DataType="vm:LocalEpisodeEntry">
-        <Button Command="{Binding GoToDetails}"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Stretch"
-                Padding="5"
-                Margin="0">
-            <Grid ColumnDefinitions="Auto, *, Auto">
-                <fluent:FontIcon Grid.Column="0"
-                                 Glyph="{StaticResource CheckmarkGlyph}"
-                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                 Foreground="Green"
-                                 Margin="5,0,10,0"
-                                 IsVisible="{Binding Episode.Watched, Converter={converters:NullValueBoolConverter}}"/>
-                <TextBlock Grid.Column="1"
-                           HorizontalAlignment="Left">
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0}. {1}">
-                            <Binding Path="Episode.Number" />
-                            <Binding Path="Title" />
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
-                <StackPanel Grid.Column="2"
-                            Spacing="5"
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Right">
-                    <TextBlock Text="F"
-                               Foreground="Crimson"
-                               IsVisible="{Binding Episode.Filler}" />
-                    <TextBlock Text="R"
-                               Foreground="Crimson"
-                               IsVisible="{Binding Episode.Recap}" />
-                </StackPanel>
-            </Grid>
-        </Button>
-    </DataTemplate>
 </ResourceDictionary>

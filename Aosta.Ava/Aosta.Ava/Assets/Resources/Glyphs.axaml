@@ -4,6 +4,8 @@
     <x:String x:Key="CalendarGlyph">&#xF801D;</x:String>
     <x:String x:Key="CheckmarkGlyph">&#xE73E;</x:String>
     <x:String x:Key="ChevronLeftGlyph">&#xE76B;</x:String>
+    <x:String x:Key="DeleteGlyph">&#xE107;</x:String>
+    <x:String x:Key="DismissGlyph">&#xF805E;</x:String>
     <x:String x:Key="EditGlyph">&#xF8066;</x:String>
     <x:String x:Key="FilterGlyph">&#xE16E;</x:String>
     <x:String x:Key="MoreVerticalGlyph">&#xF809E;</x:String>

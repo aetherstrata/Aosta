@@ -1,6 +1,7 @@
 using Aosta.Ava.ViewModels;
 
 using Avalonia;
+using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 
 namespace Aosta.Ava;

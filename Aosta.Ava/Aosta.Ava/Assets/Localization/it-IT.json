@@ -7,6 +7,9 @@
   "AnimeList.Header.NoAnime" : "La lista è vuota",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
 
+  "EpisodeDetails.Notes.Header": "Note",
+  "EpisodeDetails.Notes.TitleWatermark": "Inserisci il titolo",
+  "EpisodeDetails.Notes.NoteWatermark": "Scrivi una nuova nota",
   "EpisodeDetails.ToolTip.MarkAsWatched": "Segna questo episodio come visto",
 
   "HomePage.SeasonalAnime.Header" : "Anime in corso",
