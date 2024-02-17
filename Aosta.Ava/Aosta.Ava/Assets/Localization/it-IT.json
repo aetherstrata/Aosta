@@ -1,9 +1,13 @@
 {
   "App.Version": "Versione {0}",
 
+  "AnimeDetails.Menu.Remove": "Rimuovi dalla lista",
   "AnimeDetails.ToolTip.AddToRealm": "Aggiungi questo anime alla tua lista",
+
   "AnimeList.Header.NoAnime" : "La lista è vuota",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
+
+  "EpisodeDetails.ToolTip.MarkAsWatched": "Segna questo episodio come visto",
 
   "HomePage.SeasonalAnime.Header" : "Anime in corso",
   "HomePage.TopAnime.Header" : "Top anime",
@@ -76,7 +80,7 @@
   "Enum.AnimeSearchOrderBy.Popularity": "Popolarità",
 
   "Enum.AnimeType.TV": "TV",
-  "Enum.AnimeType.TvSpecial": "Speciale TV",
+  "Enum.AnimeType.TVSpecial": "Speciale TV",
   "Enum.AnimeType.OVA" : "OVA",
   "Enum.AnimeType.Movie": "Film",
   "Enum.AnimeType.Special": "Speciale",

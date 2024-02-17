@@ -3,8 +3,6 @@
 
 using Aosta.Ava.ViewModels;
 
-using Avalonia.ReactiveUI;
-
 namespace Aosta.Ava.Pages;
 
 public partial class LocalAnimeDetailsPage : ReactivePageBase<LocalAnimeDetailsViewModel>

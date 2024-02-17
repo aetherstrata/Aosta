@@ -60,4 +60,20 @@
                                           NavigateUri="{Binding Episode.Url}"/>
             </StackPanel>
         </ScrollViewer>
+        <Button Grid.Row="1"
+                ToolTip.Placement="TopEdgeAlignedRight"
+                ToolTip.Tip="{localize:Localize EpisodeDetails.ToolTip.MarkAsWatched}"
+                Loaded="Control_OnLoaded"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                CornerRadius="40"
+                Width="80"
+                Height="80"
+                Margin="0,0,20,20"
+                IsDefault="True"
+                Classes="accent">
+            <controls:FontIcon Glyph="{StaticResource CheckmarkGlyph}"
+                               FontSize="35"
+                               FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+        </Button>
     </Grid></UserControl>

@@ -195,8 +195,14 @@
                 HorizontalContentAlignment="Stretch"
                 Padding="5"
                 Margin="0">
-            <Grid RowDefinitions="Auto">
-                <TextBlock Grid.Row="0"
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <fluent:FontIcon Grid.Column="0"
+                                 Glyph="{StaticResource CheckmarkGlyph}"
+                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                 Foreground="Green"
+                                 Margin="5,0,10,0"
+                                 IsVisible="{Binding Episode.Watched, Converter={converters:NullValueBoolConverter}}"/>
+                <TextBlock Grid.Column="1"
                            HorizontalAlignment="Left">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0}. {1}">
@@ -205,7 +211,7 @@
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
-                <StackPanel Grid.Row="0"
+                <StackPanel Grid.Column="2"
                             Spacing="5"
                             Orientation="Horizontal"
                             HorizontalAlignment="Right">

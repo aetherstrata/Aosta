@@ -100,7 +100,7 @@ public static class JikanExtensions
     {
         AiringStatusFilter.All => new LocalizedData<AiringStatusFilter>(filter, "Label.All"),
         AiringStatusFilter.Airing => new LocalizedData<AiringStatusFilter>(filter, "Enum.AiringStatus.Airing"),
-        AiringStatusFilter.Complete => new LocalizedData<AiringStatusFilter>(filter, "Enum.AiringStatus.Complete"),
+        AiringStatusFilter.Complete => new LocalizedData<AiringStatusFilter>(filter, "Enum.AiringStatus.Finished"),
         AiringStatusFilter.Upcoming => new LocalizedData<AiringStatusFilter>(filter, "Enum.AiringStatus.Upcoming"),
         _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, error_message(nameof(AiringStatusFilter)))
     };

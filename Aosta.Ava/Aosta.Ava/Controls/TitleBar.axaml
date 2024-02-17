@@ -28,13 +28,7 @@
                                FontWeight="Bold"
                                FontSize="24"
                                VerticalAlignment="Center"/>
-                    <Button Grid.Column="5"
-                            IsVisible="{TemplateBinding IsMenuEnabled}"
-                            Command="{TemplateBinding MenuCommand}">
-                        <fluent:FontIcon Glyph="{StaticResource MoreVerticalGlyph}"
-                                         FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                         FontSize="20"/>
-                    </Button>
+                    <ContentPresenter Grid.Column="5" Content="{TemplateBinding Menu}"></ContentPresenter>
                     <Grid.Styles>
                         <Style Selector="Button">
                             <Setter Property="Margin" Value="0,9,0,5"/>

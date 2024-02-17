@@ -24,4 +24,8 @@
     <Style Selector="controls|SettingsExpanderItem">
         <Setter Property="Background" Value="Transparent"/>
     </Style>
+
+    <Style Selector="controls|CommandBar:minimal /template/ Button#MoreButton">
+        <Setter Property="Height" Value="36"/>
+    </Style>
 </Styles>

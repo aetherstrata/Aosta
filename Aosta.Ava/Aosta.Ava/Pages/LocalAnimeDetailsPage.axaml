@@ -13,8 +13,19 @@
              x:DataType="vm:LocalAnimeDetailsViewModel">
     <Grid RowDefinitions="Auto,*">
         <local:TitleBar Grid.Row="0"
-                        IsBackEnabled="True"
-                        Title="{Binding DefaultTitle}" />
+                        Title="{Binding DefaultTitle}">
+
+            <local:TitleBar.Menu>
+                <controls:CommandBar ClosedDisplayMode="Minimal"
+                                     Height="48">
+                    <controls:CommandBar.SecondaryCommands>
+                        <controls:CommandBarButton Label="{localize:Localize AnimeDetails.Menu.Remove}"
+                                                   IconSource="Dismiss"
+                                                   Command="{Binding RemoveFromRealm}"/>
+                    </controls:CommandBar.SecondaryCommands>
+                </controls:CommandBar>
+            </local:TitleBar.Menu>
+        </local:TitleBar>
         <ScrollViewer Grid.Row="1"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Hidden">

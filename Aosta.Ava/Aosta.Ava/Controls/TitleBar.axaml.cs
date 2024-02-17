@@ -7,10 +7,13 @@ using System.Windows.Input;
 using Aosta.Ava.ViewModels;
 
 using Avalonia;
+using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Media;
+
+using FluentAvalonia.UI.Controls;
 
 namespace Aosta.Ava.Controls;
 
@@ -23,14 +26,12 @@ public class TitleBar : TemplatedControl
     public static readonly StyledProperty<bool> IsBackEnabledProperty =
         AvaloniaProperty.Register<TitleBar, bool>(nameof(IsBackEnabled), true);
 
-    public static readonly StyledProperty<bool> IsMenuEnabledProperty =
-        AvaloniaProperty.Register<TitleBar, bool>(nameof(IsMenuEnabled));
-
     public static readonly StyledProperty<ICommand> BackCommandProperty =
-        AvaloniaProperty.Register<TitleBar, ICommand>(nameof(BackCommand), ((MainViewModel)Application.Current!.DataContext!).GoBack);
+        AvaloniaProperty.Register<TitleBar, ICommand>(nameof(BackCommand),
+            ((MainViewModel)Application.Current!.DataContext!).GoBack);
 
-    public static readonly StyledProperty<ICommand> MenuCommandProperty =
-        AvaloniaProperty.Register<TitleBar, ICommand>(nameof(MenuCommand));
+    public static readonly StyledProperty<Control> MenuProperty =
+        AvaloniaProperty.Register<TitleBar, Control>(nameof(Menu));
 
     public string Title
     {
@@ -44,22 +45,16 @@ public class TitleBar : TemplatedControl
         set => SetValue(IsBackEnabledProperty, value);
     }
 
-    public bool IsMenuEnabled
-    {
-        get => GetValue(IsMenuEnabledProperty);
-        set => SetValue(IsMenuEnabledProperty, value);
-    }
-
     public ICommand BackCommand
     {
         get => GetValue(BackCommandProperty);
         set => SetValue(BackCommandProperty, value);
     }
 
-    public ICommand MenuCommand
+    public Control Menu
     {
-        get => GetValue(MenuCommandProperty);
-        set => SetValue(MenuCommandProperty, value);
+        get => GetValue(MenuProperty);
+        set => SetValue(MenuProperty, value);
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)

@@ -2,12 +2,20 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Reactive;
+using System.Reactive.Linq;
 
+using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
+using Aosta.Data;
 using Aosta.Data.Extensions;
 using Aosta.Data.Models;
+using Aosta.Jikan;
+
+using Avalonia.Controls.Primitives;
 
 using ReactiveUI;
+
+using Splat;
 
 namespace Aosta.Ava.ViewModels;
 

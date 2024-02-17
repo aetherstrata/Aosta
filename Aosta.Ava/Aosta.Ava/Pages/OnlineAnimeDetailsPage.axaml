@@ -98,7 +98,7 @@
                 Margin="0,0,20,20"
                 IsDefault="True"
                 Classes="accent">
-            <controls:FontIcon Glyph="&#xE109;"
+            <controls:FontIcon Glyph="{StaticResource PlusGlyph}"
                                FontSize="35"
                                FontFamily="{StaticResource SymbolThemeFontFamily}" />
         </Button>

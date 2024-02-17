@@ -4,7 +4,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
+using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
@@ -63,6 +63,12 @@ public sealed class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
     public string Score => Anime.UserScore?.ToString() ?? LocalizedString.NA;
 
     public LocalizedString Status { get; }
+
+    public void RemoveFromRealm()
+    {
+        _realm.Write(r => r.Remove(Anime));
+        HostScreen.Router.NavigateBack.Execute();
+    }
 
     public void Dispose()
     {
