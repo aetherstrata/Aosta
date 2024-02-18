@@ -57,12 +57,18 @@
                            IsVisible="{Binding Episode.Synopsis, Converter={converters:NullValueBoolConverter}}"
                            TextWrapping="WrapWithOverflow" />
                 <ContentControl Content="{Binding Duration}" />
-                <Button Theme="{StaticResource TransparentButton}"
-                        Command="{Binding OpenMalUrl}">
-                    <TextBlock Text="MyAnimeList"
-                               Foreground="CornflowerBlue"
-                               TextDecorations="Underline" />
-                </Button>
+                <StackPanel Orientation="Horizontal"
+                            Spacing="10">
+                    <TextBlock Text="{localize:Localize Label.ExternalLinks}"
+                               FontSize="18"
+                               FontWeight="Bold" />
+                    <Button Theme="{StaticResource TransparentButton}"
+                            Command="{Binding OpenMalUrl}">
+                        <TextBlock Text="MyAnimeList"
+                                   Foreground="CornflowerBlue"
+                                   TextDecorations="Underline" />
+                    </Button>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Spacing="10">
                     <TextBlock Text="{localize:Localize EpisodeDetails.Notes.Header}"
@@ -86,20 +92,17 @@
                         CornerRadius="10"
                         Background="{DynamicResource FloatingPaneBackgroundBrush}">
                     <StackPanel Spacing="5">
-                        <Grid ColumnDefinitions="70, *">
-                            <TextBlock Grid.Column="0"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       Text="{Binding NewNoteTimeValue, Converter={converters:TimeStringConverter}}" />
-                            <Slider Grid.Column="1"
-                                    Orientation="Horizontal"
-                                    Margin="0,0,10,0"
-                                    TickFrequency="1"
-                                    Minimum="0"
-                                    Maximum="{Binding Episode.Duration}"
-                                    Value="{Binding NewNoteTimeValue}"
-                                    IsVisible="{Binding Episode.Duration, Converter={converters:NullValueBoolConverter}}" />
-                        </Grid>
+                        <Slider ToolTip.VerticalOffset="10"
+                                ToolTip.Placement="Top"
+                                ToolTip.Tip="{Binding NewNoteTimeValue, Converter={converters:TimeStringConverter}}"
+                                Orientation="Horizontal"
+                                Margin="10,0"
+                                TickFrequency="1"
+                                Minimum="0"
+                                Maximum="{Binding Episode.Duration}"
+                                Value="{Binding NewNoteTimeValue}"
+                                IsVisible="{Binding Episode.Duration, Converter={converters:NullValueBoolConverter}}">
+                        </Slider>
                         <TextBox Watermark="{localize:Localize EpisodeDetails.Notes.TitleWatermark}"
                                  Text="{Binding NewNoteTitle}"
                                  MaxLines="1"
@@ -127,17 +130,17 @@
                                             CommandParameter="{Binding}"
                                             Background="Red">
                                         <controls:FontIcon Glyph="{StaticResource DeleteGlyph}"
-                                                           FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                                                           FontFamily="{StaticResource SymbolThemeFontFamily}" />
                                     </Button>
                                     <TextBlock Grid.Row="0"
                                                Grid.Column="0"
-                                               Text="{Binding PointInTime, Converter={converters:TimeStringConverter}}"/>
+                                               Text="{Binding PointInTime, Converter={converters:TimeStringConverter}}" />
                                     <TextBlock Grid.Row="0"
                                                Grid.Column="0"
                                                Grid.ColumnSpan="2"
                                                Text="{Binding Title}"
                                                FontWeight="Bold"
-                                               HorizontalAlignment="Center"/>
+                                               HorizontalAlignment="Center" />
                                     <TextBlock Grid.Row="1"
                                                Grid.Column="0"
                                                Text="{Binding Note}" />

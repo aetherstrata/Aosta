@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
+using Aosta.Ava.Controls;
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Ava.ViewModels.DetailsPill;
@@ -14,11 +15,19 @@ using Aosta.Data;
 using Aosta.Data.Extensions;
 using Aosta.Data.Models;
 
+using Avalonia.Controls;
+using Avalonia.Controls.Templates;
+using Avalonia.Layout;
+using Avalonia.Media;
 using Avalonia.ReactiveUI;
 
 using DynamicData;
 
+using FluentAvalonia.UI.Controls;
+using FluentAvalonia.UI.Controls.Primitives;
+
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 using Splat;
 
@@ -57,6 +66,15 @@ public sealed class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
 
         GoToEpisode = ReactiveCommand.CreateFromObservable((Episode episode) =>
             HostScreen.Router.Navigate.Execute(new LocalEpisodeDetailsViewModel(HostScreen, episode, Anime)));
+
+        Anime.PropertyChanged += (_, args) =>
+        {
+            if (args.PropertyName == "watchStatus")
+            {
+                Status?.Dispose();
+                Status = Anime.WatchingStatus.Localize();
+            }
+        };
     }
 
     public IContentInfoPill DetailsPill { get; }
@@ -74,11 +92,61 @@ public sealed class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
     private readonly ReadOnlyObservableCollection<Episode> _episodes;
     public ReadOnlyObservableCollection<Episode> Episodes => _episodes;
 
-    public string Score => Anime.UserScore?.ToString() ?? LocalizedString.NA;
-
-    public LocalizedString Status { get; }
+    [Reactive]
+    public LocalizedString? Status { get; set; }
 
     public ReactiveCommand<Episode, IRoutableViewModel> GoToEpisode { get; }
+
+    public async Task OpenOnMal()
+    {
+        if (!string.IsNullOrEmpty(Anime.Url))
+        {
+            bool res = await Locator.Current.GetSafely<ILauncher>().LaunchUriAsync(new Uri(Anime.Url));
+            this.Log().Debug("Open url in browser: {Result}", res);
+        }
+    }
+
+    public async Task ShowScoreFlyout()
+    {
+        var numberBox = new NumberBox
+        {
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+            Minimum = 0,
+            Maximum = 100,
+            Value = Anime.UserScore ?? 0,
+            SimpleNumberFormat = "F0",
+            PlaceholderText = Localizer.Instance["AnimeDetails.Score.Watermark"],
+            SpinButtonPlacementMode = NumberBoxSpinButtonPlacementMode.Inline,
+            ValidationMode = NumberBoxValidationMode.InvalidInputOverwritten,
+            TextAlignment = TextAlignment.Left
+        };
+
+        var okCommand = ReactiveCommand.Create(() =>
+        {
+            this.Log().Debug("Updated user score for {AnimeName}: {Score}", Anime.Titles.GetDefault().Title, Anime.UserScore);
+            _realm.Write(r =>
+            {
+                Anime.UserScore = (int)numberBox.Value;
+            });
+        });
+
+        var scoreFlyout = new ContentDialog
+        {
+            Title = Localizer.Instance["AnimeDetails.Score.PopupTitle"],
+            TitleTemplate = new FuncDataTemplate<string>((s, _) => new TextBlock
+            {
+                Text = s,
+                FontSize = 24,
+                FontWeight = FontWeight.Bold
+            }),
+            Content = numberBox,
+            PrimaryButtonText = Localizer.Instance["Label.PrimaryButton"],
+            PrimaryButtonCommand = okCommand,
+            CloseButtonText = Localizer.Instance["Label.CloseButton"]
+        };
+
+        await scoreFlyout.ShowAsync();
+    }
 
     public void RemoveFromRealm()
     {
@@ -89,7 +157,7 @@ public sealed class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
     public void Dispose()
     {
         DetailsPill.Dispose();
-        Status.Dispose();
+        Status?.Dispose();
         _episodesConnection.Dispose();
         _subscriptionToken.Dispose();
     }

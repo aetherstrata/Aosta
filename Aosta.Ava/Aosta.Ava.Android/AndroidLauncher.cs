@@ -18,14 +18,11 @@ public class AndroidLauncher(Context context) : ILauncher
     {
         ArgumentNullException.ThrowIfNull(uri);
 
-        if (uri.IsAbsoluteUri && context.PackageManager is { } packageManager)
+        if (uri.IsAbsoluteUri)
         {
             var intent = new Intent(Intent.ActionView, AndroidUri.Parse(uri.OriginalString));
-            if (intent.ResolveActivity(packageManager) is not null)
-            {
-                intent.SetFlags(flags);
-                context.StartActivity(intent);
-            }
+            intent.SetFlags(flags);
+            context.StartActivity(intent);
         }
 
         return Task.FromResult(false);

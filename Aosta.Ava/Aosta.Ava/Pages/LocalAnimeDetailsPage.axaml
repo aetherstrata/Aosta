@@ -12,6 +12,11 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.LocalAnimeDetailsPage"
              x:DataType="vm:LocalAnimeDetailsViewModel">
+    <UserControl.Styles>
+        <Style Selector="fluent|NumberBox">
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+    </UserControl.Styles>
     <Grid RowDefinitions="Auto,*">
         <local:TitleBar Grid.Row="0"
                         Title="{Binding DefaultTitle}">
@@ -20,9 +25,12 @@
                 <fluent:CommandBar ClosedDisplayMode="Minimal"
                                      Height="48">
                     <fluent:CommandBar.SecondaryCommands>
+                        <fluent:CommandBarButton Label="{localize:Localize AnimeDetails.Menu.OpenOnMAL}"
+                                                 IconSource="Globe"
+                                                 Command="{Binding OpenOnMal}" />
                         <fluent:CommandBarButton Label="{localize:Localize AnimeDetails.Menu.Remove}"
-                                                   IconSource="Dismiss"
-                                                   Command="{Binding RemoveFromRealm}" />
+                                                 IconSource="Dismiss"
+                                                 Command="{Binding RemoveFromRealm}" />
                     </fluent:CommandBar.SecondaryCommands>
                 </fluent:CommandBar>
             </local:TitleBar.Menu>
@@ -49,23 +57,29 @@
                     <StackPanel Spacing="10">
                         <Border Background="{DynamicResource PureColorBackgroundBrush}"
                                 HorizontalAlignment="Left"
-                                Padding="5"
                                 CornerRadius="5">
-                            <StackPanel Orientation="Horizontal">
-                                <fluent:FontIcon Glyph="{StaticResource StarGlyph}"
-                                                   Margin="5,0"
-                                                   FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                                   Foreground="Gold" />
-                                <TextBlock Text="{Binding Score}" />
-                            </StackPanel>
+                            <Button Command="{Binding ShowScoreFlyout}"
+                                    Background="Transparent"
+                                    Padding="10"
+                                    BorderThickness="0">
+                                <StackPanel Orientation="Horizontal"
+                                            Spacing="5">
+                                    <fluent:FontIcon Glyph="{StaticResource StarGlyph}"
+                                                       FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                                       Foreground="Gold"
+                                                       VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Anime.UserScore, Converter={converters:ShortValueStringConverter}}"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Border>
                         <Border Background="{DynamicResource PureColorBackgroundBrush}"
                                 HorizontalAlignment="Left"
-                                Padding="5"
+                                Padding="10"
                                 CornerRadius="5">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal"
+                                        Spacing="5">
                                 <fluent:FontIcon Glyph="{StaticResource CalendarGlyph}"
-                                                   Margin="5,0"
                                                    FontFamily="{StaticResource SymbolThemeFontFamily}" />
                                 <ContentControl Content="{Binding Status}" />
                             </StackPanel>

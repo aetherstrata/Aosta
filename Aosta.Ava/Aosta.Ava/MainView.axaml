@@ -28,8 +28,7 @@
                                                    IconSource="List" />
 
                         <controls:CommandBarButton Command="{Binding GoHome}"
-                                                   IconSource="Home"
-                                                   IsDefault="True"/>
+                                                   IconSource="Home"/>
 
                         <controls:CommandBarButton Command="{Binding GoSearch}"
                                                    IconSource="Find"/>
