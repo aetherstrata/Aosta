@@ -14,7 +14,7 @@
              x:DataType="vm:LocalAnimeDetailsViewModel">
     <UserControl.Styles>
         <Style Selector="fluent|NumberBox">
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="0" />
         </Style>
     </UserControl.Styles>
     <Grid RowDefinitions="Auto,*">
@@ -23,7 +23,7 @@
 
             <local:TitleBar.Menu>
                 <fluent:CommandBar ClosedDisplayMode="Minimal"
-                                     Height="48">
+                                   Height="48">
                     <fluent:CommandBar.SecondaryCommands>
                         <fluent:CommandBarButton Label="{localize:Localize AnimeDetails.Menu.OpenOnMAL}"
                                                  IconSource="Globe"
@@ -38,8 +38,9 @@
         <ScrollViewer Grid.Row="1"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Hidden">
-            <Grid RowDefinitions="Auto">
+            <Grid RowDefinitions="Auto, Auto, Auto, *">
                 <Image Grid.Row="0"
+                       Grid.RowSpan="4"
                        async:ImageLoader.Source="{Binding Anime.Images.JPG.LargeImageUrl, FallbackValue={x:Static card:IOnlineCard.PORTRAIT_PLACEHOLDER}}"
                        VerticalAlignment="Top"
                        Height="{StaticResource AnimeBannerHeight}"
@@ -53,39 +54,57 @@
                         </LinearGradientBrush>
                     </Image.OpacityMask>
                 </Image>
-                <StackPanel Grid.Row="0" Margin="10, 10, 10 ,10">
-                    <StackPanel Spacing="10">
-                        <Border Background="{DynamicResource PureColorBackgroundBrush}"
-                                HorizontalAlignment="Left"
-                                CornerRadius="5">
-                            <Button Command="{Binding ShowScoreFlyout}"
-                                    Background="Transparent"
-                                    Padding="10"
-                                    BorderThickness="0">
-                                <StackPanel Orientation="Horizontal"
-                                            Spacing="5">
-                                    <fluent:FontIcon Glyph="{StaticResource StarGlyph}"
-                                                       FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                                       Foreground="Gold"
-                                                       VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Anime.UserScore, Converter={converters:ShortValueStringConverter}}"
-                                               VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                        </Border>
-                        <Border Background="{DynamicResource PureColorBackgroundBrush}"
-                                HorizontalAlignment="Left"
-                                Padding="10"
-                                CornerRadius="5">
-                            <StackPanel Orientation="Horizontal"
-                                        Spacing="5">
-                                <fluent:FontIcon Glyph="{StaticResource CalendarGlyph}"
-                                                   FontFamily="{StaticResource SymbolThemeFontFamily}" />
-                                <ContentControl Content="{Binding Status}" />
-                            </StackPanel>
-                        </Border>
-                        <ContentControl Content="{Binding DetailsPill}" />
+                <local:AnimatedPopup Grid.Row="0"
+                                     Grid.RowSpan="3"
+                                     Name="ScorePopup"
+                                     AnimationTime="0:0:0.3">
+                    <Border Height="200"
+                            Background="Brown">
+                        <TextBlock Text="CHIAPPAFAVA"
+                                   FontSize="48"
+                                   FontWeight="Bold"/>
+                    </Border>
+                </local:AnimatedPopup>
+                <Border Grid.Row="0"
+                        Margin="10, 10, 10, 0"
+                        Background="{DynamicResource PureColorBackgroundBrush}"
+                        HorizontalAlignment="Left"
+                        CornerRadius="5">
+                    <Button Command="{Binding #ScorePopup.Open}"
+                            Background="Transparent"
+                            Padding="10"
+                            BorderThickness="0">
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="5">
+                            <fluent:FontIcon Glyph="{StaticResource StarGlyph}"
+                                             FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                             Foreground="Gold"
+                                             VerticalAlignment="Center" />
+                            <TextBlock
+                                Text="{Binding Anime.UserScore, Converter={converters:ShortValueStringConverter}}"
+                                VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </Border>
+                <Border Grid.Row="1"
+                        Margin="10,10,10,0"
+                        Background="{DynamicResource PureColorBackgroundBrush}"
+                        HorizontalAlignment="Left"
+                        Padding="10"
+                        CornerRadius="5">
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="5">
+                        <fluent:FontIcon Glyph="{StaticResource CalendarGlyph}"
+                                         FontFamily="{StaticResource SymbolThemeFontFamily}" />
+                        <ContentControl Content="{Binding Status}" />
                     </StackPanel>
+                </Border>
+                <ContentControl Grid.Row="2"
+                                Margin="10,10,10,0"
+                                HorizontalAlignment="Right"
+                                Content="{Binding DetailsPill}" />
+                <StackPanel Grid.Row="3"
+                            Spacing="10">
                     <TextBlock Text="{localize:Localize Label.Synopsis}"
                                FontSize="18"
                                FontWeight="Bold" />
@@ -100,19 +119,20 @@
                     <ListBox ItemsSource="{Binding Episodes}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Button Command="{Binding $parent[ListBox].((vm:LocalAnimeDetailsViewModel)DataContext).GoToEpisode}"
-                                        CommandParameter="{Binding}"
-                                        HorizontalAlignment="Stretch"
-                                        HorizontalContentAlignment="Stretch"
-                                        Padding="5"
-                                        Margin="0">
+                                <Button
+                                    Command="{Binding $parent[ListBox].((vm:LocalAnimeDetailsViewModel)DataContext).GoToEpisode}"
+                                    CommandParameter="{Binding}"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    Padding="5"
+                                    Margin="0">
                                     <Grid ColumnDefinitions="Auto, *, Auto">
                                         <fluent:FontIcon Grid.Column="0"
                                                          Glyph="{StaticResource CheckmarkGlyph}"
                                                          FontFamily="{StaticResource SymbolThemeFontFamily}"
                                                          Foreground="Green"
                                                          Margin="5,0,10,0"
-                                                         IsVisible="{Binding Watched, Converter={converters:NullValueBoolConverter}}"/>
+                                                         IsVisible="{Binding Watched, Converter={converters:NullValueBoolConverter}}" />
                                         <TextBlock Grid.Column="1"
                                                    HorizontalAlignment="Left">
                                             <TextBlock.Text>
