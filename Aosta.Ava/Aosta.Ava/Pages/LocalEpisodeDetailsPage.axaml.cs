@@ -3,6 +3,7 @@
 
 using Aosta.Ava.ViewModels;
 
+using Avalonia.Input;
 using Avalonia.Interactivity;
 
 namespace Aosta.Ava.Pages;
@@ -25,5 +26,10 @@ public partial class LocalEpisodeDetailsPage : ReactivePageBase<LocalEpisodeDeta
             ViewModel.MarkAsWatched();
             MarkWatchedButton.IsVisible = false;
         };
+    }
+
+    private void InputElement_OnTapped(object? sender, TappedEventArgs e)
+    {
+        NoteEditor.Close();
     }
 }

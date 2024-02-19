@@ -132,7 +132,7 @@ public sealed class LocalEpisodeDetailsViewModel : ReactiveObject, IRoutableView
 
     private void addNote()
     {
-        _realm.WriteAsync(r => Episode.Notes.Add(new EpisodeNote
+        _realm.Write(r => Episode.Notes.Add(new EpisodeNote
         {
             PointInTime = TimeSpan.FromSeconds(NewNoteTimeValue),
             Title = NewNoteTitle,
