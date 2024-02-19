@@ -10,6 +10,16 @@ namespace Aosta.Ava.Extensions;
 
 public static class ModelExtensions
 {
+    public static LocalizedData<WatchingStatus> LocalizeWithData(this WatchingStatus status) => status switch
+    {
+        WatchingStatus.PlanToWatch => status.WrapAndLocalize("Enum.WatchingStatus.PlanToWatch"),
+        WatchingStatus.Dropped => status.WrapAndLocalize("Enum.WatchingStatus.Dropped"),
+        WatchingStatus.Completed => status.WrapAndLocalize("Enum.WatchingStatus.Completed"),
+        WatchingStatus.OnHold => status.WrapAndLocalize("Enum.WatchingStatus.OnHold"),
+        WatchingStatus.Watching => status.WrapAndLocalize("Enum.WatchingStatus.Watching"),
+        _ => throw new ArgumentOutOfRangeException(nameof(status), status, error_message(nameof(WatchingStatus)))
+    };
+
     public static LocalizedString Localize(this WatchingStatus status) => status switch
     {
         WatchingStatus.PlanToWatch => "Enum.WatchingStatus.PlanToWatch".Localize(),

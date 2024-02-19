@@ -7,6 +7,11 @@ namespace Aosta.Ava.Extensions;
 
 public static class LocalizationExtensions
 {
+    public static LocalizedData<T> WrapAndLocalize<T>(this T obj, string key)
+    {
+        return new LocalizedData<T>(obj, key);
+    }
+
     public static LocalizedString Localize(this string key)
     {
         return LocalizedString.Create(key);

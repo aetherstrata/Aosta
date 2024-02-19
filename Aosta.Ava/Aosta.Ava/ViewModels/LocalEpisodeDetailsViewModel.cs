@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
@@ -18,11 +20,10 @@ using Aosta.Jikan;
 using Avalonia.ReactiveUI;
 
 using DynamicData;
+using DynamicData.Binding;
 
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-
-using Realms;
 
 using Splat;
 
@@ -50,7 +51,10 @@ public sealed class LocalEpisodeDetailsViewModel : ReactiveObject, IRoutableView
         UrlPathSegment = $"local-ep-{anime.PrimaryKey}-{episode.Number}";
 
         Episode = episode;
+        PageTitle = ("Label.Episode.Number", Episode.Number).Localize();
         _anime = anime;
+
+        localizeDuration();
 
         if (_anime.ID.HasValue && Episode.Synopsis is null)
         {
@@ -76,18 +80,12 @@ public sealed class LocalEpisodeDetailsViewModel : ReactiveObject, IRoutableView
             .Bind(out _episodeNotes)
             .Subscribe();
 
-        PageTitle = ("Label.Episode.Number", Episode.Number).Localize();
-        localizeDuration();
+        AddNote = ReactiveCommand.Create(addNote,
+            this.WhenAnyValue(vm => vm.NewNoteText, vm => vm.NewNoteTitle)
+                .Select(((string text, string title) x) => !string.IsNullOrWhiteSpace(x.text) && !string.IsNullOrWhiteSpace(x.title)));
     }
 
-    private void localizeDuration()
-    {
-        Duration?.Dispose();
-        Duration = Episode.Duration.HasValue
-            ? LocalizedString.Duration(TimeSpan.FromSeconds(Episode.Duration.Value))
-            : LocalizedString.NOT_AVAILABLE;
-        this.RaisePropertyChanged(nameof(Duration));
-    }
+    public ReactiveCommand<Unit,Unit> AddNote { get; }
 
     internal LocalizedString PageTitle { get; }
 
@@ -99,23 +97,13 @@ public sealed class LocalEpisodeDetailsViewModel : ReactiveObject, IRoutableView
     internal double NewNoteTimeValue { get; set; }
 
     [Reactive]
-    internal string? NewNoteTitle { get; set; }
+    internal string NewNoteTitle { get; set; }
 
     [Reactive]
-    internal string? NewNoteText { get; set; }
+    internal string NewNoteText { get; set; }
 
     private readonly ReadOnlyObservableCollection<EpisodeNote> _episodeNotes;
     internal ReadOnlyObservableCollection<EpisodeNote> EpisodeNotes => _episodeNotes;
-
-    internal void AddNote()
-    {
-        _realm.Write(r => Episode.Notes.Add(new EpisodeNote
-        {
-            PointInTime = TimeSpan.FromSeconds(NewNoteTimeValue),
-            Title = NewNoteTitle,
-            Note = NewNoteText
-        }));
-    }
 
     internal Task OpenMalUrl()
     {
@@ -142,6 +130,28 @@ public sealed class LocalEpisodeDetailsViewModel : ReactiveObject, IRoutableView
     internal void DeleteNote(EpisodeNote note)
     {
         _realm.Write(r => Episode.Notes.Remove(note));
+    }
+
+    private void addNote()
+    {
+        _realm.WriteAsync(r => Episode.Notes.Add(new EpisodeNote
+        {
+            PointInTime = TimeSpan.FromSeconds(NewNoteTimeValue),
+            Title = NewNoteTitle,
+            Note = NewNoteText
+        }));
+
+        NewNoteText = string.Empty;
+        NewNoteTitle = string.Empty;
+    }
+
+    private void localizeDuration()
+    {
+        Duration?.Dispose();
+        Duration = Episode.Duration.HasValue
+            ? LocalizedString.Duration(TimeSpan.FromSeconds(Episode.Duration.Value))
+            : LocalizedString.NOT_AVAILABLE;
+        this.RaisePropertyChanged(nameof(Duration));
     }
 
     public void Dispose()

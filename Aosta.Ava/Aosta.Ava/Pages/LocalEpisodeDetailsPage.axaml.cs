@@ -31,32 +31,5 @@ public partial class LocalEpisodeDetailsPage : ReactivePageBase<LocalEpisodeDeta
             ViewModel.MarkAsWatched();
             MarkWatchedButton.IsVisible = false;
         };
-
-        AddNoteButton.Tapped += (_, _) =>
-        {
-            if (NotePopup.IsVisible)
-            {
-                ViewModel.AddNote();
-                closeTab();
-            }
-            else
-            {
-                DismissNoteButton.IsVisible = true;
-                AddNoteButton.Classes.Add("accent");
-                NotePopup.IsVisible = true;
-            }
-        };
-
-        DismissNoteButton.Tapped += (_, _) =>
-        {
-            closeTab();
-        };
-    }
-
-    private void closeTab()
-    {
-        AddNoteButton.Classes.Remove("accent");
-        NotePopup.IsVisible = false;
-        DismissNoteButton.IsVisible = false;
     }
 }

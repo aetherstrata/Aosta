@@ -1,7 +1,6 @@
 {
   "App.Version": "Versione {0}",
 
-  "AnimeDetails.Menu.OpenOnMAL": "Apri su MyAnimeList",
   "AnimeDetails.Menu.Remove": "Rimuovi dalla lista",
   "AnimeDetails.Score.PopupTitle": "Voto",
   "AnimeDetails.Score.Watermark": "Dai un voto a questo anime",
@@ -42,6 +41,7 @@
   "Label.CloseButton": "Annulla",
   "Label.ContentType": "Tipo",
   "Label.Date": "Data",
+  "Label.Duration": "Durata",
   "Label.Episode.Number": "Episodio n.{0}",
   "Label.Episodes": "Episodi",
   "Label.Filler": "Filler",
@@ -50,6 +50,7 @@
   "Label.NotAvailable.Long" : "Non disponibile",
   "Label.NotAvailable.Short" : "N/D",
   "Label.Online": "Online",
+  "Label.OpenOnMal": "Apri su MyAnimeList",
   "Label.PrimaryButton": "OK",
   "Label.Recap": "Recap",
   "Label.Score": "Voto",

@@ -11,7 +11,6 @@ using Avalonia.Animation.Easings;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
-using Avalonia.Styling;
 using Avalonia.Threading;
 
 using Splat;
@@ -74,7 +73,6 @@ public class AnimatedPopup : ContentControl
     private readonly Timer _sizingTimer;
     private readonly Control _underlay;
 
-
     private int _currentTick;
     private Size _desiredSize;
     private bool _firstAnimation = true;
@@ -85,7 +83,7 @@ public class AnimatedPopup : ContentControl
 
     #region Control Properties
 
-    private TimeSpan _animationTime = TimeSpan.FromSeconds(0.5);
+    private TimeSpan _animationTime = TimeSpan.FromSeconds(0.3);
 
     public static readonly DirectProperty<AnimatedPopup, TimeSpan> AnimationTimeProperty =
         AvaloniaProperty.RegisterDirect<AnimatedPopup, TimeSpan>(
@@ -106,30 +104,51 @@ public class AnimatedPopup : ContentControl
     public bool IsOpen
     {
         get => _isOpen;
-        set => SetAndRaise(IsOpenProperty, ref _isOpen, value);
+        set
+        {
+            if (_isOpen == value) return;
+
+            updateAnimation();
+
+            SetAndRaise(IsOpenProperty, ref _isOpen, value);
+        }
+    }
+
+    private bool _animateWidth = true;
+
+    public static readonly DirectProperty<AnimatedPopup, bool> AnimateWidthProperty =
+        AvaloniaProperty.RegisterDirect<AnimatedPopup, bool>(
+            nameof(AnimateWidth), o => o.AnimateWidth, (o, v) => o.AnimateWidth = v);
+
+    public bool AnimateWidth
+    {
+        get => _animateWidth;
+        set => SetAndRaise(AnimateWidthProperty, ref _animateWidth, value);
+    }
+
+    private bool _animateHeight = true;
+
+    public static readonly DirectProperty<AnimatedPopup, bool> AnimateHeightProperty =
+        AvaloniaProperty.RegisterDirect<AnimatedPopup, bool>(
+            nameof(AnimateHeight), o => o.AnimateHeight, (o, v) => o.AnimateHeight = v);
+
+    public bool AnimateHeight
+    {
+        get => _animateHeight;
+        set => SetAndRaise(AnimateHeightProperty, ref _animateHeight, value);
     }
 
     #endregion
 
-    public void Open()
-    {
-        IsOpen = true;
+    public void Open() => IsOpen = true;
 
-        updateAnimation();
-    }
-
-    public void Close()
-    {
-        IsOpen = false;
-
-        updateAnimation();
-    }
+    public void Close() => IsOpen = false;
 
     public override void Render(DrawingContext context)
     {
         if (!_foundSizing)
         {
-            _sizingTimer.Change(100, int.MaxValue);
+            _sizingTimer.Change(50, int.MaxValue);
         }
 
         base.Render(context);
@@ -164,8 +183,9 @@ public class AnimatedPopup : ContentControl
 
         double progress = (double)_currentTick / _totalTicks;
 
-        Width = _desiredSize.Width * _easing.Ease(progress);
-        Height = _desiredSize.Height * _easing.Ease(progress);
+        if (_animateWidth) Width = _desiredSize.Width * _easing.Ease(progress);
+
+        if (_animateHeight) Height = _desiredSize.Height * _easing.Ease(progress);
     }
 
     private void updateAnimation()
@@ -180,38 +200,41 @@ public class AnimatedPopup : ContentControl
     {
         if (_isOpen)
         {
-            Width = _desiredSize.Width;
-            Height = _desiredSize.Height;
+            Width = double.NaN;
+            Height = double.NaN;
 
             if (Parent is Grid g)
             {
-                _underlay.IsVisible = true;
-
-                if (g.RowDefinitions.Count > 0)
-                {
-                    _underlay.SetValue(Grid.RowSpanProperty, g.RowDefinitions.Count);
-                }
-
-                if (g.ColumnDefinitions.Count > 0)
-                {
-                    _underlay.SetValue(Grid.ColumnSpanProperty, g.ColumnDefinitions.Count);
-                }
-
-                g.Children.Insert(0, _underlay);
+                insertIntoGrid(_underlay, g);
             }
         }
         else
         {
-            Width = 0;
-            Height = 0;
+            if (_animateHeight) Height = 0;
 
-            if (Parent is Grid g)
+            if (_animateWidth) Width = 0;
+
+            if (Parent is Grid g && g.Children.Contains(_underlay))
             {
-                if (g.Children.Contains(_underlay))
-                {
-                    g.Children.Remove(_underlay);
-                }
+                g.Children.Remove(_underlay);
             }
         }
+    }
+
+    private static void insertIntoGrid(Control control, Grid g)
+    {
+        control.IsVisible = true;
+
+        if (g.RowDefinitions.Count > 0)
+        {
+            control.SetValue(Grid.RowSpanProperty, g.RowDefinitions.Count);
+        }
+
+        if (g.ColumnDefinitions.Count > 0)
+        {
+            control.SetValue(Grid.ColumnSpanProperty, g.ColumnDefinitions.Count);
+        }
+
+        g.Children.Insert(0, control);
     }
 }

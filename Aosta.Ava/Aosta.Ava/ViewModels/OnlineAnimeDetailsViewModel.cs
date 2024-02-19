@@ -97,24 +97,21 @@ public sealed class OnlineAnimeDetailsViewModel : ReactiveObject, IRoutableViewM
 
     private int _page;
 
-    internal Task UpdateEpisodesList(CancellationToken ct = default)
+    internal Task UpdateEpisodesList()
     {
         Interlocked.Increment(ref _page);
 
         this.Log().Debug<OnlineAnimeDetailsViewModel>("Getting episodes page {Page} for anime {Name} [{Id}]",
             _page, Response.Titles.GetDefault()!, Response.MalId);
 
-        return _jikan.GetAnimeEpisodesAsync(Response.MalId, _page, ct).ContinueWith(task =>
+        return _jikan.GetAnimeEpisodesAsync(Response.MalId, _page).ContinueWith(task =>
         {
             var entries = task.Result.Data.Select(x => new OnlineEpisodeEntry(HostScreen, x, Response.MalId));
 
             Episodes.AddRange(entries);
 
-            if (task.Result.Pagination.HasNextPage)
-            {
-                IsLoadEpisodesButtonVisible = true;
-            }
-        }, ct);
+            IsLoadEpisodesButtonVisible = task.Result.Pagination.HasNextPage;
+        });
     }
 
     public void Dispose()

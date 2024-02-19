@@ -12,11 +12,6 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.LocalAnimeDetailsPage"
              x:DataType="vm:LocalAnimeDetailsViewModel">
-    <UserControl.Styles>
-        <Style Selector="fluent|NumberBox">
-            <Setter Property="BorderThickness" Value="0" />
-        </Style>
-    </UserControl.Styles>
     <Grid RowDefinitions="Auto,*">
         <local:TitleBar Grid.Row="0"
                         Title="{Binding DefaultTitle}">
@@ -25,7 +20,7 @@
                 <fluent:CommandBar ClosedDisplayMode="Minimal"
                                    Height="48">
                     <fluent:CommandBar.SecondaryCommands>
-                        <fluent:CommandBarButton Label="{localize:Localize AnimeDetails.Menu.OpenOnMAL}"
+                        <fluent:CommandBarButton Label="{localize:Localize Label.OpenOnMal}"
                                                  IconSource="Globe"
                                                  Command="{Binding OpenOnMal}" />
                         <fluent:CommandBarButton Label="{localize:Localize AnimeDetails.Menu.Remove}"
@@ -55,14 +50,53 @@
                     </Image.OpacityMask>
                 </Image>
                 <local:AnimatedPopup Grid.Row="0"
-                                     Grid.RowSpan="3"
+                                     Grid.RowSpan="4"
                                      Name="ScorePopup"
-                                     AnimationTime="0:0:0.3">
-                    <Border Height="200"
-                            Background="Brown">
-                        <TextBlock Text="CHIAPPAFAVA"
-                                   FontSize="48"
-                                   FontWeight="Bold"/>
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Center">
+                    <Border Background="{DynamicResource FloatingPaneBackgroundBrush}"
+                            Padding="20"
+                            CornerRadius="0,0,20,20">
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="10">
+                            <NumericUpDown Name="ScoreNumberBox"
+                                           ToolTip.Tip="{localize:Localize AnimeDetails.Score.Watermark}"
+                                           ToolTip.Placement="Bottom"
+                                           ToolTip.VerticalOffset="0"
+                                           ToolTip.ShowDelay="1000"
+                                           Watermark="{localize:Localize AnimeDetails.Score.Watermark}"
+                                           Width="200"
+                                           Minimum="0"
+                                           Maximum="100"
+                                           Increment="1"
+                                           BorderThickness="0"
+                                           FormatString="F0"
+                                           ClipValueToMinMax="True"
+                                           ShowButtonSpinner="True" />
+                            <Button Classes="accent"
+                                    Tapped="InputElement_OnTapped"
+                                    Height="36"
+                                    IsDefault="True"
+                                    Command="{Binding UpdateScore}"
+                                    CommandParameter="{Binding #ScoreNumberBox.Value}">
+                                <fluent:FontIcon Glyph="{StaticResource CheckmarkGlyph}"
+                                                 FontFamily="{StaticResource SymbolThemeFontFamily}" />
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </local:AnimatedPopup>
+                <local:AnimatedPopup Grid.Row="0"
+                                     Grid.RowSpan="4"
+                                     Name="StatusPopup"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Center">
+                    <Border Background="{DynamicResource FloatingPaneBackgroundBrush}"
+                            Padding="20"
+                            CornerRadius="0,0,20,20">
+                        <ComboBox ItemsSource="{Binding StatusList}"
+                                  SelectedItem="{Binding ComboBoxStatus}"
+                                  MinWidth="200"
+                                  SelectionChanged="SelectingItemsControl_OnSelectionChanged"/>
                     </Border>
                 </local:AnimatedPopup>
                 <Border Grid.Row="0"
@@ -81,7 +115,7 @@
                                              Foreground="Gold"
                                              VerticalAlignment="Center" />
                             <TextBlock
-                                Text="{Binding Anime.UserScore, Converter={converters:ShortValueStringConverter}}"
+                                Text="{Binding Anime.UserScore, Converter={converters:ShortValueStringConverter}, StringFormat={}{0} / 100}"
                                 VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
@@ -90,21 +124,26 @@
                         Margin="10,10,10,0"
                         Background="{DynamicResource PureColorBackgroundBrush}"
                         HorizontalAlignment="Left"
-                        Padding="10"
                         CornerRadius="5">
-                    <StackPanel Orientation="Horizontal"
-                                Spacing="5">
-                        <fluent:FontIcon Glyph="{StaticResource CalendarGlyph}"
-                                         FontFamily="{StaticResource SymbolThemeFontFamily}" />
-                        <ContentControl Content="{Binding Status}" />
-                    </StackPanel>
+                    <Button Command="{Binding #StatusPopup.Open}"
+                            Background="Transparent"
+                            Padding="10"
+                            BorderThickness="0">
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="5">
+                            <fluent:FontIcon Glyph="{StaticResource CalendarGlyph}"
+                                             FontFamily="{StaticResource SymbolThemeFontFamily}" />
+                            <ContentControl Content="{Binding Status}" />
+                        </StackPanel>
+                    </Button>
                 </Border>
                 <ContentControl Grid.Row="2"
                                 Margin="10,10,10,0"
                                 HorizontalAlignment="Right"
                                 Content="{Binding DetailsPill}" />
                 <StackPanel Grid.Row="3"
-                            Spacing="10">
+                            Spacing="10"
+                            Margin="10">
                     <TextBlock Text="{localize:Localize Label.Synopsis}"
                                FontSize="18"
                                FontWeight="Bold" />

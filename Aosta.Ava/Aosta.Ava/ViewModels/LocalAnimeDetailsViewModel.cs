@@ -12,6 +12,7 @@ using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Ava.ViewModels.DetailsPill;
 using Aosta.Data;
+using Aosta.Data.Enums;
 using Aosta.Data.Extensions;
 using Aosta.Data.Models;
 
@@ -22,6 +23,7 @@ using Avalonia.Media;
 using Avalonia.ReactiveUI;
 
 using DynamicData;
+using DynamicData.Kernel;
 
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Controls.Primitives;
@@ -97,6 +99,19 @@ public sealed class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
 
     public ReactiveCommand<Episode, IRoutableViewModel> GoToEpisode { get; }
 
+    public LocalizedData<WatchingStatus>[] StatusList { get; } =
+        Enum.GetValues<WatchingStatus>().Select(x => x.LocalizeWithData()).AsArray();
+
+    public LocalizedData<WatchingStatus> ComboBoxStatus
+    {
+        get => Anime.WatchingStatus.LocalizeWithData();
+        set
+        {
+            _realm.Write(r => Anime.WatchingStatus = value.Data);
+            this.RaisePropertyChanged();
+        }
+    }
+
     public async Task OpenOnMal()
     {
         if (!string.IsNullOrEmpty(Anime.Url))
@@ -106,46 +121,13 @@ public sealed class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
         }
     }
 
-    public async Task ShowScoreFlyout()
+    public void UpdateScore(double score)
     {
-        var numberBox = new NumberBox
+        _realm.Write(r =>
         {
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-            Minimum = 0,
-            Maximum = 100,
-            Value = Anime.UserScore ?? 0,
-            SimpleNumberFormat = "F0",
-            PlaceholderText = Localizer.Instance["AnimeDetails.Score.Watermark"],
-            SpinButtonPlacementMode = NumberBoxSpinButtonPlacementMode.Inline,
-            ValidationMode = NumberBoxValidationMode.InvalidInputOverwritten,
-            TextAlignment = TextAlignment.Left
-        };
-
-        var okCommand = ReactiveCommand.Create(() =>
-        {
-            this.Log().Debug("Updated user score for {AnimeName}: {Score}", Anime.Titles.GetDefault().Title, Anime.UserScore);
-            _realm.Write(r =>
-            {
-                Anime.UserScore = (int)numberBox.Value;
-            });
+            Anime.UserScore = (int)score;
         });
-
-        var scoreFlyout = new ContentDialog
-        {
-            Title = Localizer.Instance["AnimeDetails.Score.PopupTitle"],
-            TitleTemplate = new FuncDataTemplate<string>((s, _) => new TextBlock
-            {
-                Text = s,
-                FontSize = 24,
-                FontWeight = FontWeight.Bold
-            }),
-            Content = numberBox,
-            PrimaryButtonText = Localizer.Instance["Label.PrimaryButton"],
-            PrimaryButtonCommand = okCommand,
-            CloseButtonText = Localizer.Instance["Label.CloseButton"]
-        };
-
-        await scoreFlyout.ShowAsync();
+        this.Log().Debug("Updated user score for {AnimeName}: {Score}", Anime.Titles.GetDefault().Title, Anime.UserScore);
     }
 
     public void RemoveFromRealm()

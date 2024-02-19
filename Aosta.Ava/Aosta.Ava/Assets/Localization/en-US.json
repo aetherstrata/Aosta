@@ -1,7 +1,6 @@
 {
   "App.Version": "Version {0}",
 
-  "AnimeDetails.Menu.OpenOnMAL": "Open on MyAnimeList",
   "AnimeDetails.Menu.Remove": "Remove from list",
   "AnimeDetails.Score.PopupTitle": "Score",
   "AnimeDetails.Score.Watermark": "Rate this anime",
@@ -13,6 +12,7 @@
   "EpisodeDetails.Notes.Header": "Notes",
   "EpisodeDetails.Notes.TitleWatermark": "Insert the title",
   "EpisodeDetails.Notes.NoteWatermark": "Write a new note",
+  "EpisodeDetails.Notes.TextValidation": "Ciuppa",
   "EpisodeDetails.ToolTip.MarkAsWatched": "Mark this episode as watched",
 
   "HomePage.SeasonalAnime.Header" : "Currently airing",
@@ -43,6 +43,7 @@
   "Label.CloseButton": "Cancel",
   "Label.ContentType": "Type",
   "Label.Date": "Date",
+  "Label.Duration": "Duration",
   "Label.Episode.Number": "Episode #{0}",
   "Label.Episodes": "Episodes",
   "Label.Filler": "Filler",
@@ -51,6 +52,7 @@
   "Label.NotAvailable.Long" : "Not available",
   "Label.NotAvailable.Short" : "N/A",
   "Label.Online": "Online",
+  "label.OpenOnMal": "Open on MyAnimeList",
   "Label.PrimaryButton": "OK",
   "Label.Recap": "Recap",
   "Label.Score": "Score",

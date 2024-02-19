@@ -5,7 +5,10 @@ using System.Reactive.Linq;
 
 using Aosta.Ava.ViewModels;
 
+using Avalonia.Controls;
 using Avalonia.Input;
+
+using Splat;
 
 namespace Aosta.Ava.Pages;
 
@@ -14,6 +17,16 @@ public partial class LocalAnimeDetailsPage : ReactivePageBase<LocalAnimeDetailsV
     public LocalAnimeDetailsPage()
     {
         InitializeComponent();
+    }
+
+    private void InputElement_OnTapped(object? sender, TappedEventArgs e)
+    {
+        ScorePopup.IsOpen = false;
+    }
+
+    private void SelectingItemsControl_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        StatusPopup.IsOpen = false;
     }
 }
 
