@@ -18,19 +18,13 @@ public enum AnimeSearchOrderBy
 	/// </summary>
 	[EnumMember(Value = "title")]
 	Title,
-		
+
 	/// <summary>
 	/// Orders results by score.
 	/// </summary>
 	[EnumMember(Value = "score")]
 	Score,
 
-	/// <summary>
-	/// Orders results by anime type.
-	/// </summary>
-	[EnumMember(Value = "type")]
-	Type,
-		
 	/// <summary>
 	/// Orders results by count of scores.
 	/// </summary>
@@ -66,7 +60,7 @@ public enum AnimeSearchOrderBy
 	/// </summary>
 	[EnumMember(Value = "rating")]
 	Rating,
-		
+
 	/// <summary>
 	/// Orders results by start date.
 	/// </summary>
@@ -78,13 +72,13 @@ public enum AnimeSearchOrderBy
 	/// </summary>
 	[EnumMember(Value = "end_date")]
 	EndDate,
-		
+
 	/// <summary>
 	/// Orders results by rank.
 	/// </summary>
 	[EnumMember(Value = "rank")]
 	Rank,
-		
+
 	/// <summary>
 	/// Orders results by popularity.
 	/// </summary>

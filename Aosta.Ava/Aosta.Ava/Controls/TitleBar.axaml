@@ -22,13 +22,17 @@
                                          FontSize="20"/>
                     </Button>
                     <TextBlock Name="PART_TitleText"
+                               Background="Transparent"
                                Grid.Column="3"
                                Margin="0,5"
                                Text="{TemplateBinding Title}"
                                FontWeight="Bold"
                                FontSize="24"
                                VerticalAlignment="Center"/>
-                    <ContentPresenter Grid.Column="5" Content="{TemplateBinding Menu}"></ContentPresenter>
+                    <ContentPresenter Grid.Column="5"
+                                      Content="{TemplateBinding Menu}"
+                                      Background="Transparent"
+                                      ZIndex="2"/>
                     <Grid.Styles>
                         <Style Selector="Button">
                             <Setter Property="Margin" Value="0,9,0,5"/>

@@ -64,6 +64,8 @@
                                            ToolTip.Placement="Bottom"
                                            ToolTip.VerticalOffset="0"
                                            ToolTip.ShowDelay="1000"
+                                           TextInputOptions.ContentType="Digits"
+                                           VerticalContentAlignment="Center"
                                            Watermark="{localize:Localize AnimeDetails.Score.Watermark}"
                                            Width="200"
                                            Minimum="0"
@@ -74,9 +76,9 @@
                                            ClipValueToMinMax="True"
                                            ShowButtonSpinner="True" />
                             <Button Classes="accent"
-                                    Tapped="InputElement_OnTapped"
                                     Height="36"
                                     IsDefault="True"
+                                    Tapped="InputElement_OnTapped"
                                     Command="{Binding UpdateScore}"
                                     CommandParameter="{Binding #ScoreNumberBox.Value}">
                                 <fluent:FontIcon Glyph="{StaticResource CheckmarkGlyph}"
@@ -115,7 +117,7 @@
                                              Foreground="Gold"
                                              VerticalAlignment="Center" />
                             <TextBlock
-                                Text="{Binding Anime.UserScore, Converter={converters:ShortValueStringConverter}, StringFormat={}{0} / 100}"
+                                Text="{Binding Anime.UserScore, TargetNullValue=?, Converter={converters:ShortValueStringConverter}, StringFormat={}{0} / 100}"
                                 VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>

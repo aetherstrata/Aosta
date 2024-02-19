@@ -7,13 +7,10 @@ using System.Windows.Input;
 using Aosta.Ava.ViewModels;
 
 using Avalonia;
-using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Media;
-
-using FluentAvalonia.UI.Controls;
 
 namespace Aosta.Ava.Controls;
 
@@ -65,7 +62,7 @@ public class TitleBar : TemplatedControl
             .OfType<TextBlock>()
             .First(static x => x.Name == "PART_TitleText");
 
-        Tapped += (_, _) =>
+        textBlock.Tapped += (_, _) =>
         {
             // ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
             textBlock.TextWrapping ^= TextWrapping.WrapWithOverflow;

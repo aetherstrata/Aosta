@@ -7,8 +7,8 @@ namespace Aosta.Jikan;
 
 public static class ModelExtensions
 {
-    public static string? GetDefault(this ICollection<TitleEntryResponse> entries)
+    public static TitleEntryResponse GetDefault(this ICollection<TitleEntryResponse> entries)
     {
-        return entries.FirstOrDefault(res => res.Type.Equals("Default"))?.Title;
+        return entries.First(res => res.Type.Equals("Default"));
     }
 }

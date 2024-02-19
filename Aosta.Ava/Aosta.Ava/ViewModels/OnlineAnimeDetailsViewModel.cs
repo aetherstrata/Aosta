@@ -60,7 +60,7 @@ public sealed class OnlineAnimeDetailsViewModel : ReactiveObject, IRoutableViewM
 
     internal string? LargeBanner => Response.Images?.JPG?.LargeImageUrl;
 
-    internal string Title => Response.Titles.GetDefault() ?? LocalizedString.NA;
+    internal string Title => Response.Titles.GetDefault().Title ?? LocalizedString.NA;
 
     internal bool HasEpisodes => Response.Type != AnimeType.Movie && Response.Episodes > 0;
 
@@ -73,6 +73,13 @@ public sealed class OnlineAnimeDetailsViewModel : ReactiveObject, IRoutableViewM
 
     public LocalizedString Status { get; }
 
+    internal Task OpenOnBrowser()
+    {
+        return !string.IsNullOrWhiteSpace(Response.Url)
+            ? Locator.Current.GetSafely<ILauncher>().LaunchUriAsync(new Uri(Response.Url))
+            : Task.CompletedTask;
+    }
+
     internal bool CanBeAdded()
     {
         return !_realm.Run(r => r
@@ -84,7 +91,7 @@ public sealed class OnlineAnimeDetailsViewModel : ReactiveObject, IRoutableViewM
     internal Task AddToRealm(CancellationToken ct = default)
     {
         this.Log().Info("Writing anime {Title} [{Id}] to Realm",
-            Response.Titles.GetDefault() ?? "N/A",
+            Response.Titles.GetDefault().Title ?? "N/A",
             Response.MalId);
 
         return Locator.Current.GetSafely<RealmAccess>().WriteAsync(r =>

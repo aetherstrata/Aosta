@@ -13,7 +13,18 @@
     <Grid RowDefinitions="Auto,*">
         <local:TitleBar Grid.Row="0"
                            IsBackEnabled="True"
-                           Title="{Binding PageTitle.Localized}" />
+                           Title="{Binding PageTitle.Localized}">
+            <local:TitleBar.Menu>
+                <fluent:CommandBar ClosedDisplayMode="Minimal"
+                                   Height="48">
+                    <fluent:CommandBar.SecondaryCommands>
+                        <fluent:CommandBarButton Label="{localize:Localize Label.OpenOnMal}"
+                                                 IconSource="Globe"
+                                                 Command="{Binding OpenOnBrowser}"/>
+                    </fluent:CommandBar.SecondaryCommands>
+                </fluent:CommandBar>
+            </local:TitleBar.Menu>
+        </local:TitleBar>
         <ScrollViewer Grid.Row="1"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Hidden">
@@ -55,9 +66,14 @@
                 <TextBlock Text="{Binding Synopsis}"
                            IsVisible="{Binding Synopsis, Converter={converters:NullValueBoolConverter}}"
                            TextWrapping="WrapWithOverflow" />
-                <ContentControl Content="{Binding Duration}"/>
-                <fluent:HyperlinkButton Content="MyAnimeList"
-                                        NavigateUri="{Binding Response.Url}"/>
+                <StackPanel Spacing="10"
+                            Orientation="Horizontal">
+                    <TextBlock Text="{localize:Localize Label.Duration}"
+                               FontSize="18"
+                               FontWeight="Bold"/>
+                    <ContentControl Content="{Binding Duration}"
+                                    VerticalAlignment="Center"/>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -6,7 +6,8 @@
                     xmlns:localize="clr-namespace:Aosta.Ava.Localization"
                     xmlns:vm="clr-namespace:Aosta.Ava.ViewModels"
                     xmlns:detailsPill="clr-namespace:Aosta.Ava.ViewModels.DetailsPill"
-                    xmlns:converters="clr-namespace:Aosta.Ava.Converters">
+                    xmlns:converters="clr-namespace:Aosta.Ava.Converters"
+                    xmlns:response="clr-namespace:Aosta.Jikan.Models.Response;assembly=Aosta.Jikan">
     <!-- Add Resources Here -->
 
 
@@ -111,12 +112,13 @@
         </Border>
     </DataTemplate>
 
-    <DataTemplate x:Key="JikanAnimeCard" DataType="card:JikanAnimeCardViewModel">
+    <DataTemplate x:Key="JikanAnimeCard" DataType="response:AnimeResponse">
         <Button Padding="5"
                 Background="CornflowerBlue"
                 BorderThickness="0"
                 CornerRadius="5"
-                Command="{Binding GoToDetails}">
+                Command="{Binding $parent[ListBox].((vm:HomePageViewModel)DataContext).GoToDetails}"
+                CommandParameter="{Binding }">
             <Grid RowDefinitions="Auto"
                   VerticalAlignment="Top">
                 <Border Grid.Row="0"
@@ -132,29 +134,16 @@
                                    VerticalAlignment="Center" />
                         <fluent:FontIcon Glyph="{StaticResource StarGlyph}"
                                          FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                         Foreground="Gold" />
+                                         Foreground="Gold"
+                                         ZIndex="1"/>
                     </StackPanel>
                 </Border>
                 <Image Grid.Row="0"
-                       async:ImageLoader.Source="{Binding BannerUrl}"
+                       async:ImageLoader.Source="{Binding Images.JPG.ImageUrl, FallbackValue={x:Static card:IOnlineCard.PORTRAIT_PLACEHOLDER}}"
                        Width="{StaticResource AnimeCardWidth}"
                        Height="{StaticResource AnimeCardHeight}"
-                       Stretch="UniformToFill"
-                       ZIndex="-1" />
+                       Stretch="UniformToFill"/>
             </Grid>
-        </Button>
-    </DataTemplate>
-
-    <DataTemplate x:Key="RealmAnimeCard" DataType="card:AnimeListCardViewModel">
-        <Button Padding="5"
-                Background="CornflowerBlue"
-                BorderThickness="0"
-                CornerRadius="5"
-                Command="{Binding GoToDetails}">
-            <Image async:ImageLoader.Source="{Binding BannerUrl}"
-                   Width="{StaticResource AnimeCardWidth}"
-                   Height="{StaticResource AnimeCardHeight}"
-                   Stretch="UniformToFill" />
         </Button>
     </DataTemplate>
 

@@ -92,7 +92,7 @@ public class SearchPageViewModel : ReactiveObject, IRoutableViewModel
         var searchCommand = ReactiveCommand.CreateFromTask((string s, CancellationToken ct) => executeSearch(s, ct));
 
         this.WhenAnyValue(static vm => vm.SearchText)
-            .Throttle(TimeSpan.FromMilliseconds(400))
+            .Sample(TimeSpan.FromMilliseconds(400))
             .ObserveOn(AvaloniaScheduler.Instance)
             .InvokeCommand(searchCommand);
     }

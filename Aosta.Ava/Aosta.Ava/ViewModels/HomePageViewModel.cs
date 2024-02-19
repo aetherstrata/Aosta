@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Settings;
-using Aosta.Ava.ViewModels.Card;
 using Aosta.Jikan;
+using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Query.Parameters;
+
+using DynamicData;
 
 using ReactiveUI;
 
@@ -28,7 +30,7 @@ public class HomePageViewModel : ReactiveObject, IRoutableViewModel
     {
         HostScreen = hostScreen;
 
-        Observable.Start(async () =>
+        Observable.StartAsync(async () =>
         {
             var jikan = Locator.Current.GetSafely<IJikan>();
 
@@ -36,32 +38,28 @@ public class HomePageViewModel : ReactiveObject, IRoutableViewModel
                 .SafeForWork(!Setting.IncludeNsfw));
 
             var currentTask = jikan.GetCurrentSeasonAsync(SeasonQueryParameters.Create()
-                .SafeForWork(!Setting.IncludeNsfw));
+                .SafeForWork(!Setting.IncludeNsfw)
+                .Unapproved(Setting.IncludeUnapproved));
 
             var results = await Task.WhenAll(topTask, currentTask);
 
-            foreach (var anime in results[0].Data)
-            {
-                var vm = new JikanAnimeCardViewModel(HostScreen, anime);
+            TopAnimes.AddRange(results[0].Data);
 
-                TopAnimes.Add(vm);
-            }
-
-            foreach (var anime in results[1].Data)
-            {
-                var vm = new JikanAnimeCardViewModel(HostScreen, anime);
-
-                CurrentAnimes.Add(vm);
-            }
+            CurrentAnimes.Add(results[1].Data);
         });
 
         var settingsPage = new Lazy<SettingsViewModel>(() => new SettingsViewModel(HostScreen));
 
-        GoToSettings = ReactiveCommand.CreateFromObservable(() => HostScreen.Router.Navigate.Execute(settingsPage.Value));
+        GoToSettings = ReactiveCommand.CreateFromObservable(() =>
+            HostScreen.Router.Navigate.Execute(settingsPage.Value));
+
+        GoToDetails = ReactiveCommand.CreateFromObservable((AnimeResponse response) =>
+            HostScreen.Router.Navigate.Execute(new OnlineAnimeDetailsViewModel(HostScreen, response)));
     }
 
-    public ObservableCollection<JikanAnimeCardViewModel> TopAnimes { get; } = [];
-    public ObservableCollection<JikanAnimeCardViewModel> CurrentAnimes { get; } = [];
+    public ObservableCollection<AnimeResponse> TopAnimes { get; } = [];
+    public ObservableCollection<AnimeResponse> CurrentAnimes { get; } = [];
 
     public ReactiveCommand<Unit, IRoutableViewModel> GoToSettings { get; }
+    public ReactiveCommand<AnimeResponse, IRoutableViewModel> GoToDetails { get; }
 }

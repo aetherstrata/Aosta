@@ -53,6 +53,14 @@ public sealed class OnlineEpisodeDetailsViewModel : ReactiveObject, IRoutableVie
     [Reactive]
     internal string? Synopsis { get; set; }
 
+    internal async Task OpenOnBrowser()
+    {
+        if (!string.IsNullOrWhiteSpace(Response.Url))
+        {
+            await Locator.Current.GetSafely<ILauncher>().LaunchUriAsync(new Uri(Response.Url));
+        }
+    }
+
     private async Task getData(CancellationToken ct = default)
     {
         var jikan = Locator.Current.GetSafely<IJikan>();

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -20,7 +19,6 @@ using Aosta.Jikan;
 using Avalonia.ReactiveUI;
 
 using DynamicData;
-using DynamicData.Binding;
 
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;

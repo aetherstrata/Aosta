@@ -68,9 +68,28 @@ public static class RealmExtensions
                 logger.Debug("Initialized the {Type} observable cache with {Count} elements",
                     typeof(T).Name, sender.Count);
             }
+            else if (changes.IsCleared)
+            {
+                cache.Clear();
+                logger.Debug("Observable cache for {Type} has been cleared", typeof(T).Name);
+            }
             else
             {
-                cache.Edit(update => updateCache(changes, update, sender));
+                cache.Edit(update =>
+                {
+                    // Handle deleted elements
+                    for (int index = 0; index < changes.DeletedIndices.Length; index++)
+                    {
+                        int i = changes.DeletedIndices[index] - index;
+                        update.RemoveAt(i);
+                    }
+
+                    // Handle inserted elements
+                    foreach (int i in changes.InsertedIndices)
+                    {
+                        update.Insert(i, sender[i]);
+                    }
+                });
 
                 logger.Debug("Processed {ChangesCount} changes for {Type} observable cache: [Removed: {Removed}, Added: {Added}, Moved: {Moved}]",
                     changes.DeletedIndices.Length + changes.InsertedIndices.Length,
@@ -82,21 +101,5 @@ public static class RealmExtensions
         });
 
         return cache.Connect();
-    }
-
-    private static void updateCache<T>(ChangeSet changes, IExtendedList<T> update, IRealmCollection<T> sender)
-        where T : IRealmObjectBase
-    {
-        // Handle deleted elements
-        foreach (int i in changes.DeletedIndices)
-        {
-            update.RemoveAt(i);
-        }
-
-        // Handle inserted elements
-        foreach (int i in changes.InsertedIndices)
-        {
-            update.Insert(i, sender[i]);
-        }
     }
 }

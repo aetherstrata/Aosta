@@ -8,6 +8,7 @@
 
   "AnimeList.Header.NoAnime" : "The list is empty",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
+  "AnimeList.SearchWatermark": "Search your list",
 
   "EpisodeDetails.Notes.Header": "Notes",
   "EpisodeDetails.Notes.TitleWatermark": "Insert the title",
@@ -51,8 +52,9 @@
   "Label.LocalizationLookupError": "Localization not found for {0}",
   "Label.NotAvailable.Long" : "Not available",
   "Label.NotAvailable.Short" : "N/A",
+  "Label.NotGraded": "No score",
   "Label.Online": "Online",
-  "label.OpenOnMal": "Open on MyAnimeList",
+  "Label.OpenOnMal": "Open on MyAnimeList",
   "Label.PrimaryButton": "OK",
   "Label.Recap": "Recap",
   "Label.Score": "Score",
@@ -78,7 +80,6 @@
   "Enum.AnimeSearchOrderBy.NoSorting": "No sorting",
   "Enum.AnimeSearchOrderBy.Title": "Title",
   "Enum.AnimeSearchOrderBy.Score": "Score",
-  "Enum.AnimeSearchOrderBy.Type": "Tipo",
   "Enum.AnimeSearchOrderBy.ScoredBy": "Voters",
   "Enum.AnimeSearchOrderBy.Members": "Members",
   "Enum.AnimeSearchOrderBy.Favorites": "Favorites",

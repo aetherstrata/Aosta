@@ -3,10 +3,6 @@
 
 using Aosta.Ava.ViewModels;
 
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.ReactiveUI;
-
 namespace Aosta.Ava.Pages;
 
 public partial class OnlineEpisodeDetailsPage : ReactivePageBase<OnlineEpisodeDetailsViewModel>

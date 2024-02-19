@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
-using Aosta.Ava.Controls;
 using Aosta.Ava.Extensions;
 using Aosta.Ava.Localization;
 using Aosta.Ava.ViewModels.DetailsPill;
@@ -16,17 +15,10 @@ using Aosta.Data.Enums;
 using Aosta.Data.Extensions;
 using Aosta.Data.Models;
 
-using Avalonia.Controls;
-using Avalonia.Controls.Templates;
-using Avalonia.Layout;
-using Avalonia.Media;
 using Avalonia.ReactiveUI;
 
 using DynamicData;
 using DynamicData.Kernel;
-
-using FluentAvalonia.UI.Controls;
-using FluentAvalonia.UI.Controls.Primitives;
 
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -121,8 +113,10 @@ public sealed class LocalAnimeDetailsViewModel : ReactiveObject, IRoutableViewMo
         }
     }
 
-    public void UpdateScore(double score)
+    public void UpdateScore(double? score)
     {
+        if (!score.HasValue) return;
+
         _realm.Write(r =>
         {
             Anime.UserScore = (int)score;

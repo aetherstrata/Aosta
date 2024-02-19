@@ -10,6 +10,7 @@
 
     <Style Selector="TextBox">
         <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
 
     <Style Selector="ListBoxItem">

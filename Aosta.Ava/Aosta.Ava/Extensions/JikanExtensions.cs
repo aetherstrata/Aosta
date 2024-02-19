@@ -5,7 +5,6 @@ using System;
 
 using Aosta.Ava.Localization;
 using Aosta.Jikan.Enums;
-using Aosta.Jikan.Models.Response;
 using Aosta.Jikan.Query.Enums;
 
 namespace Aosta.Ava.Extensions;
@@ -67,7 +66,6 @@ public static class JikanExtensions
         AnimeSearchOrderBy.NoSorting => new LocalizedData<AnimeSearchOrderBy>(order, "Enum.AnimeSearchOrderBy.NoSorting"),
         AnimeSearchOrderBy.Title => new LocalizedData<AnimeSearchOrderBy>(order, "Enum.AnimeSearchOrderBy.Title"),
         AnimeSearchOrderBy.Score => new LocalizedData<AnimeSearchOrderBy>(order, "Enum.AnimeSearchOrderBy.Score"),
-        AnimeSearchOrderBy.Type => new LocalizedData<AnimeSearchOrderBy>(order, "Enum.AnimeSearchOrderBy.Type"),
         AnimeSearchOrderBy.ScoredBy => new LocalizedData<AnimeSearchOrderBy>(order, "Enum.AnimeSearchOrderBy.ScoredBy"),
         AnimeSearchOrderBy.Members => new LocalizedData<AnimeSearchOrderBy>(order, "Enum.AnimeSearchOrderBy.Members"),
         AnimeSearchOrderBy.Favorites => new LocalizedData<AnimeSearchOrderBy>(order, "Enum.AnimeSearchOrderBy.Favorites"),

@@ -3,6 +3,7 @@
 
 using Aosta.Ava.ViewModels;
 
+using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 
 
@@ -13,5 +14,12 @@ public partial class AnimeListPage : ReactiveUserControl<AnimeListPageViewModel>
     public AnimeListPage()
     {
         InitializeComponent();
+    }
+
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        base.OnUnloaded(e);
+
+        if (ViewModel != null) ViewModel.SearchText = string.Empty;
     }
 }

@@ -7,7 +7,6 @@ using Aosta.Ava.ViewModels;
 
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.ReactiveUI;
 
 using Splat;
 

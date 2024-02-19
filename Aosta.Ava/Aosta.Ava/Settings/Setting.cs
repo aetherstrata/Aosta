@@ -1,8 +1,6 @@
 // Copyright (c) Davide Pierotti <d.pierotti@live.it>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
-
 using Aosta.Ava.Extensions;
 using Aosta.Data;
 using Aosta.Data.Extensions;

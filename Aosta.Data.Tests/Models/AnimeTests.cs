@@ -1,9 +1,7 @@
 using Aosta.Data.Enums;
 using Aosta.Data.Extensions;
-using Aosta.Data.Mapper;
 using Aosta.Data.Models;
 using Aosta.Data.Models.Embedded;
-using Aosta.Data.Tests.Models.Jikan;
 using Aosta.Data.Tests.Realm;
 
 using FluentAssertions.Execution;

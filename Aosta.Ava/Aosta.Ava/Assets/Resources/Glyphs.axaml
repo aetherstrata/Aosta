@@ -10,6 +10,7 @@
     <x:String x:Key="FilterGlyph">&#xE16E;</x:String>
     <x:String x:Key="MoreVerticalGlyph">&#xF809E;</x:String>
     <x:String x:Key="PlusGlyph">&#xE109;</x:String>
+    <x:String x:Key="SearchGlyph">&#xE721;</x:String>
     <x:String x:Key="SettingGlyph">&#xE115;</x:String>
     <x:String x:Key="StarGlyph">&#xE1CF;</x:String>
 </ResourceDictionary>

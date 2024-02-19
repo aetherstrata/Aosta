@@ -5,6 +5,8 @@
              xmlns:localize="clr-namespace:Aosta.Ava.Localization"
              xmlns:vm="clr-namespace:Aosta.Ava.ViewModels"
              xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:card="clr-namespace:Aosta.Ava.ViewModels.Card"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Aosta.Ava.Pages.HomePage"
              x:DataType="vm:HomePageViewModel">
@@ -22,15 +24,15 @@
                                    FontSize="26"/>
             </Button>
 
-            <!-- Seasonal anime -->
-            <TextBlock Grid.Row="2"
-                       Margin="20, 10"
+            <!-- Top anime -->
+            <TextBlock Grid.Row="0"
+                       Margin="20, 0, 0, 0"
                        FontWeight="Bold"
                        FontSize="36"
-                       Text="{localize:Localize HomePage.SeasonalAnime.Header}" />
-            <ScrollViewer Grid.Row="3">
+                       Text="{localize:Localize HomePage.TopAnime.Header}" />
+            <ScrollViewer Grid.Row="1">
                 <ListBox ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                         ItemsSource="{Binding CurrentAnimes}"
+                         ItemsSource="{Binding TopAnimes}"
                          ItemTemplate="{StaticResource JikanAnimeCard}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -49,15 +51,15 @@
                 </ListBox>
             </ScrollViewer>
 
-            <!-- Top anime -->
-            <TextBlock Grid.Row="0"
-                       Margin="20, 0"
+            <!-- Seasonal anime -->
+            <TextBlock Grid.Row="2"
+                       Margin="20, 10, 0, 0"
                        FontWeight="Bold"
                        FontSize="36"
-                       Text="{localize:Localize HomePage.TopAnime.Header}" />
-            <ScrollViewer Grid.Row="1">
+                       Text="{localize:Localize HomePage.SeasonalAnime.Header}" />
+            <ScrollViewer Grid.Row="3">
                 <ListBox ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                         ItemsSource="{Binding TopAnimes}"
+                         ItemsSource="{Binding CurrentAnimes}"
                          ItemTemplate="{StaticResource JikanAnimeCard}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>

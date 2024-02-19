@@ -29,7 +29,7 @@
                  Grid.ColumnSpan="3"
                  Text="{Binding SearchText}"
                  Watermark="{localize:Localize SearchPage.SearchBox.Watermark}"
-                 AcceptsReturn="False" />
+                 AcceptsReturn="False"/>
         <Button Grid.Row="0"
                 Grid.Column="2"
                 Name="FilterButton"

@@ -11,7 +11,6 @@ using Aosta.Jikan.Enums;
 using Aosta.Jikan.Models.Response;
 
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 namespace Aosta.Ava.ViewModels.DetailsPill;
 

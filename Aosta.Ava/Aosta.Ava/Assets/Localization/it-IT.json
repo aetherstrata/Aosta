@@ -3,11 +3,12 @@
 
   "AnimeDetails.Menu.Remove": "Rimuovi dalla lista",
   "AnimeDetails.Score.PopupTitle": "Voto",
-  "AnimeDetails.Score.Watermark": "Dai un voto a questo anime",
+  "AnimeDetails.Score.Watermark": "Dai un voto",
   "AnimeDetails.ToolTip.AddToRealm": "Aggiungi questo anime alla tua lista",
 
   "AnimeList.Header.NoAnime" : "La lista è vuota",
   "AnimeList.Header.AnimeCount" : "{0} Anime",
+  "AnimeList.SearchWatermark": "Cerca nella tua lista",
 
   "EpisodeDetails.Notes.Header": "Note",
   "EpisodeDetails.Notes.TitleWatermark": "Inserisci il titolo",
@@ -49,6 +50,7 @@
   "Label.LocalizationLookupError": "Localizzazione non trovata per {0}",
   "Label.NotAvailable.Long" : "Non disponibile",
   "Label.NotAvailable.Short" : "N/D",
+  "Label.NotGraded": "Non votato",
   "Label.Online": "Online",
   "Label.OpenOnMal": "Apri su MyAnimeList",
   "Label.PrimaryButton": "OK",
@@ -76,7 +78,6 @@
   "Enum.AnimeSearchOrderBy.NoSorting": "Nessun ordine",
   "Enum.AnimeSearchOrderBy.Title": "Titolo",
   "Enum.AnimeSearchOrderBy.Score": "Voto",
-  "Enum.AnimeSearchOrderBy.Type": "Tipo",
   "Enum.AnimeSearchOrderBy.ScoredBy": "Votanti",
   "Enum.AnimeSearchOrderBy.Members": "Membri",
   "Enum.AnimeSearchOrderBy.Favorites": "Preferiti",
